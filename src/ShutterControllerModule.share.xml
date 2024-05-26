@@ -7,21 +7,206 @@
 				<ApplicationProgram>
 					<Static>
 						<ParameterTypes>
+							<!-- Number of channels (module specific) -->
+							<ParameterType Id="%AID%_PT-SHCNumChannels" Name="SHCNumChannels">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-ShutterType" Name="ShutterType">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
+									<Enumeration Text="Rollo" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-Azimut" Name="Azimut">
+								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="20" maxInclusive="340" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-Elevation" Name="Elevation">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="2" maxInclusive="90" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-TemperaturLimit" Name="TemperaturLimit">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="40" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-BrightnessLimit" Name="BrightnessLimit">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="50" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-BrightnessHysteresis" Name="BrightnessHysteresis">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="20" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-UVIndex" Name="UVI">
+								<TypeFloat Encoding="IEEE-754 Single" minInclusive="0.1" maxInclusive="11" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-MaxCloudLimit" Name="MaxCloudLimit">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Deaktiviert" Value="101" Id="%ENID%" />
+									<Enumeration Text="20%" Value="20" Id="%ENID%" />
+									<Enumeration Text="30%" Value="30" Id="%ENID%" />
+									<Enumeration Text="40%" Value="40" Id="%ENID%" />
+									<Enumeration Text="50%" Value="50" Id="%ENID%" />
+									<Enumeration Text="60%" Value="60" Id="%ENID%" />
+									<Enumeration Text="70%" Value="70" Id="%ENID%" />
+									<Enumeration Text="80%" Value="80" Id="%ENID%" />
+									<Enumeration Text="90%" Value="90" Id="%ENID%" />
+									<Enumeration Text="95%" Value="95" Id="%ENID%" />
+									<Enumeration Text="98%" Value="98" Id="%ENID%" />
+									<Enumeration Text="99%" Value="99" Id="%ENID%" />
+									<Enumeration Text="100%" Value="100" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+					
+							<ParameterType Id="%AID%_PT-SunRiseSet" Name="SunRiseSet">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="vor" Value="1" Id="%ENID%" />
+									<Enumeration Text="bei" Value="2" Id="%ENID%" />
+									<Enumeration Text="nach" Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-ActivationTime" Name="ActivationTime">
+								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="1440" UIHint="Time_mmss" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-ElevationBeforeAfterSunSetRise" Name="ElevationBeforeAfterSunSetRise">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="240" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-WaitTimeShadingControl" Name="WaitTimeShadingControl">
+								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="720" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-Percent" Name="Percent">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SlatShadingPositionMode" Name="SlatShadingPositionMode">
+								<TypeRestriction Base="Value" SizeInBit="1">
+									<Enumeration Text="Fixe Prozentangabe" Value="0" Id="%ENID%" />
+									<Enumeration Text="Sonnenstandabhängig" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-OffsetSlatPosition" Name="OffsetSlatPosition">
+								<TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-20" maxInclusive="20" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-MinChangeForSlatAdaption" Name="MinChangeForSlatAdaption">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="5%" Value="5" Id="%ENID%" />
+									<Enumeration Text="10%" Value="10" Id="%ENID%" />
+									<Enumeration Text="15%" Value="15" Id="%ENID%" />
+									<Enumeration Text="20%" Value="20" Id="%ENID%" />
+									<Enumeration Text="25%" Value="25" Id="%ENID%" />
+									<Enumeration Text="30%" Value="30" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-AfterShadingJalousie" Name="AfterShadingJalousie" >
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
+									<Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
+									<Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+								<ParameterType Id="%AID%_PT-AfterShading" Name="AfterShading">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
+									<Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-ShadingBreak" Name="MaxCloudLimit">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Azimut" Value="1" Id="%ENID%" />
+									<Enumeration Text="Höhenwinkel" Value="2" Id="%ENID%" />
+									<Enumeration Text="Azimut UND Höhenwinkel" Value="3" Id="%ENID%" />
+									<Enumeration Text="Azimut ODER Höhenwinkel" Value="4" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							
 						</ParameterTypes>
+
+
 						<Parameters>
+							<Union SizeInBit="16">
+								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+								<!-- Anzahl der Kanäle -->
+								<Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%N%" SuffixText=" von %N%" />
+							</Union>
 						</Parameters>
 						<ParameterRefs>
+							<!-- Anzahl der Kanäle -->
+							<ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
 						</ParameterRefs>
 						<ComObjectTable>
+							<!-- Beschattung täglich aktivieren -->
+							<ComObject Number="0" Id="%AID%_O-%TT%00000" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="ShadingControlDailyActivation" Text="Beschattung täglich aktivieren" FunctionText="Beschattung täglich aktivieren" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Beschattung täglich aktivieren Status-->
+							<ComObject Number="1" Id="%AID%_O-%TT%00001" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="ShadingControlDailyActivationStatus" Text="Beschattung täglich aktivieren Status" FunctionText="Beschattung täglich aktivieren Status" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Temperatur Eingang -->
+							<ComObject Number="2" Id="%AID%_O-%TT%00002" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="TemperatureInput" Text="Temperatur Eingang" FunctionText="Temperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Temperatur Progonse Eingang -->
+							<ComObject Number="3" Id="%AID%_O-%TT%00003" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="TemperatureForecastInput" Text="Temperaturprognose Eingang" FunctionText="Temperaturprognose Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Helligkeit Eingang -->
+							<ComObject Number="4" Id="%AID%_O-%TT%00004" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput" Text="Helligkeit Eingang" FunctionText="Helligkeit Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- UVI Eingang -->
+							<ComObject Number="5" Id="%AID%_O-%TT%00005" ObjectSize="1 Byte" DatapointType="DPST-5-5" Name="UVIInput" Text="UVI Eingang" FunctionText="UVI Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Regen Eingang -->
+							<ComObject Number="6" Id="%AID%_O-%TT%00006" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="RainInput" Text="Regen Eingang" FunctionText="Regen Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Wolken Eingang -->
+							<ComObject Number="7" Id="%AID%_O-%TT%00007" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CloudsInput" Text="Wolken Eingang" FunctionText="Wolken Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 						</ComObjectTable>
 						<ComObjectRefs>
+							<!-- Beschattung täglich aktivieren -->
+							<ComObjectRef Id="%AID%_O-%TT%00000_R-%TT%0000001" RefId="%AID%_O-%TT%00000" />
+							<!-- Beschattung täglich aktivieren Status -->
+							<ComObjectRef Id="%AID%_O-%TT%00001_R-%TT%0000101" RefId="%AID%_O-%TT%00001" />
+							<!-- Temperatur Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00002_R-%TT%0000201" RefId="%AID%_O-%TT%00002" />
+							<!-- Temperatur Progonse Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00003_R-%TT%0000301" RefId="%AID%_O-%TT%00003" />
+							<!-- Helligkeit Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00004_R-%TT%0000401" RefId="%AID%_O-%TT%00004" />
+							<!-- UVI Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00005_R-%TT%0000501" RefId="%AID%_O-%TT%00005" />
+							<!-- Regen Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00006_R-%TT%0000601" RefId="%AID%_O-%TT%00006" />
+							<!-- Wolken Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" />
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
-						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="wave">
-							<ParameterBlock Id="%AID%_PB-nnn" Name="ShutterControllerSettings" Text="Jalousiensteuerung" Icon="cog" HelpContext="SHC-ShutterControllerModuleSettings">
+						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
+							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Settings">
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+								<!-- Verfügbare Kanäle -->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+
 							</ParameterBlock>
+							<ParameterBlock Id="%AID%_PB-nnn" Name="Docu%TT%" Text="Dokumentation" Icon="information-outline" HelpContext="SHC-Documentation">
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Wird keine Dokumentation angezeigt, muss diese in der ETS Werkzeugleiste über die Schaltfläche '(?) Kontexhilfe' aktiviert werden." />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version des Modules: %ModuleVersion%" UIHint="Headline" />
+							</ParameterBlock>
+
 							<op:include href="ShutterControllerModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SHC" IsInner="true" />
+
+
+							<!-- Beschattung täglich aktivieren -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
+							<!-- Beschattung täglich aktivieren Status -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
+							<!-- Temperatur Eingang -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00002_R-%TT%0000201" />
+							<!-- Temperatur Progonse Eingang -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00003_R-%TT%0000301" />
+							<!-- Helligkeit Eingang -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
+							<!-- UVI Eingang -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
+							<!-- Regen Eingang -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
+							<!-- Wolken Eingang -->
+							<ComObjectRefRef RefId="%AID%_O-%TT%00007_R-%TT%0000701" />
+
 						</Channel>
 					</Dynamic>
 				</ApplicationProgram>
@@ -30,12 +215,11 @@
 				<Baggage TargetPath="" Name="Help_de.zip" Id="%FILE-HELP-de%">
 					<FileInfo TimeInfo="%DATETIME%" />
 				</Baggage>
-				<!--
 				<Baggage TargetPath="" Name="Icons.zip" Id="%FILE-ICONS%">
-				<FileInfo TimeInfo="%DATETIME%" />
+					<FileInfo TimeInfo="%DATETIME%" />
 				</Baggage>
-				-->
 			</Baggages>
 		</Manufacturer>
 	</ManufacturerData>
 </KNX>
+
