@@ -541,8 +541,12 @@
 
 																<!-- Von Uhrzeit aktiv -->
 																<ParameterRefRef RefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501" />
-																<!-- Von Uhrzeit -->
-																<ParameterRefRef RefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" />
+																<choose ParamRefId="%AID%_P-%TT%%CC%005_R-%TT%%CC%00501">
+																	<when test="1">
+																		<!-- Von Uhrzeit -->
+																		<ParameterRefRef RefId="%AID%_P-%TT%%CC%006_R-%TT%%CC%00601" />
+																	</when>
+																</choose>
 
 																<!-- Sonnenuntergang aktiv -->
 																<ParameterRefRef RefId="%AID%_P-%TT%%CC%007_R-%TT%%CC%00701" />
@@ -553,11 +557,14 @@
 																	</when>
 																</choose>
 
-
 																<!-- Von Uhrzeit aktiv -->
 																<ParameterRefRef RefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901" />
-																<!-- Bis Uhrzeit -->
-																<ParameterRefRef RefId="%AID%_P-%TT%%CC%010_R-%TT%%CC%01001" />
+																<choose ParamRefId="%AID%_P-%TT%%CC%009_R-%TT%%CC%00901">
+																	<when test="1">
+																		<!-- Bis Uhrzeit -->
+																		<ParameterRefRef RefId="%AID%_P-%TT%%CC%010_R-%TT%%CC%01001" />
+																	</when>
+																</choose>
 
 																<!-- Sonnenaufgang aktiv -->
 																<ParameterRefRef RefId="%AID%_P-%TT%%CC%011_R-%TT%%CC%01101" />

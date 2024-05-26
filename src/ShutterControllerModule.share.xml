@@ -63,7 +63,7 @@
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-ActivationTime" Name="ActivationTime">
-								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="1440" UIHint="Time_mmss" />
+								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="1440" UIHint="Time_hhmm" />
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-ElevationBeforeAfterSunSetRise" Name="ElevationBeforeAfterSunSetRise">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="240" />
