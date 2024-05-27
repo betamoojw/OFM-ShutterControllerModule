@@ -601,15 +601,6 @@
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCShadingMode1" Text="Beschattungsmodus 1" Icon="sun-angle-outline" HelpContext="Empty">
 
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Wartezeiten" UIHint="Headline" />
-
-																<!-- Wartezeit Beschattungsstart -->
-																<ParameterRefRef RefId="%AID%_P-%TT%%CC%014_R-%TT%%CC%01401" />
-
-																<!-- Wartezeit Beschattungsende -->
-																<ParameterRefRef RefId="%AID%_P-%TT%%CC%015_R-%TT%%CC%01501" />
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonnenstand" UIHint="Headline" />
 
 																<!-- Minimaler Azimut -->
@@ -712,6 +703,18 @@
 																<ParameterRefRef RefId="%AID%_P-%TT%%CC%030_R-%TT%%CC%03001" />
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Wartezeiten" UIHint="Headline" />
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Wartezeite werden verwendet wenn während der Beschattung Messwert (z.B. Temperatur, Helligkeit, ...) die konfigurierten Werte unterschreiten oder wieder überschreiten um ein zu schnelles aktivieren und deaktivieren der Beschattung zu verhindern." UIHint="Information" />
+
+																<!-- Wartezeit Beschattungsstart -->
+																<ParameterRefRef RefId="%AID%_P-%TT%%CC%014_R-%TT%%CC%01401" />
+											
+
+																<!-- Wartezeit Beschattungsende -->
+																<ParameterRefRef RefId="%AID%_P-%TT%%CC%015_R-%TT%%CC%01501" />
+
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+								
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungssteuerung" UIHint="Headline" />
 
 																<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
