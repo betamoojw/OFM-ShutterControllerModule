@@ -71,7 +71,7 @@
 							<ParameterType Id="%AID%_PT-WaitTimeShadingControl" Name="WaitTimeShadingControl">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="720" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-Percent" Name="Percent">
+							<ParameterType Id="%AID%_PT-SHCPercent" Name="Percent">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-SlatShadingPositionMode" Name="SlatShadingPositionMode">

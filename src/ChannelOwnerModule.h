@@ -4,11 +4,11 @@
 class ShutterControllerChannelOwnerModule : public OpenKNX::Module
 {
 private: 
-    uint8_t _numberOfChannels;
+    uint8_t _numberOfChannels = 0;
     uint8_t _currentChannel = 0;
     OpenKNX::Channel** _pChannels = nullptr;
 public:
-    ShutterControllerChannelOwnerModule(uint8_t numberOfChannels = 0);
+    ShutterControllerChannelOwnerModule();
     ~ShutterControllerChannelOwnerModule();
 
     virtual OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */); 
@@ -19,6 +19,7 @@ public:
         */
     virtual void setup(bool configured) override;
     virtual void setup() override;
+    void setupChannels(uint8_t numberOfChannels);
 
     /*
         * Module logic for core0

@@ -11,8 +11,9 @@ protected:
     const std::string logPrefix();
 
 public:
-    virtual void setup(uint8_t _channelIndex);
+    void setup(uint8_t _channelIndex);
     virtual const char* name() = 0;
+    virtual void initGroupObjects() = 0;
     virtual bool allowed() = 0;
     virtual void start() = 0;
     virtual void stop() = 0;

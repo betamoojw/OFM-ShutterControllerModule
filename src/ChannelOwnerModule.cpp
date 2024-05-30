@@ -1,12 +1,7 @@
 #include "ChannelOwnerModule.h"
 
-ShutterControllerChannelOwnerModule::ShutterControllerChannelOwnerModule(uint8_t numberOfChannels)
-    : _numberOfChannels(numberOfChannels)
+ShutterControllerChannelOwnerModule::ShutterControllerChannelOwnerModule()
 {
-    if (_numberOfChannels > 0)
-    {
-        _pChannels = new OpenKNX::Channel*[numberOfChannels]();
-    }
 }
 
 ShutterControllerChannelOwnerModule::~ShutterControllerChannelOwnerModule()
@@ -22,6 +17,10 @@ ShutterControllerChannelOwnerModule::~ShutterControllerChannelOwnerModule()
     * Called during startup after initialization of all modules is completed.
     * Useful for init interrupts on core0
     */
+void ShutterControllerChannelOwnerModule::setup()
+{
+    OpenKNX::Module::setup();
+}
 void ShutterControllerChannelOwnerModule::setup(bool configured)
 {
     OpenKNX::Module::setup(configured);
@@ -32,11 +31,11 @@ OpenKNX::Channel* ShutterControllerChannelOwnerModule::createChannel(uint8_t _ch
     return nullptr;
 }
 
-void ShutterControllerChannelOwnerModule::setup()
+void ShutterControllerChannelOwnerModule::setupChannels(uint8_t numberOfChannels)
 {
-    OpenKNX::Module::setup();
-    if (_pChannels != nullptr)
+    if (_numberOfChannels > 0)
     {
+        _pChannels = new OpenKNX::Channel*[numberOfChannels]();
         logDebugP("Setting up %d channels", _numberOfChannels);
         for (uint8_t _channelIndex = 0; _channelIndex < _numberOfChannels; _channelIndex++)
         {

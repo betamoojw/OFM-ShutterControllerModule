@@ -9,7 +9,7 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
 
   public:
     ShutterControllerModule();
-
+    void setup() override;
     const std::string name() override;
     const std::string version() override;
     void showInformations() override;

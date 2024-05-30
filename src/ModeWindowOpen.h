@@ -1,7 +1,7 @@
 #pragma once
 #include "ModeBase.h"
 
-class ModeManual : public ModeBase
+class ModeWindowOpen : public ModeBase
 {
 protected:
     const char *name() override;

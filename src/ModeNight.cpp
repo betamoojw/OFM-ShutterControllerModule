@@ -4,6 +4,10 @@ const char *ModeNight::name()
 {
     return "Night";
 }
+void ModeNight::initGroupObjects()
+{
+
+}
 bool ModeNight::allowed()
 {
     return false;

@@ -4,6 +4,10 @@ const char *ModeManual::name()
 {
     return "Manual";
 }
+void ModeManual::initGroupObjects()
+{
+
+}
 bool ModeManual::allowed()
 {
     return false;
