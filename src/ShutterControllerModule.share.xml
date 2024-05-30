@@ -53,7 +53,7 @@
 									<Enumeration Text="100%" Value="100" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-					
+
 							<ParameterType Id="%AID%_PT-SunRiseSet" Name="SunRiseSet">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
@@ -93,7 +93,7 @@
 									<Enumeration Text="30%" Value="30" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-AfterShadingJalousie" Name="AfterShadingJalousie" >
+							<ParameterType Id="%AID%_PT-AfterShadingJalousie" Name="AfterShadingJalousie">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
 									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
@@ -101,7 +101,7 @@
 									<Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-								<ParameterType Id="%AID%_PT-AfterShading" Name="AfterShading">
+							<ParameterType Id="%AID%_PT-AfterShading" Name="AfterShading">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
 									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
@@ -118,19 +118,58 @@
 									<Enumeration Text="Azimut ODER Höhenwinkel" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							
+
 						</ParameterTypes>
 
 						<Parameters>
 							<Union SizeInBit="16">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Anzahl der Kanäle -->
-								<Parameter Id="%AID%_UP-%TT%00000" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Offset="0" BitOffset="0" Text="Verfügbare Kanäle" Value="%N%" SuffixText=" von %N%" />
+								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="%N%" SuffixText=" von %N%" />
+
+								<!-- Temperatur Eingang-->
+								<Parameter Id="%AID%_UP-%TT%00001" Offset="1" BitOffset="0" Name="HasTemperaturInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperatur" Value="1" />
+
+								<!-- Temperatur Prognose Eingang-->
+								<Parameter Id="%AID%_UP-%TT%00002" Offset="1" BitOffset="1" Name="HasTemperaturForecastInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperatur Prognose" Value="0" />
+
+								<!-- Helligkeit Eingang-->
+								<Parameter Id="%AID%_UP-%TT%00003" Offset="1" BitOffset="2" Name="HasBrightnessInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeit" Value="1" />
+
+								<!-- UVI Eingang-->
+								<Parameter Id="%AID%_UP-%TT%00004" Offset="1" BitOffset="3" Name="HasUVIInput" ParameterType="%AID%_PT-OnOffYesNo" Text="UVI" Value="0" />
+
+								<!-- Regen Eingang-->
+								<Parameter Id="%AID%_UP-%TT%00005" Offset="1" BitOffset="4" Name="HasRainInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Regen" Value="0" />
+
+								<!-- Wolken Eingang-->
+								<Parameter Id="%AID%_UP-%TT%00006" Offset="1" BitOffset="5" Name="HasCloudsInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Wolken" Value="0" />
+
 							</Union>
 						</Parameters>
 						<ParameterRefs>
 							<!-- Anzahl der Kanäle -->
 							<ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
+
+							<!-- Temperatur Eingang-->
+							<ParameterRef Id="%AID%_UP-%TT%00001_R-%TT%0000101" RefId="%AID%_UP-%TT%00001" />
+
+							<!-- Temperatur Prognose Eingang-->
+							<ParameterRef Id="%AID%_UP-%TT%00002_R-%TT%0000201" RefId="%AID%_UP-%TT%00002" />
+
+							<!-- Helligkeit Eingang-->
+							<ParameterRef Id="%AID%_UP-%TT%00003_R-%TT%0000301" RefId="%AID%_UP-%TT%00003" />
+
+							<!-- UVI Eingang-->
+							<ParameterRef Id="%AID%_UP-%TT%00004_R-%TT%0000401" RefId="%AID%_UP-%TT%00004" />
+
+							<!-- Regen Eingang-->
+							<ParameterRef Id="%AID%_UP-%TT%00005_R-%TT%0000501" RefId="%AID%_UP-%TT%00005" />
+
+							<!-- Wolken Eingang-->
+							<ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000601" RefId="%AID%_UP-%TT%00006" />
+
+
 						</ParameterRefs>
 						<ComObjectTable>
 							<!-- Beschattung täglich aktivieren -->
@@ -163,6 +202,7 @@
 							<ComObjectRef Id="%AID%_O-%TT%00004_R-%TT%0000401" RefId="%AID%_O-%TT%00004" />
 							<!-- UVI Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00005_R-%TT%0000501" RefId="%AID%_O-%TT%00005" />
+
 							<!-- Regen Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00006_R-%TT%0000601" RefId="%AID%_O-%TT%00006" />
 							<!-- Wolken Eingang -->
@@ -172,11 +212,74 @@
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Settings">
+								<!-- Beschattung täglich aktivieren -->
+								<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
+								<!-- Beschattung täglich aktivieren Status -->
+								<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 								<!-- Verfügbare Kanäle -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
 
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Verfügbare Messwert Eingänge" UIHint="Headline" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Jeder freigeschaltene Eingang kann für die aktivierung / deaktivieren der Beschattung verwendet werden." />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die freigeschaltene Eingänge müssen mit Gruppen Adressen verbunden werden." />
+
+								<!-- Temperatur Eingang-->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000101" />
+								<!-- Temperatur Eingang-->
+								<choose ParamRefId="%AID%_UP-%TT%00001_R-%TT%0000101">
+									<when test="1">
+										<!-- Temperatur Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00002_R-%TT%0000201" />
+									</when>
+								</choose>
+								<!-- Temperatur Prognose Eingang-->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000201" />
+								<!-- Temperatur Prognose Eingang-->
+								<choose ParamRefId="%AID%_UP-%TT%00002_R-%TT%0000201">
+									<when test="1">
+										<!-- Temperatur Progonse Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00003_R-%TT%0000301" />
+									</when>
+								</choose>
+								<!-- Helligkeit Eingang-->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" />
+								<!-- Helligkeit Eingang-->
+								<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
+									<when test="1">
+										<!-- Helligkeit Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
+									</when>
+								</choose>
+								<!-- UVI Eingang-->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" />
+								<!-- UVI Eingang-->
+								<choose ParamRefId="%AID%_UP-%TT%00004_R-%TT%0000401">
+									<when test="1">
+										<!-- UVI Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
+									</when>
+								</choose>
+								<!-- Regen Eingang-->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" />
+								<!-- Regen Eingang-->
+								<choose ParamRefId="%AID%_UP-%TT%00005_R-%TT%0000501">
+									<when test="1">
+										<!-- Regen Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
+									</when>
+								</choose>
+								<!-- Wolken Eingang-->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" />
+								<!-- Wolken Eingang-->
+								<choose ParamRefId="%AID%_UP-%TT%00006_R-%TT%0000601">
+									<when test="1">
+										<!-- Wolken Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00007_R-%TT%0000701" />
+									</when>
+								</choose>
 							</ParameterBlock>
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Docu%TT%" Text="Dokumentation" Icon="information-outline" HelpContext="SHC-Documentation">
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
@@ -189,22 +292,6 @@
 							<op:include href="ShutterControllerModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SHC" IsInner="true" />
 
 
-							<!-- Beschattung täglich aktivieren -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
-							<!-- Beschattung täglich aktivieren Status -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
-							<!-- Temperatur Eingang -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00002_R-%TT%0000201" />
-							<!-- Temperatur Progonse Eingang -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00003_R-%TT%0000301" />
-							<!-- Helligkeit Eingang -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
-							<!-- UVI Eingang -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
-							<!-- Regen Eingang -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
-							<!-- Wolken Eingang -->
-							<ComObjectRefRef RefId="%AID%_O-%TT%00007_R-%TT%0000701" />
 
 						</Channel>
 					</Dynamic>

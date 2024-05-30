@@ -1,2 +1,3 @@
 - Default für Channel Aktiv
 - Messwerteingänge über Parameter ein- ausschaltbar
+- Heinzung Eingänge
