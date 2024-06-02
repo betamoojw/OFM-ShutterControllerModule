@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+	<ManufacturerData>
+		<Manufacturer>
+			<ApplicationPrograms>
+				<ApplicationProgram>
+					<op:partParams name="ModeShading">
+						<!-- Only developer hints for declaration: -->
+						<!-- Parameter Offset -->
+						<op:param name="%ParamOffset%" value="67" increment="29" />
+						<!-- ModeShading number -->
+						<op:param name="%Pn%" value="1" />
+						<!-- Parameter ID's -->
+						<op:param name="%PPP%" value="100" />
+						<!-- KO Offset-->
+						<op:param name="%En%" value="23" />
+					</op:partParams>
+					<Static>
+						<Parameters>
+
+							<Union SizeInBit="232">
+								<Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
+								<!-- Beschattungs Modus 1 -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+13%" Offset="0" BitOffset="0" Name="Channel%C%ModeShading%Pn%" ParameterType="%AID%_PT-OnOffYesNo" Text="Beschattungsmodus %Pn%" Value="0" />
+
+								<!-- Temperatur Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+20%" Offset="0" BitOffset="1" Name="Channel%C%ModeShading%Pn%TemperatureActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperaturgrenze" Value="1" />
+
+								<!-- Temperaturprognose Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+22%" Offset="0" BitOffset="2" Name="Channel%C%ModeShading%Pn%TemperatureForecast" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperaturprognose" Value="0" />
+
+								<!-- Helligkeit Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+24%" Offset="0" BitOffset="3" Name="Channel%C%ModeShading%Pn%BrightnessActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeitlimit" Value="0" />
+
+								<!-- UV-Index Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+27%" Offset="0" BitOffset="4" Name="Channel%C%ModeShading%Pn%UVIActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="UV-Index" Value="0" />
+
+								<!-- Regen Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+29%" Offset="0" BitOffset="5" Name="Channel%C%ModeShading%Pn%RainActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Bei Regen nicht beschatten" Value="1" />
+
+								<!-- Lammellenstellung Höhenwinkelabhängig -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="6" Name="Channel%C%ModeShading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
+
+								<!-- Beschattungsunterbrechung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="0" BitOffset="7" Name="Channel%C%ModeShading%Pn%ShadingBreak" ParameterType="%AID%_PT-ShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
+
+
+								<!-- Wartezeit Beschattungsstart -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+14%" Offset="1" BitOffset="0" Name="Channel%C%ModeShading%Pn%WaitTimeStart" ParameterType="%AID%_PT-WaitTimeShadingControl" Text="Beschattungsstart" SuffixText="Minuten" Value="5" />
+
+								<!-- Wartezeit Beschattungsende -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+15%" Offset="3" BitOffset="0" Name="Channel%C%ModeShading%Pn%WaitTimeEnd" ParameterType="%AID%_PT-WaitTimeShadingControl" Text="Beschattungsende" SuffixText="Minuten" Value="15" />
+
+								<!-- Minimaler Azimut -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+16%" Offset="5" BitOffset="0" Name="Channel%C%ModeShading%Pn%AzimutMin" ParameterType="%AID%_PT-Azimut" Text="von" SuffixText="°" Value="120" />
+								<!-- Maximaler Azimut -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+17%" Offset="7" BitOffset="0" Name="Channel%C%ModeShading%Pn%AzimutMax" ParameterType="%AID%_PT-Azimut" Text="bis" SuffixText="°" Value="240" />
+
+								<!-- Minimaler Elevation -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+18%" Offset="9" BitOffset="0" Name="Channel%C%ModeShading%Pn%ElevationMin" ParameterType="%AID%_PT-Elevation" Text="von" SuffixText="°" Value="5" />
+								<!-- Maximaler Elevation -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+19%" Offset="10" BitOffset="0" Name="Channel%C%ModeShading%Pn%ElevationMax" ParameterType="%AID%_PT-Elevation" Text="bis" SuffixText="°" Value="90" />
+
+								<!-- Minimum Temperatur -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+21%" Offset="11" BitOffset="0" Name="Channel%C%ModeShading%Pn%TemperatureMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindesttemperatur" SuffixText="°C" Value="15" />
+
+								<!-- Minimum Temperatur -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+23%" Offset="12" BitOffset="0" Name="Channel%C%ModeShading%Pn%TemperatureForecastMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindestens prognostizierte Tageshöchsttemperatur" SuffixText="°C" Value="18" />
+
+
+								<!-- Minimale Helligkeit -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+25%" Offset="13" BitOffset="0" Name="Channel%C%ModeShading%Pn%BrightnessMin" ParameterType="%AID%_PT-BrightnessLimit" Text="Minimale Hellikeit" SuffixText="x1000 lux" Value="15" />
+								<!-- Helligkeit Hysterese-->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+26%" Offset="14" BitOffset="0" Name="Channel%C%ModeShading%Pn%Hysterese" ParameterType="%AID%_PT-BrightnessHysteresis" Text="Hellikeit Hysteres" Value="5" />
+
+								<!-- Minimale UV-Index -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+28%" Offset="15" BitOffset="0" Name="Channel%C%ModeShading%Pn%UVIMin" ParameterType="%AID%_PT-UVIndex" Text="Minimaler UV-Index" Value="1" />
+
+
+								<!-- Maximale Wolken -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+30%" Offset="16" BitOffset="0" Name="Channel%C%ModeShading%Pn%Clouds" ParameterType="%AID%_PT-MaxCloudLimit" Text="Maximale Bewölkung" Value="101" />
+
+								<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+31%" Offset="17" BitOffset="0" Name="Channel%C%ModeShading%Pn%ActivationOnlyIfLessThan" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsmodus nur starten aktuelle Position kleiner gleich" Value="0" />
+
+								<!-- Beschattungsposition -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+32%" Offset="18" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsposition" SuffixText="%" Value="100" />
+
+								<!-- Lammellenposition -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+33%" Offset="19" BitOffset="0" Name="Channel%C%ModeShading%Pn%SlatShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
+
+
+								<!-- Mindeständerung Lamellennachführung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+35%" Offset="20" BitOffset="0" Name="Channel%C%ModeShading%Pn%MinChangeForSlatAdaption" ParameterType="%AID%_PT-MinChangeForSlatAdaption" Text="Mindeständerung Lamellennachführung" Value="10" />
+
+								<!-- OffsetLamellenposition -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+36%" Offset="21" BitOffset="0" Name="Channel%C%ModeShading%Pn%OffsetSlatPosition" ParameterType="%AID%_PT-OffsetSlatPosition" Text="Offset Lamellenstellung" SuffixText="%" Value="0" />
+
+								<!-- Nach Beschattung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+37%" Offset="22" BitOffset="0" Name="Channel%C%ModeShading%Pn%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
+
+
+								<!-- BeschattungsunterbrechungMinimaler Azimut -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+39%" Offset="23" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakAzimutMin" ParameterType="%AID%_PT-Azimut" Text="Azimut von" SuffixText="°" Value="0" />
+								<!-- Beschattungsunterbrechung Maximaler Azimut -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+40%" Offset="25" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakAzimutMax" ParameterType="%AID%_PT-Azimut" Text="Azimut bis" SuffixText="°" Value="0" />
+
+								<!-- Beschattungsunterbrechung Minimaler Elevation -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+41%" Offset="27" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakElevationMin" ParameterType="%AID%_PT-Elevation" Text="Höhenwinkel von" SuffixText="°" Value="0" />
+								<!-- Beschattungsunterbrechung Maximaler Elevation -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+42%" Offset="28" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakElevationMax" ParameterType="%AID%_PT-Elevation" Text="Höhenwinkel bis" SuffixText="°" Value="0" />
+							</Union>
+
+						</Parameters>
+						<ParameterRefs>
+
+							<!-- Beschattungs Modus %Pn% -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+13%_R-%TT%%CC%%PPP+13%01" RefId="%AID%_UP-%TT%%CC%%PPP+13%" />
+
+							<!-- Wartezeit Beschattungsstart -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+14%_R-%TT%%CC%%PPP+14%01" RefId="%AID%_UP-%TT%%CC%%PPP+14%" />
+
+							<!-- Wartezeit Beschattungsende -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+15%_R-%TT%%CC%%PPP+15%01" RefId="%AID%_UP-%TT%%CC%%PPP+15%" />
+
+							<!-- Minimaler Azimut -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+16%_R-%TT%%CC%%PPP+16%01" RefId="%AID%_UP-%TT%%CC%%PPP+16%" />
+							<!-- Maximaler Azimut -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+17%_R-%TT%%CC%%PPP+17%01" RefId="%AID%_UP-%TT%%CC%%PPP+17%" />
+
+							<!-- Minimaler Elevation -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+18%_R-%TT%%CC%%PPP+18%01" RefId="%AID%_UP-%TT%%CC%%PPP+18%" />
+							<!-- Maximaler Elevation -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+19%_R-%TT%%CC%%PPP+19%01" RefId="%AID%_UP-%TT%%CC%%PPP+19%" />
+
+							<!-- Temperatur Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+20%_R-%TT%%CC%%PPP+20%01" RefId="%AID%_UP-%TT%%CC%%PPP+20%" />
+
+							<!-- Minimum Temperatur -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+21%_R-%TT%%CC%%PPP+21%01" RefId="%AID%_UP-%TT%%CC%%PPP+21%" />
+
+							<!-- Temperaturprognose Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+22%_R-%TT%%CC%%PPP+22%01" RefId="%AID%_UP-%TT%%CC%%PPP+22%" />
+							<!-- Minimum Temperatur -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+23%_R-%TT%%CC%%PPP+23%01" RefId="%AID%_UP-%TT%%CC%%PPP+23%" />
+
+
+							<!-- Helligkeit Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01" RefId="%AID%_UP-%TT%%CC%%PPP+24%" />
+							<!-- Minimale Helligkeit -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+25%_R-%TT%%CC%%PPP+25%01" RefId="%AID%_UP-%TT%%CC%%PPP+25%" />
+							<!-- Helligkeit Hysterese-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+26%_R-%TT%%CC%%PPP+26%01" RefId="%AID%_UP-%TT%%CC%%PPP+26%" />
+
+							<!-- UV-Index Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+27%_R-%TT%%CC%%PPP+27%01" RefId="%AID%_UP-%TT%%CC%%PPP+27%" />
+							<!-- Minimale UV-Index -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+28%_R-%TT%%CC%%PPP+28%01" RefId="%AID%_UP-%TT%%CC%%PPP+28%" />
+
+							<!-- Regen Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+29%_R-%TT%%CC%%PPP+29%01" RefId="%AID%_UP-%TT%%CC%%PPP+29%" />
+
+							<!-- Maximale Wolken -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+30%_R-%TT%%CC%%PPP+30%01" RefId="%AID%_UP-%TT%%CC%%PPP+30%" />
+
+
+							<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+31%_R-%TT%%CC%%PPP+31%01" RefId="%AID%_UP-%TT%%CC%%PPP+31%" />
+
+							<!-- Beschattungsposition -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+32%_R-%TT%%CC%%PPP+32%01" RefId="%AID%_UP-%TT%%CC%%PPP+32%" />
+
+							<!-- Lammellenposition -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" RefId="%AID%_UP-%TT%%CC%%PPP+33%" />
+
+							<!-- Lammellenstellung an Sonnen Höhenwinkel anpassen -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01" RefId="%AID%_UP-%TT%%CC%%PPP+34%" />
+
+							<!-- Mindeständerung Lamellennachführung -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+35%_R-%TT%%CC%%PPP+35%01" RefId="%AID%_UP-%TT%%CC%%PPP+35%" />
+
+							<!-- Offset Lamellenposition -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" RefId="%AID%_UP-%TT%%CC%%PPP+36%" />
+
+							<!-- Nach Beschattung -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+37%_R-%TT%%CC%%PPP+37%01" RefId="%AID%_UP-%TT%%CC%%PPP+37%" />
+
+							<!-- Beschattungsunterbrechung -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01" RefId="%AID%_UP-%TT%%CC%%PPP+38%" />
+
+							<!-- Beschattungsunterbrechung Minimaler Azimut -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+39%_R-%TT%%CC%%PPP+39%01" RefId="%AID%_UP-%TT%%CC%%PPP+39%" />
+							<!-- Beschattungsunterbrechung Maximaler Azimut -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+40%_R-%TT%%CC%%PPP+40%01" RefId="%AID%_UP-%TT%%CC%%PPP+40%" />
+
+							<!-- Beschattungsunterbrechung Minimaler Elevation -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+41%_R-%TT%%CC%%PPP+41%01" RefId="%AID%_UP-%TT%%CC%%PPP+41%" />
+							<!-- Beschattungsunterbrechung Maximaler Elevation -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+42%_R-%TT%%CC%%PPP+42%01" RefId="%AID%_UP-%TT%%CC%%PPP+42%" />
+
+
+						</ParameterRefs>
+						<ComObjectTable>
+
+
+							<!-- Modus 1 Aktiv -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+0%" Number="%K%En+0%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeShading%Pn%Active" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<!-- Modus 1 Sperre -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+1%" Number="%K%En+1%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeShading%Pn%Lock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<!-- Modus 1 Sperre Rückmeldung -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+2%" Number="%K%En+2%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeShading%Pn%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<!-- Modus 1 Beschattungsunterbrechung Sperre -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+3%" Number="%K%En+3%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeShading%Pn%ShadingBreakLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+4%" Number="%K%En+4%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeShading%Pn%ShadingBreakLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
+
+						</ComObjectTable>
+						<ComObjectRefs>
+
+							<!-- Modus 1 Aktiv -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" RefId="%AID%_O-%TT%%CC%%PPP+0%" Text="%C%: Beschattungsmodus %Pn Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Modus 1 Sperre -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" RefId="%AID%_O-%TT%%CC%%PPP+1%" Text="%C%: Beschattungsmodus %Pn Sperre" FunctionText="{{0:-}} Beschattungsmodus %Pn Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Modus 1 Sperre Rückmeldung -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" RefId="%AID%_O-%TT%%CC%%PPP+2%" Text="%C%: Beschattungsmodus %Pn Sperre Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Modus 1 Beschattungsunterbrechung Sperre -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_O-%TT%%CC%%PPP+3%" Text="%C%: Beschattungsmodus %Pn Beschattungsunterbrechung Sperre" FunctionText="{{0:-}} Beschattungsmodus %Pn Beschattungsunterbrechung Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" RefId="%AID%_O-%TT%%CC%%PPP+4%" Text="%C%: Beschattungsmodus %Pn Beschattungsunterbrechung Sperre Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn Beschattungsunterbrechung Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+
+
+						</ComObjectRefs>
+					</Static>
+					<Dynamic>
+						<ChannelIndependentBlock>
+							<ParameterBlock Id="ChannelParameters">
+								<!-- Beschattungs Modus %Pn% -->
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+13%_R-%TT%%CC%%PPP+13%01" />
+							</ParameterBlock>
+							<ParameterBlock Id="ShadingParameters">
+
+								<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
+									<when test="&gt;=%C%">
+
+										<!-- Gerätetype -->
+										<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+
+											<when test="&gt;0">
+												<!-- Gerätetype aktiviert -->
+
+												<!-- Beschattungs Modus %Pn% -->
+												<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+13%_R-%TT%%CC%%PPP+13%01">
+													<when test="1">
+														<!-- Beschattungs Modus %Pn% Aktiv -->
+
+														<!-- Modus %Pn%  Aktiv -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
+														<!-- Modus %Pn%  Sperre -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
+														<!-- Modus %Pn%  Sperre Rückmeldung -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
+
+														<!-- Beschattungsunterbrechung -->
+														<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">
+															<!-- Nicht deaktiviert -->
+															<when test="&gt;0">
+																<!-- Modus %Pn%  Beschattungsunterbrechung Sperre -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
+																<!-- Modus %Pn%  Beschattungsunterbrechung Sperre Rückmeldung -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
+															</when>
+														</choose>
+
+														<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="Empty">
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonnenposition" UIHint="Headline" />
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Himmelsrichtung (Azimut)" />
+
+															<!-- Minimaler Azimut -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+16%_R-%TT%%CC%%PPP+16%01" />
+															<!-- Maximaler Azimut -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+17%_R-%TT%%CC%%PPP+17%01" />
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Höhenwinkel (Elevation, Altitude)" />
+
+															<!-- Minimaler Elevation -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+18%_R-%TT%%CC%%PPP+18%01" />
+															<!-- Maximaler Elevation -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+19%_R-%TT%%CC%%PPP+19%01" />
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungsunterbrechung" UIHint="Headline" />
+
+															<!-- Beschattungsunterbrechung -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01" />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">																<!-- Beschattungsunterbrechung -->																<!-- Nicht deaktiviert -->
+																<when test="1 3 4">																	<!-- Azimut abhängig -->
+																	<!-- Beschattungsunterbrechung Minimaler Azimut -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+39%_R-%TT%%CC%%PPP+39%01" />
+																	<!-- Beschattungsunterbrechung Maximaler Azimut -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+40%_R-%TT%%CC%%PPP+40%01" />
+																</when>
+															</choose>
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">																<!-- Beschattungsunterbrechung -->																<!-- Nicht deaktiviert -->
+																<when test="3">
+																	<!-- Azimut und Höhenwinkel -->
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="UND" />
+																</when>
+															</choose>
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">																<!-- Beschattungsunterbrechung -->																<!-- Nicht deaktiviert -->
+																<when test="4">
+																	<!-- Azimut oder Höhenwinkel -->
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="ODER" />
+																</when>
+															</choose>
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">																<!-- Beschattungsunterbrechung -->																<!-- Nicht deaktiviert -->
+																<when test="2 3 4">																	<!-- Höhenwinkel abhängig -->
+																	<!-- Beschattungsunterbrechung Minimaler Elevation -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+41%_R-%TT%%CC%%PPP+41%01" />
+																	<!-- Beschattungsunterbrechung Maximaler Elevation -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+42%_R-%TT%%CC%%PPP+42%01" />
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Temperaturgrenzen" UIHint="Headline" />
+															<!-- Temperatur Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%00001_R-%TT%0000101">
+																<when test="1">
+
+																	<!-- Temperatur Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+20%_R-%TT%%CC%%PPP+20%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+20%_R-%TT%%CC%%PPP+20%01">																		<!-- Nicht deaktiviert -->
+																		<when test="1">
+																			<!-- Minimum Temperatur -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+21%_R-%TT%%CC%%PPP+21%01" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+
+															<!-- Temperatur Prognose Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%00002_R-%TT%0000201">
+																<when test="1">
+
+																	<!-- Temperaturprognose Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+22%_R-%TT%%CC%%PPP+22%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+22%_R-%TT%%CC%%PPP+22%01">																		<!-- Nicht deaktiviert -->
+																		<when test="1">
+																			<!-- Minimum Temperatur -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+23%_R-%TT%%CC%%PPP+23%01" />
+																		</when>
+																	</choose>
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+21%_R-%TT%%CC%%PPP+21%01" />
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Helligkeitsgrenzen" UIHint="Headline" />
+
+															<!-- Helligkeit Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
+																<when test="1">
+																	<!-- Helligkeit Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01">																		<!-- Nicht deaktiviert -->
+																		<when test="1">
+																			<!-- Minimale Helligkeit -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+25%_R-%TT%%CC%%PPP+25%01" />
+																			<!-- Helligkeit Hysterese-->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+26%_R-%TT%%CC%%PPP+26%01" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+															<!-- UVI Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%00004_R-%TT%0000401">
+																<when test="1">
+
+																	<!-- UV-Index Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+27%_R-%TT%%CC%%PPP+27%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+27%_R-%TT%%CC%%PPP+27%01">																		<!-- Nicht deaktiviert -->
+																		<when test="1">
+																			<!-- Minimale UV-Index -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+28%_R-%TT%%CC%%PPP+28%01" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter" UIHint="Headline" />
+
+															<!-- Regen Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%00005_R-%TT%0000501">
+																<when test="1">
+																	<!-- Regen Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+29%_R-%TT%%CC%%PPP+29%01" />
+																</when>
+															</choose>
+															<!-- Wolken Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%00006_R-%TT%0000601">
+																<when test="1">
+																	<!-- Maximale Wolken -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+30%_R-%TT%%CC%%PPP+30%01" />
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wartezeiten" UIHint="Headline" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wartezeite werden verwendet wenn während der Beschattung Messwert (z.B. Temperatur, Helligkeit, ...) die konfigurierten Werte unterschreiten oder wieder überschreiten um ein zu schnelles aktivieren und deaktivieren der Beschattung zu verhindern." UIHint="Information" />
+
+															<!-- Wartezeit Beschattungsstart -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+14%_R-%TT%%CC%%PPP+14%01" />
+
+
+															<!-- Wartezeit Beschattungsende -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+15%_R-%TT%%CC%%PPP+15%01" />
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungssteuerung" UIHint="Headline" />
+
+															<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+31%_R-%TT%%CC%%PPP+31%01" />
+
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungsparameter" UIHint="Headline" />
+
+															<!-- Beschattungsposition -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+32%_R-%TT%%CC%%PPP+32%01" />
+
+															<!-- Gerätetype -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																<when test="1">
+																	<!-- Gerätetype Jalousie -->
+
+																	<!-- Lammellenposition -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" />
+
+																	<!-- Lammellenstellung an Sonnenstand Höhenwinkel anpassen -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01" />
+
+																	<!-- Mindeständerung Lamellennachführung -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+35%_R-%TT%%CC%%PPP+35%01" />
+
+																	<!-- Offset Lamellenposition -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" />
+																</when>
+															</choose>
+
+															<!-- Nach Beschattung -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+37%_R-%TT%%CC%%PPP+37%01" />
+														</ParameterBlock>
+													</when>
+												</choose>
+
+											</when>
+										</choose>
+
+									</when>
+								</choose>
+							</ParameterBlock>
+						</ChannelIndependentBlock>
+					</Dynamic>
+				</ApplicationProgram>
+			</ApplicationPrograms>
+		</Manufacturer>
+	</ManufacturerData>
+</KNX>
