@@ -8,7 +8,7 @@
 					<op:partParams name="ModeShading">
 						<!-- Only developer hints for declaration: -->
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="67" increment="29" />
+						<op:param name="%ParamOffset%" value="67" increment="38" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -19,7 +19,7 @@
 					<Static>
 						<Parameters>
 
-							<Union SizeInBit="232">
+							<Union SizeInBit="304">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
 								<!-- Beschattungs Modus 1 -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+13%" Offset="0" BitOffset="0" Name="Channel%C%ModeShading%Pn%" ParameterType="%AID%_PT-OnOffYesNo" Text="Beschattungsmodus %Pn%" Value="0" />
@@ -79,37 +79,51 @@
 
 
 								<!-- Maximale Wolken -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+30%" Offset="16" BitOffset="0" Name="Channel%C%ModeShading%Pn%Clouds" ParameterType="%AID%_PT-MaxCloudLimit" Text="Maximale Bewölkung" Value="101" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+30%" Offset="19" BitOffset="0" Name="Channel%C%ModeShading%Pn%Clouds" ParameterType="%AID%_PT-MaxCloudLimit" Text="Maximale Bewölkung" Value="101" />
 
 								<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+31%" Offset="17" BitOffset="0" Name="Channel%C%ModeShading%Pn%ActivationOnlyIfLessThan" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsmodus nur starten aktuelle Position kleiner gleich" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+31%" Offset="20" BitOffset="0" Name="Channel%C%ModeShading%Pn%ActivationOnlyIfLessThan" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsmodus nur starten aktuelle Position kleiner gleich" Value="0" />
 
 								<!-- Beschattungsposition -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+32%" Offset="18" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsposition" SuffixText="%" Value="100" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+32%" Offset="21" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsposition" SuffixText="%" Value="100" />
 
 								<!-- Lammellenposition -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+33%" Offset="19" BitOffset="0" Name="Channel%C%ModeShading%Pn%SlatShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+33%" Offset="22" BitOffset="0" Name="Channel%C%ModeShading%Pn%SlatShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
 
 
 								<!-- Mindeständerung Lamellennachführung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+35%" Offset="20" BitOffset="0" Name="Channel%C%ModeShading%Pn%MinChangeForSlatAdaption" ParameterType="%AID%_PT-MinChangeForSlatAdaption" Text="Mindeständerung Lamellennachführung" Value="10" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+35%" Offset="23" BitOffset="0" Name="Channel%C%ModeShading%Pn%MinChangeForSlatAdaption" ParameterType="%AID%_PT-MinChangeForSlatAdaption" Text="Mindeständerung Lamellennachführung" Value="10" />
 
 								<!-- OffsetLamellenposition -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+36%" Offset="21" BitOffset="0" Name="Channel%C%ModeShading%Pn%OffsetSlatPosition" ParameterType="%AID%_PT-OffsetSlatPosition" Text="Offset Lamellenstellung" SuffixText="%" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+36%" Offset="24" BitOffset="0" Name="Channel%C%ModeShading%Pn%OffsetSlatPosition" ParameterType="%AID%_PT-OffsetSlatPosition" Text="Offset Lamellenstellung" SuffixText="%" Value="0" />
 
 								<!-- Nach Beschattung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+37%" Offset="22" BitOffset="0" Name="Channel%C%ModeShading%Pn%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+37%" Offset="25" BitOffset="0" Name="Channel%C%ModeShading%Pn%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
 
 
 								<!-- BeschattungsunterbrechungMinimaler Azimut -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+39%" Offset="23" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakAzimutMin" ParameterType="%AID%_PT-Azimut" Text="Azimut von" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+39%" Offset="26" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakAzimutMin" ParameterType="%AID%_PT-AzimutBreak" Text="Azimut von" SuffixText="°" Value="0" />
 								<!-- Beschattungsunterbrechung Maximaler Azimut -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+40%" Offset="25" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakAzimutMax" ParameterType="%AID%_PT-Azimut" Text="Azimut bis" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+40%" Offset="28" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakAzimutMax" ParameterType="%AID%_PT-AzimutBreak" Text="Azimut bis" SuffixText="°" Value="0" />
 
 								<!-- Beschattungsunterbrechung Minimaler Elevation -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+41%" Offset="27" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakElevationMin" ParameterType="%AID%_PT-Elevation" Text="Höhenwinkel von" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+41%" Offset="30" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakElevationMin" ParameterType="%AID%_PT-Elevation" Text="Höhenwinkel von" SuffixText="°" Value="0" />
 								<!-- Beschattungsunterbrechung Maximaler Elevation -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+42%" Offset="28" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakElevationMax" ParameterType="%AID%_PT-Elevation" Text="Höhenwinkel bis" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+42%" Offset="31" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingBreakElevationMax" ParameterType="%AID%_PT-Elevation" Text="Höhenwinkel bis" SuffixText="°" Value="0" />
+
+
+								<!-- Raumtemperatur Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+43%" Offset="32" BitOffset="0" Name="Channel%C%ModeShading%Pn%RoomTemperaturActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
+								<!-- Heizung Aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="32" BitOffset="1" Name="Channel%C%ModeShading%Pn%HeatingActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Heizung" Value="0" />
+
+								<!-- Heizung Stellwert -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+45%" Offset="33" BitOffset="0" Name="Channel%C%ModeShading%Pn%MaxHeatingValue" ParameterType="%AID%_PT-MaxHeatingValue" Text="Maximaler Heinzungsstellwert" SuffixText="%" Value="0" />
+
+								<!-- Raumtemperatur Minimum -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+46%" Offset="34" BitOffset="0" Name="Channel%C%ModeShading%Pn%RoomTemperaturMinimum" ParameterType="%AID%_PT-RoomTemperaturMinimum" Text="Minimale Raumtemperatur" SuffixText="°C" Value="21" />
+
+								<!-- Next Offset + 4 Byte = 38 -->
 							</Union>
 
 						</Parameters>
@@ -199,6 +213,16 @@
 							<!-- Beschattungsunterbrechung Maximaler Elevation -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+42%_R-%TT%%CC%%PPP+42%01" RefId="%AID%_UP-%TT%%CC%%PPP+42%" />
 
+							<!-- Raumtemperatur Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+43%_R-%TT%%CC%%PPP+43%01" RefId="%AID%_UP-%TT%%CC%%PPP+43%" />
+							<!-- Heizung Aktiv -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+44%_R-%TT%%CC%%PPP+44%01" RefId="%AID%_UP-%TT%%CC%%PPP+44%" />
+
+							<!-- Heizung Maximum Stellwert -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+45%_R-%TT%%CC%%PPP+45%01" RefId="%AID%_UP-%TT%%CC%%PPP+45%" />
+
+							<!-- Raumtemperartur Minimum -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+46%_R-%TT%%CC%%PPP+46%01" RefId="%AID%_UP-%TT%%CC%%PPP+46%" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -215,7 +239,6 @@
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+4%" Number="%K%En+4%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeShading%Pn%ShadingBreakLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
-
 						</ComObjectTable>
 						<ComObjectRefs>
 
@@ -229,7 +252,6 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_O-%TT%%CC%%PPP+3%" Text="%C%: Beschattungsmodus %Pn Beschattungsunterbrechung Sperre" FunctionText="{{0:-}} Beschattungsmodus %Pn Beschattungsunterbrechung Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" RefId="%AID%_O-%TT%%CC%%PPP+4%" Text="%C%: Beschattungsmodus %Pn Beschattungsunterbrechung Sperre Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn Beschattungsunterbrechung Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-
 
 						</ComObjectRefs>
 					</Static>
@@ -329,6 +351,9 @@
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Temperaturgrenzen" UIHint="Headline" />
 															<!-- Temperatur Eingang-->
 															<choose ParamRefId="%AID%_UP-%TT%00001_R-%TT%0000101">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Temperatur zu verwenden, muss 'Temperatur' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />														
+																</when>
 																<when test="1">
 
 																	<!-- Temperatur Aktiv -->
@@ -344,6 +369,10 @@
 
 															<!-- Temperatur Prognose Eingang-->
 															<choose ParamRefId="%AID%_UP-%TT%00002_R-%TT%0000201">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Temperatur Prognose zu verwenden, muss 'Temperatur Prognose' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />														
+																</when>
+							
 																<when test="1">
 
 																	<!-- Temperaturprognose Aktiv -->
@@ -363,6 +392,9 @@
 
 															<!-- Helligkeit Eingang-->
 															<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Helligkeit zu verwenden, muss 'Helligkeit' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />														
+																</when>
 																<when test="1">
 																	<!-- Helligkeit Aktiv -->
 																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01" />
@@ -378,6 +410,9 @@
 															</choose>
 															<!-- UVI Eingang-->
 															<choose ParamRefId="%AID%_UP-%TT%00004_R-%TT%0000401">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um den UV-Index zu verwenden, muss 'UV-Index' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />														
+																</when>
 																<when test="1">
 
 																	<!-- UV-Index Aktiv -->
@@ -391,12 +426,16 @@
 																</when>
 															</choose>
 
+														
 
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wetter" UIHint="Headline" />
 
 															<!-- Regen Eingang-->
 															<choose ParamRefId="%AID%_UP-%TT%00005_R-%TT%0000501">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um den Regen zu verwenden, muss 'Regen' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />														
+																</when>
 																<when test="1">
 																	<!-- Regen Aktiv -->
 																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+29%_R-%TT%%CC%%PPP+29%01" />
@@ -404,9 +443,60 @@
 															</choose>
 															<!-- Wolken Eingang-->
 															<choose ParamRefId="%AID%_UP-%TT%00006_R-%TT%0000601">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um den Wolken zu verwenden, muss 'Wolen' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />														
+																</when>
 																<when test="1">
 																	<!-- Maximale Wolken -->
 																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+30%_R-%TT%%CC%%PPP+30%01" />
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wohnraum" UIHint="Headline" />
+
+															<!-- Heizung Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Heizung zu verwenden, muss 'Heizung' unter 'Raumbezogene Messwert Eingänge' in den Kanaleinstellungen aktiviert werden" />														
+																</when>
+																<when test="1">
+																	<!-- Heizung Stellwert % Eingang-->
+
+																	<!-- Heizung Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+44%_R-%TT%%CC%%PPP+44%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+44%_R-%TT%%CC%%PPP+44%01">																		<!-- Nicht deaktiviert -->
+																		<when test="1">
+																			<!-- Heizung Maximum Stellwert -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+45%_R-%TT%%CC%%PPP+45%01" />
+																		</when>
+																	</choose>
+																</when>
+																<when test="2">
+																	<!-- Heizung Anforderung Eingang-->
+
+																	<!-- Heizung Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+44%_R-%TT%%CC%%PPP+44%01" />
+
+
+																</when>
+															</choose>
+
+															<!-- Raumtemperatur Eingang-->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
+																<when test="0">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Raumtemperatur zu verwenden, muss 'Raumtemperatur' unter 'Raumbezogene Messwert Eingänge' in den Kanaleinstellungen aktiviert werden" />														
+																</when>
+																<when test="1">
+
+																	<!-- Raumtemperatur Aktiv -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+43%_R-%TT%%CC%%PPP+43%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+43%_R-%TT%%CC%%PPP+43%01">																		<!-- Nicht deaktiviert -->
+																		<when test="1">
+																			<!-- Raumtemperatur Minimum -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+46%_R-%TT%%CC%%PPP+46%01" />
+																		</when>
+																	</choose>
 																</when>
 															</choose>
 

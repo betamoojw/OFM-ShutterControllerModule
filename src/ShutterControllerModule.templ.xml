@@ -8,13 +8,13 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="67" increment="29" />
+						<op:param name="%ParamOffset%" value="17" increment="38" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" increment="100" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="23" increment="5" />
+						<op:param name="%En%" value="25" increment="5" />
 					</op:part>
 
 					<Static>
@@ -23,11 +23,12 @@
 							<!-- Kanal Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-							<Union SizeInBit="64">
+							<Union SizeInBit="112">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
 								<Parameter Id="%AID%_UP-%TT%%CC%001" Offset="0" BitOffset="0" Name="Channel%C%Type" ParameterType="%AID%_PT-ShutterType" Text="Geräteart" Value="0" />
+
 								<!-- Kanal Deaktivieren -->
 								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="Channel%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
 								<!-- Ersten Manuellen Fahrbefehl startet Beschattung wenn erlaubt -->
@@ -36,37 +37,51 @@
 								<!-- Nacht Modus -->
 								<Parameter Id="%AID%_UP-%TT%%CC%004" Offset="1" BitOffset="2" Name="Channel%C%ModeNight" ParameterType="%AID%_PT-OnOffYesNo" Text="Nachtmodus" Value="0" />
 
+								<!-- Raumtemperatur-->
+								<Parameter Id="%AID%_UP-%TT%%CC%014" Offset="1" BitOffset="3" Name="Channel%C%RoomTemperature" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
+										
+								<!-- 4 Bit free -->
 
-								<!-- Von Uhrzeit aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="1" BitOffset="3" Name="Channel%C%ModeNightFromTimeActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Ab Uhrzeit" Value="0" />
+								<!-- Nacht Modus von -->
+								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="Channel%C%NightModeStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Start Auslöser" Value="3" />
 
-								<!-- Von Uhrzeit aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="1" BitOffset="4" Name="Channel%C%ModeNightToTimeActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Bis Uhrzeit" Value="0" />
-
-								<!-- Höhenwinkel Grad vor/nach Sonnenaufgang aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%011" Offset="1" BitOffset="5" Name="Channel%C%ModeNightSunRise" ParameterType="%AID%_PT-SunRiseSet" Text="Sonnenaufgang" Value="0" />
-
-								<!-- 2 Bit free -->
-
-								<!-- Höhenwinkel Grad vor/nach Sonnenuntergang aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%007" Offset="1" BitOffset="4" Name="Channel%C%ModeNightSunSet" ParameterType="%AID%_PT-SunRiseSet" Text="Sonnenuntergang" Value="0" />
+								<!-- 4 Bit free -->
 
 								<!-- Von Uhrzeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="2" BitOffset="0" Name="Channel%C%ModeNightFromTime" ParameterType="%AID%_PT-ActivationTime" Text="Ab" Value="1320" />
+								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="4" BitOffset="0" Name="Channel%C%ModeNightFromTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="1320" />
+
+								<!-- vor / bei / nach -->
+								<Parameter Id="%AID%_UP-%TT%%CC%007" Offset="6" BitOffset="0" Name="Channel%C%ModeNightSunSet" ParameterType="%AID%_PT-SunSet" Text="Sonne" Value="1" />
+
+								<!-- 4 Bit free -->
 
 								<!-- Höhenwinkel Grad nach Sonnenuntergang -->
-								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="4" BitOffset="0" Name="Channel%C%ModeNightSunSetElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="7" BitOffset="0" Name="Channel%C%ModeNightSunSetElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
 
+								<!-- Nacht Modus bis -->
+								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="Channel%C%NightModeEndBehavior" ParameterType="%AID%_PT-NightModeEndBehavior" Text="Ende Auslöser" Value="2" />
+
+								<!-- 4 Bit free -->
 
 								<!-- Bis Uhrzeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%010" Offset="5" BitOffset="0" Name="Channel%C%ModeNightToTime" ParameterType="%AID%_PT-ActivationTime" Text="Bis" Value="420" />
+								<Parameter Id="%AID%_UP-%TT%%CC%010" Offset="9" BitOffset="0" Name="Channel%C%ModeNightToTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="420" />
+
+								<!-- vor / bei / nach -->
+								<Parameter Id="%AID%_UP-%TT%%CC%011" Offset="11" BitOffset="0" Name="Channel%C%ModeNightSunRise" ParameterType="%AID%_PT-SunRise" Text="Sonne" Value="1" />
+
+								<!-- 4 Bit free -->
 
 								<!-- Höhenwinkel Grad nach Sonnenaufgang -->
-								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="7" BitOffset="0" Name="Channel%C%ModeNightSunRiseElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="12" BitOffset="0" Name="Channel%C%ModeNightSunRiseElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
+
+								<!-- Heizungs Anforderung-->
+								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="Channel%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heinzung" Value="0" />
+								<!-- 6 Bit free -->
+							
 							</Union>
 
 							<Union SizeInBit="24">
-								<Memory CodeSegment="%AID%_RS-04-00000" Offset="64" BitOffset="0" />
+								<Memory CodeSegment="%AID%_RS-04-00000" Offset="14" BitOffset="0" />
 								<!-- Fenster offen Mode -->
 								<Parameter Id="%AID%_UP-%TT%%CC%070" Offset="0" BitOffset="0" Name="Channel%C%ModeWindowOpen" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus" Value="0" />
 
@@ -86,7 +101,7 @@
 							</Union>
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
-							<!-- Offset: 67 -->
+							<!-- Offset: 17 -->
 							<op:usePart name="ModeShading" xpath="//Parameters/*" />
 
 						</Parameters>
@@ -107,27 +122,34 @@
 							<ParameterRef Id="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_UP-%TT%%CC%004" />
 
 
-							<!-- Von Uhrzeit aktiv -->
+							<!-- Nachtmodus von -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_UP-%TT%%CC%005" />
 							<!-- Von Uhrzeit -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_UP-%TT%%CC%006" />
 
-							<!-- Höhenwinkel Grad vor/nach Sonnenuntergang aktiv -->
+							<!-- vor / bei / nach -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_UP-%TT%%CC%007" />
+
 							<!-- Höhenwinkel Grad nach Sonnenuntergang -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_UP-%TT%%CC%008" />
 
 
-							<!-- Von Uhrzeit aktiv -->
+							<!-- Nachtmodus bis -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_UP-%TT%%CC%009" />
 							<!-- Bis Uhrzeit -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_UP-%TT%%CC%010" />
 
-							<!-- Höhenwinkel Grad vor/nach Sonnenaufgang aktiv -->
+							<!-- vor / bei / nach -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_UP-%TT%%CC%011" />
 
 							<!-- Höhenwinkel Grad nach Sonnenaufgang -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
+
+							<!-- Heizung Eingang -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
+
+							<!-- Raumtemperatur Eingang -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_UP-%TT%%CC%014" />
 
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
@@ -207,9 +229,15 @@
 							<!-- Modus Nacht Sperre Rückmeldung -->
 							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
+							<!-- Heizung -->
+							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Raumtemperatur -->
+							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="CH%C%RoomTemperature" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+
+		
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Id starting with 100 -->
-							<!-- Number starting with 23 -->
+							<!-- Number starting with 25 -->
 							<op:usePart name="ModeShading" xpath="//ComObjectTable/*" />
 
 						</ComObjectTable>
@@ -266,7 +294,15 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="%C%: Nachtmodus Sperre Aktiv" FunctionText="{{0:-}} Nachtmodus Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-
+					
+							<!-- Heizung Stellwert % Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Heizungsanforderung Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02302" RefId="%AID%_O-%TT%%CC%023" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+						
+							<!-- Raumtemperatur Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+			
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
 					</Static>
@@ -333,6 +369,8 @@
 														<!-- Kanal Deaktivieren -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
 
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
+
 														<!-- Nacht Modus -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
 
@@ -346,6 +384,30 @@
 
 														<!-- Ersten Manuellen Fahrbefehl startet Beschattung wenn zulässig -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
+
+														<!-- Heizung Eingang -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
+															<when test="1">
+																<!-- Heizung Stellwert % Eingang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
+															</when>
+															<when test="2">
+																<!-- Heizungsanforderung Eingang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02302" />
+															</when>
+														</choose>
+
+														<!-- Raumtemperatur Eingang -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
+															<when test="1">
+																<!-- Raumtemperatur Eingang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
+															</when>
+														</choose>
 
 													</when>
 												</choose>
@@ -374,41 +436,41 @@
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht" UIHint="Headline" />
 
-																<!-- Von Uhrzeit aktiv -->
+																<!-- Nachtmodus von -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501">
-																	<when test="1">
+																	<when test="0 2 3">
 																		<!-- Von Uhrzeit -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" />
+																	</when>
+																	<when test="1 2 3">
+																		<!-- vor / bei / nach -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701">
+																			<when test="0 2">
+																				<!-- Höhenwinkel Grad nachSonnenuntergang -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" />
+																			</when>
+																		</choose>
 																	</when>
 																</choose>
-
-																<!-- Sonnenuntergang aktiv -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701">
-																	<when test="1 3">
-																		<!-- Höhenwinkel Grad nach
-																		Sonnenuntergang -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" />
-																	</when>
-																</choose>
-
-																<!-- Von Uhrzeit aktiv -->
+	
+																<!-- Nachtmodus bis -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901">
-																	<when test="1">
+																	<when test="0 2 3">
 																		<!-- Bis Uhrzeit -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
 																	</when>
-																</choose>
-
-																<!-- Sonnenaufgang aktiv -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">
-																	<when test="1 3">
-																		<!-- Höhenwinkel Grad nach
-																		Sonnenaufgang -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" />
+																	<when test="1 2 3">
+																		<!-- vor / bei / nach -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">
+																			<when test="0 2">
+																				<!-- Höhenwinkel Grad nach Sonnenaufgang -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" />
+																			</when>
+																		</choose>
 																	</when>
 																</choose>
 

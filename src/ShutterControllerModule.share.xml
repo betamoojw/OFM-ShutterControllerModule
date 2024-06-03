@@ -21,8 +21,11 @@
 							<ParameterType Id="%AID%_PT-Azimut" Name="Azimut">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="20" maxInclusive="340" />
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-AzimutBreak" Name="AzimutBreak">
+								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="360" />
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-Elevation" Name="Elevation">
-								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="2" maxInclusive="90" />
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="90" />
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-TemperaturLimit" Name="TemperaturLimit">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="40" />
@@ -54,14 +57,22 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-SunRiseSet" Name="SunRiseSet">
-								<TypeRestriction Base="Value" SizeInBit="8">
-									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
-									<Enumeration Text="vor" Value="1" Id="%ENID%" />
-									<Enumeration Text="bei" Value="2" Id="%ENID%" />
-									<Enumeration Text="nach" Value="3" Id="%ENID%" />
+							<ParameterType Id="%AID%_PT-SunSet" Name="SunSet">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="vor Sonnenuntergang" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei Sonnenuntergang" Value="1" Id="%ENID%" />
+									<Enumeration Text="nach Sonnenuntergang" Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-SunRise" Name="SunRise">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="vor Sonnenaufgang" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei Sonnenaufgang" Value="1" Id="%ENID%" />
+									<Enumeration Text="nach Sonnenaufgang" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-ActivationTime" Name="ActivationTime">
 								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="1440" UIHint="Time_hhmm" />
 							</ParameterType>
@@ -119,13 +130,47 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-NightModeStartBehavior" Name="NightModeStartBehavior">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
+									<Enumeration Text="Sonne" Value="1" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="2" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-NightModeEndBehavior" Name="NightModeEndBehavior">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
+									<Enumeration Text="Sonne" Value="1" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="2" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-HeatingInput" Name="HeatingInput">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
+									<Enumeration Text="Heizungsanforderung (EIN/AUS)" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-RoomTemperaturMinimum" Name="RoomTemperaturMinimum">
+								<TypeFloat Encoding="IEEE-754 Single" minInclusive="10" maxInclusive="30" />
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-MaxHeatingValue" Name="MaxHeatingValue">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
+							</ParameterType>
+
 						</ParameterTypes>
 
 						<Parameters>
-							<Union SizeInBit="16">
+							<Union SizeInBit="24">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Anzahl der Kanäle -->
-								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="%N%" SuffixText=" von %N%" />
+								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="0" SuffixText=" von %N%" />
 
 								<!-- Temperatur Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00001" Offset="1" BitOffset="0" Name="HasTemperaturInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperatur" Value="1" />
@@ -137,7 +182,7 @@
 								<Parameter Id="%AID%_UP-%TT%00003" Offset="1" BitOffset="2" Name="HasBrightnessInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeit" Value="1" />
 
 								<!-- UVI Eingang-->
-								<Parameter Id="%AID%_UP-%TT%00004" Offset="1" BitOffset="3" Name="HasUVIInput" ParameterType="%AID%_PT-OnOffYesNo" Text="UVI" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%00004" Offset="1" BitOffset="3" Name="HasUVIInput" ParameterType="%AID%_PT-OnOffYesNo" Text="UV-Index" Value="0" />
 
 								<!-- Regen Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00005" Offset="1" BitOffset="4" Name="HasRainInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Regen" Value="0" />
@@ -169,7 +214,6 @@
 							<!-- Wolken Eingang-->
 							<ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000601" RefId="%AID%_UP-%TT%00006" />
 
-
 						</ParameterRefs>
 						<ComObjectTable>
 							<!-- Beschattung täglich aktivieren -->
@@ -188,6 +232,7 @@
 							<ComObject Number="6" Id="%AID%_O-%TT%00006" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="RainInput" Text="Regen Eingang" FunctionText="Regen Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Wolken Eingang -->
 							<ComObject Number="7" Id="%AID%_O-%TT%00007" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CloudsInput" Text="Wolken Eingang" FunctionText="Wolken Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+					
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->
@@ -202,12 +247,11 @@
 							<ComObjectRef Id="%AID%_O-%TT%00004_R-%TT%0000401" RefId="%AID%_O-%TT%00004" />
 							<!-- UVI Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00005_R-%TT%0000501" RefId="%AID%_O-%TT%00005" />
-
 							<!-- Regen Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00006_R-%TT%0000601" RefId="%AID%_O-%TT%00006" />
 							<!-- Wolken Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" />
-						</ComObjectRefs>
+					</ComObjectRefs>
 					</Static>
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
@@ -220,6 +264,10 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 								<!-- Verfügbare Kanäle -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden."  />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen."  />
+								
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Verfügbare Messwert Eingänge" UIHint="Headline" />
@@ -280,6 +328,7 @@
 										<ComObjectRefRef RefId="%AID%_O-%TT%00007_R-%TT%0000701" />
 									</when>
 								</choose>
+
 							</ParameterBlock>
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Docu%TT%" Text="Dokumentation" Icon="information-outline" HelpContext="SHC-Documentation">
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
@@ -308,4 +357,3 @@
 		</Manufacturer>
 	</ManufacturerData>
 </KNX>
-

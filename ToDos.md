@@ -1,3 +1,3 @@
-- Default für Channel Aktiv
-- Messwerteingänge über Parameter ein- ausschaltbar
-- Heinzung Eingänge
+- Default für Channel Aktiv Input
+- Neigung der Fassade
+- Schattenkantennachführung
