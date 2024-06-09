@@ -433,17 +433,16 @@
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCModeNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
 
-
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht" UIHint="Headline" />
 
 																<!-- Nachtmodus von -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501">
-																	<when test="0 2 3">
+																	<when test="1 3 4">
 																		<!-- Von Uhrzeit -->
 																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" />
 																	</when>
-																	<when test="1 2 3">
+																	<when test="2 3 4">
 																		<!-- vor / bei / nach -->
 																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701">
@@ -458,11 +457,11 @@
 																<!-- Nachtmodus bis -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901">
-																	<when test="0 2 3">
+																	<when test="1 3 4">
 																		<!-- Bis Uhrzeit -->
 																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
 																	</when>
-																	<when test="1 2 3">
+																	<when test="2 3 4">
 																		<!-- vor / bei / nach -->
 																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">

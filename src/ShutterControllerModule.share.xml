@@ -132,19 +132,21 @@
 
 							<ParameterType Id="%AID%_PT-NightModeStartBehavior" Name="NightModeStartBehavior">
 								<TypeRestriction Base="Value" SizeInBit="4">
-									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
-									<Enumeration Text="Sonne" Value="1" Id="%ENID%" />
-									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="2" Id="%ENID%" />
-									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="3" Id="%ENID%" />
+									<Enumeration Text="Kein Autstart" Value="0" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit" Value="1" Id="%ENID%" />
+									<Enumeration Text="Sonne" Value="2" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="3" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 
 							<ParameterType Id="%AID%_PT-NightModeEndBehavior" Name="NightModeEndBehavior">
 								<TypeRestriction Base="Value" SizeInBit="4">
-									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
-									<Enumeration Text="Sonne" Value="1" Id="%ENID%" />
-									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="2" Id="%ENID%" />
-									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="3" Id="%ENID%" />
+									<Enumeration Text="Kein Autoende" Value="0" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit" Value="1" Id="%ENID%" />
+									<Enumeration Text="Sonne" Value="2" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="3" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 
