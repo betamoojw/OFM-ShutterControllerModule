@@ -8,7 +8,7 @@ void ModeManual::initGroupObjects()
 {
 
 }
-bool ModeManual::allowed()
+bool ModeManual::allowed(unsigned long currentMillis)
 {
     return false;
 }

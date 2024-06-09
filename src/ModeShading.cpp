@@ -2,9 +2,11 @@
 #include "Timer.h"
 #include "Helios.h"
 
+#ifdef SHC_KoCHModeShading2Active
 // redefine SHC_ParamCalcIndex to add offset for Shading Mode 2
 #undef SHC_ParamCalcIndex
 #define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_ChannelModeShading2 - SHC_ChannelModeShading1) * (_index - 1))
+#endif
 
 ModeShading::ModeShading(uint8_t index)
     : _index(index)
@@ -20,10 +22,56 @@ const char *ModeShading::name()
 void ModeShading::initGroupObjects()
 {
     getKo(SHC_KoCHModeShading1LockActive).value(false, DPT_Switch);
+    _recalcMeasurmentValues = true;
 }
-bool ModeShading::allowed()
+bool ModeShading::allowed(unsigned long currentMillis)
 {
-    Timer& timer = Timer::instance();
+    bool noWaitTimeCheck = false;
+    if (allowedByTimeAndSun() != _lastTimeAndSunFrameAllowed)
+    {
+        _lastTimeAndSunFrameAllowed = !_lastTimeAndSunFrameAllowed; 
+        noWaitTimeCheck = true;
+    }
+    if (!_lastTimeAndSunFrameAllowed)
+        return false;
+
+    if (_recalcMeasurmentValues)
+    {
+        _recalcMeasurmentValues = false;
+        auto allowedByMeasurementValues = allowedByMeasurmentValues();
+        if (_allowedByMeasurementValues != allowedByMeasurementValues)
+        {
+            if (noWaitTimeCheck)
+                _waitTimeAfterMeasurmentValueChange = 0;
+            else
+                _waitTimeAfterMeasurmentValueChange = currentMillis;
+            _allowedByMeasurementValues = allowedByMeasurementValues;
+        }
+    }
+    if (_waitTimeAfterMeasurmentValueChange != 0)
+    {
+        bool lastState = !_allowedByMeasurementValues;
+        if (lastState)
+        {
+            // Check end wait time
+            auto waitTimeInMinutes = (unsigned long) ParamSHC_ChannelModeShading1WaitTimeStart;
+            if (currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
+                return lastState; 
+        }
+        else
+        {
+            // Check start wait time
+            auto waitTimeInMinutes = (unsigned long) ParamSHC_ChannelModeShading1WaitTimeEnd;
+            if (currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
+                return lastState; 
+        }
+    }
+    return _allowedByMeasurementValues;
+}
+
+bool ModeShading::allowedByTimeAndSun()
+{
+    Timer &timer = Timer::instance();
     if (timer.isTimerValid())
         return false;
     tm time;
@@ -71,13 +119,15 @@ bool ModeShading::allowed()
             (helios.dElevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && helios.dElevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax))
             return false;
         break;
-        case 4:
+    case 4:
         if ((helios.dAzimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && helios.dAzimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax) ||
             (helios.dElevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && helios.dElevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax))
             return false;
         break;
     }
-
+}
+bool ModeShading::allowedByMeasurmentValues()
+{
     if (!getKo(SHC_KoCHModeShading1LockActive).value(DPT_Switch))
         return false;
     if (ParamSHC_HasTemperaturInput && ParamSHC_ChannelModeShading1TemperatureActive && (float)KoSHC_TemperatureInput.value(DPT_Value_Temp) < ParamSHC_ChannelModeShading1TemperatureMin)
@@ -96,9 +146,7 @@ bool ModeShading::allowed()
     return false;
 }
 
-#ifdef SHC_KoCHModeShading2Active
-#error SHC_KoCHModeShading2Active is now defined in knxprod.h - preliminary code must be removed
-#else
+#ifndef SHC_KoCHModeShading2Active
 #define SHC_KoCHModeShading2Active SHC_KoCHModeShading1Active
 #endif
 
@@ -114,17 +162,22 @@ GroupObject &ModeShading::getKo(uint8_t ko)
 
 void ModeShading::start()
 {
+    _active = true;
 }
 void ModeShading::stop()
 {
+    _active = false;
+    _waitTimeAfterMeasurmentValueChange = 0;
 }
 void ModeShading::processInputKo(GroupObject &ko)
 {
+    // channel ko
     switch (ko.asap() - koChannelOffset())
     {
     case SHC_KoCHModeShading1Lock:
         getKo(SHC_KoCHModeShading1LockActive).value(ko.value(DPT_Switch), DPT_Switch);
-        _recalcAllowed = true;
+        _recalcMeasurmentValues = true;
         break;
     }
+   _recalcMeasurmentValues = true;
 }

@@ -14,7 +14,7 @@ public:
     void setup(uint8_t _channelIndex);
     virtual const char* name() = 0;
     virtual void initGroupObjects() = 0;
-    virtual bool allowed() = 0;
+    virtual bool allowed(unsigned long currentMillis) = 0;
     virtual void start() = 0;
     virtual void stop() = 0;
     virtual void processInputKo(GroupObject &ko) = 0;

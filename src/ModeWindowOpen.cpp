@@ -8,7 +8,7 @@ void ModeWindowOpen::initGroupObjects()
 {
 
 }
-bool ModeWindowOpen::allowed()
+bool ModeWindowOpen::allowed(unsigned long currentMillis)
 {
     return false;
 }

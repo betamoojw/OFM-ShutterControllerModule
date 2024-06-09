@@ -8,7 +8,7 @@ void ModeNight::initGroupObjects()
 {
 
 }
-bool ModeNight::allowed()
+bool ModeNight::allowed(unsigned long currentMillis)
 {
     return false;
 }
