@@ -1,6 +1,7 @@
 #pragma once
 #include "OpenKNX.h"
 #include "ModeBase.h"
+#include "CallContext.h"
 
 class ShutterControllerChannel : public OpenKNX::Channel
 {
@@ -18,5 +19,5 @@ class ShutterControllerChannel : public OpenKNX::Channel
         uint8_t getCancelCallTime();
         void processInputKo(GroupObject &ko) override;
         bool processCommand(const std::string cmd, bool diagnoseKo);
-        void loop() override;
+        void execute(const CallContext& callContext);
 };

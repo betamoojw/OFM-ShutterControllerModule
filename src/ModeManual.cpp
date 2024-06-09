@@ -8,9 +8,9 @@ void ModeManual::initGroupObjects()
 {
 
 }
-bool ModeManual::allowed(unsigned long currentMillis)
+bool ModeManual::allowed(const CallContext& callContext)
 {
-    return false;
+    return true;
 }
 void ModeManual::start()
 {

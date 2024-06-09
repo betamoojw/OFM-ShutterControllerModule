@@ -72,15 +72,12 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     return false;
 }
 
-void ShutterControllerChannel::loop()
+void ShutterControllerChannel::execute(const CallContext& callContext)
 {
-    auto now = millis();
-    if (now == 0)
-        now = 1; // 0 is used as special marker, so 1 is used instead.
     ModeBase *nextMode = _manualMode;
     for (auto mode : _modes)
     {
-        if (mode->allowed(now))
+        if (mode->allowed(callContext))
             nextMode = mode;
     }
     if (_currentMode != nextMode)

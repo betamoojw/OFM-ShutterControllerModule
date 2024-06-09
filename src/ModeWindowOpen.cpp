@@ -8,7 +8,7 @@ void ModeWindowOpen::initGroupObjects()
 {
 
 }
-bool ModeWindowOpen::allowed(unsigned long currentMillis)
+bool ModeWindowOpen::allowed(const CallContext& callContext)
 {
     return false;
 }

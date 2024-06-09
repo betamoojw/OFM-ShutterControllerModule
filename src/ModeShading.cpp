@@ -24,10 +24,10 @@ void ModeShading::initGroupObjects()
     getKo(SHC_KoCHModeShading1LockActive).value(false, DPT_Switch);
     _recalcMeasurmentValues = true;
 }
-bool ModeShading::allowed(unsigned long currentMillis)
+bool ModeShading::allowed(const CallContext& callContext)
 {
     bool noWaitTimeCheck = false;
-    if (allowedByTimeAndSun() != _lastTimeAndSunFrameAllowed)
+    if (allowedByTimeAndSun(callContext) != _lastTimeAndSunFrameAllowed)
     {
         _lastTimeAndSunFrameAllowed = !_lastTimeAndSunFrameAllowed; 
         noWaitTimeCheck = true;
@@ -44,7 +44,7 @@ bool ModeShading::allowed(unsigned long currentMillis)
             if (noWaitTimeCheck)
                 _waitTimeAfterMeasurmentValueChange = 0;
             else
-                _waitTimeAfterMeasurmentValueChange = currentMillis;
+                _waitTimeAfterMeasurmentValueChange = callContext.currentMillis;
             _allowedByMeasurementValues = allowedByMeasurementValues;
         }
     }
@@ -55,47 +55,28 @@ bool ModeShading::allowed(unsigned long currentMillis)
         {
             // Check end wait time
             auto waitTimeInMinutes = (unsigned long) ParamSHC_ChannelModeShading1WaitTimeStart;
-            if (currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
+            if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
                 return lastState; 
         }
         else
         {
             // Check start wait time
             auto waitTimeInMinutes = (unsigned long) ParamSHC_ChannelModeShading1WaitTimeEnd;
-            if (currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
+            if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
                 return lastState; 
         }
     }
     return _allowedByMeasurementValues;
 }
 
-bool ModeShading::allowedByTimeAndSun()
+bool ModeShading::allowedByTimeAndSun(const CallContext& callContext)
 {
-    Timer &timer = Timer::instance();
-    if (timer.isTimerValid())
+    if (!getKo(SHC_KoCHModeShading1LockActive).value(DPT_Switch))
         return false;
-    tm time;
-    time.tm_isdst = -1;
-    time.tm_year = timer.getYear();
-    time.tm_mon = timer.getMonth();
-    time.tm_mday = timer.getDay();
-    time.tm_hour = timer.getHour();
-    time.tm_min = timer.getMinute();
-    time.tm_sec = timer.getSecond();
 
-    std::time_t timet = std::mktime(&time);
-    timet -= ParamBASE_Timezone * 60 * 60;
-    if (timer.IsSummertime())
-        timet += 60 * 60;
-
-    tm utc;
-    localtime_r(&timet, &utc);
-    Helios helios;
-    helios.calcSunPos(utc.tm_year, utc.tm_mon, utc.tm_mday, utc.tm_hour, utc.tm_min, utc.tm_sec, ParamBASE_Longitude, ParamBASE_Latitude);
-
-    if (helios.dAzimuth < ParamSHC_ChannelModeShading1AzimutMin || helios.dAzimuth > ParamSHC_ChannelModeShading1AzimutMax)
+    if (callContext.azimuth < ParamSHC_ChannelModeShading1AzimutMin || callContext.azimuth > ParamSHC_ChannelModeShading1AzimutMax)
         return false;
-    if (helios.dElevation < ParamSHC_ChannelModeShading1ElevationMin || helios.dElevation > ParamSHC_ChannelModeShading1ElevationMax)
+    if (callContext.elevation < ParamSHC_ChannelModeShading1ElevationMin || callContext.elevation > ParamSHC_ChannelModeShading1ElevationMax)
         return false;
 
     auto shadingBreak = ParamSHC_ChannelModeShading1ShadingBreak;
@@ -109,27 +90,26 @@ bool ModeShading::allowedByTimeAndSun()
     switch (shadingBreak)
     {
     case 1:
-        if (helios.dAzimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && helios.dAzimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax)
+        if (callContext.azimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && callContext.azimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax)
             return false;
     case 2:
-        if (helios.dElevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && helios.dElevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax)
+        if (callContext.elevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && callContext.elevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax)
             return false;
     case 3:
-        if ((helios.dAzimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && helios.dAzimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax) &&
-            (helios.dElevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && helios.dElevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax))
+        if ((callContext.azimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && callContext.azimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax) &&
+            (callContext.elevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && callContext.elevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax))
             return false;
         break;
     case 4:
-        if ((helios.dAzimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && helios.dAzimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax) ||
-            (helios.dElevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && helios.dElevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax))
+        if ((callContext.azimuth >= ParamSHC_ChannelModeShading1ShadingBreakAzimutMin && callContext.azimuth <= ParamSHC_ChannelModeShading1ShadingBreakAzimutMax) ||
+            (callContext.elevation >= ParamSHC_ChannelModeShading1ShadingBreakElevationMin && callContext.elevation <= ParamSHC_ChannelModeShading1ShadingBreakElevationMax))
             return false;
         break;
     }
+    return true;
 }
 bool ModeShading::allowedByMeasurmentValues()
 {
-    if (!getKo(SHC_KoCHModeShading1LockActive).value(DPT_Switch))
-        return false;
     if (ParamSHC_HasTemperaturInput && ParamSHC_ChannelModeShading1TemperatureActive && (float)KoSHC_TemperatureInput.value(DPT_Value_Temp) < ParamSHC_ChannelModeShading1TemperatureMin)
         return false;
     if (ParamSHC_HasTemperaturForecastInput && ParamSHC_ChannelModeShading1TemperatureForecast && (float)KoSHC_TemperatureForecastInput.value(DPT_Value_Temp) < ParamSHC_ChannelModeShading1TemperatureForecastMin)

@@ -13,13 +13,13 @@ class ModeShading : public ModeBase
     int16_t koChannelOffset();
     GroupObject& getKo(uint8_t ko);
     bool allowedByMeasurmentValues();
-    bool allowedByTimeAndSun();
+    bool allowedByTimeAndSun(const CallContext& callContext);
 public:
     ModeShading(uint8_t index);
 protected:
     const char *name() override;
     void initGroupObjects() override;
-    bool allowed(unsigned long currentMillis) override;
+    bool allowed(const CallContext& callContext) override;
     void start() override;
     void stop() override;
     void processInputKo(GroupObject &ko) override;
