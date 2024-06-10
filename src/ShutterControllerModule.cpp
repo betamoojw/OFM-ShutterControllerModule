@@ -30,6 +30,8 @@ void ShutterControllerModule::showInformations()
 
 void ShutterControllerModule::showHelp()
 {
+    openknx.console.printHelpLine("sc", "Show Shutter Controller Information");
+    openknx.console.printHelpLine("sc<CC>", "Show information of channel CC. i.e. sc01");  
 }
 
 void ShutterControllerModule::loop()
@@ -45,10 +47,14 @@ void ShutterControllerModule::loop()
     if (_callContext.timeAndSunValid && _lastMinute != timer.getMinute())
     {
         _lastMinute = timer.getMinute();
-         _callContext.minuteChanged = true;
+         
+        _callContext.minuteChanged = true;
         _callContext.hour = timer.getHour();
         _callContext.minute = _lastMinute;
-        _callContext.minuteOfDay = _lastMinute + 60 *  _callContext.hour;
+        _callContext.minuteOfDay = _callContext.minute + 60 *  _callContext.hour;
+        _callContext.year = timer.getYear();
+        _callContext.month = timer.getMonth();
+        _callContext.day = timer.getDay();
 
         tm time;
         time.tm_isdst = -1;
@@ -66,6 +72,15 @@ void ShutterControllerModule::loop()
 
         tm utc;
         localtime_r(&timet, &utc);
+
+        _callContext.UtcYear = utc.tm_year;
+        _callContext.UtcMonth = utc.tm_mon;
+        _callContext.UtcDay = utc.tm_mday;
+        _callContext.UtcHour = utc.tm_hour;
+        _callContext.UtcMinute = utc.tm_min;
+        _callContext.UtcMinuteOfDay = _callContext.UtcMinute + 60 *  _callContext.UtcHour;
+      
+
         Helios helios;
         helios.calcSunPos(utc.tm_year, utc.tm_mon, utc.tm_mday, utc.tm_hour, utc.tm_min, utc.tm_sec, ParamBASE_Longitude, ParamBASE_Latitude);
         _callContext.azimuth = helios.dAzimuth;
@@ -82,13 +97,51 @@ void ShutterControllerModule::loop()
 
 bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnoseKo)
 {
-    if (cmd == "CalcSun")
+    if (cmd == "sc")
     {
-
-        Helios helios;
-        helios.calcSunPos(2024, 5, 28, 20, 00, 00, 15.40664048676037, 47.071934457426266);
-        logInfoP("Sun azimut: %d elevation: %d", helios.dAzimuth, helios.dElevation);
+        if (!_callContext.timeAndSunValid)
+            logInfoP("No valid time");
+        else
+        {
+            logInfoP("UTC: %04d-%02d-%02d %02d-%02d", (int) _callContext.UtcYear, (int) _callContext.UtcMonth, (int) _callContext.UtcDay, (int) _callContext.UtcHour, (int) _callContext.UtcMinute);
+            logInfoP("Local Time: %04d-%02d-%02d %02d-%02d", (int) _callContext.year, (int) _callContext.month, (int) _callContext.day, (int) _callContext.hour, (int) _callContext.minute);
+            logInfoP("Aizmut: %.1f°", (double) _callContext.azimuth);
+            logInfoP("Elevation: %.1f°", (double) _callContext.elevation);
+        }
         return true;
+    }
+    else if (cmd.rfind("sc", 0) == 0)
+    {
+        auto channelString = cmd.substr(2);
+        if (channelString.length() > 0)
+        {
+            auto pos = channelString.find_first_of(' ');
+            std::string channelNumberString;
+            std::string channelCmd;
+            if (pos > 0 && pos != std::string::npos)
+            {
+                channelNumberString = channelString.substr(0, pos);
+                channelCmd = channelString.substr(pos + 1);
+            }
+            else
+            {
+                channelNumberString = channelString;
+                channelCmd = "";
+            }
+            auto channelNumber = atoi(channelNumberString.c_str());
+            if (channelNumber < 1 || channelNumber > getNumberOfChannels())
+            {
+                logInfoP("Channel %d not found", channelNumber);
+                return true;
+            }
+            auto channel = (ShutterControllerChannel*) getChannel(channelNumber - 1);
+            if (channel == nullptr)
+            {
+                logInfoP("Channel not %d activated", channel);
+                return true;
+            }
+            return channel->processCommand(channelCmd, diagnoseKo);
+        }
     }
     return false;
 }

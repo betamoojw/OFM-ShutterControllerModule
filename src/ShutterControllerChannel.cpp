@@ -66,7 +66,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         if (_currentMode == nullptr)
             logInfoP("Not started");
         else
-            logInfoP(_currentMode->name());
+            logInfoP("Mode: %s", _currentMode->name());
         return true;
     }
     return false;
