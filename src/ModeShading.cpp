@@ -22,6 +22,7 @@ const char *ModeShading::name()
 void ModeShading::initGroupObjects()
 {
     getKo(SHC_KoCHModeShading1LockActive).value(false, DPT_Switch);
+    getKo(SHC_KoCHModeShading1Active).value(false, DPT_Switch);
     _recalcMeasurmentValues = true;
 }
 bool ModeShading::allowed(const CallContext& callContext)
@@ -143,11 +144,13 @@ GroupObject &ModeShading::getKo(uint8_t ko)
 void ModeShading::start()
 {
     _active = true;
+    getKo(SHC_KoCHModeShading1Active).value(true, DPT_Switch);
 }
 void ModeShading::stop()
 {
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;
+    getKo(SHC_KoCHModeShading1Active).value(false, DPT_Switch);
 }
 void ModeShading::processInputKo(GroupObject &ko)
 {
