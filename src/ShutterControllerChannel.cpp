@@ -26,24 +26,26 @@ void ShutterControllerChannel::setup()
         _modes.push_back(new ModeWindowOpen());
     if (ParamSHC_ChannelModeNight)
         _modes.push_back(new ModeNight());
-    if (ParamSHC_ChannelModeShading1)
-        _modes.push_back(new ModeShading(1));
-// up to 4 instances can be defined in ShutterControllerModule.templ.xml
-#ifdef ParamSHC_ChannelModeShading2
-    if (ParamSHC_ChannelModeShading2)
-        _modes.push_back(new ModeShading(2));
-#endif
-#ifdef ParamSHC_ChannelModeShading3
-    if (ParamSHC_ChannelModeShading3)
-        _modes.push_back(new ModeShading(3));
+
+// up to 4 instances can be defined of ModeShading in ShutterControllerModule.templ.xml
+#ifdef ParamSHC_ChannelModeShading5
+#error Not more the 4 instances allowed for ModeShading in ShutterControllerModule.templ.xml
 #endif
 #ifdef ParamSHC_ChannelModeShading4
     if (ParamSHC_ChannelModeShading4)
         _modes.push_back(new ModeShading(4));
 #endif
-#ifdef ParamSHC_ChannelModeShading5
-#error Not more the 4 instances allowed for ModeShading in ShutterControllerModule.templ.xml
+#ifdef ParamSHC_ChannelModeShading3
+    if (ParamSHC_ChannelModeShading3)
+        _modes.push_back(new ModeShading(3));
 #endif
+#ifdef ParamSHC_ChannelModeShading2
+    if (ParamSHC_ChannelModeShading2)
+        _modes.push_back(new ModeShading(2));
+#endif
+    if (ParamSHC_ChannelModeShading1)
+        _modes.push_back(new ModeShading(1));
+
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
@@ -74,16 +76,32 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
 
 void ShutterControllerChannel::execute(const CallContext& callContext)
 {
-    ModeBase *nextMode = _manualMode;
+    ModeBase *nextMode = nullptr;
     for (auto mode : _modes)
     {
         if (mode->allowed(callContext))
-            nextMode = mode;
+        {
+            if (nextMode == nullptr)
+            {
+                nextMode = mode;
+                // Do not break because allowed should be called for all modes
+                // because it is a replacment for the loop function
+            }
+        }
     }
+    if (nextMode == nullptr)
+        nextMode = _manualMode; // Manual mode can be activated event it's allowed function returns false.
     if (_currentMode != nextMode)
     {
         if (_currentMode != nullptr)
+        {
+            logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
             _currentMode->stop();
+        }
+        else
+        {
+            logDebugP("Start mode %s", nextMode->name());
+        }
         _currentMode = nextMode;
         _currentMode->start();
     }

@@ -10,7 +10,7 @@ void ModeManual::initGroupObjects()
 }
 bool ModeManual::allowed(const CallContext& callContext)
 {
-    return true;
+    return false;
 }
 void ModeManual::start()
 {
