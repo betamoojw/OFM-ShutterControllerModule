@@ -55,26 +55,29 @@ void ShutterControllerModule::loop()
         _callContext.year = timer.getYear();
         _callContext.month = timer.getMonth();
         _callContext.day = timer.getDay();
+        _callContext.summerTime = timer.IsSummertime();
 
-        tm time;
-        time.tm_isdst = -1;
-        time.tm_year = timer.getYear();
-        time.tm_mon = timer.getMonth();
-        time.tm_mday = timer.getDay();
-        time.tm_hour = timer.getHour();
-        time.tm_min = timer.getMinute();
-        time.tm_sec = timer.getSecond();
+        tm localTime = {0};
+        localTime.tm_isdst = -1;
+        localTime.tm_year = timer.getYear() - 1900;
+        localTime.tm_mon = timer.getMonth() - 1;
+        localTime.tm_mday = timer.getDay();
+        localTime.tm_hour = timer.getHour();
+        localTime.tm_min = timer.getMinute();
+        localTime.tm_sec = timer.getSecond();
      
-        std::time_t timet = std::mktime(&time);
+        std::time_t timet = std::mktime(&localTime);
         timet -= ParamBASE_Timezone * 60 * 60;
         if (timer.IsSummertime())
-            timet += 60 * 60;
+        {
+            timet -= 60 * 60;
+        }
 
         tm utc;
         localtime_r(&timet, &utc);
 
-        _callContext.UtcYear = utc.tm_year;
-        _callContext.UtcMonth = utc.tm_mon;
+        _callContext.UtcYear = utc.tm_year + 1900;
+        _callContext.UtcMonth = utc.tm_mon + 1;
         _callContext.UtcDay = utc.tm_mday;
         _callContext.UtcHour = utc.tm_hour;
         _callContext.UtcMinute = utc.tm_min;
@@ -104,7 +107,8 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         else
         {
             logInfoP("UTC: %04d-%02d-%02d %02d-%02d", (int) _callContext.UtcYear, (int) _callContext.UtcMonth, (int) _callContext.UtcDay, (int) _callContext.UtcHour, (int) _callContext.UtcMinute);
-            logInfoP("Local Time: %04d-%02d-%02d %02d-%02d", (int) _callContext.year, (int) _callContext.month, (int) _callContext.day, (int) _callContext.hour, (int) _callContext.minute);
+            
+            logInfoP("Local Time: %04d-%02d-%02d %02d-%02d %s", (int) _callContext.year, (int) _callContext.month, (int) _callContext.day, (int) _callContext.hour, (int) _callContext.minute, _callContext.summerTime ? "Summertime" : "Wintertime");
             logInfoP("Aizmut: %.1f°", (double) _callContext.azimuth);
             logInfoP("Elevation: %.1f°", (double) _callContext.elevation);
         }

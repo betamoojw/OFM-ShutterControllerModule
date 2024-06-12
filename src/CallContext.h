@@ -8,13 +8,14 @@ class CallContext
         unsigned long currentMillis;
         bool timeAndSunValid;
         bool minuteChanged;
-        uint8_t year;
+        bool summerTime;
+        uint16_t year;
         uint8_t month;
         uint8_t day;
         uint8_t hour;
         uint8_t minute;
         uint16_t minuteOfDay;
-        uint8_t UtcYear;
+        uint16_t UtcYear;
         uint8_t UtcMonth;
         uint8_t UtcDay;
         uint8_t UtcHour;
