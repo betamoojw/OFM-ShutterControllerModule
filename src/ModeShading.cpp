@@ -1,6 +1,5 @@
 #include "ModeShading.h"
 #include "Timer.h"
-#include "Helios.h"
 
 #ifdef SHC_KoCHModeShading2Active
 // redefine SHC_ParamCalcIndex to add offset for Shading Mode 2

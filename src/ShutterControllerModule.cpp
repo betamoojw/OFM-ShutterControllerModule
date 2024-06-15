@@ -1,7 +1,9 @@
 #include "ShutterControllerModule.h"
 #include "ShutterControllerChannel.h"
-#include "Helios.h"
+#include "SunPos.h"
 #include "Timer.h"
+
+void sunpos2(cTime udtTime, cLocation udtLocation, cSunCoordinates *udtSunCoordinates);
 
 ShutterControllerModule::ShutterControllerModule()
     : ShutterControllerChannelOwnerModule()
@@ -83,11 +85,26 @@ void ShutterControllerModule::loop()
         _callContext.UtcMinute = utc.tm_min;
         _callContext.UtcMinuteOfDay = _callContext.UtcMinute + 60 *  _callContext.UtcHour;
       
+        double latitude = ParamBASE_Latitude;
+        double longitude = ParamBASE_Longitude;
+  
+        cTime cTime = {0};
+        cTime.iYear = _callContext.UtcYear;
+        cTime.iMonth = _callContext.UtcMonth;
+        cTime.iDay = _callContext.UtcDay;
+        cTime.dHours = _callContext.UtcHour;
+        cTime.dMinutes = _callContext.UtcMinute;
+        cTime.dSeconds = 0;
 
-        Helios helios;
-        helios.calcSunPos(utc.tm_year, utc.tm_mon, utc.tm_mday, utc.tm_hour, utc.tm_min, utc.tm_sec, ParamBASE_Longitude, ParamBASE_Latitude);
-        _callContext.azimuth = helios.dAzimuth;
-        _callContext.elevation = helios.dElevation;
+        cLocation cLocation = {0};
+        cLocation.dLatitude = latitude;
+        cLocation.dLongitude = longitude;
+
+        cSunCoordinates cSunCoordinates;
+        sunpos(cTime, cLocation, &cSunCoordinates);
+        _callContext.azimuth = cSunCoordinates.dAzimuth;
+        _callContext.elevation = 90 - cSunCoordinates.dZenithAngle;
+
     }
     auto numberOfChannels = getNumberOfChannels();
     for (uint8_t i = 0; i < numberOfChannels; i++)
@@ -102,15 +119,16 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
 {
     if (cmd == "sc")
     {
+        logInfoP("Used cordinates: %f %f", (double) ParamBASE_Latitude, (double) ParamBASE_Longitude);
+  
         if (!_callContext.timeAndSunValid)
             logInfoP("No valid time");
         else
         {
-            logInfoP("UTC: %04d-%02d-%02d %02d-%02d", (int) _callContext.UtcYear, (int) _callContext.UtcMonth, (int) _callContext.UtcDay, (int) _callContext.UtcHour, (int) _callContext.UtcMinute);
-            
             logInfoP("Local Time: %04d-%02d-%02d %02d-%02d %s", (int) _callContext.year, (int) _callContext.month, (int) _callContext.day, (int) _callContext.hour, (int) _callContext.minute, _callContext.summerTime ? "Summertime" : "Wintertime");
-            logInfoP("Aizmut: %.1f°", (double) _callContext.azimuth);
-            logInfoP("Elevation: %.1f°", (double) _callContext.elevation);
+            logInfoP("UTC: %04d-%02d-%02d %02d-%02d", (int) _callContext.UtcYear, (int) _callContext.UtcMonth, (int) _callContext.UtcDay, (int) _callContext.UtcHour, (int) _callContext.UtcMinute);          
+            logInfoP("Aizmut: %.2f°", (double) _callContext.azimuth);
+            logInfoP("Elevation: %.2f°", (double) _callContext.elevation);
         }
         return true;
     }
