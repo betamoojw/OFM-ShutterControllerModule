@@ -12,7 +12,7 @@ class ModeShading : public ModeBase
     bool _lastTimeAndSunFrameAllowed = false;
     int16_t koChannelOffset();
     GroupObject& getKo(uint8_t ko);
-    bool allowedByMeasurmentValues();
+    bool allowedByMeasurmentValues(bool diagnosticLog);
     bool allowedByTimeAndSun(const CallContext& callContext);
 public:
     ModeShading(uint8_t index);

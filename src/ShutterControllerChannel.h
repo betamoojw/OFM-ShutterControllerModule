@@ -18,6 +18,6 @@ class ShutterControllerChannel : public OpenKNX::Channel
         const char* getPhoneNumber();
         uint8_t getCancelCallTime();
         void processInputKo(GroupObject &ko) override;
-        bool processCommand(const std::string cmd, bool diagnoseKo);
+        bool processCommand(const std::string cmd, bool diagnoseKo, bool& diagnosticLogLoopRequest);
         void execute(const CallContext& callContext);
 };

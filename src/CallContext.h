@@ -5,6 +5,7 @@
 class CallContext
 {
     public:
+        bool diagnosticLog;
         unsigned long currentMillis;
         bool timeAndSunValid;
         bool minuteChanged;

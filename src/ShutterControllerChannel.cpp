@@ -45,7 +45,6 @@ void ShutterControllerChannel::setup()
 #endif
     if (ParamSHC_ChannelModeShading1)
         _modes.push_back(new ModeShading(1));
-
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
@@ -61,26 +60,34 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     }
 }
 
-bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagnoseKo)
+bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagnoseKo, bool &diagnosticLogLoopRequest)
 {
     if (cmd == "")
     {
         if (_currentMode == nullptr)
             logInfoP("Not started");
         else
-            logInfoP("Mode: %s", _currentMode->name());
+        {
+            logInfoP("Current active mode: %s", _currentMode->name());
+            diagnosticLogLoopRequest = true;
+        }
         return true;
     }
     return false;
 }
 
-void ShutterControllerChannel::execute(const CallContext& callContext)
+void ShutterControllerChannel::execute(const CallContext &callContext)
 {
     ModeBase *nextMode = nullptr;
     for (auto mode : _modes)
     {
+        if (callContext.diagnosticLog)
+            logInfoP("Mode %s", mode->name());
+        logIndentUp();
         if (mode->allowed(callContext))
         {
+            if (callContext.diagnosticLog)
+                logInfoP("-> allowed");
             if (nextMode == nullptr)
             {
                 nextMode = mode;
@@ -88,6 +95,12 @@ void ShutterControllerChannel::execute(const CallContext& callContext)
                 // because it is a replacment for the loop function
             }
         }
+        else
+        {
+            if (callContext.diagnosticLog)
+                logInfoP("-> not allowed");
+        }
+        logIndentDown();
     }
     if (nextMode == nullptr)
         nextMode = _manualMode; // Manual mode can be activated event it's allowed function returns false.

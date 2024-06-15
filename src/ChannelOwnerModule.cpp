@@ -33,6 +33,7 @@ OpenKNX::Channel* ShutterControllerChannelOwnerModule::createChannel(uint8_t _ch
 
 void ShutterControllerChannelOwnerModule::setupChannels(uint8_t numberOfChannels)
 {
+    _numberOfChannels = numberOfChannels;
     if (_numberOfChannels > 0)
     {
         _pChannels = new OpenKNX::Channel*[numberOfChannels]();

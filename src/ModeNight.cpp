@@ -121,7 +121,11 @@ bool ModeNight::allowed(const CallContext &callContext)
             _allowed = false;
     }
     if (KoSHC_CHModeNightLockActive.value(DPT_Switch))
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Lock KO active");
         return false;
+    }
     return _allowed;
 }
 
