@@ -123,10 +123,10 @@
 							<ParameterType Id="%AID%_PT-ShadingBreak" Name="MaxCloudLimit">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
-									<Enumeration Text="Azimut" Value="1" Id="%ENID%" />
+									<Enumeration Text="Himmelsrichtung" Value="1" Id="%ENID%" />
 									<Enumeration Text="Höhenwinkel" Value="2" Id="%ENID%" />
-									<Enumeration Text="Azimut UND Höhenwinkel" Value="3" Id="%ENID%" />
-									<Enumeration Text="Azimut ODER Höhenwinkel" Value="4" Id="%ENID%" />
+									<Enumeration Text="Himmelsrichtung UND Höhenwinkel" Value="3" Id="%ENID%" />
+									<Enumeration Text="Himmelsrichtung ODER Höhenwinkel" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 
