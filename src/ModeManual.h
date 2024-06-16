@@ -3,6 +3,8 @@
 
 class ModeManual : public ModeBase
 {
+    bool _recalcAllowed = true;
+    bool _allowed = false;
 protected:
     const char *name() override;
     void initGroupObjects() override;
