@@ -11,9 +11,21 @@ void ModeWindowOpen::initGroupObjects()
 }
 bool ModeWindowOpen::allowed(const CallContext& callContext)
 {
-    if (_recalcAllowed)
+    if (_recalcAllowed || callContext.diagnosticLog)
     {
-        _allowed = KoSHC_CHWindow.value(DPT_OpenClose) && KoSHC_CHWindowOpenLockActive.value(DPT_Switch);
+        _allowed = true;
+        if (!KoSHC_CHWindow.value(DPT_OpenClose))
+        {
+            _allowed = false;
+            if (callContext.diagnosticLog)
+                logInfoP("Window closed");
+        }
+        if (KoSHC_CHWindowOpenLockActive.value(DPT_Switch))
+        {
+            _allowed = false;
+            if (callContext.diagnosticLog)
+                logInfoP("Lock KO active");
+        }
     }
     return _allowed;
 }
