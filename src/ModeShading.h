@@ -10,6 +10,7 @@ class ModeShading : public ModeBase
     bool _active = false;
     unsigned long _waitTimeAfterMeasurmentValueChange = 0;
     bool _lastTimeAndSunFrameAllowed = false;
+    bool _needWaitTime = false;
     int16_t koChannelOffset();
     GroupObject& getKo(uint8_t ko);
     bool allowedByMeasurmentValues(bool diagnosticLog);

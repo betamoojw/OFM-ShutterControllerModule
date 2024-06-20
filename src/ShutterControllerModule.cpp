@@ -39,7 +39,7 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc u<value>", "Set UV index. i.e. sb u1.5");
     openknx.console.printHelpLine("sc r<0|1>",   "Set rain. i.e. sb r1");
     openknx.console.printHelpLine("sc c<value>", "Set clouds. i.e. sb c20");
-    openknx.console.printHelpLine("sc d<YY-MM-DD hh:mm>", "Set date/time . i.e. sd c2023-04-15 17:33");
+    openknx.console.printHelpLine("sc d<YYMMDDhh2mm>", "Set date/time . i.e. d d2304151733");
     openknx.console.printHelpLine("sc<CC>", "Show information of channel CC. i.e. sc01");
 }
 
@@ -143,47 +143,58 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
     {
         // module commands
         auto moduleCommand = cmd.substr(3);
-        if (moduleCommand.rfind("st") == 0)
+        if (moduleCommand.rfind("t") == 0)
         {
             logInfoP("Set temperature");
-            KoSHC_TemperatureInput.valueNoSend(std::stof(moduleCommand.substr(2)), DPT_Value_Temp);
+            KoSHC_TemperatureInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
+            processInputKo(KoSHC_TemperatureInput);
             return true;
         }
-        else if (moduleCommand.rfind("sf") == 0)
+        else if (moduleCommand.rfind("f") == 0)
         {
             logInfoP("Set temperature forecast");
-            KoSHC_TemperatureForecastInput.valueNoSend(std::stof(moduleCommand.substr(2)), DPT_Value_Temp);
+            KoSHC_TemperatureForecastInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
+            processInputKo(KoSHC_TemperatureForecastInput);
             return true;
         }
-        else if (moduleCommand.rfind("sb") == 0)
+        else if (moduleCommand.rfind("b") == 0)
         {
             logInfoP("Set brightness");
-            KoSHC_BrightnessInput.valueNoSend(std::stoi(moduleCommand.substr(2)), DPT_Value_Lux);
+            KoSHC_BrightnessInput.valueNoSend(std::stoi(moduleCommand.substr(1)), DPT_Value_Lux);
+            processInputKo(KoSHC_BrightnessInput);
             return true;
         }
-        else if (moduleCommand.rfind("su") == 0)
+        else if (moduleCommand.rfind("u") == 0)
         {
             logInfoP("Set UVI");
-            KoSHC_UVIInput.valueNoSend(std::stof(moduleCommand.substr(2)), DPT_DecimalFactor);
+            KoSHC_UVIInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_DecimalFactor);
+            processInputKo(KoSHC_UVIInput);
             return true;
         }
-        else if (moduleCommand.rfind("sr") == 0)
+        else if (moduleCommand.rfind("r") == 0)
         {
             logInfoP("Set rain");
-            KoSHC_UVIInput.valueNoSend(std::stoi(moduleCommand.substr(2)), DPT_Switch);
+            KoSHC_RainInput.valueNoSend(std::stoi(moduleCommand.substr(1)), DPT_Switch);
+            processInputKo(KoSHC_RainInput);
             return true;
         }
-        else if (moduleCommand.rfind("sc") == 0)
+        else if (moduleCommand.rfind("c") == 0)
         {
             logInfoP("Set clouds");
-            KoSHC_UVIInput.valueNoSend(std::stoi(moduleCommand.substr(2)), DPT_Switch);
+            KoSHC_CloudsInput.valueNoSend(std::stoi(moduleCommand.substr(1)), DPT_Scaling);
+            processInputKo(KoSHC_CloudsInput);
             return true;
         }
-        else if (moduleCommand.rfind("sd") == 0)
+        else if (moduleCommand.rfind("d") == 0)
         {
             logInfoP("Set date/time");
             tm tm = {0};
-             strptime(moduleCommand.substr(2).c_str(), "%Y-%m-%d %H:%M", &tm);
+            tm.tm_year = stoi(moduleCommand.substr(1, 2)) + 2000;
+            tm.tm_mon = stoi(moduleCommand.substr(3, 2));
+            tm.tm_mday = stoi(moduleCommand.substr(5, 2));
+            tm.tm_hour = stoi(moduleCommand.substr(7, 2));
+            tm.tm_min = stoi(moduleCommand.substr(9, 2));          
+            logInfoP("%04d-%02d-%02d %02d:%02d", (int) tm.tm_year, (int) tm.tm_mon, (int) tm.tm_mday, (int) tm.tm_hour, (int) tm.tm_min);
             Timer::instance().setDateTimeFromBus(&tm);
             return true;
         }

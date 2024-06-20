@@ -14,7 +14,7 @@
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" increment="100" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="25" increment="5" />
+						<op:param name="%En%" value="26" increment="5" />
 					</op:part>
 
 					<Static>
@@ -180,59 +180,62 @@
 							<ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ShutterPercentOutput" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Prozent Lamelle Ausgang -->
 							<ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ShutterSlatOutput" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<!-- Steuerung Stopp/Schritt Ausgang -->
+							<ComObject Id="%AID%_O-%TT%%CC%002" Number="%K2%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="CH%C%ShutterStopStepOutput" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
 
 							<!-- Beschattung Einschalten -->
-							<ComObject Id="%AID%_O-%TT%%CC%002" Number="%K2%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingControl" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingControl" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Beschattung Einschalten Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingControlActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingControlActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Beschattung Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Sperre Kanal -->
-							<ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%Lock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%Lock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Sperre Kanal Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Aktiver Modus -->
-							<ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%" ObjectSize="1 Byte" DatapointType="DPST-17-1" Name="CH%C%ActiveMode" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%" ObjectSize="1 Byte" DatapointType="DPST-17-1" Name="CH%C%ActiveMode" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 
 
 							<!-- Modus Handbetrieb Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ManuelActiv" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ManuelActiv" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Handbetrieb Sperre -->
-							<ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ManualLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ManualLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Handbetrieb Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ManualLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ManualLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
-							<ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="CH%C%ManualUpDown" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="CH%C%ManualUpDown" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Stopp/Schritt -->
-							<ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="CH%C%ManualStepStop" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="CH%C%ManualStepStop" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Prozent -->
-							<ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ManualPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ManualPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
-							<ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Fenster Offen Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenModeActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenModeActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Fenster Offen -->
-							<ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" ObjectSize="1 Bit" DatapointType="DPST-1-3" Name="CH%C%Window" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%017" Number="%K17%" ObjectSize="1 Bit" DatapointType="DPST-1-3" Name="CH%C%Window" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Fenster Offen Sperre -->
-							<ComObject Id="%AID%_O-%TT%%CC%017" Number="%K17%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%018" Number="%K18%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Fenster Offen Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%018" Number="%K18%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 
 							<!-- Modus Nacht Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht -->
-							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNight" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNight" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre -->
-							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Heizung -->
-							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Raumtemperatur -->
-							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="CH%C%RoomTemperature" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K25%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="CH%C%RoomTemperature" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 
 		
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
@@ -247,61 +250,63 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" Text="%C%: Jalousie Prozent Ausgang" FunctionText="{{0:-}} Jalousie Prozent setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Ausgang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_O-%TT%%CC%001" Text="%C%: Lamelle Prozent Ausgang" FunctionText="{{0:-}} Lamelle Prozent setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Steuerung Stopp/Schritt Ausgang -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="%C%: Stopp/Schritt Ausgang" FunctionText="{{0:-}} Stopp/Schritt setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Beschattung Einschalten -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="%C%: Beschattung Einschalten" FunctionText="{{0:-}} Beschattung Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_O-%TT%%CC%003" Text="%C%: Beschattung Einschalten" FunctionText="{{0:-}} Beschattung Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Beschattung Einschalten Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_O-%TT%%CC%003" Text="%C%: Beschattung Eingeschalten" FunctionText="{{0:-}} Beschattung Eingeschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="%C%: Beschattung Eingeschalten" FunctionText="{{0:-}} Beschattung Eingeschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Beschattung Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="%C%: Beschattung Aktiv" FunctionText="{{0:-}} Beschattung Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="%C%: Beschattung Aktiv" FunctionText="{{0:-}} Beschattung Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Sperre Kanal -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="%C%: Sperre" FunctionText="{{0:-}} Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_O-%TT%%CC%006" Text="%C%: Sperre" FunctionText="{{0:-}} Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Sperre Kanal Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_O-%TT%%CC%006" Text="%C%: Sperre Aktiv" FunctionText="{{0:-}} Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_O-%TT%%CC%007" Text="%C%: Sperre Aktiv" FunctionText="{{0:-}} Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Aktiver Modus -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_O-%TT%%CC%007" Text="%C%: Aktiver Modus" FunctionText="{{0:-}} Aktiver Modus" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_O-%TT%%CC%008" Text="%C%: Aktiver Modus" FunctionText="{{0:-}} Aktiver Modus" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Modus Handbetrieb Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_O-%TT%%CC%008" Text="%C%: Handbetrieb Aktiv" FunctionText="{{0:-}} Handbetrieb Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_O-%TT%%CC%009" Text="%C%: Handbetrieb Aktiv" FunctionText="{{0:-}} Handbetrieb Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_O-%TT%%CC%009" Text="%C%: Handbetrieb Sperre" FunctionText="{{0:-}} Handbetrieb Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_O-%TT%%CC%010" Text="%C%: Handbetrieb Sperre" FunctionText="{{0:-}} Handbetrieb Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_O-%TT%%CC%010" Text="%C%: Handbetrieb Sperre Aktiv" FunctionText="{{0:-}} Handbetrieb Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_O-%TT%%CC%011" Text="%C%: Handbetrieb Sperre Aktiv" FunctionText="{{0:-}} Handbetrieb Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_O-%TT%%CC%011" Text="%C%: Handbetrieb Auf/Ab" FunctionText="{{0:-}} Handbetrieb Auf/Ab" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="%C%: Handbetrieb Auf/Ab" FunctionText="{{0:-}} Handbetrieb Auf/Ab" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Stopp/Schritt -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="%C%: Handbetrieb Stopp/Schritt" FunctionText="{{0:-}} Handbetrieb Stopp/Schritt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="%C%: Handbetrieb Stopp/Schritt" FunctionText="{{0:-}} Handbetrieb Stopp/Schritt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Prozent -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="%C%: Handbetrieb Prozent" FunctionText="{{0:-}} Handbetrieb Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_O-%TT%%CC%014" Text="%C%: Handbetrieb Prozent" FunctionText="{{0:-}} Handbetrieb Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_O-%TT%%CC%014" Text="%C%: Handbetrieb Lamelle Prozent" FunctionText="{{0:-}} Handbetrieb Lamelle Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_O-%TT%%CC%015" Text="%C%: Handbetrieb Lamelle Prozent" FunctionText="{{0:-}} Handbetrieb Lamelle Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Fenster Offen Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_O-%TT%%CC%015" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_O-%TT%%CC%016" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_O-%TT%%CC%016" Text="%C%: Fenster offen" FunctionText="{{0:-}} Fenster offen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_O-%TT%%CC%017" Text="%C%: Fenster offen" FunctionText="{{0:-}} Fenster offen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_O-%TT%%CC%017" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_O-%TT%%CC%018" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_O-%TT%%CC%018" Text="%C%: Fenster offen Sperre Aktive" FunctionText="{{0:-}} Fenster offen Sperre Aktive" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_O-%TT%%CC%019" Text="%C%: Fenster offen Sperre Aktive" FunctionText="{{0:-}} Fenster offen Sperre Aktive" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Modus Nacht Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_O-%TT%%CC%019" Text="%C%: Nachtmodus Aktiv" FunctionText="{{0:-}} Nachtmodus Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="%C%: Nachtmodus Aktiv" FunctionText="{{0:-}} Nachtmodus Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="%C%: Nachtmodus Einschalten" FunctionText="{{0:-}} Nachtmodus Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Nachtmodus Einschalten" FunctionText="{{0:-}} Nachtmodus Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="%C%: Nachtmodus Sperre Aktiv" FunctionText="{{0:-}} Nachtmodus Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" Text="%C%: Nachtmodus Sperre Aktiv" FunctionText="{{0:-}} Nachtmodus Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 					
 							<!-- Heizung Stellwert % Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Heizungsanforderung Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02302" RefId="%AID%_O-%TT%%CC%023" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 						
 							<!-- Raumtemperatur Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 			
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
@@ -335,35 +340,38 @@
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
 															</when>
 														</choose>
+														<!-- Schritt/Stopp Ausgang -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
+
 
 														<!-- Beschattung Einschalten -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
-														<!-- Beschattung Einschalten Rückmeldung -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" />
-														<!-- Beschattung Aktiv -->
+														<!-- Beschattung Einschalten Rückmeldung -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
-														<!-- Sperre Kanal -->
+														<!-- Beschattung Aktiv -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
-														<!-- Sperre Kanal Aktiv -->
+														<!-- Sperre Kanal -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
-														<!-- Aktiver Modus -->
+														<!-- Sperre Kanal Aktiv -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
+														<!-- Aktiver Modus -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
 
 
 														<!-- Modus Handbetrieb Aktiv -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
-														<!-- Modus Handbetrieb Sperre -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
-														<!-- Modus Handbetrieb Sperre Rückmeldung -->
+														<!-- Modus Handbetrieb Sperre -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
-														<!-- Handbetrieb Steuerung Auf/Ab -->
+														<!-- Modus Handbetrieb Sperre Rückmeldung -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
-														<!-- Handbetrieb Steuerung Stopp/Schritt -->
+														<!-- Handbetrieb Steuerung Auf/Ab -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
-														<!-- Handbetrieb Steuerung Prozent -->
+														<!-- Handbetrieb Steuerung Stopp/Schritt -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
-														<!-- Handbetrieb Steuerung Lamelle Prozent -->
+														<!-- Handbetrieb Steuerung Prozent -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
+														<!-- Handbetrieb Steuerung Lamelle Prozent -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
 
 
 														<!-- Kanal Deaktivieren -->
@@ -392,11 +400,11 @@
 														<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
 															<when test="1">
 																<!-- Heizung Stellwert % Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
 															</when>
 															<when test="2">
 																<!-- Heizungsanforderung Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02302" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
 															</when>
 														</choose>
 
@@ -405,7 +413,7 @@
 														<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
 															<when test="1">
 																<!-- Raumtemperatur Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
 															</when>
 														</choose>
 
@@ -423,13 +431,13 @@
 															<!-- Nacht Modus Aktiv -->
 
 															<!-- Modus Nacht Aktiv -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
-															<!-- Modus Nacht -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
-															<!-- Modus Nacht Sperre -->
+															<!-- Modus Nacht -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
-															<!-- Modus Nacht Sperre Rückmeldung -->
+															<!-- Modus Nacht Sperre -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
+															<!-- Modus Nacht Sperre Rückmeldung -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCModeNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
 
@@ -486,13 +494,13 @@
 															<!-- Fenster offen Mode aktiv -->
 
 															<!-- Fenster Offen Aktiv -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
-															<!-- Fenster Offen -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
-															<!-- Fenster Offen Sperre -->
+															<!-- Fenster Offen -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
-															<!-- Fenster Offen Sperre Rückmeldung -->
+															<!-- Fenster Offen Sperre -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" />
+															<!-- Fenster Offen Sperre Rückmeldung -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
 
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCWindowOpenMode" Text="Fenster offen Modus" Icon="window-open-variant" HelpContext="Empty">

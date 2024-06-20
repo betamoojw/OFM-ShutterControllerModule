@@ -26,11 +26,12 @@ void ModeShading::initGroupObjects()
 }
 bool ModeShading::allowed(const CallContext &callContext)
 {
-    bool noWaitTimeCheck = false;
-    if (allowedByTimeAndSun(callContext) != _lastTimeAndSunFrameAllowed)
+    bool allowedTimeAndSun = allowedByTimeAndSun(callContext);
+    if (allowedTimeAndSun != _lastTimeAndSunFrameAllowed)
     {
-        _lastTimeAndSunFrameAllowed = !_lastTimeAndSunFrameAllowed;
-        noWaitTimeCheck = true;
+        logDebugP("Allowed by time and sun: %d", (int) allowedTimeAndSun);
+        _lastTimeAndSunFrameAllowed = allowedTimeAndSun;
+        _needWaitTime = false;
     }
     if (!callContext.diagnosticLog && !_lastTimeAndSunFrameAllowed)
         return false;
@@ -41,11 +42,14 @@ bool ModeShading::allowed(const CallContext &callContext)
         auto allowedByMeasurementValues = allowedByMeasurmentValues(callContext.diagnosticLog);
         if (_allowedByMeasurementValues != allowedByMeasurementValues)
         {
-            if (noWaitTimeCheck)
-                _waitTimeAfterMeasurmentValueChange = 0;
-            else
+            logDebugP("Allowed by measurement values: %d", (int) allowedByMeasurementValues);
+            if (_needWaitTime)
                 _waitTimeAfterMeasurmentValueChange = callContext.currentMillis;
+            else
+                _waitTimeAfterMeasurmentValueChange = 0;
             _allowedByMeasurementValues = allowedByMeasurementValues;
+            if (allowedByMeasurementValues)
+                _needWaitTime = true;
         }
     }
     if (_waitTimeAfterMeasurmentValueChange != 0)
@@ -58,7 +62,7 @@ bool ModeShading::allowed(const CallContext &callContext)
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Wait time end not reached");
+                    logInfoP("Stop wait time %dms not reached: %dms", waitTimeInMinutes * 60000, (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange));
                 return lastState;
             }
         }
@@ -69,10 +73,11 @@ bool ModeShading::allowed(const CallContext &callContext)
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Wait time start not reached");
+                    logInfoP("Start wait time %dms not reached: %dms", waitTimeInMinutes * 60000, (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange));
                 return lastState;
             }
         }
+        _waitTimeAfterMeasurmentValueChange = 0;
     }
     return _allowedByMeasurementValues && _lastTimeAndSunFrameAllowed;
 }
@@ -206,11 +211,11 @@ bool ModeShading::allowedByMeasurmentValues(bool diagnosticLog)
         else
             return false;
     }
-    if (ParamSHC_HasCloudsInput && (uint8_t)KoSHC_CloudsInput.value(DPT_Percent_U8) > ParamSHC_ChannelModeShading1Clouds)
+    if (ParamSHC_HasCloudsInput && (uint8_t)KoSHC_CloudsInput.value(DPT_Scaling) > ParamSHC_ChannelModeShading1Clouds)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Clouds %d more than %d", (int)KoSHC_CloudsInput.value(DPT_Percent_U8), (int) ParamSHC_ChannelModeShading1Clouds);
+            logInfoP("Clouds %d more than %d", (int)KoSHC_CloudsInput.value(DPT_Scaling), (int) ParamSHC_ChannelModeShading1Clouds);
         else
             return false;
     }

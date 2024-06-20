@@ -29,6 +29,7 @@ In das Anwendungs XML muss das OFM-ShutterControlModule aufgenommen werden:
     <op:verify File="../lib/OFM-ShutterControllerModule/library.json" ModuleVersion="0" /> 
   </op:define>
 ```
+**Hinweis:** Das Module verwendet 7 Global KO's und weiters pro Kanal 35 KO's. Dies muss bei nachfolgenden Modulen bei KoOffset und KoSingleOffset entsprechend berücksichtigt werden. 
 
 In main.cpp muss das ShutterControlModule ebenfalls hinzugefügt werden:
 

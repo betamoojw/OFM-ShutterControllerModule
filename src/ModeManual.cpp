@@ -16,10 +16,16 @@ bool ModeManual::allowed(const CallContext &callContext)
         if (KoSHC_CHManualLockActive.value(DPT_Switch))
         {
             _allowed = false;
+            _waitTime = 0;
             if (callContext.diagnosticLog)
                 logInfoP("Lock KO active");
         }
     }
+    if (_waitTime == 0)
+        return false;
+    if (callContext.currentMillis - _waitTime < 10 * 60 * 1000)
+        return _allowed;
+    _waitTime = 0;
     return _allowed;
 }
 void ModeManual::start()

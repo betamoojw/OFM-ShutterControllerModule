@@ -3,13 +3,12 @@
 #include "ModeWindowOpen.h"
 #include "ModeNight.h"
 #include "ModeShading.h"
+#include "ModeIdle.h"
 
 ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
     : _modes()
 {
-    _channelIndex = channelIndex;
-    char buffer[10] = {0};
-    _name = itoa(channelIndex, buffer, 10);
+    _name = "SC";
 }
 
 const std::string ShutterControllerChannel::name()
@@ -45,6 +44,12 @@ void ShutterControllerChannel::setup()
 #endif
     if (ParamSHC_ChannelModeShading1)
         _modes.push_back(new ModeShading(1));
+
+    _modes.push_back(new ModeIdle());
+    for (auto mode : _modes)
+    {
+        mode->setup(_channelIndex);
+    }
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
@@ -102,8 +107,6 @@ void ShutterControllerChannel::execute(const CallContext &callContext)
         }
         logIndentDown();
     }
-    if (nextMode == nullptr)
-        nextMode = _manualMode; // Manual mode can be activated event it's allowed function returns false.
     if (_currentMode != nextMode)
     {
         if (_currentMode != nullptr)
