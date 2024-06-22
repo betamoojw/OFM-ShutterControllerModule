@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="20" increment="38" />
+						<op:param name="%ParamOffset%" value="19" increment="38" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -23,7 +23,7 @@
 							<!-- Kanal Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-							<Union SizeInBit="136">
+							<Union SizeInBit="124">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
@@ -32,15 +32,18 @@
 								<!-- Kanal Deaktivieren -->
 								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="Channel%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
 								<!-- Ersten Manuellen Fahrbefehl startet Beschattung wenn erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="Channel%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Fahrbefehl startet Beschattung wenn diese zulässig ist" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="Channel%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Fahrbefehl ignorieren wenn Beschattung aktiv" Value="0" />
 
 								<!-- Nacht Modus -->
 								<Parameter Id="%AID%_UP-%TT%%CC%004" Offset="1" BitOffset="2" Name="Channel%C%ModeNight" ParameterType="%AID%_PT-OnOffYesNo" Text="Nachtmodus" Value="0" />
 
 								<!-- Raumtemperatur-->
 								<Parameter Id="%AID%_UP-%TT%%CC%014" Offset="1" BitOffset="3" Name="Channel%C%RoomTemperature" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
-										
-								<!-- 4 Bit free -->
+
+								<!-- Fenster offen Modus in Nachtmodus erlaubt -->
+								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="Channel%C%WindowOpenInNightMode" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+
+								<!-- 3 Bit free -->
 
 								<!-- Nacht Modus von -->
 								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="Channel%C%NightModeStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Start Auslöser" Value="3" />
@@ -76,17 +79,20 @@
 
 								<!-- Heizungs Anforderung-->
 								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="Channel%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heinzung" Value="0" />
+
 								<!-- 6 Bit free -->
-							
+
 								<!-- Handbetrieb Auf/Ab Type-->
 								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="Channel%C%UpDownTypeForManualControl" ParameterType="%AID%_PT-UpDownTypeForManualControl" Text="Handbetrieb Auf/Ab an Aktor übergeben als" Value="0" />
 								<!-- Beschattungsunterbrechnung nach Handbetrieb -->
-								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="Channel%C%WaitTimeAfterManualUsageForShading" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen für" SuffixText="Minuten" Value="240" />
-								<!-- Next offset: 17-->
+								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="Channel%C%WaitTimeAfterManualUsageForShading" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
+
+								<!-- Next offset: 16-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%018 -->
 							</Union>
 
 							<Union SizeInBit="24">
-								<Memory CodeSegment="%AID%_RS-04-00000" Offset="17" BitOffset="0" />
+								<Memory CodeSegment="%AID%_RS-04-00000" Offset="16" BitOffset="0" />
 								<!-- Fenster offen Mode -->
 								<Parameter Id="%AID%_UP-%TT%%CC%070" Offset="0" BitOffset="0" Name="Channel%C%ModeWindowOpen" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus" Value="0" />
 
@@ -161,6 +167,8 @@
 							<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_UP-%TT%%CC%016" />
 
+							<!-- Fenster offen Modus in Nachtmodus erlaubt -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_UP-%TT%%CC%017" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Parameter Id starting with: 100 -->
@@ -181,7 +189,7 @@
 
 							<!-- Lammellenposition -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%074_R-%TT%%CC%07401" RefId="%AID%_UP-%TT%%CC%074" />
-							
+
 						</ParameterRefs>
 						<ComObjectTable>
 
@@ -199,7 +207,7 @@
 							<ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ShutterPercentInput" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Prozent Lamelle Eingang -->
 							<ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ShutterSlatInput" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
-						
+
 
 							<!-- Beschattung Einschalten -->
 							<ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ShadingControl" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
@@ -254,7 +262,7 @@
 							<!-- Raumtemperatur -->
 							<ComObject Id="%AID%_O-%TT%%CC%028" Number="%K28%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="CH%C%RoomTemperature" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 
-		
+
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Id starting with 100 -->
 							<!-- Number starting with 25 -->
@@ -325,15 +333,15 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_O-%TT%%CC%026" Text="%C%: Nachtmodus Sperre Aktiv" FunctionText="{{0:-}} Nachtmodus Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-					
+
 							<!-- Heizung Stellwert % Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_O-%TT%%CC%027" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Heizungsanforderung Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02702" RefId="%AID%_O-%TT%%CC%027" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-						
+
 							<!-- Raumtemperatur Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%028_R-%TT%%CC%02801" RefId="%AID%_O-%TT%%CC%028" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-			
+
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
 					</Static>
@@ -368,7 +376,7 @@
 														</choose>
 														<!-- Schritt/Stopp Ausgang -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" />
-														
+
 														<!-- Jalousie Prozent Eingang -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
 														<!-- Prozent Lamelle Eingang -->
@@ -421,8 +429,36 @@
 														<!-- Fenster offen Mode -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001" />
 
-														<!-- Ersten Manuellen Fahrbefehl startet Beschattung wenn zulässig -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
+
+														<!-- Handbetrieb Auf/Ab Type-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+															<when test="0">
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt lediglich die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
+															</when>
+															<when test="1">
+																<!-- Auf/Ab Ausgang verwenden -->
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
+
+																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+
+																<!-- Auf/Ab Ausgang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
+
+															</when>
+															<when test="2">
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
+
+																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+
+															</when>
+														</choose>
+														<!-- Beschattungsunterbrechnung nach Handbetrieb -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
 
@@ -456,25 +492,6 @@
 												<when test="&gt;0">
 													<!-- Gerätetype aktiviert -->
 
-													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCModeManual" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
-
-														<!-- Handbetrieb Auf/Ab Type-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
-															<when test="0"> 
-																<!-- Auf/Ab Ausgang verwenden -->
-								
-																<!-- Auf/Ab Ausgang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
-															</when>
-														</choose>
-														<!-- Beschattungsunterbrechnung nach Handbetrieb -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
-
-													</ParameterBlock>
-
 													<!-- Nacht Modus -->
 													<choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
 														<when test="1">
@@ -491,6 +508,9 @@
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCModeNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
 
+																<!-- Fenster offen Modus in Nachtmodus erlaubt -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" />
+															
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht" UIHint="Headline" />
 
 																<!-- Nachtmodus von -->
@@ -511,7 +531,7 @@
 																		</choose>
 																	</when>
 																</choose>
-	
+
 																<!-- Nachtmodus bis -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901">

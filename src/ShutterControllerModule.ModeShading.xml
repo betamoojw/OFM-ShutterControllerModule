@@ -8,7 +8,7 @@
 					<op:partParams name="ModeShading">
 						<!-- Only developer hints for declaration: -->
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="20" increment="38" />
+						<op:param name="%ParamOffset%" value="19" increment="38" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -116,6 +116,10 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+43%" Offset="32" BitOffset="0" Name="Channel%C%ModeShading%Pn%RoomTemperaturActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 								<!-- Heizung Aktiv -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="32" BitOffset="1" Name="Channel%C%ModeShading%Pn%HeatingActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Heizung" Value="0" />
+								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="1" BitOffset="2" Name="Channel%C%ModeShading%Pn%WindowOpenInShadowMode" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+
+								<!-- 5 Bits free -->
 
 								<!-- Heizung Stellwert -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+45%" Offset="33" BitOffset="0" Name="Channel%C%ModeShading%Pn%MaxHeatingValue" ParameterType="%AID%_PT-MaxHeatingValue" Text="Maximaler Heinzungsstellwert" SuffixText="%" Value="0" />
@@ -124,6 +128,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+46%" Offset="34" BitOffset="0" Name="Channel%C%ModeShading%Pn%RoomTemperaturMinimum" ParameterType="%AID%_PT-RoomTemperaturMinimum" Text="Minimale Raumtemperatur" SuffixText="°C" Value="21" />
 
 								<!-- Next Offset + 4 Byte = 38 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+47% -->
 							</Union>
 
 						</Parameters>
@@ -224,6 +229,9 @@
 							<!-- Raumtemperartur Minimum -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+46%_R-%TT%%CC%%PPP+46%01" RefId="%AID%_UP-%TT%%CC%%PPP+46%" />
 
+							<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" RefId="%AID%_UP-%TT%%CC%%PPP+47%" />
+
 						</ParameterRefs>
 						<ComObjectTable>
 
@@ -296,6 +304,9 @@
 														</choose>
 
 														<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="Empty">
+											
+															<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" />
 
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonnenposition" UIHint="Headline" />
 
