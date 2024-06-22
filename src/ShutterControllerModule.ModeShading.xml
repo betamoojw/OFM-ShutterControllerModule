@@ -8,13 +8,13 @@
 					<op:partParams name="ModeShading">
 						<!-- Only developer hints for declaration: -->
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="67" increment="38" />
+						<op:param name="%ParamOffset%" value="20" increment="38" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="23" />
+						<op:param name="%En%" value="29" />
 					</op:partParams>
 					<Static>
 						<Parameters>
@@ -63,7 +63,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+19%" Offset="10" BitOffset="0" Name="Channel%C%ModeShading%Pn%ElevationMax" ParameterType="%AID%_PT-Elevation" Text="bis" SuffixText="°" Value="90" />
 
 								<!-- Minimum Temperatur -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+21%" Offset="11" BitOffset="0" Name="Channel%C%ModeShading%Pn%TemperatureMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindesttemperatur" SuffixText="°C" Value="%Pn*3+15%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+21%" Offset="11" BitOffset="0" Name="Channel%C%ModeShading%Pn%TemperatureMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindesttemperatur" SuffixText="°C" Value="%Pn+15%" />
 
 								<!-- Minimum Forecast Temperatur -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+23%" Offset="12" BitOffset="0" Name="Channel%C%ModeShading%Pn%TemperatureForecastMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindestens prognostizierte Tageshöchsttemperatur" SuffixText="°C" Value="18" />

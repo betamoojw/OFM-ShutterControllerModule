@@ -2,6 +2,9 @@
 
 #include "Arduino.h"
 
+class ModeIdle;
+class ModeManual;
+
 class CallContext
 {
     public:
@@ -25,4 +28,6 @@ class CallContext
      
         double azimuth;
         double elevation;
+        const ModeIdle* modeIdle;
+        const ModeManual* modeManual;
 };

@@ -161,11 +161,11 @@ double ModeNight::getElevationFromSunRiseParameter()
     }
 }
 
-void ModeNight::start()
+void ModeNight::start(ModeBase* previous)
 {
     KoSHC_CHModeNightActive.value(true, DPT_Switch);
 }
-void ModeNight::stop()
+void ModeNight::stop(ModeBase* next)
 {
     KoSHC_CHModeNightActive.value(false, DPT_Switch);
 }

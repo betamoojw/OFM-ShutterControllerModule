@@ -12,3 +12,8 @@ const std::string ModeBase::logPrefix()
 {
     return _logPrefix;
 }
+
+bool ModeBase::isShading()
+{
+    return false;
+}

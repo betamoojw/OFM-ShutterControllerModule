@@ -11,10 +11,10 @@ bool ModeIdle::allowed(const CallContext &callContext)
 {
    return true;
 }
-void ModeIdle::start()
+void ModeIdle::start(ModeBase* previous)
 {
 }
-void ModeIdle::stop()
+void ModeIdle::stop(ModeBase* next)
 {
 }
 void ModeIdle::processInputKo(GroupObject &ko)

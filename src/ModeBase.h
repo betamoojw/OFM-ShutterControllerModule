@@ -16,7 +16,8 @@ public:
     virtual const char* name() = 0;
     virtual void initGroupObjects() = 0;
     virtual bool allowed(const CallContext& callContext) = 0;
-    virtual void start() = 0;
-    virtual void stop() = 0;
+    virtual void start(ModeBase* previous) = 0;
+    virtual void stop(ModeBase* next) = 0;
     virtual void processInputKo(GroupObject &ko) = 0;
+    virtual bool isShading();
 };

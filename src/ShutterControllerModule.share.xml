@@ -166,6 +166,17 @@
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-UpDownTypeForManualControl" Name="UpDownTypeForManualControl">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="Auf/Ab" Value="0" Id="%ENID%" />
+									<Enumeration Text="Prozent 0/100" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-WaitTimeAfterManualUsageForShading" Name="WaitTimeAfterManualUsageForShading">
+								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="1" maxInclusive="720" />
+							</ParameterType>
+
 						</ParameterTypes>
 
 						<Parameters>

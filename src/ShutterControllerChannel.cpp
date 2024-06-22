@@ -19,10 +19,12 @@ const std::string ShutterControllerChannel::name()
 void ShutterControllerChannel::setup()
 {
     // add modes, highest priority first
-    _manualMode = new ModeManual();
-    _modes.push_back(_manualMode);
+    _modeManual = new ModeManual();
     if (ParamSHC_ChannelModeWindowOpen)
         _modes.push_back(new ModeWindowOpen());
+ 
+    _modes.push_back(_modeManual);
+ 
     if (ParamSHC_ChannelModeNight)
         _modes.push_back(new ModeNight());
 
@@ -45,11 +47,14 @@ void ShutterControllerChannel::setup()
     if (ParamSHC_ChannelModeShading1)
         _modes.push_back(new ModeShading(1));
 
-    _modes.push_back(new ModeIdle());
+    _modeIdle = new ModeIdle();
+    _currentMode = _modeIdle;
+    _modes.push_back(_modeIdle);
     for (auto mode : _modes)
     {
         mode->setup(_channelIndex);
     }
+    _currentMode->start(_modeIdle);
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
@@ -81,9 +86,11 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     return false;
 }
 
-void ShutterControllerChannel::execute(const CallContext &callContext)
+void ShutterControllerChannel::execute(CallContext &callContext)
 {
     ModeBase *nextMode = nullptr;
+    callContext.modeIdle = _modeIdle;
+    callContext.modeManual = _modeManual;
     for (auto mode : _modes)
     {
         if (callContext.diagnosticLog)
@@ -112,13 +119,16 @@ void ShutterControllerChannel::execute(const CallContext &callContext)
         if (_currentMode != nullptr)
         {
             logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
-            _currentMode->stop();
+            _currentMode->stop(nextMode);
         }
         else
         {
             logDebugP("Start mode %s", nextMode->name());
         }
+        auto previousMode = _currentMode;
         _currentMode = nextMode;
-        _currentMode->start();
+        _currentMode->start(previousMode);
     }
+    callContext.modeIdle = nullptr;
+    callContext.modeManual = nullptr;
 }

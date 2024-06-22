@@ -28,11 +28,11 @@ bool ModeManual::allowed(const CallContext &callContext)
     _waitTime = 0;
     return _allowed;
 }
-void ModeManual::start()
+void ModeManual::start(ModeBase* previous)
 {
     KoSHC_CHManuelActiv.value(true, DPT_Switch);
 }
-void ModeManual::stop()
+void ModeManual::stop(ModeBase* next)
 {
     KoSHC_CHManuelActiv.value(false, DPT_Switch);
 }

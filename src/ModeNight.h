@@ -17,8 +17,8 @@ protected:
     const char *name() override;
     void initGroupObjects() override;
     bool allowed(const CallContext& callContext) override;
-    void start() override;
-    void stop() override;
+    void start(ModeBase* previous) override;
+    void stop(ModeBase* next) override;
     void processInputKo(GroupObject &ko) override;
   
 };

@@ -236,12 +236,12 @@ GroupObject &ModeShading::getKo(uint8_t ko)
     return knx.getGroupObject(ko + koChannelOffset());
 }
 
-void ModeShading::start()
+void ModeShading::start(ModeBase* previous)
 {
     _active = true;
     getKo(SHC_KoCHModeShading1Active).value(true, DPT_Switch);
 }
-void ModeShading::stop()
+void ModeShading::stop(ModeBase* next)
 {
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;
@@ -258,4 +258,9 @@ void ModeShading::processInputKo(GroupObject &ko)
         break;
     }
     _recalcMeasurmentValues = true;
+}
+
+bool ModeShading::isShading()
+{
+    return true;
 }
