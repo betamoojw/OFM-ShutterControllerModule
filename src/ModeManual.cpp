@@ -8,6 +8,10 @@ void ModeManual::initGroupObjects()
 {
     KoSHC_CHManualLockActive.value(false, DPT_Switch);
 }
+bool ModeManual::modeWindowOpenAllowed() const
+{
+    return true;
+}
 bool ModeManual::allowed(const CallContext &callContext)
 {
     if (_recalcAllowed || callContext.diagnosticLog)

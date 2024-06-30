@@ -117,7 +117,7 @@
 								<!-- Heizung Aktiv -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="32" BitOffset="1" Name="Channel%C%ModeShading%Pn%HeatingActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Heizung" Value="0" />
 								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="1" BitOffset="2" Name="Channel%C%ModeShading%Pn%WindowOpenInShadowMode" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="1" BitOffset="2" Name="Channel%C%ModeShading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
 
 								<!-- 5 Bits free -->
 
@@ -304,9 +304,13 @@
 														</choose>
 
 														<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="Empty">
-											
-															<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
-															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" />
+															<!-- Fenster offen Mode -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001">
+																<when test="1">
+																	<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" />
+																</when>
+															</choose>
 
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonnenposition" UIHint="Headline" />
 

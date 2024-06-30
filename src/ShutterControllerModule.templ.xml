@@ -41,7 +41,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%014" Offset="1" BitOffset="3" Name="Channel%C%RoomTemperature" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 
 								<!-- Fenster offen Modus in Nachtmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="Channel%C%WindowOpenInNightMode" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="Channel%C%NightModeWindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
 
 								<!-- 3 Bit free -->
 
@@ -508,9 +508,14 @@
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCModeNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
 
-																<!-- Fenster offen Modus in Nachtmodus erlaubt -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" />
-															
+																<!-- Fenster offen Mode -->
+																<choose ParamRefId="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001">
+																	<when test="1">
+																		<!-- Fenster offen Modus in Nachtmodus erlaubt -->
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" />
+																	</when>
+																</choose>
+
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht" UIHint="Headline" />
 
 																<!-- Nachtmodus von -->

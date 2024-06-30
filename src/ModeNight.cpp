@@ -9,6 +9,10 @@ void ModeNight::initGroupObjects()
     KoSHC_CHModeNightActive.value(false, DPT_Switch);
     KoSHC_CHModeNightLockActive.value(false, DPT_Switch);
 }
+bool ModeNight::modeWindowOpenAllowed() const
+{
+    return ParamSHC_ChannelNightModeWindowOpenAllowed;
+}
 bool ModeNight::allowed(const CallContext &callContext)
 {
     if (callContext.UtcDay != _lastDayUTC)

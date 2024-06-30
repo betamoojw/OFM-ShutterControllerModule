@@ -13,6 +13,7 @@ protected:
 
 public:
     void setup(uint8_t _channelIndex);
+    virtual bool modeWindowOpenAllowed() const = 0;
     virtual const char* name() = 0;
     virtual void initGroupObjects() = 0;
     virtual bool allowed(const CallContext& callContext) = 0;

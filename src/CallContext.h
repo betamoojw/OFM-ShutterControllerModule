@@ -4,6 +4,7 @@
 
 class ModeIdle;
 class ModeManual;
+class ModeBase;
 
 class CallContext
 {
@@ -30,4 +31,5 @@ class CallContext
         double elevation;
         const ModeIdle* modeIdle;
         const ModeManual* modeManual;
+        const ModeBase* modeCurrentActive;
 };

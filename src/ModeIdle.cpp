@@ -7,6 +7,10 @@ const char *ModeIdle::name()
 void ModeIdle::initGroupObjects()
 {
 }
+bool ModeIdle::modeWindowOpenAllowed() const
+{
+    return true;
+}
 bool ModeIdle::allowed(const CallContext &callContext)
 {
    return true;

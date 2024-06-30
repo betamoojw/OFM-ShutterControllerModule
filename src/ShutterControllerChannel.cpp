@@ -91,6 +91,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     ModeBase *nextMode = nullptr;
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
+    callContext.modeCurrentActive = _currentMode;
     for (auto mode : _modes)
     {
         if (callContext.diagnosticLog)
@@ -131,4 +132,5 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     }
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
+    callContext.modeCurrentActive = nullptr;
 }

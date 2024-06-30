@@ -9,6 +9,7 @@ class ModeManual : public ModeBase
 protected:
     const char *name() override;
     void initGroupObjects() override;
+    bool modeWindowOpenAllowed() const override;
     bool allowed(const CallContext& callContext) override;
     void start(ModeBase* previous) override;
     void stop(ModeBase* next) override;

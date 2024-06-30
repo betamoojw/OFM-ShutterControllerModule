@@ -24,6 +24,10 @@ void ModeShading::initGroupObjects()
     getKo(SHC_KoCHModeShading1Active).value(false, DPT_Switch);
     _recalcMeasurmentValues = true;
 }
+bool ModeShading::modeWindowOpenAllowed() const
+{
+    return ParamSHC_ChannelModeShading1WindowOpenAllowed;
+}
 bool ModeShading::allowed(const CallContext &callContext)
 {
     bool allowedTimeAndSun = allowedByTimeAndSun(callContext);

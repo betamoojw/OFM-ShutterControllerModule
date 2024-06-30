@@ -9,8 +9,18 @@ void ModeWindowOpen::initGroupObjects()
     KoSHC_CHWindowOpenModeActive.value(false, DPT_Switch);
     KoSHC_CHWindowOpenLockActive.value(false, DPT_Switch);
 }
+bool ModeWindowOpen::modeWindowOpenAllowed() const
+{
+    return true;
+}
 bool ModeWindowOpen::allowed(const CallContext& callContext)
 {
+    if (!callContext.modeCurrentActive->modeWindowOpenAllowed())
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Window open mode not allowed by current active mode");
+        return false;
+    }
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
