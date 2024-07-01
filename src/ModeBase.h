@@ -21,5 +21,5 @@ public:
     virtual void control(const CallContext& callContext) = 0;
     virtual void stop(ModeBase* next) = 0;
     virtual void processInputKo(GroupObject &ko) = 0;
-    virtual bool isShading();
+    virtual bool isShading() const;
 };

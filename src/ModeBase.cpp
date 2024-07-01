@@ -13,7 +13,7 @@ const std::string ModeBase::logPrefix()
     return _logPrefix;
 }
 
-bool ModeBase::isShading()
+bool ModeBase::isShading() const
 {
     return false;
 }

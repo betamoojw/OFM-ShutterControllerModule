@@ -13,8 +13,8 @@ class ModeShading : public ModeBase
     bool _needWaitTime = false;
     int16_t koChannelOffset();
     GroupObject& getKo(uint8_t ko);
-    bool allowedByMeasurmentValues(bool diagnosticLog);
     bool allowedByTimeAndSun(const CallContext& callContext);
+    bool allowedByMeasurmentValues(const CallContext& callContext);
 public:
     ModeShading(uint8_t index);
 protected:
@@ -26,5 +26,5 @@ protected:
     void control(const CallContext& callContext) override;
     void stop(ModeBase* next) override;
     void processInputKo(GroupObject &ko) override;
-    bool isShading() override;
+    bool isShading() const override;
 };

@@ -89,6 +89,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
     ModeBase *nextMode = nullptr;
+    callContext.newStarted = false;
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
     callContext.modeCurrentActive = _currentMode;
@@ -129,7 +130,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         auto previousMode = _currentMode;
         _currentMode = nextMode;
         _currentMode->start(previousMode);
+        callContext.newStarted = true;
     }
+    _currentMode->control(callContext);
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
     callContext.modeCurrentActive = nullptr;

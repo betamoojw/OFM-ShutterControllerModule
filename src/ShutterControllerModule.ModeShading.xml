@@ -16,7 +16,7 @@
 						<!-- KO Offset-->
 						<op:param name="%En%" value="29" />
 						<!-- Min Temperature-->
-						<op:param name="%MinTemp%" value="15" increment="5"  />
+						<op:param name="%MinTemp%" value="15" increment="5" />
 					</op:partParams>
 					<Static>
 						<Parameters>
@@ -84,7 +84,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+30%" Offset="19" BitOffset="0" Name="Channel%C%ModeShading%Pn%Clouds" ParameterType="%AID%_PT-MaxCloudLimit" Text="Maximale Bewölkung" Value="101" />
 
 								<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+31%" Offset="20" BitOffset="0" Name="Channel%C%ModeShading%Pn%ActivationOnlyIfLessThan" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsmodus nur starten aktuelle Position kleiner gleich" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+31%" Offset="20" BitOffset="0" Name="Channel%C%ModeShading%Pn%ActivationOnlyIfLessThan" ParameterType="%AID%_PT-SHCPercent" Text="Nur starten wenn aktuelle Position kleiner gleich" Value="0" />
 
 								<!-- Beschattungsposition -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+32%" Offset="21" BitOffset="0" Name="Channel%C%ModeShading%Pn%ShadingPosition" ParameterType="%AID%_PT-SHCPercent" Text="Beschattungsposition" SuffixText="%" Value="100" />
@@ -533,9 +533,6 @@
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+31%_R-%TT%%CC%%PPP+31%01" />
 
 
-															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungsparameter" UIHint="Headline" />
-
 															<!-- Beschattungsposition -->
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+32%_R-%TT%%CC%%PPP+32%01" />
 
@@ -544,12 +541,13 @@
 																<when test="1">
 																	<!-- Gerätetype Jalousie -->
 
-																	<!-- Lammellenposition -->
-																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" />
-
 																	<!-- Lammellenstellung an Sonnenstand Höhenwinkel anpassen -->
 																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01" />
 																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01">
+																		<when test="0">
+																			<!-- Lammellenposition -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" />
+																		</when>
 																		<when test="1">
 																			<!-- Mindeständerung Lamellennachführung -->
 																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+35%_R-%TT%%CC%%PPP+35%01" />

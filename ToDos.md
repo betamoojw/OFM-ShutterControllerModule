@@ -8,3 +8,4 @@
 - Szenen 
 - Positionen für Nacht Start und Stop in ETS und Control function
 - Timeout für Messwerte
+- Beschattungsmodus Auswahl auf Drop-Down umstellen und Beschattungseinstellungen nur anzeigen wenn Beschattungsmodus aktiv
