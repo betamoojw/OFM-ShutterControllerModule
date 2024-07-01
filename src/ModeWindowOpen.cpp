@@ -43,6 +43,9 @@ void ModeWindowOpen::start(ModeBase* previous)
 {
     KoSHC_CHWindowOpenModeActive.value(true, DPT_Switch);
 }
+void ModeWindowOpen::control(const CallContext &callContext)
+{
+}
 void ModeWindowOpen::stop(ModeBase* next)
 {
     KoSHC_CHWindowOpenModeActive.value(false, DPT_Switch);

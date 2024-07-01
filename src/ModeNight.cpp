@@ -169,6 +169,11 @@ void ModeNight::start(ModeBase* previous)
 {
     KoSHC_CHModeNightActive.value(true, DPT_Switch);
 }
+
+void ModeNight::control(const CallContext &callContext)
+{
+}
+
 void ModeNight::stop(ModeBase* next)
 {
     KoSHC_CHModeNightActive.value(false, DPT_Switch);

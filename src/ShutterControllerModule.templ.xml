@@ -8,13 +8,15 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="19" increment="38" />
+						<op:param name="%ParamOffset%" value="19" increment="37" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" increment="100" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="29" increment="5" />
+						<!-- Min Temperature-->
+						<op:param name="%MinTemp%" value="15" increment="5" />
 					</op:part>
 
 					<Static>
@@ -87,8 +89,11 @@
 								<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="Channel%C%WaitTimeAfterManualUsageForShading" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
-								<!-- Next offset: 16-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%018 -->
+								<!-- Nach Beschattung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="Channel%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
+
+								<!-- Next offset: 17-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%019 -->
 							</Union>
 
 							<Union SizeInBit="24">
@@ -169,6 +174,9 @@
 
 							<!-- Fenster offen Modus in Nachtmodus erlaubt -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_UP-%TT%%CC%017" />
+
+							<!-- Nach Beschattung -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Parameter Id starting with: 100 -->
@@ -457,8 +465,15 @@
 
 															</when>
 														</choose>
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungseinstellung" UIHint="Headline" />
+
 														<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
+
+														<!-- Nach Beschattung -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
+
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
 

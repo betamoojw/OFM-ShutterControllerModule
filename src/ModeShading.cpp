@@ -245,6 +245,11 @@ void ModeShading::start(ModeBase* previous)
     _active = true;
     getKo(SHC_KoCHModeShading1Active).value(true, DPT_Switch);
 }
+
+void ModeShading::control(const CallContext &callContext)
+{
+}
+
 void ModeShading::stop(ModeBase* next)
 {
     _active = false;

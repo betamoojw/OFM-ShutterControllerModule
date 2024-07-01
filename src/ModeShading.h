@@ -21,8 +21,9 @@ protected:
     const char *name() override;
     void initGroupObjects() override;
     bool modeWindowOpenAllowed() const override;
-    bool allowed(const CallContext& callContext) override;
+    bool allowed(const CallContext& callContext) override; 
     void start(ModeBase* previous) override;
+    void control(const CallContext& callContext) override;
     void stop(ModeBase* next) override;
     void processInputKo(GroupObject &ko) override;
     bool isShading() override;

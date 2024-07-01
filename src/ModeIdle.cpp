@@ -18,6 +18,9 @@ bool ModeIdle::allowed(const CallContext &callContext)
 void ModeIdle::start(ModeBase* previous)
 {
 }
+void ModeIdle::control(const CallContext &callContext)
+{
+}
 void ModeIdle::stop(ModeBase* next)
 {
 }
