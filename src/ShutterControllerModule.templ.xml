@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="19" increment="37" />
+						<op:param name="%ParamOffset%" value="25" increment="37" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -25,7 +25,7 @@
 							<!-- Kanal Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-							<Union SizeInBit="124">
+							<Union SizeInBit="168">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
@@ -48,7 +48,7 @@
 								<!-- 3 Bit free -->
 
 								<!-- Nacht Modus von -->
-								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="Channel%C%NightModeStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Start Auslöser" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="Channel%C%NightModeStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
 
 								<!-- 4 Bit free -->
 
@@ -64,7 +64,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="7" BitOffset="0" Name="Channel%C%ModeNightSunSetElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
 
 								<!-- Nacht Modus bis -->
-								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="Channel%C%NightModeEndBehavior" ParameterType="%AID%_PT-NightModeEndBehavior" Text="Ende Auslöser" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="Channel%C%NightModeEndBehavior" ParameterType="%AID%_PT-NightModeEndBehavior" Text="Auslöser" Value="2" />
 
 								<!-- 4 Bit free -->
 
@@ -92,32 +92,51 @@
 								<!-- Nach Beschattung -->
 								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="Channel%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
 
-								<!-- Next offset: 17-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%019 -->
+
+								<!-- Position bei Nacht Start anfahren -->
+								<Parameter Id="%AID%_UP-%TT%%CC%019" Offset="17" BitOffset="0" Name="Channel%C%ModeNightStartPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+
+								<!-- Night Mode Start Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%020" Offset="17" BitOffset="1" Name="Channel%C%NightModeStartPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="100" SuffixText="%" />
+
+								<!-- Night Mode Start Lamellen Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%021" Offset="18" BitOffset="1" Name="Channel%C%NightModeStartSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="100" SuffixText="%" />
+
+								<!-- Position bei Nacht Ende anfahren -->
+								<Parameter Id="%AID%_UP-%TT%%CC%022" Offset="19" BitOffset="0" Name="Channel%C%ModeNightStopPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+
+								<!-- Night Mode Stop Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%023" Offset="19" BitOffset="1" Name="Channel%C%NightModeStopPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="0" SuffixText="%" />
+
+								<!-- Night Mode Stop Lamellen Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%024" Offset="20" BitOffset="1" Name="Channel%C%NightModeStopSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
+
+								<!-- Next offset: 21-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%025 -->
 							</Union>
 
-							<Union SizeInBit="24">
-								<Memory CodeSegment="%AID%_RS-04-00000" Offset="16" BitOffset="0" />
+							<Union SizeInBit="32">
+								<Memory CodeSegment="%AID%_RS-04-00000" Offset="21" BitOffset="0" />
 								<!-- Fenster offen Mode -->
 								<Parameter Id="%AID%_UP-%TT%%CC%070" Offset="0" BitOffset="0" Name="Channel%C%ModeWindowOpen" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus" Value="0" />
 
+								<!-- 7 Bits free -->
+
 								<!-- Position anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%071" Offset="0" BitOffset="1" Name="Channel%C%ModeWindowOpenPositionControl" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren wenn geschlossen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%071" Offset="1" BitOffset="0" Name="Channel%C%ModeWindowOpenPositionControl" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
 
 								<!-- Lammellenstellung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%073" Offset="0" BitOffset="2" Name="Channel%C%ModeWindowOpenSlatPositionControl" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellen öffnen" Value="0" />
-
-								<!-- 5 Bits free -->
+								<Parameter Id="%AID%_UP-%TT%%CC%073" Offset="1" BitOffset="4" Name="Channel%C%ModeWindowOpenSlatPositionControl" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="1" />
 
 								<!-- Position -->
-								<Parameter Id="%AID%_UP-%TT%%CC%072" Offset="1" BitOffset="0" Name="Channel%C%ModeWindowOpenPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%072" Offset="2" BitOffset="0" Name="Channel%C%ModeWindowOpenPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
 
 								<!-- Lammellenposition -->
-								<Parameter Id="%AID%_UP-%TT%%CC%074" Offset="2" BitOffset="0" Name="Channel%C%ModeWindowOpenSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
+								<Parameter Id="%AID%_UP-%TT%%CC%074" Offset="3" BitOffset="0" Name="Channel%C%ModeWindowOpenSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
 							</Union>
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
-							<!-- Offset: 17 -->
+							<!-- Next Offset: 25 -->
 							<op:usePart name="ModeShading" xpath="//Parameters/*" />
 
 						</Parameters>
@@ -149,6 +168,15 @@
 							<!-- Höhenwinkel Grad nach Sonnenuntergang -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_UP-%TT%%CC%008" />
 
+							<!-- Position bei Nacht Start anfahren -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_UP-%TT%%CC%019" />
+
+							<!-- Night Mode Start Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_UP-%TT%%CC%020" />
+
+							<!-- Night Mode Start Lamellen Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_UP-%TT%%CC%021" />
+
 
 							<!-- Nachtmodus bis -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_UP-%TT%%CC%009" />
@@ -160,6 +188,16 @@
 
 							<!-- Höhenwinkel Grad nach Sonnenaufgang -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
+
+							<!-- Position bei Nacht Ende anfahren -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_UP-%TT%%CC%022" />
+
+							<!-- Night Mode Stop Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_UP-%TT%%CC%023" />
+
+							<!-- Night Mode Stop Lamellen Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_UP-%TT%%CC%024" />
+
 
 							<!-- Heizung Eingang -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
@@ -531,7 +569,7 @@
 																	</when>
 																</choose>
 
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht" UIHint="Headline" />
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Begin" UIHint="Headline" />
 
 																<!-- Nachtmodus von -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" />
@@ -552,6 +590,27 @@
 																	</when>
 																</choose>
 
+																<!-- Position bei Nacht Start anfahren -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901">
+																	<when test="1">
+
+																		<!-- Night Mode Start Position -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" />
+
+																		<!-- Gerätetype -->
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																			<when test="1">
+
+																				<!-- Night Mode Start Lamellen Position -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" />
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
+
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Ende" UIHint="Headline" />
+
 																<!-- Nachtmodus bis -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901">
@@ -571,6 +630,23 @@
 																	</when>
 																</choose>
 
+																<!-- Position bei Nacht Ende anfahren -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201"/>
+																<choose ParamRefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201">
+																	<when test="1">
+																		<!-- Night Mode Stop Position -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" />
+
+																		<!-- Gerätetype -->
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																			<when test="1">
+
+																				<!-- Night Mode Stop Lamellen Position -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401"/>
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
 															</ParameterBlock>
 														</when>
 													</choose>
@@ -599,9 +675,13 @@
 
 																<!-- Position anfahren -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101">
+																	<when test="&gt;0">
 
-																<!-- Position -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
+																		<!-- Position -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
+																	</when>
+																</choose>
 																<!-- Gerätetype -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
 																	<when test="1">
@@ -609,9 +689,13 @@
 
 																		<!-- Lammellenstellung -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301">
+																			<when test="&gt;0">
 
-																		<!-- Lammellenposition -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%074_R-%TT%%CC%07401" />
+																				<!-- Lammellenposition -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%074_R-%TT%%CC%07401" />
+																			</when>
+																		</choose>
 																	</when>
 																</choose>
 															</ParameterBlock>
