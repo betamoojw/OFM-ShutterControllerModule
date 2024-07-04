@@ -10,11 +10,11 @@ protected:
     std::string _logPrefix = "";
 
     const std::string logPrefix();
-
 public:
     void setup(uint8_t _channelIndex);
     virtual bool modeWindowOpenAllowed() const = 0;
-    virtual const char* name() = 0;
+    virtual const char* name() const = 0;
+    virtual uint8_t sceneNumber() const = 0;
     virtual void initGroupObjects() = 0;
     virtual bool allowed(const CallContext& callContext) = 0;
     virtual void start(const CallContext& callContext, const ModeBase* previous) = 0;

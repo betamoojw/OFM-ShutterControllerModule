@@ -1,9 +1,15 @@
 #include "ModeManual.h"
 
-const char *ModeManual::name()
+const char *ModeManual::name() const
 {
     return "Manual";
 }
+
+uint8_t ModeManual::sceneNumber() const 
+{
+    return 11;
+}
+
 void ModeManual::initGroupObjects()
 {
     KoSHC_CHManualLockActive.value(false, DPT_Switch);

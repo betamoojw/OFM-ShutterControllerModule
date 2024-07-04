@@ -1,9 +1,15 @@
 #include "ModeIdle.h"
 
-const char *ModeIdle::name()
+const char *ModeIdle::name() const
 {
     return "Idle";
 }
+
+uint8_t ModeIdle::sceneNumber() const 
+{
+    return 10;
+}
+
 void ModeIdle::initGroupObjects()
 {
 }

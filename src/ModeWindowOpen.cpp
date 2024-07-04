@@ -1,9 +1,15 @@
 #include "ModeWindowOpen.h"
 
-const char *ModeWindowOpen::name()
+const char *ModeWindowOpen::name() const
 {
     return "WindowOpen";
 }
+
+uint8_t ModeWindowOpen::sceneNumber() const 
+{
+    return 13;
+}
+
 void ModeWindowOpen::initGroupObjects()
 {
     KoSHC_CHWindowOpenModeActive.value(false, DPT_Switch);

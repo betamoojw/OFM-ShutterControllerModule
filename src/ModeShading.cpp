@@ -14,10 +14,16 @@ ModeShading::ModeShading(uint8_t index)
     _name += std::to_string(index);
 }
 
-const char *ModeShading::name()
+const char *ModeShading::name() const
 {
     return _name.c_str();
 }
+
+uint8_t ModeShading::sceneNumber() const
+{
+    return _index;
+}
+
 void ModeShading::initGroupObjects()
 {
     getKo(SHC_KoCHModeShading1LockActive).value(false, DPT_Switch);
@@ -30,14 +36,22 @@ bool ModeShading::modeWindowOpenAllowed() const
 }
 bool ModeShading::allowed(const CallContext &callContext)
 {
+    auto diagnosticLog = callContext.diagnosticLog;
+    if (_lockActive)
+    {
+        if (diagnosticLog)
+            logInfoP("Lock KO activ");
+        else
+            return false;
+    }
     bool allowedTimeAndSun = allowedByTimeAndSun(callContext);
     if (allowedTimeAndSun != _lastTimeAndSunFrameAllowed)
     {
-        logDebugP("Allowed by time and sun: %d", (int) allowedTimeAndSun);
+        logDebugP("Allowed by time and sun: %d", (int)allowedTimeAndSun);
         _lastTimeAndSunFrameAllowed = allowedTimeAndSun;
         _needWaitTime = false;
     }
-    if (!callContext.diagnosticLog && !_lastTimeAndSunFrameAllowed)
+    if (!diagnosticLog && !_lastTimeAndSunFrameAllowed)
         return false;
 
     if (_recalcMeasurmentValues || callContext.diagnosticLog)
@@ -46,7 +60,7 @@ bool ModeShading::allowed(const CallContext &callContext)
         auto allowedByMeasurementValues = allowedByMeasurmentValues(callContext);
         if (_allowedByMeasurementValues != allowedByMeasurementValues)
         {
-            logDebugP("Allowed by measurement values: %d", (int) allowedByMeasurementValues);
+            logDebugP("Allowed by measurement values: %d", (int)allowedByMeasurementValues);
             if (_needWaitTime)
                 _waitTimeAfterMeasurmentValueChange = callContext.currentMillis;
             else
@@ -90,19 +104,11 @@ bool ModeShading::allowedByTimeAndSun(const CallContext &callContext)
 {
     bool diagnosticLog = callContext.diagnosticLog;
     bool allowed = true;
-    if (getKo(SHC_KoCHModeShading1LockActive).value(DPT_Switch))
-    {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("Lock KO activ");
-        else
-            return false;
-    }
     if (callContext.azimuth < ParamSHC_ChannelModeShading1AzimutMin || callContext.azimuth > ParamSHC_ChannelModeShading1AzimutMax)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Azimut %.2f not between %d and %d", callContext.azimuth, (int) ParamSHC_ChannelModeShading1AzimutMin, (int) ParamSHC_ChannelModeShading1AzimutMax);
+            logInfoP("Azimut %.2f not between %d and %d", callContext.azimuth, (int)ParamSHC_ChannelModeShading1AzimutMin, (int)ParamSHC_ChannelModeShading1AzimutMax);
         else
             return false;
     }
@@ -110,7 +116,7 @@ bool ModeShading::allowedByTimeAndSun(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Elevantion %.2f not between %d and %d", callContext.elevation, (int)ParamSHC_ChannelModeShading1ElevationMin, (int) ParamSHC_ChannelModeShading1ElevationMax);
+            logInfoP("Elevantion %.2f not between %d and %d", callContext.elevation, (int)ParamSHC_ChannelModeShading1ElevationMin, (int)ParamSHC_ChannelModeShading1ElevationMax);
         else
             return false;
     }
@@ -178,7 +184,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Temperatur %.1f is lower than %d", (double) KoSHC_TemperatureInput.value(DPT_Value_Temp), (int) ParamSHC_ChannelModeShading1TemperatureMin);
+            logInfoP("Temperatur %.1f is lower than %d", (double)KoSHC_TemperatureInput.value(DPT_Value_Temp), (int)ParamSHC_ChannelModeShading1TemperatureMin);
         else
             return false;
     }
@@ -186,7 +192,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Temperaturforecast %.1f is lower than %d", (double)KoSHC_TemperatureForecastInput.value(DPT_Value_Temp), (int) ParamSHC_ChannelModeShading1TemperatureForecastMin);
+            logInfoP("Temperaturforecast %.1f is lower than %d", (double)KoSHC_TemperatureForecastInput.value(DPT_Value_Temp), (int)ParamSHC_ChannelModeShading1TemperatureForecastMin);
         else
             return false;
     }
@@ -194,7 +200,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Brightness %.1f is lower than %d", (double)KoSHC_BrightnessInput.value(DPT_Value_Lux), (int) 1000 * ParamSHC_ChannelModeShading1BrightnessMin );
+            logInfoP("Brightness %.1f is lower than %d", (double)KoSHC_BrightnessInput.value(DPT_Value_Lux), (int)1000 * ParamSHC_ChannelModeShading1BrightnessMin);
         else
             return false;
     }
@@ -202,7 +208,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("UV index %.1f is lower than %d", (double)KoSHC_UVIInput.value(DPT_DecimalFactor), (int) ParamSHC_ChannelModeShading1UVIMin);
+            logInfoP("UV index %.1f is lower than %d", (double)KoSHC_UVIInput.value(DPT_DecimalFactor), (int)ParamSHC_ChannelModeShading1UVIMin);
         else
             return false;
     }
@@ -218,15 +224,15 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Clouds %d more than %d", (int)KoSHC_CloudsInput.value(DPT_Scaling), (int) ParamSHC_ChannelModeShading1Clouds);
+            logInfoP("Clouds %d more than %d", (int)KoSHC_CloudsInput.value(DPT_Scaling), (int)ParamSHC_ChannelModeShading1Clouds);
         else
             return false;
     }
-    if (!callContext.modeCurrentActive->isShading() &&  (uint8_t) KoSHC_CHShutterPercentInput.value(DPT_Scaling) > ParamSHC_ChannelModeShading1ActivationOnlyIfLessThan)
+    if (!callContext.modeCurrentActive->isShading() && (uint8_t)KoSHC_CHShutterPercentInput.value(DPT_Scaling) > ParamSHC_ChannelModeShading1ActivationOnlyIfLessThan)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Shutter %d more than %d", (int)KoSHC_CHShutterPercentInput.value(DPT_Scaling), (int) ParamSHC_ChannelModeShading1ActivationOnlyIfLessThan);
+            logInfoP("Shutter %d more than %d", (int)KoSHC_CHShutterPercentInput.value(DPT_Scaling), (int)ParamSHC_ChannelModeShading1ActivationOnlyIfLessThan);
         else
             return false;
     }
@@ -247,58 +253,57 @@ GroupObject &ModeShading::getKo(uint8_t ko)
     return knx.getGroupObject(ko + koChannelOffset());
 }
 
-void ModeShading::start(const CallContext& callContext, const ModeBase* previous)
+void ModeShading::start(const CallContext &callContext, const ModeBase *previous)
 {
     _active = true;
     getKo(SHC_KoCHModeShading1Active).value(true, DPT_Switch);
-    
+
     auto shutterPosition = ParamSHC_ChannelModeShading1ShadingPosition;
     KoSHC_CHShutterPercentOutput.value(shutterPosition, DPT_Scaling);
- 
+
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
     // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
     // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
     if (ParamSHC_ChannelType == 1 && !ParamSHC_ChannelModeShading1SlatElevationDepending)
         KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelModeShading1SlatShadingPosition, DPT_Scaling);
-
 }
 
 void ModeShading::control(const CallContext &callContext)
 {
     if (!callContext.newStarted && !callContext.minuteChanged && !callContext.diagnosticLog)
         return;
-  
+
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
     // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
     // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
     if (ParamSHC_ChannelType != 1)
         return;
 
-    // Jalousie    
+    // Jalousie
     if (ParamSHC_ChannelModeShading1SlatElevationDepending)
     {
-        auto targetSlatPosition = (90 - callContext.elevation) / 90 * 50 + 50 + (double) ParamSHC_ChannelModeShading1OffsetSlatPosition;
+        auto targetSlatPosition = (90 - callContext.elevation) / 90 * 50 + 50 + (double)ParamSHC_ChannelModeShading1OffsetSlatPosition;
         if (targetSlatPosition < 0)
             targetSlatPosition = 0;
         else if (targetSlatPosition > 100)
             targetSlatPosition = 100;
-        auto slatPosition = (uint8_t) targetSlatPosition;
+        auto slatPosition = (uint8_t)targetSlatPosition;
         if (callContext.diagnosticLog)
-            logInfoP("Calculated slat position %d", (int) slatPosition);
+            logInfoP("Calculated slat position %d", (int)slatPosition);
 
-        if (!callContext.newStarted && abs((int) KoSHC_CHShutterPercentOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_ChannelModeShading2MinChangeForSlatAdaption)
+        if (!callContext.newStarted && abs((int)KoSHC_CHShutterPercentOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_ChannelModeShading2MinChangeForSlatAdaption)
         {
             if (callContext.diagnosticLog)
-                logInfoP("Slat position %d difference is less then %d", (int) abs((int) KoSHC_CHShutterPercentOutput.value(DPT_Scaling) - slatPosition), (int) ParamSHC_ChannelModeShading2MinChangeForSlatAdaption);
+                logInfoP("Slat position %d difference is less then %d", (int)abs((int)KoSHC_CHShutterPercentOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_ChannelModeShading2MinChangeForSlatAdaption);
 
             return; // Do not change, to less difference
-        }   
-        
+        }
+
         KoSHC_CHShutterSlatOutput.value(slatPosition, DPT_Scaling);
     }
 }
 
-void ModeShading::stop(const CallContext& callContext, const ModeBase* next)
+void ModeShading::stop(const CallContext &callContext, const ModeBase *next)
 {
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;
@@ -310,7 +315,8 @@ void ModeShading::processInputKo(GroupObject &ko)
     switch (ko.asap() - koChannelOffset())
     {
     case SHC_KoCHModeShading1Lock:
-        getKo(SHC_KoCHModeShading1LockActive).value(ko.value(DPT_Switch), DPT_Switch);
+        _lockActive = ko.value(DPT_Switch);
+        getKo(SHC_KoCHModeShading1LockActive).value(_lockActive, DPT_Switch);
         _recalcMeasurmentValues = true;
         break;
     }

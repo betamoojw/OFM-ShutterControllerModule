@@ -1,9 +1,15 @@
 #include "ModeNight.h"
 
-const char *ModeNight::name()
+const char *ModeNight::name() const
 {
     return "Night";
 }
+
+uint8_t ModeNight::sceneNumber() const 
+{
+    return 12;
+}
+
 void ModeNight::initGroupObjects()
 {
     KoSHC_CHModeNightActive.value(false, DPT_Switch);
@@ -165,13 +171,17 @@ double ModeNight::getElevationFromSunRiseParameter()
     }
 }
 
-void ModeNight::start(const CallContext& callContext, const ModeBase* previous)
+void ModeNight::start(const CallContext &callContext, const ModeBase *previous)
 {
     KoSHC_CHModeNightActive.value(true, DPT_Switch);
     if (ParamSHC_ChannelModeNightStartPositionEnabled)
     {
         KoSHC_CHShutterPercentOutput.value(ParamSHC_ChannelModeNightStartPositionEnabled, DPT_Scaling);
-        KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
+        // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
+        if (ParamSHC_ChannelType == 1)
+            KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
     }
 }
 
@@ -179,13 +189,17 @@ void ModeNight::control(const CallContext &callContext)
 {
 }
 
-void ModeNight::stop(const CallContext& callContext, const ModeBase* next)
+void ModeNight::stop(const CallContext &callContext, const ModeBase *next)
 {
     KoSHC_CHModeNightActive.value(false, DPT_Switch);
-    if (next != (const ModeBase*) callContext.modeManual && ParamSHC_ChannelModeNightStartPositionEnabled)
+    if (next != (const ModeBase *)callContext.modeManual && ParamSHC_ChannelModeNightStartPositionEnabled)
     {
         KoSHC_CHShutterPercentOutput.value(ParamSHC_ChannelModeNightStartPositionEnabled, DPT_Scaling);
-        KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
+        // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
+        if (ParamSHC_ChannelType == 1)
+            KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
     }
 }
 

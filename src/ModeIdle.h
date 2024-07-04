@@ -4,7 +4,8 @@
 class ModeIdle : public ModeBase
 {
 protected:
-    const char *name() override;
+    const char *name() const override;
+    uint8_t sceneNumber() const override;
     void initGroupObjects() override;
     bool modeWindowOpenAllowed() const override;
     bool allowed(const CallContext& callContext) override;

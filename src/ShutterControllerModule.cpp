@@ -251,6 +251,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
 
 void ShutterControllerModule::setup()
 {
+    KoSHC_ShadingControlDailyActivation.value(false, DPT_Switch);
+    KoSHC_ShadingControlDailyActivationStatus.value(false, DPT_Switch);
+
     setupChannels(ParamSHC_VisibleChannels);
 }
 
