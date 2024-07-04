@@ -306,12 +306,6 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%"  />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								
-								<!-- <ParameterSeparator Id="%AID%_PS-nnn" Text="Dokumentation" UIHint="Headline" />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Dokumentation ist als Kontextsensitive Hilfe verfügbar, siehe den Text im unteren Bereich des Bildschirms." />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Wird keine Dokumentation angezeigt, muss diese in der ETS Werkzeugleiste über die Schaltfläche '(?) Kontexhilfe' aktiviert werden." />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-					 -->
-								
 								<!-- Beschattung täglich aktivieren -->
 								<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
 								<!-- Beschattung täglich aktivieren Status -->

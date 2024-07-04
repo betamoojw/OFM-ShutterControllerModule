@@ -48,13 +48,11 @@ void ShutterControllerChannel::setup()
         _modes.push_back(new ModeShading(1));
 
     _modeIdle = new ModeIdle();
-    _currentMode = _modeIdle;
     _modes.push_back(_modeIdle);
     for (auto mode : _modes)
     {
         mode->setup(_channelIndex);
     }
-    _currentMode->start(_modeIdle);
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
@@ -93,6 +91,13 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
     callContext.modeCurrentActive = _currentMode;
+
+    if (_currentMode == nullptr)
+    {
+        _currentMode = _modeIdle;
+        _currentMode->start(callContext, callContext.modeCurrentActive);
+    }
+
     for (auto mode : _modes)
     {
         if (callContext.diagnosticLog)
@@ -121,7 +126,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (_currentMode != nullptr)
         {
             logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
-            _currentMode->stop(nextMode);
+            _currentMode->stop(callContext, nextMode);
         }
         else
         {
@@ -129,7 +134,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         auto previousMode = _currentMode;
         _currentMode = nextMode;
-        _currentMode->start(previousMode);
+        _currentMode->start(callContext, previousMode);
         callContext.newStarted = true;
     }
     _currentMode->control(callContext);

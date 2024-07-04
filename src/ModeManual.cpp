@@ -41,7 +41,7 @@ bool ModeManual::allowed(const CallContext &callContext)
     }
     return false;
 }
-void ModeManual::start(ModeBase *previous)
+void ModeManual::start(const CallContext& callContext, const ModeBase *previous)
 {
     KoSHC_CHManuelActiv.value(true, DPT_Switch);
 }
@@ -98,7 +98,7 @@ void ModeManual::control(const CallContext &callContext)
     }
     _changedGroupObjects.clear();
 }
-void ModeManual::stop(ModeBase *next)
+void ModeManual::stop(const CallContext& callContext, const ModeBase *next)
 {
     KoSHC_CHManuelActiv.value(false, DPT_Switch);
 }

@@ -165,18 +165,28 @@ double ModeNight::getElevationFromSunRiseParameter()
     }
 }
 
-void ModeNight::start(ModeBase* previous)
+void ModeNight::start(const CallContext& callContext, const ModeBase* previous)
 {
     KoSHC_CHModeNightActive.value(true, DPT_Switch);
+    if (ParamSHC_ChannelModeNightStartPositionEnabled)
+    {
+        KoSHC_CHShutterPercentOutput.value(ParamSHC_ChannelModeNightStartPositionEnabled, DPT_Scaling);
+        KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
+    }
 }
 
 void ModeNight::control(const CallContext &callContext)
 {
 }
 
-void ModeNight::stop(ModeBase* next)
+void ModeNight::stop(const CallContext& callContext, const ModeBase* next)
 {
     KoSHC_CHModeNightActive.value(false, DPT_Switch);
+    if (next != (const ModeBase*) callContext.modeManual && ParamSHC_ChannelModeNightStartPositionEnabled)
+    {
+        KoSHC_CHShutterPercentOutput.value(ParamSHC_ChannelModeNightStartPositionEnabled, DPT_Scaling);
+        KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
+    }
 }
 
 void ModeNight::processInputKo(GroupObject &ko)

@@ -39,14 +39,14 @@ bool ModeWindowOpen::allowed(const CallContext& callContext)
     }
     return _allowed;
 }
-void ModeWindowOpen::start(ModeBase* previous)
+void ModeWindowOpen::start(const CallContext& callContext, const ModeBase* previous)
 {
     KoSHC_CHWindowOpenModeActive.value(true, DPT_Switch);
 }
 void ModeWindowOpen::control(const CallContext &callContext)
 {
 }
-void ModeWindowOpen::stop(ModeBase* next)
+void ModeWindowOpen::stop(const CallContext& callContext, const ModeBase* next)
 {
     KoSHC_CHWindowOpenModeActive.value(false, DPT_Switch);
 }

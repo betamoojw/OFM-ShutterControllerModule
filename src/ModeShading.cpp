@@ -247,7 +247,7 @@ GroupObject &ModeShading::getKo(uint8_t ko)
     return knx.getGroupObject(ko + koChannelOffset());
 }
 
-void ModeShading::start(ModeBase* previous)
+void ModeShading::start(const CallContext& callContext, const ModeBase* previous)
 {
     _active = true;
     getKo(SHC_KoCHModeShading1Active).value(true, DPT_Switch);
@@ -298,7 +298,7 @@ void ModeShading::control(const CallContext &callContext)
     }
 }
 
-void ModeShading::stop(ModeBase* next)
+void ModeShading::stop(const CallContext& callContext, const ModeBase* next)
 {
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;

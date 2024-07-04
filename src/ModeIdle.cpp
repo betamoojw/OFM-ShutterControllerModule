@@ -15,13 +15,13 @@ bool ModeIdle::allowed(const CallContext &callContext)
 {
    return true;
 }
-void ModeIdle::start(ModeBase* previous)
+void ModeIdle::start(const CallContext& callContext, const ModeBase* previous)
 {
 }
 void ModeIdle::control(const CallContext &callContext)
 {
 }
-void ModeIdle::stop(ModeBase* next)
+void ModeIdle::stop(const CallContext& callContext, const ModeBase* next)
 {
 }
 void ModeIdle::processInputKo(GroupObject &ko)
