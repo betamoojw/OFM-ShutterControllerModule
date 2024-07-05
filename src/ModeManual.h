@@ -5,10 +5,12 @@ class ModeManual : public ModeBase
 {
     bool _recalcAllowed = true;
     bool _allowed = false;
+    bool _shadingActive = false;
+    bool _firstManualCommandWhileShading = false;
     unsigned long _waitTimeStart = 0;
     std::vector<GroupObject*> _changedGroupObjects = std::vector<GroupObject*>();
     bool _requestStart = false;
-protected:
+ protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;
     void initGroupObjects() override;

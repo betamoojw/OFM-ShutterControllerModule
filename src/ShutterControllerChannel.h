@@ -6,6 +6,7 @@
 class ShutterControllerChannel : public OpenKNX::Channel
 {
         volatile bool _triggered = false;
+        bool _channelLockActive = false;
         std::string _name = std::string();
         std::vector<ModeBase*> _modes;
         ModeManual* _modeManual = nullptr;

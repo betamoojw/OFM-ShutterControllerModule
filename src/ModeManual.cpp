@@ -20,6 +20,14 @@ bool ModeManual::modeWindowOpenAllowed() const
 }
 bool ModeManual::allowed(const CallContext &callContext)
 {
+    if (_shadingActive != callContext.modeCurrentActive->isShading())
+    {
+        _shadingActive = callContext.modeCurrentActive->isShading();
+        if (_shadingActive)
+            _firstManualCommandWhileShading = true;
+        else
+            _firstManualCommandWhileShading = false;
+    }
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
@@ -119,6 +127,12 @@ void ModeManual::processInputKo(GroupObject &ko)
     if (KoSHC_CHManualLockActive.value(DPT_Switch))
         return; // lock active, ignore manual KO's
 
+    if (_firstManualCommandWhileShading)
+    {
+        _firstManualCommandWhileShading = false;
+        if (ParamSHC_ChannelIgnoreFirstManualCommandIfShadingActiv)
+            return;
+    }
     switch (ko.asap())
     {
     case SHC_KoCHManualPercent:

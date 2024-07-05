@@ -5,7 +5,7 @@ class ModeWindowOpen : public ModeBase
 {
     bool _recalcAllowed = true;
     bool _allowed = false;
-protected:
+ protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;
     void initGroupObjects() override;

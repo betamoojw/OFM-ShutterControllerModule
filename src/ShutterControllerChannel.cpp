@@ -18,10 +18,13 @@ const std::string ShutterControllerChannel::name()
 
 void ShutterControllerChannel::setup()
 {
-    KoSHC_CHShadingControl.value(false, DPT_Switch);
-    KoSHC_CHShadingControlActive.value(false, DPT_Switch);
+    KoSHC_CHShadingControl.value(_shadingControlActive, DPT_Switch);
+    KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
     KoSHC_CHShadingActive.value(false, DPT_Switch);
-  
+
+    KoSHC_CHLock.value(_channelLockActive, DPT_Switch);
+    KoSHC_CHLockActive.value(_channelLockActive, DPT_Switch);
+
     // add modes, highest priority first
     _modeManual = new ModeManual();
     if (ParamSHC_ChannelModeWindowOpen)
@@ -65,6 +68,10 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     auto index = SHC_KoCalcIndex(ko.asap());
     switch (index)
     {
+    case SHC_KoCHLock:
+        _channelLockActive = ko.value(DPT_Switch);
+        KoSHC_CHLockActive.value(_channelLockActive, DPT_Switch);
+        break;
     case SHC_KoShadingControlDailyActivation:
         KoSHC_ShadingControlDailyActivationStatus.value(ko.value(DPT_Switch), DPT_Switch);
         break;
@@ -111,9 +118,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
     }
     // Handle daily reactivation
-    if (callContext.minuteChanged && 
-        callContext.minute == 0 && 
-        callContext.hour == 0 && 
+    if (callContext.minuteChanged &&
+        callContext.minute == 0 &&
+        callContext.hour == 0 &&
         KoSHC_ShadingControlDailyActivationStatus.value(DPT_Switch))
     {
         KoSHC_CHShadingControl.value(true, DPT_Switch);
@@ -161,14 +168,22 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         logIndentUp();
         if (mode->allowed(callContext))
         {
-            if (callContext.diagnosticLog)
-                logInfoP("-> allowed");
-            if (nextMode == nullptr &&                         // check if this is the first allowed mode
-                (_shadingControlActive || !mode->isShading())) // check shading allowed to activate
+            if (_channelLockActive && (mode != _modeManual || !ParamSHC_ChannelModeManualIgnoreChannelLock))
             {
-                nextMode = mode;
-                // Do not break because allowed should be called for all modes
-                // because it is a replacment for the loop function
+                if (callContext.diagnosticLog)
+                    logInfoP("-> global channel lock active, not allowed");
+            }
+            else
+            {
+                if (callContext.diagnosticLog)
+                    logInfoP("-> allowed");
+                if (nextMode == nullptr &&                         // check if this is the first allowed mode
+                    (_shadingControlActive || !mode->isShading())) // check shading allowed to activate
+                {
+                    nextMode = mode;
+                    // Do not break because allowed should be called for all modes
+                    // because it is a replacment for the loop function
+                }
             }
         }
         else
