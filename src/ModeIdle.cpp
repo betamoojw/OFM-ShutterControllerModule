@@ -23,6 +23,7 @@ bool ModeIdle::allowed(const CallContext &callContext)
 }
 void ModeIdle::start(const CallContext& callContext, const ModeBase* previous)
 {
+    // For the first start of idle, previous will be null
 }
 void ModeIdle::control(const CallContext &callContext)
 {

@@ -5,6 +5,8 @@
 
 class ShutterControllerChannel : public OpenKNX::Channel
 {
+        int8_t _lastManualPosition = -1;
+        int8_t _lastManualPositionSlat = -1;
         volatile bool _triggered = false;
         bool _channelLockActive = false;
         std::string _name = std::string();
@@ -12,10 +14,13 @@ class ShutterControllerChannel : public OpenKNX::Channel
         ModeManual* _modeManual = nullptr;
         ModeIdle* _modeIdle = nullptr;
         ModeBase* _currentMode = nullptr;
-        bool _shadingControlActive;
-        bool _shadowActive = false;
+        bool _shadingControlActive = false;
+        bool _anyShadingModeActive = false;
+        bool _anyAutoModeActive = false;
         unsigned long _waitTimeForReactivateShadingAfterManualStarted = 0;
         bool _waitForShadingPeriodEnd = false;
+        void shadingStarted();
+        void shadingStopped();
     public:
         ShutterControllerChannel(uint8_t channelIndex);
         const std::string name() override;

@@ -132,8 +132,8 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
             logInfoP("No valid time");
         else
         {
-            logInfoP("Local Time: %04d-%02d-%02d %02d-%02d %s", (int)_callContext.year, (int)_callContext.month, (int)_callContext.day, (int)_callContext.hour, (int)_callContext.minute, _callContext.summerTime ? "Summertime" : "Wintertime");
-            logInfoP("UTC: %04d-%02d-%02d %02d-%02d", (int)_callContext.UtcYear, (int)_callContext.UtcMonth, (int)_callContext.UtcDay, (int)_callContext.UtcHour, (int)_callContext.UtcMinute);
+            logInfoP("Local Time: %04d-%02d-%02d %02d:%02d %s", (int)_callContext.year, (int)_callContext.month, (int)_callContext.day, (int)_callContext.hour, (int)_callContext.minute, _callContext.summerTime ? "Summertime" : "Wintertime");
+            logInfoP("UTC: %04d-%02d-%02d %02d:%02d", (int)_callContext.UtcYear, (int)_callContext.UtcMonth, (int)_callContext.UtcDay, (int)_callContext.UtcHour, (int)_callContext.UtcMinute);
             logInfoP("Aizmut: %.2f°", (double)_callContext.azimuth);
             logInfoP("Elevation: %.2f°", (double)_callContext.elevation);
         }

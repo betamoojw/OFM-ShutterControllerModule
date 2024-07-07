@@ -116,7 +116,7 @@
 								<!-- Heizung Aktiv -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="31" BitOffset="1" Name="Channel%C%ModeShading%Pn%HeatingActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Heizung" Value="0" />
 								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="1" BitOffset="2" Name="Channel%C%ModeShading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="31" BitOffset="2" Name="Channel%C%ModeShading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
 
 								<!-- 5 Bits free -->
 

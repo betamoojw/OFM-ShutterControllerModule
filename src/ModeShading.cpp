@@ -7,6 +7,7 @@
 #define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_ChannelModeShading2 - SHC_ChannelModeShading1) * (_index - 1))
 #endif
 
+
 ModeShading::ModeShading(uint8_t index)
     : _index(index)
 {
@@ -68,6 +69,15 @@ bool ModeShading::allowed(const CallContext &callContext)
             _allowedByMeasurementValues = allowedByMeasurementValues;
             if (allowedByMeasurementValues)
                 _needWaitTime = true;
+
+            if (allowedByMeasurementValues && _active)
+                _waitTimeAfterMeasurmentValueChange = 0; // Currently active and allowed, not need to wait
+
+        
+            logDebugP("Need wait time: %d", (int)_needWaitTime);
+            logDebugP("Wait time start set: %d", (int)(_waitTimeAfterMeasurmentValueChange != 0));
+            logDebugP("Allowed by sun: %d", (int)_lastTimeAndSunFrameAllowed);
+   
         }
     }
     if (_waitTimeAfterMeasurmentValueChange != 0)
@@ -76,22 +86,22 @@ bool ModeShading::allowed(const CallContext &callContext)
         if (lastState)
         {
             // Check end wait time
-            auto waitTimeInMinutes = (unsigned long)ParamSHC_ChannelModeShading1WaitTimeStart;
+            auto waitTimeInMinutes = (unsigned long)ParamSHC_ChannelModeShading1WaitTimeEnd;
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Stop wait time %dms not reached: %dms", waitTimeInMinutes * 60000, (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange));
+                    logInfoP("Stop wait time %ds not reached: %ds", (int) waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
                 return lastState;
             }
         }
         else
         {
             // Check start wait time
-            auto waitTimeInMinutes = (unsigned long)ParamSHC_ChannelModeShading1WaitTimeEnd;
+            auto waitTimeInMinutes = (unsigned long)ParamSHC_ChannelModeShading1WaitTimeStart;
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Start wait time %dms not reached: %dms", waitTimeInMinutes * 60000, (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange));
+                    logInfoP("Start wait time %ds not reached: %ds", (int) waitTimeInMinutes * 60, (int) ((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
                 return lastState;
             }
         }
@@ -291,10 +301,10 @@ void ModeShading::control(const CallContext &callContext)
         if (callContext.diagnosticLog)
             logInfoP("Calculated slat position %d", (int)slatPosition);
 
-        if (!callContext.newStarted && abs((int)KoSHC_CHShutterPercentOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_ChannelModeShading2MinChangeForSlatAdaption)
+        if (!callContext.newStarted && abs((int)KoSHC_CHShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_ChannelModeShading1MinChangeForSlatAdaption)
         {
             if (callContext.diagnosticLog)
-                logInfoP("Slat position %d difference is less then %d", (int)abs((int)KoSHC_CHShutterPercentOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_ChannelModeShading2MinChangeForSlatAdaption);
+                logInfoP("Slat position %d difference is less then %d", (int)abs((int)KoSHC_CHShutterSlatOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_ChannelModeShading1MinChangeForSlatAdaption);
 
             return; // Do not change, to less difference
         }
@@ -308,6 +318,7 @@ void ModeShading::stop(const CallContext &callContext, const ModeBase *next)
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;
     getKo(SHC_KoCHModeShading1Active).value(false, DPT_Switch);
+
 }
 void ModeShading::processInputKo(GroupObject &ko)
 {
@@ -317,8 +328,17 @@ void ModeShading::processInputKo(GroupObject &ko)
     case SHC_KoCHModeShading1Lock:
         _lockActive = ko.value(DPT_Switch);
         getKo(SHC_KoCHModeShading1LockActive).value(_lockActive, DPT_Switch);
+        _waitTimeAfterMeasurmentValueChange = 0; // lock does not use wait time
         _recalcMeasurmentValues = true;
-        break;
+        return;
+    }
+    // global ko
+    switch (ko.asap())
+    {
+        case SHC_KoCHShadingControl:
+            // Manual activativation / deativiation stop wait time
+            _waitTimeAfterMeasurmentValueChange = 0;
+            return;
     }
     _recalcMeasurmentValues = true;
 }

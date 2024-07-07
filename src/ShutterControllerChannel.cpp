@@ -18,6 +18,10 @@ const std::string ShutterControllerChannel::name()
 
 void ShutterControllerChannel::setup()
 {
+    KoSHC_CHShutterPercentInput.requestObjectRead();
+    if (ParamSHC_ChannelType == 1)
+        KoSHC_CHShutterSlatInput.requestObjectRead();
+
     KoSHC_CHShadingControl.value(_shadingControlActive, DPT_Switch);
     KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
     KoSHC_CHShadingActive.value(false, DPT_Switch);
@@ -110,13 +114,13 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.newStarted = false;
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
-    callContext.modeCurrentActive = _currentMode;
     if (_currentMode == nullptr)
     {
         _currentMode = _modeIdle;
         _currentMode->start(callContext, callContext.modeCurrentActive);
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
     }
+    callContext.modeCurrentActive = _currentMode;
     // Handle daily reactivation
     if (callContext.minuteChanged &&
         callContext.minute == 0 &&
@@ -177,12 +181,22 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             {
                 if (callContext.diagnosticLog)
                     logInfoP("-> allowed");
-                if (nextMode == nullptr &&                         // check if this is the first allowed mode
-                    (_shadingControlActive || !mode->isShading())) // check shading allowed to activate
+                if (nextMode == nullptr) // check if this is the first allowed mode
                 {
-                    nextMode = mode;
+                    if (!_shadingControlActive && mode->isShading())
+                    {
+                        if (callContext.diagnosticLog)
+                            logInfoP("-> but ignored, because global shadow not alloewd");
+                    }
+                    else
+                        nextMode = mode;
                     // Do not break because allowed should be called for all modes
                     // because it is a replacment for the loop function
+                }
+                else
+                {
+                    if (callContext.diagnosticLog)
+                        logInfoP("-> but ignored because other mode has higher priority");
                 }
             }
         }
@@ -202,19 +216,44 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             if (_currentMode->isShading())
             {
                 _shadingControlActive = false;
-                KoSHC_CHShadingControlActive.value(false, DPT_Switch);
                 if (ParamSHC_ChannelWaitTimeAfterManualUsageForShading != 0)
                     _waitTimeForReactivateShadingAfterManualStarted = callContext.currentMillis;
                 else
                     _waitForShadingPeriodEnd = true;
             }
         }
+        bool nextModeIsAutoMode = nextMode != _modeIdle && nextMode != _modeManual;
+        if (nextModeIsAutoMode != _anyAutoModeActive)
+        {
+            if (nextModeIsAutoMode)
+            {
+                // leave manual mode, store current position
+                if (KoSHC_CHShutterPercentInput.initialized())
+                    _lastManualPosition = KoSHC_CHShutterPercentInput.value(DPT_Scaling);
+                else
+                    _lastManualPosition = -1;
+
+                if (ParamSHC_ChannelType == 1)
+                {
+                    // leave manual mode, store current position
+                    if (KoSHC_CHShutterSlatInput.initialized())
+                        _lastManualPositionSlat = KoSHC_CHShutterSlatInput.value(DPT_Scaling);
+                    else
+                        _lastManualPositionSlat = -1;
+                }
+                logDebugP("Mode changed to auto mode, store position: %d, slat: %d", (int)_lastManualPosition, (int)_lastManualPositionSlat);
+            }
+            _anyAutoModeActive = nextModeIsAutoMode;
+        }
+
         if (_currentMode != nullptr)
         {
             logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
             _currentMode->stop(callContext, nextMode);
-            if (_currentMode->isShading() && !_shadowActive)
-                KoSHC_CHShadingActive.value(false, DPT_Switch);
+            if (!nextMode->isShading() && _anyShadingModeActive)
+            {
+                shadingStopped();
+            }
         }
         else
         {
@@ -222,18 +261,57 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         auto previousMode = _currentMode;
         _currentMode = nextMode;
+        if (_currentMode->isShading() && !_anyShadingModeActive)
+        {
+            shadingStarted();
+        }
         _currentMode->start(callContext, previousMode);
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
         callContext.newStarted = true;
-        if (_currentMode->isShading() != _shadowActive)
-        {
-            _shadowActive = _currentMode->isShading();
-            if (_shadowActive)
-                KoSHC_CHShadingActive.value(true, DPT_Switch);
-        }
     }
     _currentMode->control(callContext);
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
     callContext.modeCurrentActive = nullptr;
+}
+
+void ShutterControllerChannel::shadingStarted()
+{
+    _anyShadingModeActive = true;
+    KoSHC_CHShadingActive.value(true, DPT_Switch);
+}
+
+void ShutterControllerChannel::shadingStopped()
+{
+    _anyShadingModeActive = false;
+    KoSHC_CHShadingActive.value(false, DPT_Switch);
+    // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+    switch (ParamSHC_ChannelAfterShading)
+    {
+    case 1:
+        if (_lastManualPosition != -1)
+            KoSHC_CHShutterPercentOutput.value((uint8_t)_lastManualPosition, DPT_Scaling);
+        else
+            KoSHC_CHShutterPercentOutput.value((uint8_t)0, DPT_Scaling);
+        if (ParamSHC_ChannelType == 1)
+        {
+            if (_lastManualPositionSlat != -1)
+                KoSHC_CHShutterSlatOutput.value((uint8_t)_lastManualPositionSlat, DPT_Scaling);
+            else
+                KoSHC_CHShutterSlatOutput.value((uint8_t)0, DPT_Scaling);
+        }
+        break;
+    case 2: // Fährt auf
+        KoSHC_CHShutterPercentOutput.value(0, DPT_Scaling);
+        if (ParamSHC_ChannelType == 1)
+            KoSHC_CHShutterSlatOutput.value(0, DPT_Scaling);
+        break;
+    case 3:
+        if (ParamSHC_ChannelType == 1)
+            KoSHC_CHShutterSlatOutput.value(50, DPT_Scaling);
+        break;
+    }
 }
