@@ -32,7 +32,10 @@ void ShutterControllerChannel::setup()
     // add modes, highest priority first
     _modeManual = new ModeManual();
     if (ParamSHC_ChannelModeWindowOpen)
-        _modes.push_back(new ModeWindowOpen());
+    {
+        _modeWindowOpen = new ModeWindowOpen();
+        _modes.push_back(_modeWindowOpen);
+    }
 
     _modes.push_back(_modeManual);
 
@@ -105,6 +108,30 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         }
         return true;
     }
+    else if (cmd == "s1")
+    {
+        KoSHC_CHShadingControl.value(1, DPT_Switch);
+        processInputKo(KoSHC_CHShadingControl);
+        return true;
+    }
+    else if (cmd == "s0")
+    {
+        KoSHC_CHShadingControl.value(0, DPT_Switch);
+        processInputKo(KoSHC_CHShadingControl);
+        return true;
+    }
+    else if (cmd == "w1")
+    {
+        KoSHC_CHWindow.value(1, DPT_OpenClose);
+        processInputKo(KoSHC_CHWindow);
+        return true;
+    }
+    else if (cmd == "w0")
+    {
+        KoSHC_CHWindow.value(0, DPT_OpenClose);
+        processInputKo(KoSHC_CHWindow);
+        return true;
+    }
     return false;
 }
 
@@ -146,6 +173,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         bool allShadingPeriodsEnd = true;
         for (auto mode : _modes)
         {
+            if (mode == _modeWindowOpen && _handleWindowOpenAsShading != nullptr)
+                mode = _handleWindowOpenAsShading;
             if (mode->isShading())
             {
                 auto modeShading = (ModeShading *)mode;
@@ -164,6 +193,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
     }
     // State machine handling for mode activateion
+    bool currentModeAllowed = false;
     for (auto mode : _modes)
     {
         if (callContext.diagnosticLog)
@@ -172,6 +202,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         logIndentUp();
         if (mode->allowed(callContext))
         {
+            if (mode == _currentMode)
+                currentModeAllowed = true;
             if (_channelLockActive && (mode != _modeManual || !ParamSHC_ChannelModeManualIgnoreChannelLock))
             {
                 if (callContext.diagnosticLog)
@@ -213,7 +245,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (nextMode == _modeManual)
         {
             // If manual mode stops shading, temporary disable Shadingcontrol
-            if (_currentMode->isShading())
+            if (_currentMode->isShading() || (_currentMode == _modeWindowOpen && _handleWindowOpenAsShading != nullptr))
             {
                 _shadingControlActive = false;
                 if (ParamSHC_ChannelWaitTimeAfterManualUsageForShading != 0)
@@ -249,10 +281,19 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (_currentMode != nullptr)
         {
             logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
+            _handleWindowOpenAsShading = nullptr;
             _currentMode->stop(callContext, nextMode);
             if (!nextMode->isShading() && _anyShadingModeActive)
             {
-                shadingStopped();
+                if (nextMode == _modeWindowOpen && currentModeAllowed)
+                {
+                    // shading still allowed, handle windowOpen as shading mode
+                    _handleWindowOpenAsShading = (ModeShading*) _currentMode;
+                }
+                else
+                {
+                    shadingStopped();
+                }
             }
         }
         else
@@ -277,12 +318,14 @@ void ShutterControllerChannel::execute(CallContext &callContext)
 
 void ShutterControllerChannel::shadingStarted()
 {
+    logInfoP("Shading started");
     _anyShadingModeActive = true;
     KoSHC_CHShadingActive.value(true, DPT_Switch);
 }
 
 void ShutterControllerChannel::shadingStopped()
 {
+    logInfoP("Shading stopped");  
     _anyShadingModeActive = false;
     KoSHC_CHShadingActive.value(false, DPT_Switch);
     // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />

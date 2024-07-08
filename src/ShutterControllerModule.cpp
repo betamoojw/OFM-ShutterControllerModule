@@ -37,10 +37,12 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc f<value>", "Set temperature forecast. i.e. sc f28.3");
     openknx.console.printHelpLine("sc b<value>", "Set brightness. i.e. sb b1000");
     openknx.console.printHelpLine("sc u<value>", "Set UV index. i.e. sb u1.5");
-    openknx.console.printHelpLine("sc r<0|1>",   "Set rain. i.e. sb r1");
+    openknx.console.printHelpLine("sc r<0|1>", "Set rain. i.e. sb r1");
     openknx.console.printHelpLine("sc c<value>", "Set clouds. i.e. sb c20");
     openknx.console.printHelpLine("sc d<YYMMDDhh2mm>", "Set date/time . i.e. d d2304151733");
     openknx.console.printHelpLine("sc<CC>", "Show information of channel CC. i.e. sc01");
+    openknx.console.printHelpLine("sc<CC> s<0|1>", "Disabled or enable shadow of channel CC. i.e. sc01 s1");
+    openknx.console.printHelpLine("sc<CC> w<0|1>", "Close or open window of channel CC. i.e. sc01 w1");
 }
 
 void ShutterControllerModule::loop()
@@ -139,7 +141,7 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         return true;
     }
-    else if (cmd.rfind("sc " ) == 0)
+    else if (cmd.rfind("sc ") == 0)
     {
         // module commands
         auto moduleCommand = cmd.substr(3);
@@ -189,19 +191,43 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         {
             logInfoP("Set date/time");
             tm tm = {0};
-            tm.tm_year = stoi(moduleCommand.substr(1, 2)) + 2000;
-            tm.tm_mon = stoi(moduleCommand.substr(3, 2));
-            tm.tm_mday = stoi(moduleCommand.substr(5, 2));
-            tm.tm_hour = stoi(moduleCommand.substr(7, 2));
-            tm.tm_min = stoi(moduleCommand.substr(9, 2));          
-            logInfoP("%04d-%02d-%02d %02d:%02d", (int) tm.tm_year, (int) tm.tm_mon, (int) tm.tm_mday, (int) tm.tm_hour, (int) tm.tm_min);
+            if (moduleCommand.length() == 1)
+            {
+                tm.tm_year = 2024;
+                tm.tm_mon = 7;
+                tm.tm_mday = 1;
+                tm.tm_hour = 15;
+                tm.tm_min = 0;
+            }
+            else if (moduleCommand.length() == 5)
+            {
+                tm.tm_year = Timer::instance().isTimerValid() ? Timer::instance().getYear() : 2024;
+                tm.tm_mon = Timer::instance().isTimerValid() ? Timer::instance().getMonth() : 1;
+                tm.tm_mday = Timer::instance().isTimerValid() ? Timer::instance().getDay() : 7;
+                tm.tm_hour = stoi(moduleCommand.substr(1, 2));
+                tm.tm_min = stoi(moduleCommand.substr(3, 2));
+            }
+            else if (moduleCommand.length() == 11)
+            {
+                tm.tm_year = stoi(moduleCommand.substr(1, 2)) + 2000;
+                tm.tm_mon = stoi(moduleCommand.substr(3, 2));
+                tm.tm_mday = stoi(moduleCommand.substr(5, 2));
+                tm.tm_hour = stoi(moduleCommand.substr(7, 2));
+                tm.tm_min = stoi(moduleCommand.substr(9, 2));
+            }
+            else
+            {
+                logInfoP("Invalid time format");
+                return true;
+            }
+            logInfoP("%04d-%02d-%02d %02d:%02d", (int)tm.tm_year, (int)tm.tm_mon, (int)tm.tm_mday, (int)tm.tm_hour, (int)tm.tm_min);
             Timer::instance().setDateTimeFromBus(&tm);
             return true;
         }
         else
         {
             logInfoP("Unkown ShutterControllerModule command '%s'", moduleCommand.c_str());
-            return true;    
+            return true;
         }
     }
     else if (cmd.rfind("sc", 0) == 0)

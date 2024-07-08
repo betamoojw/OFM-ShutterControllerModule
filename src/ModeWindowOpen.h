@@ -5,6 +5,8 @@ class ModeWindowOpen : public ModeBase
 {
     bool _recalcAllowed = true;
     bool _allowed = false;
+    int8_t _slatToRestore = -1;
+    int8_t _positionToRestore = -1;
  protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;
