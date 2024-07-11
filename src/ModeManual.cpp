@@ -135,6 +135,15 @@ void ModeManual::processInputKo(GroupObject &ko)
     }
     switch (ko.asap())
     {
+    case SHC_KoCHManuelStopStart:
+        if (!ko.value(DPT_Switch))
+        {
+            _waitTimeStart = 0; // Stop manual mode immeditaly
+            return;
+        }
+         _changedGroupObjects.push_back(&ko);
+        _requestStart = true;
+        break;
     case SHC_KoCHManualPercent:
     case SHC_KoCHManualStepStop:
     case SHC_KoCHManualUpDown:

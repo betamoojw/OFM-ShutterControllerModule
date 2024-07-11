@@ -10,3 +10,5 @@
 - Restore Berechnung:
   - Auswertung Manual Input, bei Up-Down 0 bzw. 100% annehmen, bei Stop warten auf Feedback
 - Parameter Initial Beschattung aktive
+- Parameternamen kürzen
+- Mehre Fensteroffen Modus (Z.B. Offen, gekippt)
