@@ -21,14 +21,14 @@ bool ModeIdle::allowed(const CallContext &callContext)
 {
    return true;
 }
-void ModeIdle::start(const CallContext& callContext, const ModeBase* previous)
+void ModeIdle::start(const CallContext& callContext, const ModeBase* previous, PositionController& positionController)
 {
     // For the first start of idle, previous will be null
 }
-void ModeIdle::control(const CallContext &callContext)
+void ModeIdle::control(const CallContext &callContext, PositionController& positionController)
 {
 }
-void ModeIdle::stop(const CallContext& callContext, const ModeBase* next)
+void ModeIdle::stop(const CallContext& callContext, const ModeBase* next, PositionController& positionController)
 {
 }
 void ModeIdle::processInputKo(GroupObject &ko)

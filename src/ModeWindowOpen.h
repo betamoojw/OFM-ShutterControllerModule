@@ -13,8 +13,8 @@ class ModeWindowOpen : public ModeBase
     void initGroupObjects() override;
     bool modeWindowOpenAllowed() const override;
     bool allowed(const CallContext& callContext) override;
-    void start(const CallContext& callContext, const ModeBase* previous) override;
-    void control(const CallContext& callContext) override;
-    void stop(const CallContext& callContext, const ModeBase* next) override;
+    void start(const CallContext& callContext, const ModeBase* previous, PositionController& positionController) override;
+    void control(const CallContext& callContext, PositionController& positionController) override;
+    void stop(const CallContext& callContext, const ModeBase* next, PositionController& positionController) override;
     void processInputKo(GroupObject &ko) override;
 };

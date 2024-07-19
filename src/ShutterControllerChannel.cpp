@@ -6,7 +6,7 @@
 #include "ModeIdle.h"
 
 ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
-    : _modes()
+    : _modes(), _positionController(channelIndex)
 {
     _name = "SC";
 }
@@ -89,6 +89,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
         KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
         break;
     }
+    _positionController.processInputKo(ko);
     for (auto mode : _modes)
     {
         mode->processInputKo(ko);
@@ -144,7 +145,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     if (_currentMode == nullptr)
     {
         _currentMode = _modeIdle;
-        _currentMode->start(callContext, callContext.modeCurrentActive);
+        _currentMode->start(callContext, callContext.modeCurrentActive, _positionController);
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
     }
     callContext.modeCurrentActive = _currentMode;
@@ -257,24 +258,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         bool nextModeIsAutoMode = nextMode != _modeIdle && nextMode != _modeManual;
         if (nextModeIsAutoMode != _anyAutoModeActive)
         {
-            if (nextModeIsAutoMode)
-            {
-                // leave manual mode, store current position
-                if (KoSHC_CHShutterPercentInput.initialized())
-                    _lastManualPosition = KoSHC_CHShutterPercentInput.value(DPT_Scaling);
-                else
-                    _lastManualPosition = -1;
-
-                if (ParamSHC_ChannelType == 1)
-                {
-                    // leave manual mode, store current position
-                    if (KoSHC_CHShutterSlatInput.initialized())
-                        _lastManualPositionSlat = KoSHC_CHShutterSlatInput.value(DPT_Scaling);
-                    else
-                        _lastManualPositionSlat = -1;
-                }
-                logDebugP("Mode changed to auto mode, store position: %d, slat: %d", (int)_lastManualPosition, (int)_lastManualPositionSlat);
-            }
             _anyAutoModeActive = nextModeIsAutoMode;
         }
 
@@ -282,7 +265,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         {
             logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
             _handleWindowOpenAsShading = nullptr;
-            _currentMode->stop(callContext, nextMode);
+            _currentMode->stop(callContext, nextMode, _positionController);
             if (!nextMode->isShading() && _anyShadingModeActive)
             {
                 if (nextMode == _modeWindowOpen && currentModeAllowed)
@@ -306,11 +289,13 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         {
             shadingStarted();
         }
-        _currentMode->start(callContext, previousMode);
+        _currentMode->start(callContext, previousMode, _positionController);
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
         callContext.newStarted = true;
     }
-    _currentMode->control(callContext);
+    _currentMode->control(callContext, _positionController);
+    _positionController.control(callContext);
+
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
     callContext.modeCurrentActive = nullptr;
@@ -335,26 +320,14 @@ void ShutterControllerChannel::shadingStopped()
     switch (ParamSHC_ChannelAfterShading)
     {
     case 1:
-        if (_lastManualPosition != -1)
-            KoSHC_CHShutterPercentOutput.value((uint8_t)_lastManualPosition, DPT_Scaling);
-        else
-            KoSHC_CHShutterPercentOutput.value((uint8_t)0, DPT_Scaling);
-        if (ParamSHC_ChannelType == 1)
-        {
-            if (_lastManualPositionSlat != -1)
-                KoSHC_CHShutterSlatOutput.value((uint8_t)_lastManualPositionSlat, DPT_Scaling);
-            else
-                KoSHC_CHShutterSlatOutput.value((uint8_t)0, DPT_Scaling);
-        }
+        _positionController.restoreLastManualPosition();
         break;
     case 2: // Fährt auf
-        KoSHC_CHShutterPercentOutput.value(0, DPT_Scaling);
-        if (ParamSHC_ChannelType == 1)
-            KoSHC_CHShutterSlatOutput.value(0, DPT_Scaling);
+        _positionController.setManualPosition(0); // Handled as manual operation because the value should be stored
+        _positionController.setManualSlat(0); // Handled as manual operation because the value should be stored
         break;
     case 3:
-        if (ParamSHC_ChannelType == 1)
-            KoSHC_CHShutterSlatOutput.value(50, DPT_Scaling);
+        _positionController.setManualSlat(50); // Handled as manual operation because the value should be stored
         break;
     }
 }

@@ -8,7 +8,7 @@ void ModeBase::setup(uint8_t _channelIndex)
     initGroupObjects();
 }
 
-const std::string ModeBase::logPrefix()
+const std::string& ModeBase::logPrefix()
 {
     return _logPrefix;
 }

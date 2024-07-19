@@ -2,14 +2,13 @@
 #include "OpenKNX.h"
 #include "ModeBase.h"
 #include "CallContext.h"
+#include "PositionController.h"
 
 class ModeWindowOpen;
 class ModeShading;
 
 class ShutterControllerChannel : public OpenKNX::Channel
 {
-        int8_t _lastManualPosition = -1;
-        int8_t _lastManualPositionSlat = -1;
         volatile bool _triggered = false;
         bool _channelLockActive = false;
         std::string _name = std::string();
@@ -18,6 +17,7 @@ class ShutterControllerChannel : public OpenKNX::Channel
         ModeWindowOpen* _modeWindowOpen = nullptr;
         ModeIdle* _modeIdle = nullptr;
         ModeBase* _currentMode = nullptr;
+        PositionController _positionController;
         bool _shadingControlActive = false;
         bool _anyShadingModeActive = false;
         bool _anyAutoModeActive = false;

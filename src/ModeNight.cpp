@@ -1,4 +1,5 @@
 #include "ModeNight.h"
+#include "PositionController.h"
 
 const char *ModeNight::name() const
 {
@@ -171,35 +172,29 @@ double ModeNight::getElevationFromSunRiseParameter()
     }
 }
 
-void ModeNight::start(const CallContext &callContext, const ModeBase *previous)
+void ModeNight::start(const CallContext &callContext, const ModeBase *previous, PositionController& positionController)
 {
     KoSHC_CHModeNightActive.value(true, DPT_Switch);
     if (ParamSHC_ChannelModeNightStartPositionEnabled)
     {
-        KoSHC_CHShutterPercentOutput.value(ParamSHC_ChannelModeNightStartPositionEnabled, DPT_Scaling);
-        // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
-        // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
-        // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
-        if (ParamSHC_ChannelType == 1)
-            KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
+        // Use manual modes, because the position should be stored as last manual position
+        positionController.setManualPosition(ParamSHC_ChannelNightModeStartPosition);
+        positionController.setManualSlat(ParamSHC_ChannelNightModeStartSlatPosition);
     }
 }
 
-void ModeNight::control(const CallContext &callContext)
+void ModeNight::control(const CallContext &callContext, PositionController& positionController)
 {
 }
 
-void ModeNight::stop(const CallContext &callContext, const ModeBase *next)
+void ModeNight::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
     KoSHC_CHModeNightActive.value(false, DPT_Switch);
-    if (next != (const ModeBase *)callContext.modeManual && ParamSHC_ChannelModeNightStartPositionEnabled)
+    if (next != (const ModeBase *)callContext.modeManual && ParamSHC_ChannelModeNightStopPositionEnabled)
     {
-        KoSHC_CHShutterPercentOutput.value(ParamSHC_ChannelModeNightStartPositionEnabled, DPT_Scaling);
-        // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
-        // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
-        // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
-        if (ParamSHC_ChannelType == 1)
-            KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelNightModeStartSlatPosition, DPT_Scaling);
+        // Use manual modes, because the position should be stored as last manual position
+        positionController.setManualPosition(ParamSHC_ChannelNightModeStopPosition); 
+        positionController.setManualSlat(ParamSHC_ChannelNightModeStopSlatPosition);
     }
 }
 

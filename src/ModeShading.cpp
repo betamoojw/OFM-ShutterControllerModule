@@ -1,5 +1,6 @@
 #include "ModeShading.h"
 #include "Timer.h"
+#include "PositionController.h"
 
 #ifdef SHC_KoCHModeShading2Active
 // redefine SHC_ParamCalcIndex to add offset for Shading Mode 2
@@ -263,22 +264,21 @@ GroupObject &ModeShading::getKo(uint8_t ko)
     return knx.getGroupObject(ko + koChannelOffset());
 }
 
-void ModeShading::start(const CallContext &callContext, const ModeBase *previous)
+void ModeShading::start(const CallContext &callContext, const ModeBase *previous, PositionController& positionController)
 {
     _active = true;
     getKo(SHC_KoCHModeShading1Active).value(true, DPT_Switch);
 
-    auto shutterPosition = ParamSHC_ChannelModeShading1ShadingPosition;
-    KoSHC_CHShutterPercentOutput.value(shutterPosition, DPT_Scaling);
+    positionController.setAutomaticPosition(ParamSHC_ChannelModeShading1ShadingPosition);
 
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
     // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
     // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
     if (ParamSHC_ChannelType == 1 && !ParamSHC_ChannelModeShading1SlatElevationDepending)
-        KoSHC_CHShutterSlatOutput.value(ParamSHC_ChannelModeShading1SlatShadingPosition, DPT_Scaling);
+        positionController.setAutomaticSlat(ParamSHC_ChannelModeShading1SlatShadingPosition);
 }
 
-void ModeShading::control(const CallContext &callContext)
+void ModeShading::control(const CallContext &callContext, PositionController& positionController)
 {
     if (!callContext.newStarted && !callContext.minuteChanged && !callContext.diagnosticLog)
         return;
@@ -308,12 +308,11 @@ void ModeShading::control(const CallContext &callContext)
 
             return; // Do not change, to less difference
         }
-
-        KoSHC_CHShutterSlatOutput.value(slatPosition, DPT_Scaling);
+        positionController.setAutomaticSlat(slatPosition);
     }
 }
 
-void ModeShading::stop(const CallContext &callContext, const ModeBase *next)
+void ModeShading::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;

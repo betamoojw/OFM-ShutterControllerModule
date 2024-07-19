@@ -1,4 +1,5 @@
 #include "ModeWindowOpen.h"
+#include "PositionController.h"
 
 const char *ModeWindowOpen::name() const
 {
@@ -51,7 +52,7 @@ bool ModeWindowOpen::allowed(const CallContext &callContext)
     }
     return _allowed;
 }
-void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previous)
+void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previous, PositionController& positionController)
 {
     _positionToRestore = -1;
     _slatToRestore = -1;
@@ -78,14 +79,14 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
                 _positionToRestore = currentPositionValue;
                 if (callContext.diagnosticLog)
                     logInfoP("Set shutter to %d%%", (int)(position));
-                KoSHC_CHShutterPercentOutput.value(position, DPT_Scaling);
+                positionController.setAutomaticPosition(position);
             }
             break;
         case 2:
             _positionToRestore = currentPositionValue;
             if (callContext.diagnosticLog)
                 logInfoP("Set shutter to %d%%", (int)(position));
-            KoSHC_CHShutterPercentOutput.value(position, DPT_Scaling);
+            positionController.setAutomaticPosition(position);
             break;
         }
     }
@@ -113,32 +114,32 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
                     _slatToRestore = currentSlatValue;
                     if (callContext.diagnosticLog)
                         logInfoP("Set slat to %d%%", (int)(slatPosition));
-                    KoSHC_CHShutterSlatOutput.value(slatPosition, DPT_Scaling);
+                    positionController.setAutomaticSlat(slatPosition);
                 }
                 break;
             case 2:
                 _slatToRestore = currentSlatValue;
                 if (callContext.diagnosticLog)
                     logInfoP("Set slat to %d%%", (int)(slatPosition));
-                KoSHC_CHShutterSlatOutput.value(slatPosition, DPT_Scaling);
+                positionController.setAutomaticSlat(slatPosition);
                 break;
             }
         }
     }
 }
-void ModeWindowOpen::control(const CallContext &callContext)
+void ModeWindowOpen::control(const CallContext &callContext, PositionController& positionController)
 {
 }
-void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next)
+void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
     if (_positionToRestore != -1)
     {
-        KoSHC_CHShutterPercentOutput.value((uint8_t)_positionToRestore, DPT_Scaling);
+        positionController.setAutomaticPosition(_positionToRestore);
         _positionToRestore = -1;
     }
     if (_slatToRestore != -1)
     {
-        KoSHC_CHShutterSlatOutput.value((uint8_t)_slatToRestore, DPT_Scaling);
+        positionController.setAutomaticSlat(_slatToRestore);
         _slatToRestore = -1;
     }
     KoSHC_CHWindowOpenModeActive.value(false, DPT_Switch);

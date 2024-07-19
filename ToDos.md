@@ -12,3 +12,4 @@
 - Parameter Initial Beschattung aktive
 - Parameternamen kürzen
 - Mehre Fensteroffen Modus (Z.B. Offen, gekippt)
+- Letzte Heizanforderung vor mindestens X Minuten/Stunden

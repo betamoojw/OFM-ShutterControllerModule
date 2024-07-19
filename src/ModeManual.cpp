@@ -1,4 +1,5 @@
 #include "ModeManual.h"
+#include "PositionController.h"
 
 const char *ModeManual::name() const
 {
@@ -55,11 +56,11 @@ bool ModeManual::allowed(const CallContext &callContext)
     }
     return false;
 }
-void ModeManual::start(const CallContext& callContext, const ModeBase *previous)
+void ModeManual::start(const CallContext& callContext, const ModeBase *previous, PositionController& positionController)
 {
     KoSHC_CHManuelActiv.value(true, DPT_Switch);
 }
-void ModeManual::control(const CallContext &callContext)
+void ModeManual::control(const CallContext &callContext, PositionController& positionController)
 {
     if (_changedGroupObjects.empty())
         return;
@@ -74,36 +75,16 @@ void ModeManual::control(const CallContext &callContext)
             switch (ko->asap())
             {
             case SHC_KoCHManualPercent:
-                KoSHC_CHShutterPercentOutput.value(ko->value(DPT_Scaling), DPT_Scaling);
+                positionController.setManualPosition(ko->value(DPT_Scaling));
                 break;
             case SHC_KoCHManualStepStop:
-                KoSHC_CHShutterStopStepOutput.value(ko->value(DPT_Step), DPT_Step);
+                positionController.setManualStep(ko->value(DPT_Step));
                 break;
             case SHC_KoCHManualUpDown:
-                // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
-                // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-                if (mode == 1)
-                {
-                    KoSHC_CHShutterUpDownOutput.value(ko->value(DPT_UpDown), DPT_UpDown);
-                }
-                else
-                {
-                    if (ko->value(DPT_UpDown))
-                    {
-                        // Up
-                        KoSHC_CHShutterPercentOutput.value(0, DPT_Scaling);
-                        KoSHC_CHShutterSlatOutput.value(0, DPT_Scaling);
-                    }
-                    else
-                    {
-                        // Down
-                        KoSHC_CHShutterPercentOutput.value(100, DPT_Scaling);
-                        KoSHC_CHShutterSlatOutput.value(100, DPT_Scaling);
-                    }
-                }
+                positionController.setManualUpDown(ko->value(DPT_UpDown));
                 break;
             case SHC_KoCHManualSlatPercent:
-                KoSHC_CHShutterSlatOutput.value(ko->value(DPT_Scaling), DPT_Scaling);
+                positionController.setManualSlat(ko->value(DPT_Scaling));
                 break;
             default:
                 break;
@@ -112,7 +93,7 @@ void ModeManual::control(const CallContext &callContext)
     }
     _changedGroupObjects.clear();
 }
-void ModeManual::stop(const CallContext& callContext, const ModeBase *next)
+void ModeManual::stop(const CallContext& callContext, const ModeBase *next, PositionController& positionController)
 {
     KoSHC_CHManuelActiv.value(false, DPT_Switch);
 }
