@@ -17,6 +17,7 @@ class PositionController
     const std::string& logPrefix();
 public:
     PositionController(uint8_t channelIndex);
+    bool hasSlat() const;
     void setAutomaticPosition(uint8_t position);
     void setAutomaticSlat(uint8_t position);
     void setManualPosition(uint8_t position);

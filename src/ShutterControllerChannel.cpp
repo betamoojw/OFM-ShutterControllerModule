@@ -31,12 +31,11 @@ void ShutterControllerChannel::setup()
 
     // add modes, highest priority first
     _modeManual = new ModeManual();
-    if (ParamSHC_ChannelModeWindowOpen)
+    for (uint8_t i = 0; i < ParamSHC_ChannelModeWindowOpenCount - 1; i++)
     {
-        _modeWindowOpen = new ModeWindowOpen();
-        _modes.push_back(_modeWindowOpen);
+        _modes.push_back(new ModeWindowOpen(i));
     }
-
+  
     _modes.push_back(_modeManual);
 
     if (ParamSHC_ChannelModeNight)
@@ -123,16 +122,30 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     }
     else if (cmd == "w1")
     {
-        KoSHC_CHWindow.value(1, DPT_OpenClose);
-        processInputKo(KoSHC_CHWindow);
+        KoSHC_CHModeWindowOpenOpened1.value(1, DPT_OpenClose);
+        processInputKo(KoSHC_CHModeWindowOpenOpened1);
         return true;
     }
     else if (cmd == "w0")
     {
-        KoSHC_CHWindow.value(0, DPT_OpenClose);
-        processInputKo(KoSHC_CHWindow);
+        KoSHC_CHModeWindowOpenOpened1.value(0, DPT_OpenClose);
+        processInputKo(KoSHC_CHModeWindowOpenOpened1);
         return true;
     }
+#ifdef KoSHC_CHModeWindowOpenOpened2
+    else if (cmd == "wt1")
+    {
+        KoSHC_CHModeWindowOpenOpened2.value(1, DPT_OpenClose);
+        processInputKo(KoSHC_CHModeWindowOpenOpened2);
+        return true;
+    }
+    else if (cmd == "wt0")
+    {
+        KoSHC_CHModeWindowOpenOpened2.value(0, DPT_OpenClose);
+        processInputKo(KoSHC_CHModeWindowOpenOpened2);
+        return true;
+    }
+#endif
     return false;
 }
 
@@ -174,9 +187,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         bool allShadingPeriodsEnd = true;
         for (auto mode : _modes)
         {
-            if (mode == _modeWindowOpen && _handleWindowOpenAsShading != nullptr)
+            if (mode->isModeWindowOpen() && _handleWindowOpenAsShading != nullptr)
                 mode = _handleWindowOpenAsShading;
-            if (mode->isShading())
+            if (mode->isModeShading())
             {
                 auto modeShading = (ModeShading *)mode;
                 if (modeShading->allowedByTimeAndSun(callContext))
@@ -216,7 +229,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                     logInfoP("-> allowed");
                 if (nextMode == nullptr) // check if this is the first allowed mode
                 {
-                    if (!_shadingControlActive && mode->isShading())
+                    if (!_shadingControlActive && mode->isModeShading())
                     {
                         if (callContext.diagnosticLog)
                             logInfoP("-> but ignored, because global shadow not alloewd");
@@ -246,7 +259,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (nextMode == _modeManual)
         {
             // If manual mode stops shading, temporary disable Shadingcontrol
-            if (_currentMode->isShading() || (_currentMode == _modeWindowOpen && _handleWindowOpenAsShading != nullptr))
+            if (_currentMode->isModeShading() || (_currentMode->isModeWindowOpen() && _handleWindowOpenAsShading != nullptr))
             {
                 _shadingControlActive = false;
                 if (ParamSHC_ChannelWaitTimeAfterManualUsageForShading != 0)
@@ -266,9 +279,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
             _handleWindowOpenAsShading = nullptr;
             _currentMode->stop(callContext, nextMode, _positionController);
-            if (!nextMode->isShading() && _anyShadingModeActive)
+            if (!nextMode->isModeShading() && _anyShadingModeActive)
             {
-                if (nextMode == _modeWindowOpen && currentModeAllowed)
+                if (nextMode->isModeWindowOpen() && currentModeAllowed)
                 {
                     // shading still allowed, handle windowOpen as shading mode
                     _handleWindowOpenAsShading = (ModeShading*) _currentMode;
@@ -285,7 +298,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         auto previousMode = _currentMode;
         _currentMode = nextMode;
-        if (_currentMode->isShading() && !_anyShadingModeActive)
+        if (_currentMode->isModeShading() && !_anyShadingModeActive)
         {
             shadingStarted();
         }

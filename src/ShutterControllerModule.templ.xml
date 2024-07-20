@@ -6,15 +6,28 @@
 			<ApplicationPrograms>
 				<ApplicationProgram>
 
+					<op:part href="ShutterControllerModule.ModeWindowOpen.xml" name="ModeWindowOpen" instances="2">
+						<!-- Parameter Offset -->
+						<op:param name="%ParamOffset%" value="22" increment="4" />
+						<!-- KO Offset-->
+						<op:param name="%En%" value="26" increment="4" />
+						<!-- ModeWindowOpen number -->
+						<op:param name="%Pn%" value="1" />
+						<!-- Text select -->
+						<op:param name="%Tn%" value="2" increment="-1"/>
+						<!-- Parameter ID's -->
+						<op:param name="%PPP%" value="900" increment="10" />
+					</op:part>
+
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="25" increment="37" />
+						<op:param name="%ParamOffset%" value="30" increment="37" />
+						<!-- KO Offset-->
+						<op:param name="%En%" value="34" increment="5" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" increment="100" />
-						<!-- KO Offset-->
-						<op:param name="%En%" value="30" increment="5" />
 						<!-- Min Temperature-->
 						<op:param name="%MinTemp%" value="15" increment="5" />
 					</op:part>
@@ -25,7 +38,7 @@
 							<!-- Kanal Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-							<Union SizeInBit="168">
+							<Union SizeInBit="176">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
@@ -114,32 +127,19 @@
 								<!-- Night Mode Stop Lamellen Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%024" Offset="20" BitOffset="1" Name="Channel%C%NightModeStopSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
 
-								<!-- Next offset: 21-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%026 -->
+								<!-- Anzahl Fenster Offen Mode-->
+								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="Channel%C%ModeWindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster Offen" Value="0" />
+
+								<!-- 4 Bit free -->
+
+								<!-- Next offset: 22-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%027 -->
 							</Union>
 
-							<Union SizeInBit="32">
-								<Memory CodeSegment="%AID%_RS-04-00000" Offset="21" BitOffset="0" />
-								<!-- Fenster offen Mode -->
-								<Parameter Id="%AID%_UP-%TT%%CC%070" Offset="0" BitOffset="0" Name="Channel%C%ModeWindowOpen" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus" Value="0" />
-
-								<!-- 7 Bits free -->
-
-								<!-- Position anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%071" Offset="1" BitOffset="0" Name="Channel%C%ModeWindowOpenPositionControl" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
-
-								<!-- Lammellenstellung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%073" Offset="1" BitOffset="4" Name="Channel%C%ModeWindowOpenSlatPositionControl" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="1" />
-
-								<!-- Position -->
-								<Parameter Id="%AID%_UP-%TT%%CC%072" Offset="2" BitOffset="0" Name="Channel%C%ModeWindowOpenPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
-
-								<!-- Lammellenposition -->
-								<Parameter Id="%AID%_UP-%TT%%CC%074" Offset="3" BitOffset="0" Name="Channel%C%ModeWindowOpenSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
-							</Union>
+							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
+							<op:usePart name="ModeWindowOpen" xpath="//Parameters/*" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
-
 							<op:usePart name="ModeShading" xpath="//Parameters/*" />
 
 						</Parameters>
@@ -204,6 +204,8 @@
 							<!-- Mode Manual ignoriert Kanal Lock -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_UP-%TT%%CC%025" />
 
+							<!-- Anzahl Fenster Offen Mode-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_UP-%TT%%CC%026" />
 
 							<!-- Heizung Eingang -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
@@ -222,26 +224,13 @@
 							<!-- Nach Beschattung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
 
+							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
+							<!-- Parameter Id starting with: 70 -->
+							<op:usePart name="ModeWindowOpen" xpath="//ParameterRefs/*" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Parameter Id starting with: 100 -->
 							<op:usePart name="ModeShading" xpath="//ParameterRefs/*" />
-
-
-							<!-- Fenster offen Mode -->
-							<ParameterRef Id="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001" RefId="%AID%_UP-%TT%%CC%070" />
-
-							<!-- Position anfahren -->
-							<ParameterRef Id="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" RefId="%AID%_UP-%TT%%CC%071" />
-
-							<!-- Position -->
-							<ParameterRef Id="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" RefId="%AID%_UP-%TT%%CC%072" />
-
-							<!-- Lammellenstellung -->
-							<ParameterRef Id="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" RefId="%AID%_UP-%TT%%CC%073" />
-
-							<!-- Lammellenposition -->
-							<ParameterRef Id="%AID%_UP-%TT%%CC%074_R-%TT%%CC%07401" RefId="%AID%_UP-%TT%%CC%074" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -293,34 +282,28 @@
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
 							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 
-							<!-- Fenster Offen Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenModeActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-							<!-- Fenster Offen -->
-							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-3" Name="CH%C%Window" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
-							<!-- Fenster Offen Sperre -->
-							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
-							<!-- Fenster Offen Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%WindowOpenLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-
-
 							<!-- Modus Nacht Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht -->
-							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K25%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNight" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNight" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre -->
-							<ComObject Id="%AID%_O-%TT%%CC%026" Number="%K26%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%027" Number="%K27%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="CH%C%ModeNightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Heizung -->
-							<ComObject Id="%AID%_O-%TT%%CC%028" Number="%K28%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CH%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Raumtemperatur -->
-							<ComObject Id="%AID%_O-%TT%%CC%029" Number="%K29%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="CH%C%RoomTemperature" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K25%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="CH%C%RoomTemperature" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 
+							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
+							<!-- Id starting with 900 -->
+							<!-- KO Number starting with 26 -->
+							<op:usePart name="ModeWindowOpen" xpath="//ComObjectTable/*" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Id starting with 100 -->
-							<!-- Number starting with 30 -->
+							<!-- KO Number starting with 34 -->
 							<op:usePart name="ModeShading" xpath="//ComObjectTable/*" />
 
 						</ComObjectTable>
@@ -373,32 +356,47 @@
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_O-%TT%%CC%019" Text="%C%: Handbetrieb Lamelle Prozent" FunctionText="{{0:-}} Handbetrieb Lamelle Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
-							<!-- Fenster Offen Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-							<!-- Fenster Offen -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Fenster offen" FunctionText="{{0:-}} Fenster offen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-							<!-- Fenster Offen Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-							<!-- Fenster Offen Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" Text="%C%: Fenster offen Sperre Aktive" FunctionText="{{0:-}} Fenster offen Sperre Aktive" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-
 							<!-- Modus Nacht Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" Text="%C%: Nachtmodus Aktiv" FunctionText="{{0:-}} Nachtmodus Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="%C%: Nachtmodus Aktiv" FunctionText="{{0:-}} Nachtmodus Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="%C%: Nachtmodus Einschalten" FunctionText="{{0:-}} Nachtmodus Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Nachtmodus Einschalten" FunctionText="{{0:-}} Nachtmodus Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_O-%TT%%CC%026" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_O-%TT%%CC%027" Text="%C%: Nachtmodus Sperre Aktiv" FunctionText="{{0:-}} Nachtmodus Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" Text="%C%: Nachtmodus Sperre Aktiv" FunctionText="{{0:-}} Nachtmodus Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Heizung Stellwert % Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%028_R-%TT%%CC%02801" RefId="%AID%_O-%TT%%CC%028" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Heizungsanforderung Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%028_R-%TT%%CC%02802" RefId="%AID%_O-%TT%%CC%028" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="%C%: Heizung Stellwert % Eingang" FunctionText="{{0:-}} Heizung Stellwert % Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Raumtemperatur Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%029_R-%TT%%CC%02901" RefId="%AID%_O-%TT%%CC%029" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
+							
+	
+							<!-- Fenster Offen Aktiv -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" RefId="%AID%_O-%TT%%CC%900" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Fenster Offen -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_O-%TT%%CC%901" Text="%C%: Fenster offen Kontakt" FunctionText="{{0:-}} Fenster offen Kontak" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Fenster Offen Sperre -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_O-%TT%%CC%902" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Fenster Offen Sperre Rückmeldung -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%903_R-%TT%%CC%90301" RefId="%AID%_O-%TT%%CC%903" Text="%C%: Fenster offen Sperre Aktiv" FunctionText="{{0:-}} Fenster offen Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+		
+
+							<!-- Fenster Kippstellung Aktiv -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" RefId="%AID%_O-%TT%%CC%910" Text="%C%: Fenster gekippt Aktiv" FunctionText="{{0:-}} Fenster gekippt Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Fenster Kippstellung -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" RefId="%AID%_O-%TT%%CC%911" Text="%C%: Fenster gekippt Kontakt" FunctionText="{{0:-}} Fenster gekippt Kontak" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Fenster Kippstellung Sperre -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" RefId="%AID%_O-%TT%%CC%912" Text="%C%: Fenster gekippt Sperre" FunctionText="{{0:-}} Fenster gekippt Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Fenster Kippstellung Sperre Rückmeldung -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%913_R-%TT%%CC%91301" RefId="%AID%_O-%TT%%CC%913" Text="%C%: Fenster gekippt Sperre Aktiv" FunctionText="{{0:-}} Fenster gekippt Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+		
+
+
+						
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
 					</Static>
@@ -454,7 +452,7 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
 
 
-														
+
 														<!-- Modus Handbetrieb Stop/Start -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
 														<!-- Modus Handbetrieb Aktiv -->
@@ -482,12 +480,12 @@
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
 
 
+														<!-- Anzahl Fenster Offen Mode-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
+
+
 														<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 														<op:usePart name="ModeShading" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='ChannelParameters']/*" />
-
-
-														<!-- Fenster offen Mode -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001" />
 
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
@@ -540,11 +538,11 @@
 														<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
 															<when test="1">
 																<!-- Heizung Stellwert % Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%028_R-%TT%%CC%02801" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
 															</when>
 															<when test="2">
 																<!-- Heizungsanforderung Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%028_R-%TT%%CC%02802" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
 															</when>
 														</choose>
 
@@ -553,7 +551,7 @@
 														<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
 															<when test="1">
 																<!-- Raumtemperatur Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%029_R-%TT%%CC%02901" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
 															</when>
 														</choose>
 
@@ -571,24 +569,28 @@
 															<!-- Nacht Modus Aktiv -->
 
 															<!-- Modus Nacht Aktiv -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
 															<!-- Modus Nacht -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
 															<!-- Modus Nacht Sperre -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" />
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
 															<!-- Modus Nacht Sperre Rückmeldung -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" />
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
 
 															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCModeNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
 
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+													
 																<!-- Fenster offen Mode -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001">
-																	<when test="1">
+																<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+																	<when test="&gt;0">
 																		<!-- Fenster offen Modus in Nachtmodus erlaubt -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" />
 																	</when>
 																</choose>
 
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Begin" UIHint="Headline" />
 
 																<!-- Nachtmodus von -->
@@ -629,6 +631,7 @@
 																	</when>
 																</choose>
 
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Ende" UIHint="Headline" />
 
 																<!-- Nachtmodus bis -->
@@ -674,54 +677,10 @@
 													<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 													<op:usePart name="ModeShading" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='ShadingParameters']/*" />
 
-													<!-- Fenster offen Mode -->
-													<choose ParamRefId="%AID%_UP-%TT%%CC%070_R-%TT%%CC%07001">
-														<when test="1">
-															<!-- Fenster offen Mode aktiv -->
-
-															<!-- Fenster Offen Aktiv -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
-															<!-- Fenster Offen -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
-															<!-- Fenster Offen Sperre -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
-															<!-- Fenster Offen Sperre Rückmeldung -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
+													<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
+													<op:usePart name="ModeWindowOpen" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='WindowOpenParameters']/*" />
 
 
-															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCWindowOpenMode" Text="Fenster offen Modus" Icon="window-open-variant" HelpContext="Empty">
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Fenster Offen" UIHint="Headline" />
-
-																<!-- Position anfahren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%071_R-%TT%%CC%07101">
-																	<when test="&gt;0">
-
-																		<!-- Position -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%072_R-%TT%%CC%07201" />
-																	</when>
-																</choose>
-																<!-- Gerätetype -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-																	<when test="1">
-																		<!-- Gerätetype Jalousie -->
-
-																		<!-- Lammellenstellung -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%073_R-%TT%%CC%07301">
-																			<when test="&gt;0">
-
-																				<!-- Lammellenposition -->
-																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%074_R-%TT%%CC%07401" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-															</ParameterBlock>
-
-														</when>
-													</choose>
 												</when>
 											</choose>
 										</Channel>

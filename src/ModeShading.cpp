@@ -239,7 +239,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         else
             return false;
     }
-    if (!callContext.modeCurrentActive->isShading() && (uint8_t)KoSHC_CHShutterPercentInput.value(DPT_Scaling) > ParamSHC_ChannelModeShading1ActivationOnlyIfLessThan)
+    if (!callContext.modeCurrentActive->isModeShading() && (uint8_t)KoSHC_CHShutterPercentInput.value(DPT_Scaling) > ParamSHC_ChannelModeShading1ActivationOnlyIfLessThan)
     {
         allowed = false;
         if (diagnosticLog)
@@ -274,7 +274,7 @@ void ModeShading::start(const CallContext &callContext, const ModeBase *previous
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
     // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
     // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
-    if (ParamSHC_ChannelType == 1 && !ParamSHC_ChannelModeShading1SlatElevationDepending)
+    if (!ParamSHC_ChannelModeShading1SlatElevationDepending)
         positionController.setAutomaticSlat(ParamSHC_ChannelModeShading1SlatShadingPosition);
 }
 
@@ -286,7 +286,7 @@ void ModeShading::control(const CallContext &callContext, PositionController& po
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
     // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
     // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
-    if (ParamSHC_ChannelType != 1)
+    if (positionController.hasSlat())
         return;
 
     // Jalousie
@@ -342,7 +342,7 @@ void ModeShading::processInputKo(GroupObject &ko)
     _recalcMeasurmentValues = true;
 }
 
-bool ModeShading::isShading() const
+bool ModeShading::isModeShading() const
 {
     return true;
 }

@@ -14,6 +14,11 @@ const std::string &PositionController::logPrefix()
     return _logPrefix;
 }
 
+bool PositionController::hasSlat() const
+{
+    return _hasSlat;
+}
+
 void PositionController::setAutomaticPosition(uint8_t position)
 {
     _setPosition = position;

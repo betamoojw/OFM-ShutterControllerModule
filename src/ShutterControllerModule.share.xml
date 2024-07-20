@@ -206,6 +206,15 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-WindowOpenModeActive" Name="WindowOpenModeActive">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Ein Kontakt" Value="1" Id="%ENID%" />
+									<Enumeration Text="Zwei Kontakte" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+
 						</ParameterTypes>
 
 						<Parameters>
@@ -384,7 +393,16 @@
 
 							<op:include href="ShutterControllerModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SHC" IsInner="true" />
 
-
+							<!-- More Page -->
+							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
+								<when test="&lt;%N%">
+									<ParameterBlock Id="%AID%_PB-nnn" Name="IWAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">										<!-- HelpContext="Empty" -->
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+										<!-- HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" /-->
+									</ParameterBlock>
+								</when>
+							</choose>
 
 						</Channel>
 					</Dynamic>

@@ -5,11 +5,10 @@
 
 - Wenn nach Beschattungsende Lüftmodus aktiv werden könnte, muss die Target Position ausgewertet werden.
 - Szenen 
-- Timeout für Messwerte
+
 - Beschattungsmodus Auswahl auf Drop-Down umstellen und Beschattungseinstellungen nur anzeigen wenn Beschattungsmodus aktiv
-- Restore Berechnung:
-  - Auswertung Manual Input, bei Up-Down 0 bzw. 100% annehmen, bei Stop warten auf Feedback
-- Parameter Initial Beschattung aktive
 - Parameternamen kürzen
-- Mehre Fensteroffen Modus (Z.B. Offen, gekippt)
+
+- Timeout für Messwerte
+- Parameter Initial Beschattung aktive
 - Letzte Heizanforderung vor mindestens X Minuten/Stunden

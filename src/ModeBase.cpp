@@ -13,7 +13,12 @@ const std::string& ModeBase::logPrefix()
     return _logPrefix;
 }
 
-bool ModeBase::isShading() const
+bool ModeBase::isModeShading() const
+{
+    return false;
+}
+
+bool ModeBase::isModeWindowOpen() const
 {
     return false;
 }

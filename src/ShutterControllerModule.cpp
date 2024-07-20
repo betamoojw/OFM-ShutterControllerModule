@@ -43,6 +43,7 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc<CC>", "Show information of channel CC. i.e. sc01");
     openknx.console.printHelpLine("sc<CC> s<0|1>", "Disabled or enable shadow of channel CC. i.e. sc01 s1");
     openknx.console.printHelpLine("sc<CC> w<0|1>", "Close or open window of channel CC. i.e. sc01 w1");
+    openknx.console.printHelpLine("sc<CC> wt<0|1>", "Tilt window of channel CC. i.e. sc01 wt1");
 }
 
 void ShutterControllerModule::loop()

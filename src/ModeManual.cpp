@@ -21,9 +21,9 @@ bool ModeManual::modeWindowOpenAllowed() const
 }
 bool ModeManual::allowed(const CallContext &callContext)
 {
-    if (_shadingActive != callContext.modeCurrentActive->isShading())
+    if (_shadingActive != callContext.modeCurrentActive->isModeShading())
     {
-        _shadingActive = callContext.modeCurrentActive->isShading();
+        _shadingActive = callContext.modeCurrentActive->isModeShading();
         if (_shadingActive)
             _firstManualCommandWhileShading = true;
         else
