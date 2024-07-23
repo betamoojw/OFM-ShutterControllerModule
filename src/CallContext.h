@@ -9,7 +9,8 @@ class ModeBase;
 class CallContext
 {
     public:
-        bool newStarted;
+        bool modeNewStarted;
+        bool hasSlat;
         bool diagnosticLog;
         unsigned long currentMillis;
         bool timeAndSunValid;

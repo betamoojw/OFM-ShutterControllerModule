@@ -54,7 +54,7 @@ bool ModeWindowOpen::allowed(const CallContext &callContext)
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
-        if (ParamSHC_ChannelModeWindowOpenPositionControl1 == 0 && (ParamSHC_ChannelType != 1 || ParamSHC_ChannelModeWindowOpenSlatPositionControl1 == 0))
+        if (ParamSHC_ChannelModeWindowOpenPositionControl1 == 0 && (callContext.hasSlat != 1 || ParamSHC_ChannelModeWindowOpenSlatPositionControl1 == 0))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
@@ -169,10 +169,10 @@ void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, 
 }
 void ModeWindowOpen::processInputKo(GroupObject &ko)
 {
-    switch (ko.asap()- koChannelOffset())
+    switch (ko.asap()- koChannelOffset() + SHC_KoOffset)
     {
     case SHC_KoCHModeWindowOpenOpened1:
-    case SHC_KoCHModeWindowOpenLock1:
+     case SHC_KoCHModeWindowOpenLock1:
         _recalcAllowed = true;
         break;
     }

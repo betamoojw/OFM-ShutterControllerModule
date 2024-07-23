@@ -49,7 +49,6 @@ void ShutterControllerModule::showHelp()
 void ShutterControllerModule::loop()
 {
     ShutterControllerChannelOwnerModule::loop();
-
     _callContext.currentMillis = millis();
     if (_callContext.currentMillis == 0)
         _callContext.currentMillis = 1; // 0 can be used as special marker -> skip 0
@@ -120,7 +119,15 @@ void ShutterControllerModule::loop()
     {
         auto channel = (ShutterControllerChannel *)getChannel(i);
         if (channel != nullptr)
+        {
+            if (_shadingDailyActivation &&
+                _callContext.minuteChanged &&
+                _callContext.minute == 0 &&
+                _callContext.hour == 0)
+                channel->activateShading();
+
             channel->execute(_callContext);
+        }
     }
 }
 
@@ -276,11 +283,75 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
     return false;
 }
 
+void ShutterControllerModule::setDailyShadingActivation(bool active)
+{
+    _shadingDailyActivation = active;
+    // <Enumeration Text="Aus" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Ein" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard AUS" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard EIN" Value="3" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard AUS, Initial vom Bus lesen" Value="4" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard EIN, Initial vom Bus lesen" Value="5" Id="%ENID%" />
+    if (ParamSHC_ShadingActivation >= 2)
+    {
+        KoSHC_ShadingControlDailyActivationStatus.value(active, DPT_Switch);
+    }
+    if (active)
+    {
+        auto numberOfChannels = getNumberOfChannels();
+        for (uint8_t i = 0; i < numberOfChannels; i++)
+        {
+            auto channel = (ShutterControllerChannel *)getChannel(i);
+            if (channel != nullptr)
+                channel->activateShading();
+        }
+    }
+}
+void ShutterControllerModule::processInputKo(GroupObject &ko)
+{
+    if (ko.asap() == SHC_KoShadingControlDailyActivation)
+    {
+        setDailyShadingActivation(ko.value(DPT_Switch));
+        return;
+    }
+    ShutterControllerChannelOwnerModule::processInputKo(ko);
+}
+
 void ShutterControllerModule::setup()
 {
-    KoSHC_ShadingControlDailyActivation.value(false, DPT_Switch);
-    KoSHC_ShadingControlDailyActivationStatus.value(false, DPT_Switch);
-
+    // <Enumeration Text="Aus" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Ein" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard AUS" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard EIN" Value="3" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard AUS, Initial vom Bus lesen" Value="4" Id="%ENID%" />
+    // <Enumeration Text="Über KO, Standard EIN, Initial vom Bus lesen" Value="5" Id="%ENID%" />
+    switch (ParamSHC_ShadingActivation)
+    {
+    case 0:
+        _shadingDailyActivation = false;
+        break;
+    case 1:
+        _shadingDailyActivation = true;
+        break;
+    case 2:
+        setDailyShadingActivation(false);
+        KoSHC_ShadingControlDailyActivation.value(false, DPT_Switch);
+        break;
+    case 3:
+        setDailyShadingActivation(true);
+        KoSHC_ShadingControlDailyActivation.value(true, DPT_Switch);
+        break;
+    case 4:
+        setDailyShadingActivation(false);
+        KoSHC_ShadingControlDailyActivation.value(false, DPT_Switch);
+        KoSHC_ShadingControlDailyActivation.requestObjectRead();
+        break;
+    case 5:
+        setDailyShadingActivation(true);
+        KoSHC_ShadingControlDailyActivation.value(true, DPT_Switch);
+        KoSHC_ShadingControlDailyActivation.requestObjectRead();
+        break;
+    }
     setupChannels(ParamSHC_VisibleChannels);
 }
 

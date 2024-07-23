@@ -125,7 +125,7 @@ void PositionController::processInputKo(GroupObject &ko)
 void PositionController::control(const CallContext &callContext)
 {
     auto now = millis();
-    if (millis() - _startWaitForManualSlatPositionFeedback > 3000)
+    if (now - _startWaitForManualSlatPositionFeedback > 3000)
     {
         _startWaitForManualSlatPositionFeedback = 0;
     }

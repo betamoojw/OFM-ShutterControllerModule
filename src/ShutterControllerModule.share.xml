@@ -214,6 +214,16 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-ShadingActivation" Name="ShadingActivation">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Aus" Value="0" Id="%ENID%" />
+									<Enumeration Text="Ein" Value="1" Id="%ENID%" />
+									<Enumeration Text="Über KO, Standard AUS" Value="2" Id="%ENID%" />
+									<Enumeration Text="Über KO, Standard EIN" Value="3" Id="%ENID%" />
+									<Enumeration Text="Über KO, Standard AUS, Initial vom Bus lesen" Value="4" Id="%ENID%" />
+									<Enumeration Text="Über KO, Standard EIN, Initial vom Bus lesen" Value="5" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
 
 						</ParameterTypes>
 
@@ -241,6 +251,12 @@
 								<!-- Wolken Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00006" Offset="1" BitOffset="5" Name="HasCloudsInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Wolken" Value="0" />
 
+								<!-- 2 bits free-->
+
+								<!-- Beschattung täglich aktivieren -->
+								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche aktivierung" Value="3" />
+
+								<!-- 8 bits free-->
 							</Union>
 						</Parameters>
 						<ParameterRefs>
@@ -264,6 +280,9 @@
 
 							<!-- Wolken Eingang-->
 							<ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000601" RefId="%AID%_UP-%TT%00006" />
+
+							<!-- Beschattung täglich aktivieren -->
+							<ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000701" RefId="%AID%_UP-%TT%00007" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -315,11 +334,6 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%"  />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								
-								<!-- Beschattung täglich aktivieren -->
-								<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
-								<!-- Beschattung täglich aktivieren Status -->
-								<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
-
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 								<!-- Verfügbare Kanäle -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
@@ -327,6 +341,19 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden."  />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen."  />
 								
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Globale Beschattungseinstellung" UIHint="Headline" />
+
+								<!-- Beschattung täglich aktivieren -->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" />
+								<choose ParamRefId="%AID%_UP-%TT%00007_R-%TT%0000701">
+									<when test="&gt;=2">
+										<!-- Beschattung täglich aktivieren -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
+										<!-- Beschattung täglich aktivieren Status -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
+									</when>
+								</choose>
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Verfügbare Messwert Eingänge" UIHint="Headline" />

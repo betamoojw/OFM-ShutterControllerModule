@@ -1,4 +1,3 @@
-- Default für Channel Aktiv Input
 - Neigung der Fassade
 - Schattenkantennachführung
 
@@ -10,5 +9,5 @@
 - Parameternamen kürzen
 
 - Timeout für Messwerte
-- Parameter Initial Beschattung aktive
 - Letzte Heizanforderung vor mindestens X Minuten/Stunden
+- Globale KO's ausblenden wenn kein Kanal vorhande

@@ -23,6 +23,8 @@ class ShutterControllerChannel : public OpenKNX::Channel
         ModeShading* _handleWindowOpenAsShading = nullptr;
         unsigned long _waitTimeForReactivateShadingAfterManualStarted = 0;
         bool _waitForShadingPeriodEnd = false;
+        bool _shadingDailiyActivation = false;
+        void setDailyShadingActivation(bool active);
         void shadingStarted();
         void shadingStopped();
     public:
@@ -35,4 +37,5 @@ class ShutterControllerChannel : public OpenKNX::Channel
         void processInputKo(GroupObject &ko) override;
         bool processCommand(const std::string cmd, bool diagnoseKo, bool& diagnosticLogLoopRequest);
         void execute(CallContext& callContext);
+        void activateShading();
 };

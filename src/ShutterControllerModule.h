@@ -5,6 +5,9 @@
 
 class ShutterControllerModule : public ShutterControllerChannelOwnerModule
 {
+  private: 
+    bool _shadingDailyActivation = false;
+    void setDailyShadingActivation(bool active);
   protected:
     OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */) override; 
     uint8_t _lastMinute = 61;
@@ -19,6 +22,7 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
     void showHelp() override;
     bool connected();
     bool processCommand(const std::string cmd, bool diagnoseKo) override;
+    void processInputKo(GroupObject &ko) override;
 };
 
 extern ShutterControllerModule openknxShutterControllerModule;

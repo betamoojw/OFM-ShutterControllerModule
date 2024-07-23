@@ -280,7 +280,7 @@ void ModeShading::start(const CallContext &callContext, const ModeBase *previous
 
 void ModeShading::control(const CallContext &callContext, PositionController& positionController)
 {
-    if (!callContext.newStarted && !callContext.minuteChanged && !callContext.diagnosticLog)
+    if (!callContext.modeNewStarted && !callContext.minuteChanged && !callContext.diagnosticLog)
         return;
 
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
@@ -301,7 +301,7 @@ void ModeShading::control(const CallContext &callContext, PositionController& po
         if (callContext.diagnosticLog)
             logInfoP("Calculated slat position %d", (int)slatPosition);
 
-        if (!callContext.newStarted && abs((int)KoSHC_CHShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_ChannelModeShading1MinChangeForSlatAdaption)
+        if (!callContext.modeNewStarted && abs((int)KoSHC_CHShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_ChannelModeShading1MinChangeForSlatAdaption)
         {
             if (callContext.diagnosticLog)
                 logInfoP("Slat position %d difference is less then %d", (int)abs((int)KoSHC_CHShutterSlatOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_ChannelModeShading1MinChangeForSlatAdaption);

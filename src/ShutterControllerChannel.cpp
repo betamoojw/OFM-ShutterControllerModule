@@ -31,7 +31,9 @@ void ShutterControllerChannel::setup()
 
     // add modes, highest priority first
     _modeManual = new ModeManual();
-    for (uint8_t i = 0; i < ParamSHC_ChannelModeWindowOpenCount - 1; i++)
+    logErrorP("Slat1: %d", ParamSHC_ChannelModeWindowOpenSlatPositionControl1);
+    logErrorP("Slat2: %d", ParamSHC_ChannelModeWindowOpenSlatPositionControl2);
+    for (uint8_t i = 1; i <= ParamSHC_ChannelModeWindowOpenCount; i++)
     {
         _modes.push_back(new ModeWindowOpen(i));
     }
@@ -78,10 +80,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
         _channelLockActive = ko.value(DPT_Switch);
         KoSHC_CHLockActive.value(_channelLockActive, DPT_Switch);
         break;
-    case SHC_KoShadingControlDailyActivation:
-        KoSHC_ShadingControlDailyActivationStatus.value(ko.value(DPT_Switch), DPT_Switch);
-        break;
-    case SHC_KoCHShadingControl:
+     case SHC_KoCHShadingControl:
         _shadingControlActive = ko.value(DPT_Switch);
         _waitTimeForReactivateShadingAfterManualStarted = 0;
         _waitForShadingPeriodEnd = false;
@@ -148,11 +147,16 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
 #endif
     return false;
 }
-
+void ShutterControllerChannel::activateShading()
+{
+    KoSHC_CHShadingControl.value(true, DPT_Switch);
+    processInputKo(KoSHC_CHShadingControl);
+}
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
     ModeBase *nextMode = nullptr;
-    callContext.newStarted = false;
+    callContext.hasSlat = _positionController.hasSlat();
+    callContext.modeNewStarted = false;
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
     if (_currentMode == nullptr)
@@ -162,15 +166,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
     }
     callContext.modeCurrentActive = _currentMode;
-    // Handle daily reactivation
-    if (callContext.minuteChanged &&
-        callContext.minute == 0 &&
-        callContext.hour == 0 &&
-        KoSHC_ShadingControlDailyActivationStatus.value(DPT_Switch))
-    {
-        KoSHC_CHShadingControl.value(true, DPT_Switch);
-        processInputKo(KoSHC_CHShadingControl);
-    }
+    
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
@@ -304,7 +300,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         _currentMode->start(callContext, previousMode, _positionController);
         KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
-        callContext.newStarted = true;
+        callContext.modeNewStarted = true;
     }
     _currentMode->control(callContext, _positionController);
     _positionController.control(callContext);
