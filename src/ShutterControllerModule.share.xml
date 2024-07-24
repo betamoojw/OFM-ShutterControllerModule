@@ -225,10 +225,31 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-MeasurementWatchdog" Name="MeasurementWatchdog">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Aus" Value="0" Id="%ENID%" />
+									<Enumeration Text="10 Minuten" Value="1" Id="%ENID%" />
+									<Enumeration Text="30 Minuten" Value="2" Id="%ENID%" />
+									<Enumeration Text="1 Stunde" Value="3" Id="%ENID%" />
+									<Enumeration Text="2 Stunden" Value="4" Id="%ENID%" />
+									<Enumeration Text="3 Stunden" Value="5" Id="%ENID%" />
+									<Enumeration Text="4 Stunden" Value="6" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-MeasurementFallback" Name="MeasurementFallback">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Wert Ignorieren" Value="0" Id="%ENID%" />
+									<Enumeration Text="Leseanforderung schicken, dann Ignorieren" Value="1" Id="%ENID%" />
+									<Enumeration Text="Fixen Wert vorgeben" Value="2" Id="%ENID%" />
+									<Enumeration Text="Leseanforderung schicken, dann fixen Wert vorgeben" Value="3" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
 						</ParameterTypes>
 
 						<Parameters>
-							<Union SizeInBit="24">
+							<Union SizeInBit="152">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Anzahl der Kanäle -->
 								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="0" SuffixText=" von %N%" />
@@ -256,7 +277,66 @@
 								<!-- Beschattung täglich aktivieren -->
 								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche aktivierung" Value="3" />
 
-								<!-- 8 bits free-->
+
+								<!-- Temperatur Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%00008" Offset="3" BitOffset="0" Name="TempWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+
+								<!-- Temperatur Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%00009" Offset="3" BitOffset="4" Name="TempWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Temperatur Fallback -->
+								<Parameter Id="%AID%_UP-%TT%00010" Offset="4" BitOffset="0" Name="TempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" SuffixText="°C" Value="30" />
+
+								
+								<!-- Temperatur Prognose Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%00011" Offset="5" BitOffset="0" Name="TempForecastWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+
+								<!-- Temperatur Prognose Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%00012" Offset="5" BitOffset="4" Name="TempForecastWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Temperatur Prognose Fallback -->
+								<Parameter Id="%AID%_UP-%TT%00013" Offset="6" BitOffset="0" Name="TempForecastFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" SuffixText="°C" Value="30" />
+
+
+								<!-- Helligkeit Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%00014" Offset="7" BitOffset="0" Name="BrightnessWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+
+								<!-- Helligkeit Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%00015" Offset="7" BitOffset="4" Name="BrightnessWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Helligkeit Fallback -->
+								<Parameter Id="%AID%_UP-%TT%00016" Offset="8" BitOffset="0" Name="BrightnessFallback" ParameterType="%AID%_PT-BrightnessLimit" Text="Wert" SuffixText="x1000 lux" Value="30" />
+
+
+								<!-- UVI Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%00017" Offset="9" BitOffset="0" Name="UVIWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+
+								<!-- UVI Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%00018" Offset="9" BitOffset="4" Name="UVIWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- UVI Fallback -->
+								<Parameter Id="%AID%_UP-%TT%00019" Offset="10" BitOffset="0" Name="UVIFallback" ParameterType="%AID%_PT-UVIndex" Text="Wert" Value="10" />
+
+								<!-- Regen Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%00020" Offset="14" BitOffset="0" Name="RainWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+
+								<!-- Regen Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%00021" Offset="14" BitOffset="4" Name="RainWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Regen Fallback -->
+								<Parameter Id="%AID%_UP-%TT%00022" Offset="15" BitOffset="0" Name="RainFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" />
+
+								<!-- 7 bits free-->
+
+								<!-- Wolken Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%00023" Offset="16" BitOffset="0" Name="CloudsWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+
+								<!-- Wolken Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%00024" Offset="17" BitOffset="4" Name="CloudsWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Wolken Fallback -->
+								<Parameter Id="%AID%_UP-%TT%00025" Offset="18" BitOffset="0" Name="CloudsFallback" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" />
+
 							</Union>
 						</Parameters>
 						<ParameterRefs>
@@ -284,6 +364,59 @@
 							<!-- Beschattung täglich aktivieren -->
 							<ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000701" RefId="%AID%_UP-%TT%00007" />
 
+							<!-- Temperatur Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%00008_R-%TT%0000801" RefId="%AID%_UP-%TT%00008" />
+
+							<!-- Temperatur Watchdog Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00009_R-%TT%0000901" RefId="%AID%_UP-%TT%00009" />
+
+							<!-- Temperatur Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00010_R-%TT%0001001" RefId="%AID%_UP-%TT%00010" />
+
+							<!-- Temperatur Prognose Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%00011_R-%TT%0001101" RefId="%AID%_UP-%TT%00011" />
+
+							<!-- Temperatur Prognose Watchdog Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00012_R-%TT%0001201" RefId="%AID%_UP-%TT%00012" />
+
+							<!-- Temperatur Prognose Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00013_R-%TT%0001301" RefId="%AID%_UP-%TT%00013" />
+
+							<!-- Helligkeit Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%00014_R-%TT%0001401" RefId="%AID%_UP-%TT%00014" />
+
+							<!-- Helligkeit Watchdog Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00015_R-%TT%0001501" RefId="%AID%_UP-%TT%00015" />
+
+							<!-- Helligkeit Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00016_R-%TT%0001601" RefId="%AID%_UP-%TT%00016" />
+
+							<!-- UVI Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%00017_R-%TT%0001701" RefId="%AID%_UP-%TT%00017" />
+
+							<!-- UVI Watchdog Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00018_R-%TT%0001801" RefId="%AID%_UP-%TT%00018" />
+
+							<!-- UVI Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00019_R-%TT%0001901" RefId="%AID%_UP-%TT%00019" />
+
+							<!-- Regen Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%00020_R-%TT%0002001" RefId="%AID%_UP-%TT%00020" />
+
+							<!-- Regen Watchdog Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00021_R-%TT%0002101" RefId="%AID%_UP-%TT%00021" />
+
+							<!-- Regen Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00022_R-%TT%0002201" RefId="%AID%_UP-%TT%00022" />
+
+							<!-- Wolken Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%00023_R-%TT%0002301" RefId="%AID%_UP-%TT%00023" />
+
+							<!-- Wolken Watchdog Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00024_R-%TT%0002401" RefId="%AID%_UP-%TT%00024" />
+
+							<!-- Wolken Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%00025_R-%TT%0002501" RefId="%AID%_UP-%TT%00025" />
 						</ParameterRefs>
 						<ComObjectTable>
 							<!-- Beschattung täglich aktivieren -->
@@ -302,7 +435,7 @@
 							<ComObject Number="6" Id="%AID%_O-%TT%00006" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="RainInput" Text="Regen Eingang" FunctionText="Regen Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Wolken Eingang -->
 							<ComObject Number="7" Id="%AID%_O-%TT%00007" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CloudsInput" Text="Wolken Eingang" FunctionText="Wolken Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
-					
+
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->
@@ -321,26 +454,26 @@
 							<ComObjectRef Id="%AID%_O-%TT%00006_R-%TT%0000601" RefId="%AID%_O-%TT%00006" />
 							<!-- Wolken Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" />
-					</ComObjectRefs>
+						</ComObjectRefs>
 					</Static>
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
 							<!-- <ParameterBlock Id="%AID%_PB-nnn" Name="Docu%TT%" Text="Dokumentation" Icon="information-outline" HelpContext="SHC-Documentation">
 							</ParameterBlock> -->
-							
+
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Settings">
-								
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Jalousiensteuerung"  UIHint="Headline"/>
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%"  />
+
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Jalousiensteuerung" UIHint="Headline"/>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-								
+
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 								<!-- Verfügbare Kanäle -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
 
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden."  />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen."  />
-								
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden." />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen." />
+
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Globale Beschattungseinstellung" UIHint="Headline" />
 
@@ -364,11 +497,27 @@
 								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000101" />
 								<!-- Temperatur Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00001_R-%TT%0000101">
-									<when test="1">
+									<when test="&gt;0">
 										<!-- Temperatur Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00002_R-%TT%0000201" />
+										<!-- Temperatur Watchdog -->
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00008_R-%TT%0000801" />
+										<choose ParamRefId="%AID%_UP-%TT%00008_R-%TT%0000801">
+											<when test="&gt;0">
+												<!-- Temperatur Watchdog Fallback -->
+												<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00009_R-%TT%0000901" />
+												<choose ParamRefId="%AID%_UP-%TT%00009_R-%TT%0000901">
+													<when test="2 3">
+														<!-- Temperatur Fallback -->
+														<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00010_R-%TT%0001001" />
+													</when>
+												</choose>
+											</when>
+										</choose>
 									</when>
 								</choose>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
 								<!-- Temperatur Prognose Eingang-->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000201" />
 								<!-- Temperatur Prognose Eingang-->
@@ -376,8 +525,24 @@
 									<when test="1">
 										<!-- Temperatur Progonse Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00003_R-%TT%0000301" />
+										<!-- Temperatur Prognose Watchdog -->
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00011_R-%TT%0001101" />
+										<choose ParamRefId="%AID%_UP-%TT%00011_R-%TT%0001101">
+											<when test="&gt;0">
+												<!-- Temperatur Prognose Watchdog Fallback -->
+												<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00012_R-%TT%0001201" />
+												<choose ParamRefId="%AID%_UP-%TT%00012_R-%TT%0001201">
+													<when test="2 3">
+														<!-- Temperatur Prognose Fallback -->
+														<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00013_R-%TT%0001301" />
+													</when>
+												</choose>
+											</when>
+										</choose>
 									</when>
 								</choose>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
 								<!-- Helligkeit Eingang-->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" />
 								<!-- Helligkeit Eingang-->
@@ -385,8 +550,24 @@
 									<when test="1">
 										<!-- Helligkeit Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
+										<!-- Helligkeit Watchdog -->
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00014_R-%TT%0001401" />
+										<choose ParamRefId="%AID%_UP-%TT%00014_R-%TT%0001401">
+											<when test="&gt;0">
+												<!-- Helligkeit Watchdog Fallback -->
+												<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00015_R-%TT%0001501" />
+												<choose ParamRefId="%AID%_UP-%TT%00015_R-%TT%0001501">
+													<when test="2 3">
+														<!-- Helligkeit Fallback -->
+														<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00016_R-%TT%0001601" />
+													</when>
+												</choose>
+											</when>
+										</choose>
 									</when>
 								</choose>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
 								<!-- UVI Eingang-->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" />
 								<!-- UVI Eingang-->
@@ -394,8 +575,24 @@
 									<when test="1">
 										<!-- UVI Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
+										<!-- UVI Watchdog -->
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00017_R-%TT%0001701" />
+										<choose ParamRefId="%AID%_UP-%TT%00017_R-%TT%0001701">
+											<when test="&gt;0">
+												<!-- UVI Watchdog Fallback -->
+												<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00018_R-%TT%0001801"/>
+												<choose ParamRefId="%AID%_UP-%TT%00018_R-%TT%0001801">
+													<when test="2 3">
+														<!-- UVI Fallback -->
+														<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00019_R-%TT%0001901" />
+													</when>
+												</choose>
+											</when>
+										</choose>
 									</when>
 								</choose>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
 								<!-- Regen Eingang-->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" />
 								<!-- Regen Eingang-->
@@ -403,8 +600,24 @@
 									<when test="1">
 										<!-- Regen Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
+										<!-- Regen Watchdog -->
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00020_R-%TT%0002001" />
+										<choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
+											<when test="&gt;0">
+												<!-- Regen Watchdog Fallback -->
+												<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00021_R-%TT%0002101" />
+												<choose ParamRefId="%AID%_UP-%TT%00021_R-%TT%0002101">
+													<when test="2 3">
+														<!-- Regen Fallback -->
+														<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00022_R-%TT%0002201" />
+													</when>
+												</choose>
+											</when>
+										</choose>
 									</when>
 								</choose>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
 								<!-- Wolken Eingang-->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" />
 								<!-- Wolken Eingang-->
@@ -412,11 +625,24 @@
 									<when test="1">
 										<!-- Wolken Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00007_R-%TT%0000701" />
+
+										<!-- Wolken Watchdog -->
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00023_R-%TT%0002301" />
+										<choose ParamRefId="%AID%_UP-%TT%00023_R-%TT%0002301">
+											<when test="&gt;0">
+												<!-- Wolken Watchdog Fallback -->
+												<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00024_R-%TT%0002401"/>
+												<choose ParamRefId="%AID%_UP-%TT%00024_R-%TT%0002401">
+													<when test="2 3">
+														<!-- Wolken Fallback -->
+														<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00025_R-%TT%0002501" />
+													</when>
+												</choose>
+											</when>
+										</choose>
 									</when>
 								</choose>
-
 							</ParameterBlock>
-						
 
 							<op:include href="ShutterControllerModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SHC" IsInner="true" />
 

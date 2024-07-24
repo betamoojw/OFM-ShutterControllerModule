@@ -9,5 +9,8 @@
 - Parameternamen kürzen
 
 - Timeout für Messwerte
+  - Leseanforderung
+  - Ignorieren oder Messwertvorgabe
 - Letzte Heizanforderung vor mindestens X Minuten/Stunden
-- Globale KO's ausblenden wenn kein Kanal vorhande
+- Globale KO's ausblenden wenn kein Kanal vorhanden
+- Nach Start warten auf Messwerte

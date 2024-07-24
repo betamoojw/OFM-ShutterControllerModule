@@ -224,6 +224,7 @@
 							<!-- Nach Beschattung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
 
+
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
 							<op:usePart name="ModeWindowOpen" xpath="//ParameterRefs/*" />
