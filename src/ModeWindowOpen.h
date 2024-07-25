@@ -10,6 +10,7 @@ class ModeWindowOpen : public ModeBase
     int8_t _slatToRestore = -1;
     int8_t _positionToRestore = -1;
     int16_t koChannelOffset();
+    bool _deactivatedWhileOpen = false;
     GroupObject& getKo(uint8_t ko);
 public:
     ModeWindowOpen(uint8_t index);

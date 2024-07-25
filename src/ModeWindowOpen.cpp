@@ -72,6 +72,12 @@ bool ModeWindowOpen::allowed(const CallContext &callContext)
             if (callContext.diagnosticLog)
                 logInfoP("Lock KO active");
         }
+        if (_deactivatedWhileOpen)
+        {
+            _allowed = false;
+            if (callContext.diagnosticLog)
+                logInfoP("Deactivated while window open because of manual mode");
+        }
     }
     return _allowed;
 }
@@ -155,6 +161,11 @@ void ModeWindowOpen::control(const CallContext &callContext, PositionController&
 }
 void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
+    if ((ModeBase*) callContext.modeManual == next && getKo(SHC_KoCHModeWindowOpenOpened1).value(DPT_OpenClose))
+    {
+        _deactivatedWhileOpen = true;
+        _recalcAllowed = false;
+    }
     if (_positionToRestore != -1)
     {
         positionController.setAutomaticPosition(_positionToRestore);
@@ -171,7 +182,11 @@ void ModeWindowOpen::processInputKo(GroupObject &ko)
 {
     switch (ko.asap()- koChannelOffset() + SHC_KoOffset)
     {
-    case SHC_KoCHModeWindowOpenOpened1:
+     case SHC_KoCHModeWindowOpenOpened1:
+        if (!ko.value(DPT_OpenClose))
+            _deactivatedWhileOpen = false;
+        _recalcAllowed = true;
+        break;
      case SHC_KoCHModeWindowOpenLock1:
         _recalcAllowed = true;
         break;
