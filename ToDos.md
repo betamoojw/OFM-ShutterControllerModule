@@ -8,9 +8,8 @@
 - Beschattungsmodus Auswahl auf Drop-Down umstellen und Beschattungseinstellungen nur anzeigen wenn Beschattungsmodus aktiv
 - Parameternamen kürzen
 
-- Timeout für Messwerte
-  - Leseanforderung
-  - Ignorieren oder Messwertvorgabe
+
+
 - Letzte Heizanforderung vor mindestens X Minuten/Stunden
 - Globale KO's ausblenden wenn kein Kanal vorhanden
 - Nach Start warten auf Messwerte

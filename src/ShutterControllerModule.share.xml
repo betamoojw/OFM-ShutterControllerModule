@@ -279,7 +279,7 @@
 
 
 								<!-- Temperatur Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00008" Offset="3" BitOffset="0" Name="TempWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00008" Offset="3" BitOffset="0" Name="TempWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Temperatur Watchdog Fallback-->
 								<Parameter Id="%AID%_UP-%TT%00009" Offset="3" BitOffset="4" Name="TempWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
@@ -289,7 +289,7 @@
 
 								
 								<!-- Temperatur Prognose Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00011" Offset="5" BitOffset="0" Name="TempForecastWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00011" Offset="5" BitOffset="0" Name="TempForecastWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Temperatur Prognose Watchdog Fallback-->
 								<Parameter Id="%AID%_UP-%TT%00012" Offset="5" BitOffset="4" Name="TempForecastWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
@@ -299,7 +299,7 @@
 
 
 								<!-- Helligkeit Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00014" Offset="7" BitOffset="0" Name="BrightnessWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00014" Offset="7" BitOffset="0" Name="BrightnessWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Helligkeit Watchdog Fallback-->
 								<Parameter Id="%AID%_UP-%TT%00015" Offset="7" BitOffset="4" Name="BrightnessWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
@@ -309,7 +309,7 @@
 
 
 								<!-- UVI Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00017" Offset="9" BitOffset="0" Name="UVIWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00017" Offset="9" BitOffset="0" Name="UVIWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- UVI Watchdog Fallback-->
 								<Parameter Id="%AID%_UP-%TT%00018" Offset="9" BitOffset="4" Name="UVIWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
@@ -318,7 +318,7 @@
 								<Parameter Id="%AID%_UP-%TT%00019" Offset="10" BitOffset="0" Name="UVIFallback" ParameterType="%AID%_PT-UVIndex" Text="Wert" Value="10" />
 
 								<!-- Regen Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00020" Offset="14" BitOffset="0" Name="RainWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00020" Offset="14" BitOffset="0" Name="RainWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Regen Watchdog Fallback-->
 								<Parameter Id="%AID%_UP-%TT%00021" Offset="14" BitOffset="4" Name="RainWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
@@ -329,7 +329,7 @@
 								<!-- 7 bits free-->
 
 								<!-- Wolken Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00023" Offset="16" BitOffset="0" Name="CloudsWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Auffallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00023" Offset="16" BitOffset="0" Name="CloudsWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Wolken Watchdog Fallback-->
 								<Parameter Id="%AID%_UP-%TT%00024" Offset="17" BitOffset="4" Name="CloudsWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />

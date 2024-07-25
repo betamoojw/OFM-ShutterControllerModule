@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeWindowOpen.xml" name="ModeWindowOpen" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="22" increment="4" />
+						<op:param name="%ParamOffset%" value="28" increment="4" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="26" increment="4" />
 						<!-- ModeWindowOpen number -->
@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="30" increment="37" />
+						<op:param name="%ParamOffset%" value="36" increment="37" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="34" increment="5" />
 						<!-- ModeShading number -->
@@ -36,104 +36,128 @@
 						<Parameters>
 
 							<!-- Kanal Name -->
-							<Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
+							<Parameter Id="%AID%_P-%TT%%CC%000" Name="C%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-							<Union SizeInBit="176">
+							<Union SizeInBit="224">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
-								<Parameter Id="%AID%_UP-%TT%%CC%001" Offset="0" BitOffset="0" Name="Channel%C%Type" ParameterType="%AID%_PT-ShutterType" Text="Geräteart" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%001" Offset="0" BitOffset="0" Name="C%C%Type" ParameterType="%AID%_PT-ShutterType" Text="Geräteart" Value="0" />
 
 								<!-- Kanal Deaktivieren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="Channel%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="C%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
 								<!-- Ersten Manuellen Fahrbefehl startet Beschattung wenn erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="Channel%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Fahrbefehl ignorieren wenn Beschattung aktiv" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="C%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Fahrbefehl ignorieren wenn Beschattung aktiv" Value="0" />
 
 								<!-- Nacht Modus -->
-								<Parameter Id="%AID%_UP-%TT%%CC%004" Offset="1" BitOffset="2" Name="Channel%C%ModeNight" ParameterType="%AID%_PT-OnOffYesNo" Text="Nachtmodus" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%004" Offset="1" BitOffset="2" Name="C%C%ModeNight" ParameterType="%AID%_PT-OnOffYesNo" Text="Nachtmodus" Value="0" />
 
 								<!-- Raumtemperatur-->
-								<Parameter Id="%AID%_UP-%TT%%CC%014" Offset="1" BitOffset="3" Name="Channel%C%RoomTemperature" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%014" Offset="1" BitOffset="3" Name="C%C%RoomTemperature" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 
 								<!-- Fenster offen Modus in Nachtmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="Channel%C%NightModeWindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="C%C%NightModeWindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
 
 								<!-- Mode Manual ignoriert Kanal Lock -->
-								<Parameter Id="%AID%_UP-%TT%%CC%025" Offset="1" BitOffset="5" Name="Channel%C%ModeManualIgnoreChannelLock" ParameterType="%AID%_PT-OnOffYesNo" Text="Handbedienung bei globaler Kanal-Sperre erlauben" Value="1"/>
+								<Parameter Id="%AID%_UP-%TT%%CC%025" Offset="1" BitOffset="5" Name="C%C%ModeManualIgnoreChannelLock" ParameterType="%AID%_PT-OnOffYesNo" Text="Handbedienung bei globaler Kanal-Sperre erlauben" Value="1"/>
 
 								<!-- 3 Bit free -->
 
 								<!-- Nacht Modus von -->
-								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="Channel%C%NightModeStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightModeStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Von Uhrzeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="4" BitOffset="0" Name="Channel%C%ModeNightFromTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="1320" />
+								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="4" BitOffset="0" Name="C%C%ModeNightFromTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="1320" />
 
 								<!-- vor / bei / nach -->
-								<Parameter Id="%AID%_UP-%TT%%CC%007" Offset="6" BitOffset="0" Name="Channel%C%ModeNightSunSet" ParameterType="%AID%_PT-SunSet" Text="Sonne" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%007" Offset="6" BitOffset="0" Name="C%C%ModeNightSunSet" ParameterType="%AID%_PT-SunSet" Text="Sonne" Value="1" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Höhenwinkel Grad nach Sonnenuntergang -->
-								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="7" BitOffset="0" Name="Channel%C%ModeNightSunSetElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="7" BitOffset="0" Name="C%C%ModeNightSunSetElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
 
 								<!-- Nacht Modus bis -->
-								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="Channel%C%NightModeEndBehavior" ParameterType="%AID%_PT-NightModeEndBehavior" Text="Auslöser" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="C%C%NightModeEndBehavior" ParameterType="%AID%_PT-NightModeEndBehavior" Text="Auslöser" Value="2" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Bis Uhrzeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%010" Offset="9" BitOffset="0" Name="Channel%C%ModeNightToTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="420" />
+								<Parameter Id="%AID%_UP-%TT%%CC%010" Offset="9" BitOffset="0" Name="C%C%ModeNightToTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="420" />
 
 								<!-- vor / bei / nach -->
-								<Parameter Id="%AID%_UP-%TT%%CC%011" Offset="11" BitOffset="0" Name="Channel%C%ModeNightSunRise" ParameterType="%AID%_PT-SunRise" Text="Sonne" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%011" Offset="11" BitOffset="0" Name="C%C%ModeNightSunRise" ParameterType="%AID%_PT-SunRise" Text="Sonne" Value="1" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Höhenwinkel Grad nach Sonnenaufgang -->
-								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="12" BitOffset="0" Name="Channel%C%ModeNightSunRiseElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="12" BitOffset="0" Name="C%C%ModeNightSunRiseElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
 
 								<!-- Heizungs Anforderung-->
-								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="Channel%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heinzung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="C%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heinzung" Value="0" />
 
 								<!-- 6 Bit free -->
 
 								<!-- Handbetrieb Auf/Ab Type-->
-								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="Channel%C%UpDownTypeForManualControl" ParameterType="%AID%_PT-UpDownTypeForManualControl" Text="Handbetrieb Auf/Ab an Aktor übergeben als" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="C%C%UpDownTypeForManualControl" ParameterType="%AID%_PT-UpDownTypeForManualControl" Text="Handbetrieb Auf/Ab an Aktor übergeben als" Value="0" />
 								<!-- Beschattungsunterbrechnung nach Handbetrieb -->
-								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="Channel%C%WaitTimeAfterManualUsageForShading" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%WaitTimeAfterManualUsageForShading" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
 								<!-- Nach Beschattung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="Channel%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
 
 
 								<!-- Position bei Nacht Start anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%019" Offset="17" BitOffset="0" Name="Channel%C%ModeNightStartPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%019" Offset="17" BitOffset="0" Name="C%C%ModeNightStartPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
 
 								<!-- Night Mode Start Position -->
-								<Parameter Id="%AID%_UP-%TT%%CC%020" Offset="17" BitOffset="1" Name="Channel%C%NightModeStartPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="100" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%020" Offset="17" BitOffset="1" Name="C%C%NightModeStartPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="100" SuffixText="%" />
 
 								<!-- Night Mode Start Lamellen Position -->
-								<Parameter Id="%AID%_UP-%TT%%CC%021" Offset="18" BitOffset="1" Name="Channel%C%NightModeStartSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="100" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%021" Offset="18" BitOffset="1" Name="C%C%NightModeStartSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="100" SuffixText="%" />
 
 								<!-- Position bei Nacht Ende anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%022" Offset="19" BitOffset="0" Name="Channel%C%ModeNightStopPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%022" Offset="19" BitOffset="0" Name="C%C%ModeNightStopPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
 
 								<!-- Night Mode Stop Position -->
-								<Parameter Id="%AID%_UP-%TT%%CC%023" Offset="19" BitOffset="1" Name="Channel%C%NightModeStopPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%023" Offset="19" BitOffset="1" Name="C%C%NightModeStopPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="0" SuffixText="%" />
 
 								<!-- Night Mode Stop Lamellen Position -->
-								<Parameter Id="%AID%_UP-%TT%%CC%024" Offset="20" BitOffset="1" Name="Channel%C%NightModeStopSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%024" Offset="20" BitOffset="1" Name="C%C%NightModeStopSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
 
 								<!-- Anzahl Fenster Offen Mode-->
-								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="Channel%C%ModeWindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster Offen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="C%C%ModeWindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster Offen" Value="0" />
 
 								<!-- 4 Bit free -->
 
-								<!-- Next offset: 22-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%027 -->
+
+								<!-- Heizung Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%%CC%027" Offset="22" BitOffset="0" Name="C%C%HeatingWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+
+								<!-- Heizung Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%%CC%028" Offset="23" BitOffset="4" Name="C%C%HeatingWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Heizung Fallback % -->
+								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" />
+								<!-- Heizung Fallback Ein/Aus -->
+								<Parameter Id="%AID%_UP-%TT%%CC%030" Offset="24" BitOffset="0" Name="C%C%HeadingFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" />
+
+
+								<!-- Raumtemperatur Watchdog -->
+								<Parameter Id="%AID%_UP-%TT%%CC%031" Offset="25" BitOffset="0" Name="C%C%RoomTempWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+
+								<!-- Raumtemperatur Watchdog Fallback-->
+								<Parameter Id="%AID%_UP-%TT%%CC%032" Offset="26" BitOffset="4" Name="C%C%RoomTempWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+
+								<!-- Raumtemperatur Fallback -->
+								<Parameter Id="%AID%_UP-%TT%%CC%033" Offset="27" BitOffset="0" Name="C%C%RoomTempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="0" />
+
+								<!-- Next offset: 28-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%033 -->
+
+
 							</Union>
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
@@ -224,6 +248,21 @@
 							<!-- Nach Beschattung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
 
+							<!-- Heizung Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_UP-%TT%%CC%027" />
+							<!-- Heizung Watchdog Fallback-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" RefId="%AID%_UP-%TT%%CC%028" />
+							<!-- Heizung Fallback % -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" RefId="%AID%_UP-%TT%%CC%029" />
+							<!-- Heizung Fallback Ein/Aus -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" RefId="%AID%_UP-%TT%%CC%030" />
+
+							<!-- Raumtemperatur Watchdog -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" RefId="%AID%_UP-%TT%%CC%031" />
+							<!-- Raumtemperatur Watchdog Fallback-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" RefId="%AID%_UP-%TT%%CC%032" />
+							<!-- Raumtemperatur Fallback -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" RefId="%AID%_UP-%TT%%CC%033" />
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
@@ -374,8 +413,8 @@
 							<!-- Raumtemperatur Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="%C%: Raumtemperatur Eingang" FunctionText="{{0:-}} Raumtemperatur Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
-							
-	
+
+
 							<!-- Fenster Offen Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" RefId="%AID%_O-%TT%%CC%900" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen -->
@@ -384,7 +423,7 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_O-%TT%%CC%902" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%903_R-%TT%%CC%90301" RefId="%AID%_O-%TT%%CC%903" Text="%C%: Fenster offen Sperre Aktiv" FunctionText="{{0:-}} Fenster offen Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
-		
+
 
 							<!-- Fenster Kippstellung Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" RefId="%AID%_O-%TT%%CC%910" Text="%C%: Fenster gekippt Aktiv" FunctionText="{{0:-}} Fenster gekippt Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
@@ -394,10 +433,10 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" RefId="%AID%_O-%TT%%CC%912" Text="%C%: Fenster gekippt Sperre" FunctionText="{{0:-}} Fenster gekippt Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%913_R-%TT%%CC%91301" RefId="%AID%_O-%TT%%CC%913" Text="%C%: Fenster gekippt Sperre Aktiv" FunctionText="{{0:-}} Fenster gekippt Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
-		
 
 
-						
+
+
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
 					</Static>
@@ -540,10 +579,40 @@
 															<when test="1">
 																<!-- Heizung Stellwert % Eingang -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
+
+																<!-- Heizung Watchdog -->
+																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
+																	<when test="&gt;0">
+																		<!-- Heizung Watchdog Fallback-->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
+																			<when test="2 3">
+																				<!-- Heizung Fallback % -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" />
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
 															</when>
 															<when test="2">
 																<!-- Heizungsanforderung Eingang -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
+
+																<!-- Heizung Watchdog -->
+																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
+																	<when test="&gt;0">
+																		<!-- Heizung Watchdog Fallback-->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
+																			<when test="2 3">
+																				<!-- Heizung Fallback Ein/Aus -->
+																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" />
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
 															</when>
 														</choose>
 
@@ -553,6 +622,21 @@
 															<when test="1">
 																<!-- Raumtemperatur Eingang -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
+
+																<!-- Raumtemperatur Watchdog -->
+																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
+																	<when test="&gt;0">
+																		<!-- Raumtemperatur Watchdog Fallback-->
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
+																			<when test="2 3">
+																				<!-- Raumtemperatur Fallback Ein/Aus -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
 															</when>
 														</choose>
 
@@ -582,7 +666,7 @@
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-													
+
 																<!-- Fenster offen Mode -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 																	<when test="&gt;0">
