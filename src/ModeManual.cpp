@@ -13,7 +13,7 @@ uint8_t ModeManual::sceneNumber() const
 
 void ModeManual::initGroupObjects()
 {
-    KoSHC_CHManualLockActive.value(false, DPT_Switch);
+    KoSHC_CManualLockActive.value(false, DPT_Switch);
 }
 bool ModeManual::modeWindowOpenAllowed() const
 {
@@ -32,7 +32,7 @@ bool ModeManual::allowed(const CallContext &callContext)
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
-        if (KoSHC_CHManualLockActive.value(DPT_Switch))
+        if (KoSHC_CManualLockActive.value(DPT_Switch))
         {
             _allowed = false;
             _waitTimeStart = 0;
@@ -58,7 +58,7 @@ bool ModeManual::allowed(const CallContext &callContext)
 }
 void ModeManual::start(const CallContext& callContext, const ModeBase *previous, PositionController& positionController)
 {
-    KoSHC_CHManuelActiv.value(true, DPT_Switch);
+    KoSHC_CManuelActiv.value(true, DPT_Switch);
 }
 void ModeManual::control(const CallContext &callContext, PositionController& positionController)
 {
@@ -66,7 +66,7 @@ void ModeManual::control(const CallContext &callContext, PositionController& pos
         return;
 
     _waitTimeStart = callContext.currentMillis; // Start wait time
-    auto mode = ParamSHC_ChannelUpDownTypeForManualControl;
+    auto mode = ParamSHC_CManualUpDownType;
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     if (mode != 0)
     {
@@ -74,16 +74,16 @@ void ModeManual::control(const CallContext &callContext, PositionController& pos
         {
             switch (ko->asap())
             {
-            case SHC_KoCHManualPercent:
+            case SHC_KoCManualPercent:
                 positionController.setManualPosition(ko->value(DPT_Scaling));
                 break;
-            case SHC_KoCHManualStepStop:
+            case SHC_KoCManualStepStop:
                 positionController.setManualStep(ko->value(DPT_Step));
                 break;
-            case SHC_KoCHManualUpDown:
+            case SHC_KoCManualUpDown:
                 positionController.setManualUpDown(ko->value(DPT_UpDown));
                 break;
-            case SHC_KoCHManualSlatPercent:
+            case SHC_KoCManualSlatPercent:
                 positionController.setManualSlat(ko->value(DPT_Scaling));
                 break;
             default:
@@ -95,28 +95,28 @@ void ModeManual::control(const CallContext &callContext, PositionController& pos
 }
 void ModeManual::stop(const CallContext& callContext, const ModeBase *next, PositionController& positionController)
 {
-    KoSHC_CHManuelActiv.value(false, DPT_Switch);
+    KoSHC_CManuelActiv.value(false, DPT_Switch);
 }
 void ModeManual::processInputKo(GroupObject &ko)
 {
     auto asap = ko.asap();
-    if (asap == SHC_KoCHManualLock)
+    if (asap == SHC_KoCManualLock)
     {
-        KoSHC_CHManualLockActive.value(ko.value(DPT_Switch), DPT_Switch);
+        KoSHC_CManualLockActive.value(ko.value(DPT_Switch), DPT_Switch);
         _recalcAllowed = true;
     }
-    if (KoSHC_CHManualLockActive.value(DPT_Switch))
+    if (KoSHC_CManualLockActive.value(DPT_Switch))
         return; // lock active, ignore manual KO's
 
     if (_firstManualCommandWhileShading)
     {
         _firstManualCommandWhileShading = false;
-        if (ParamSHC_ChannelIgnoreFirstManualCommandIfShadingActiv)
+        if (ParamSHC_CIgnoreFirstManualCommandIfShadingActiv)
             return;
     }
     switch (ko.asap())
     {
-    case SHC_KoCHManuelStopStart:
+    case SHC_KoCManuelStopStart:
         if (!ko.value(DPT_Switch))
         {
             _waitTimeStart = 0; // Stop manual mode immeditaly
@@ -125,10 +125,10 @@ void ModeManual::processInputKo(GroupObject &ko)
          _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;
-    case SHC_KoCHManualPercent:
-    case SHC_KoCHManualStepStop:
-    case SHC_KoCHManualUpDown:
-    case SHC_KoCHManualSlatPercent:
+    case SHC_KoCManualPercent:
+    case SHC_KoCManualStepStop:
+    case SHC_KoCManualUpDown:
+    case SHC_KoCManualSlatPercent:
         _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;

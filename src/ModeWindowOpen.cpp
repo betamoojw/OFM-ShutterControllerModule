@@ -1,10 +1,10 @@
 #include "ModeWindowOpen.h"
 #include "PositionController.h"
 
-#ifdef SHC_ChannelModeWindowOpenPosition2
+#ifdef SHC_CWindowOpenPosition2
 // redefine SHC_ParamCalcIndex to add offset for Window Mode 2
 #undef SHC_ParamCalcIndex
-#define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_ChannelModeWindowOpenPosition2 - SHC_ChannelModeWindowOpenPosition1) * (_index - 1))
+#define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CWindowOpenPosition2 - SHC_CWindowOpenPosition1) * (_index - 1))
 #endif
 
 ModeWindowOpen::ModeWindowOpen(uint8_t index)
@@ -16,7 +16,7 @@ ModeWindowOpen::ModeWindowOpen(uint8_t index)
 
 int16_t ModeWindowOpen::koChannelOffset()
 {
-    return (_index - 1) * (SHC_KoCHModeWindowOpenModeActive2 - SHC_KoCHModeWindowOpenModeActive1);
+    return (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1);
 }
 
 GroupObject &ModeWindowOpen::getKo(uint8_t ko)
@@ -36,8 +36,8 @@ uint8_t ModeWindowOpen::sceneNumber() const
 
 void ModeWindowOpen::initGroupObjects()
 {
-    getKo(SHC_KoCHModeWindowOpenModeActive1).value(false, DPT_Switch);
-    getKo(SHC_KoCHModeWindowOpenLockActive1).value(false, DPT_Switch);
+    getKo(SHC_KoCWindowOpenModeActive1).value(false, DPT_Switch);
+    getKo(SHC_KoCWindowOpenLockActive1).value(false, DPT_Switch);
 }
 bool ModeWindowOpen::modeWindowOpenAllowed() const
 {
@@ -54,19 +54,19 @@ bool ModeWindowOpen::allowed(const CallContext &callContext)
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
-        if (ParamSHC_ChannelModeWindowOpenPositionControl1 == 0 && (callContext.hasSlat != 1 || ParamSHC_ChannelModeWindowOpenSlatPositionControl1 == 0))
+        if (ParamSHC_CWindowOpenPositionControl1 == 0 && (callContext.hasSlat != 1 || ParamSHC_CWindowOpenSlatPositionControl1 == 0))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
                 logInfoP("whether shutter nor slat position configured");
         }
-        if (!getKo(SHC_KoCHModeWindowOpenOpened1).value(DPT_OpenClose))
+        if (!getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
                 logInfoP("Window closed");
         }
-        if (getKo(SHC_KoCHModeWindowOpenLockActive1).value(DPT_Switch))
+        if (getKo(SHC_KoCWindowOpenLockActive1).value(DPT_Switch))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
@@ -85,17 +85,17 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
 {
     _positionToRestore = -1;
     _slatToRestore = -1;
-    getKo(SHC_KoCHModeWindowOpenModeActive1).value(true, DPT_Switch);
-    auto positionControl = ParamSHC_ChannelModeWindowOpenPositionControl1;
+    getKo(SHC_KoCWindowOpenModeActive1).value(true, DPT_Switch);
+    auto positionControl = ParamSHC_CWindowOpenPositionControl1;
     if (positionControl > 0)
     {
         int8_t currentPositionValue = -1;
-        if (KoSHC_CHShutterPercentOutput.commFlag() == ComFlag::WriteRequest)
-            currentPositionValue = (uint8_t)KoSHC_CHShutterPercentOutput.value(DPT_Scaling);
-        else if (KoSHC_CHShutterPercentInput.initialized())
-            currentPositionValue = KoSHC_CHShutterPercentInput.value(DPT_Scaling);
+        if (KoSHC_CShutterPercentOutput.commFlag() == ComFlag::WriteRequest)
+            currentPositionValue = (uint8_t)KoSHC_CShutterPercentOutput.value(DPT_Scaling);
+        else if (KoSHC_CShutterPercentInput.initialized())
+            currentPositionValue = KoSHC_CShutterPercentInput.value(DPT_Scaling);
 
-        auto position = ParamSHC_ChannelModeWindowOpenPosition1;
+        auto position = ParamSHC_CWindowOpenPosition1;
 
         // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
         //  <Enumeration Text="Nur wenn weiter geschlossen" Value="1" Id="%ENID%" />
@@ -121,16 +121,16 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
     }
     if (positionController.hasSlat())
     {
-        auto slatPositionControl = ParamSHC_ChannelModeWindowOpenSlatPositionControl1;
+        auto slatPositionControl = ParamSHC_CWindowOpenSlatPositionControl1;
         if (slatPositionControl > 0)
         {
             int8_t currentSlatValue = -1;
-            if (KoSHC_CHShutterSlatOutput.commFlag() == ComFlag::WriteRequest)
-                currentSlatValue = (uint8_t) KoSHC_CHShutterSlatOutput.value(DPT_Scaling);
-            else if (KoSHC_CHShutterSlatInput.initialized())
-                currentSlatValue = KoSHC_CHShutterSlatInput.value(DPT_Scaling);
+            if (KoSHC_CShutterSlatOutput.commFlag() == ComFlag::WriteRequest)
+                currentSlatValue = (uint8_t) KoSHC_CShutterSlatOutput.value(DPT_Scaling);
+            else if (KoSHC_CShutterSlatInput.initialized())
+                currentSlatValue = KoSHC_CShutterSlatInput.value(DPT_Scaling);
         
-            auto slatPosition = ParamSHC_ChannelModeWindowOpenSlatPosition1;
+            auto slatPosition = ParamSHC_CWindowOpenSlatPosition1;
 
             // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
             //  <Enumeration Text="Nur wenn weiter geschlossen" Value="1" Id="%ENID%" />
@@ -161,7 +161,7 @@ void ModeWindowOpen::control(const CallContext &callContext, PositionController&
 }
 void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
-    if ((ModeBase*) callContext.modeManual == next && getKo(SHC_KoCHModeWindowOpenOpened1).value(DPT_OpenClose))
+    if ((ModeBase*) callContext.modeManual == next && getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
     {
         _deactivatedWhileOpen = true;
         _recalcAllowed = false;
@@ -176,18 +176,18 @@ void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, 
         positionController.setAutomaticSlat(_slatToRestore);
         _slatToRestore = -1;
     }
-    getKo(SHC_KoCHModeWindowOpenModeActive1).value(false, DPT_Switch);
+    getKo(SHC_KoCWindowOpenModeActive1).value(false, DPT_Switch);
 }
 void ModeWindowOpen::processInputKo(GroupObject &ko)
 {
     switch (ko.asap()- koChannelOffset() + SHC_KoOffset)
     {
-     case SHC_KoCHModeWindowOpenOpened1:
+     case SHC_KoCWindowOpenOpened1:
         if (!ko.value(DPT_OpenClose))
             _deactivatedWhileOpen = false;
         _recalcAllowed = true;
         break;
-     case SHC_KoCHModeWindowOpenLock1:
+     case SHC_KoCWindowOpenLock1:
         _recalcAllowed = true;
         break;
     }

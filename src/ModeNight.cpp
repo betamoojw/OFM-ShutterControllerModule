@@ -13,12 +13,12 @@ uint8_t ModeNight::sceneNumber() const
 
 void ModeNight::initGroupObjects()
 {
-    KoSHC_CHModeNightActive.value(false, DPT_Switch);
-    KoSHC_CHModeNightLockActive.value(false, DPT_Switch);
+    KoSHC_CNightActive.value(false, DPT_Switch);
+    KoSHC_CNightLockActive.value(false, DPT_Switch);
 }
 bool ModeNight::modeWindowOpenAllowed() const
 {
-    return ParamSHC_ChannelNightModeWindowOpenAllowed;
+    return ParamSHC_CNightWindowOpenAllowed;
 }
 bool ModeNight::allowed(const CallContext &callContext)
 {
@@ -39,10 +39,10 @@ bool ModeNight::allowed(const CallContext &callContext)
         // 	<Enumeration Text="Sonne" Value="2" Id="%ENID%" />
         // 	<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="3" Id="%ENID%" />
         // 	<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="4" Id="%ENID%" />
-        switch (ParamSHC_ChannelNightModeStartBehavior)
+        switch (ParamSHC_CNightStartBehavior)
         {
         case 1:
-            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_ChannelModeNightFromTime)))
+            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
             {
                 startTime = true;
                 trigger = true;
@@ -56,7 +56,7 @@ bool ModeNight::allowed(const CallContext &callContext)
             }
             break;
         case 3:
-            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_ChannelModeNightFromTime)))
+            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
             {
                 startTime = true;
                 trigger = true;
@@ -68,7 +68,7 @@ bool ModeNight::allowed(const CallContext &callContext)
             }
             break;
         case 4:
-            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_ChannelModeNightFromTime)))
+            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
             {
                 startTime = true;
                 trigger = sunRise;
@@ -87,10 +87,10 @@ bool ModeNight::allowed(const CallContext &callContext)
         // 	<Enumeration Text="Sonne" Value="2" Id="%ENID%" />
         // 	<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="3" Id="%ENID%" />
         // 	<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="4" Id="%ENID%" />
-        switch (ParamSHC_ChannelNightModeEndBehavior)
+        switch (ParamSHC_CNightEndBehavior)
         {
         case 1:
-            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_ChannelModeNightToTime)))
+            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
             {
                 stopTime = true;
                 trigger = true;
@@ -104,7 +104,7 @@ bool ModeNight::allowed(const CallContext &callContext)
             }
             break;
         case 3:
-            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_ChannelModeNightToTime)))
+            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
             {
                 stopTime = true;
                 trigger = true;
@@ -116,7 +116,7 @@ bool ModeNight::allowed(const CallContext &callContext)
             }
             break;
         case 4:
-            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_ChannelModeNightToTime)))
+            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
             {
                 stopTime = true;
                 trigger = sunRise;
@@ -131,7 +131,7 @@ bool ModeNight::allowed(const CallContext &callContext)
         if (trigger)
             _allowed = false;
     }
-    if (KoSHC_CHModeNightLockActive.value(DPT_Switch))
+    if (KoSHC_CNightLockActive.value(DPT_Switch))
     {
         if (callContext.diagnosticLog)
             logInfoP("Lock KO active");
@@ -145,12 +145,12 @@ bool ModeNight::allowed(const CallContext &callContext)
 // <Enumeration Text="nach Sonnenuntergang" Value="2" Id="%ENID%" />
 double ModeNight::getElevationFromSunSetParameter()
 {
-    switch (ParamSHC_ChannelModeNightSunSet)
+    switch (ParamSHC_CNightSunSet)
     {
     case 0:
-        return ParamSHC_ChannelModeNightSunSetElevationOffset;
+        return ParamSHC_CNightSunSetElevationOffset;
     case 2:
-        return ((double)ParamSHC_ChannelModeNightSunSetElevationOffset) * -1;
+        return ((double)ParamSHC_CNightSunSetElevationOffset) * -1;
     default:
         return 0;
     }
@@ -161,12 +161,12 @@ double ModeNight::getElevationFromSunSetParameter()
 // <Enumeration Text="nach Sonnenaufgang" Value="2" Id="%ENID%" />
 double ModeNight::getElevationFromSunRiseParameter()
 {
-    switch (ParamSHC_ChannelModeNightSunRise)
+    switch (ParamSHC_CNightSunRise)
     {
     case 0:
-        return ((double)ParamSHC_ChannelModeNightSunRiseElevationOffset) * -1;
+        return ((double)ParamSHC_CNightSunRiseElevationOffset) * -1;
     case 2:
-        return ParamSHC_ChannelModeNightSunRiseElevationOffset;
+        return ParamSHC_CNightSunRiseElevationOffset;
     default:
         return 0;
     }
@@ -174,12 +174,12 @@ double ModeNight::getElevationFromSunRiseParameter()
 
 void ModeNight::start(const CallContext &callContext, const ModeBase *previous, PositionController& positionController)
 {
-    KoSHC_CHModeNightActive.value(true, DPT_Switch);
-    if (ParamSHC_ChannelModeNightStartPositionEnabled)
+    KoSHC_CNightActive.value(true, DPT_Switch);
+    if (ParamSHC_CNightStartPositionEnabled)
     {
         // Use manual modes, because the position should be stored as last manual position
-        positionController.setManualPosition(ParamSHC_ChannelNightModeStartPosition);
-        positionController.setManualSlat(ParamSHC_ChannelNightModeStartSlatPosition);
+        positionController.setManualPosition(ParamSHC_CNightStartPosition);
+        positionController.setManualSlat(ParamSHC_CNightStartSlatPosition);
     }
 }
 
@@ -189,12 +189,12 @@ void ModeNight::control(const CallContext &callContext, PositionController& posi
 
 void ModeNight::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
-    KoSHC_CHModeNightActive.value(false, DPT_Switch);
-    if (next != (const ModeBase *)callContext.modeManual && ParamSHC_ChannelModeNightStopPositionEnabled)
+    KoSHC_CNightActive.value(false, DPT_Switch);
+    if (next != (const ModeBase *)callContext.modeManual && ParamSHC_CNightStopPositionEnabled)
     {
         // Use manual modes, because the position should be stored as last manual position
-        positionController.setManualPosition(ParamSHC_ChannelNightModeStopPosition); 
-        positionController.setManualSlat(ParamSHC_ChannelNightModeStopSlatPosition);
+        positionController.setManualPosition(ParamSHC_CNightStopPosition); 
+        positionController.setManualSlat(ParamSHC_CNightStopSlatPosition);
     }
 }
 
@@ -202,11 +202,11 @@ void ModeNight::processInputKo(GroupObject &ko)
 {
     switch (ko.asap())
     {
-    case SHC_KoCHModeNight:
+    case SHC_KoCNight:
         _allowed = ko.value(DPT_Switch);
         break;
-    case SHC_KoCHModeNightLock:
-        KoSHC_CHModeNightLockActive.value(ko.value(DPT_Switch), DPT_Switch);
+    case SHC_KoCNightLock:
+        KoSHC_CNightLockActive.value(ko.value(DPT_Switch), DPT_Switch);
         break;
     default:
         break;

@@ -156,15 +156,15 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         if (moduleCommand.rfind("t") == 0)
         {
             logInfoP("Set temperature");
-            KoSHC_TemperatureInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
-            processInputKo(KoSHC_TemperatureInput);
+            KoSHC_TempInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
+            processInputKo(KoSHC_TempInput);
             return true;
         }
         else if (moduleCommand.rfind("f") == 0)
         {
             logInfoP("Set temperature forecast");
-            KoSHC_TemperatureForecastInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
-            processInputKo(KoSHC_TemperatureForecastInput);
+            KoSHC_TempForecastInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
+            processInputKo(KoSHC_TempForecastInput);
             return true;
         }
         else if (moduleCommand.rfind("b") == 0)
@@ -357,7 +357,7 @@ void ShutterControllerModule::setup()
 
 OpenKNX::Channel *ShutterControllerModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
 {
-    if (ParamSHC_ChannelDeactivated)
+    if (ParamSHC_CDeactivated)
         return nullptr;
     return new ShutterControllerChannel(_channelIndex);
 }

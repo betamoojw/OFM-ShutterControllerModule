@@ -5,7 +5,7 @@
 PositionController::PositionController(uint8_t channelIndex)
     : _channelIndex(channelIndex)
 {
-    _hasSlat = ParamSHC_ChannelType == 1;
+    _hasSlat = ParamSHC_CType == 1;
     _logPrefix = openknx.logger.buildPrefix("SC", _channelIndex + 1);
     _logPrefix += "PosCtrl";
 }
@@ -37,7 +37,7 @@ void PositionController::setManualPosition(uint8_t position)
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    if (ParamSHC_ChannelUpDownTypeForManualControl != 0)
+    if (ParamSHC_CManualUpDownType != 0)
         _setPosition = position;
 }
 void PositionController::setManualSlat(uint8_t position)
@@ -49,15 +49,15 @@ void PositionController::setManualSlat(uint8_t position)
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    if (_hasSlat && ParamSHC_ChannelUpDownTypeForManualControl != 0)
+    if (_hasSlat && ParamSHC_CManualUpDownType != 0)
         _setSlat = position;
 }
 void PositionController::setManualStep(bool step)
 {
-    if (_hasSlat && ParamSHC_ChannelUpDownTypeForManualControl != 0)
+    if (_hasSlat && ParamSHC_CManualUpDownType != 0)
     {
         logInfoP("Set step: %d", (int)step);
-        KoSHC_CHShutterStopStepOutput.value(step, DPT_Step);
+        KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
         _startWaitForManualPositionFeedback = millis();
         if (_startWaitForManualPositionFeedback == 0)
             _startWaitForManualPositionFeedback = 1;
@@ -86,11 +86,11 @@ void PositionController::setManualUpDown(bool up)
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    switch (ParamSHC_ChannelUpDownTypeForManualControl)
+    switch (ParamSHC_CManualUpDownType)
     {
     case 1:
         logInfoP("Set up: %d", (int)up);
-        KoSHC_CHShutterUpDownOutput.value(up, DPT_UpDown);
+        KoSHC_CShutterUpDownOutput.value(up, DPT_UpDown);
         break;
     case 2:
         _setPosition = up ? 0 : 100;
@@ -108,13 +108,13 @@ void PositionController::processInputKo(GroupObject &ko)
 {
     switch (ko.asap())
     {
-    case SHC_KoCHShutterPercentInput:
+    case SHC_KoCShutterPercentInput:
         if (millis() - _startWaitForManualPositionFeedback < 3000)
         {
             _lastManaulPosition = (uint8_t)ko.value(DPT_Scaling);
         }
         break;
-    case SHC_KoCHShutterSlatInput:
+    case SHC_KoCShutterSlatInput:
         if (millis() - _startWaitForManualSlatPositionFeedback < 3000)
         {
             _lastManualSlat = (uint8_t)ko.value(DPT_Scaling);
@@ -132,13 +132,13 @@ void PositionController::control(const CallContext &callContext)
     if (_setPosition != 255)
     {
         logInfoP("Set position: %d", (int)_setPosition);
-        KoSHC_CHShutterPercentOutput.value(_setPosition, DPT_Scaling);
+        KoSHC_CShutterPercentOutput.value(_setPosition, DPT_Scaling);
         _setPosition = 255;
     }
     if (_setSlat != 255)
     {
         logInfoP("Set slat position: %d", (int)_setSlat);
-        KoSHC_CHShutterSlatOutput.value(_setSlat, DPT_Scaling);
+        KoSHC_CShutterSlatOutput.value(_setSlat, DPT_Scaling);
         _setSlat = 255;
     }
     if (callContext.diagnosticLog)

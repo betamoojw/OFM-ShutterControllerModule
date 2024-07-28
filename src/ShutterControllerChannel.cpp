@@ -18,48 +18,48 @@ const std::string ShutterControllerChannel::name()
 
 void ShutterControllerChannel::setup()
 {
-    KoSHC_CHShutterPercentInput.requestObjectRead();
-    if (ParamSHC_ChannelType == 1)
-        KoSHC_CHShutterSlatInput.requestObjectRead();
+    KoSHC_CShutterPercentInput.requestObjectRead();
+    if (ParamSHC_CType == 1)
+        KoSHC_CShutterSlatInput.requestObjectRead();
 
-    KoSHC_CHShadingControl.value(_shadingControlActive, DPT_Switch);
-    KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
-    KoSHC_CHShadingActive.value(false, DPT_Switch);
+    KoSHC_CShadingControl.value(_shadingControlActive, DPT_Switch);
+    KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
+    KoSHC_CShadingActive.value(false, DPT_Switch);
 
-    KoSHC_CHLock.value(_channelLockActive, DPT_Switch);
-    KoSHC_CHLockActive.value(_channelLockActive, DPT_Switch);
+    KoSHC_CLock.value(_channelLockActive, DPT_Switch);
+    KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
 
     // add modes, highest priority first
     _modeManual = new ModeManual();
-    logErrorP("Slat1: %d", ParamSHC_ChannelModeWindowOpenSlatPositionControl1);
-    logErrorP("Slat2: %d", ParamSHC_ChannelModeWindowOpenSlatPositionControl2);
-    for (uint8_t i = 1; i <= ParamSHC_ChannelModeWindowOpenCount; i++)
+    logErrorP("Slat1: %d", ParamSHC_CWindowOpenSlatPositionControl1);
+    logErrorP("Slat2: %d", ParamSHC_CWindowOpenSlatPositionControl2);
+    for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
     {
         _modes.push_back(new ModeWindowOpen(i));
     }
   
     _modes.push_back(_modeManual);
 
-    if (ParamSHC_ChannelModeNight)
+    if (ParamSHC_CNight)
         _modes.push_back(new ModeNight());
 
 // up to 4 instances can be defined of ModeShading in ShutterControllerModule.templ.xml
-#ifdef ParamSHC_ChannelModeShading5
+#ifdef ParamSHC_CShading5
 #error Not more the 4 instances allowed for ModeShading in ShutterControllerModule.templ.xml
 #endif
-#ifdef ParamSHC_ChannelModeShading4
-    if (ParamSHC_ChannelModeShading4)
+#ifdef ParamSHC_CShading4
+    if (ParamSHC_CShading4)
         _modes.push_back(new ModeShading(4));
 #endif
-#ifdef ParamSHC_ChannelModeShading3
-    if (ParamSHC_ChannelModeShading3)
+#ifdef ParamSHC_CShading3
+    if (ParamSHC_CShading3)
         _modes.push_back(new ModeShading(3));
 #endif
-#ifdef ParamSHC_ChannelModeShading2
-    if (ParamSHC_ChannelModeShading2)
+#ifdef ParamSHC_CShading2
+    if (ParamSHC_CShading2)
         _modes.push_back(new ModeShading(2));
 #endif
-    if (ParamSHC_ChannelModeShading1)
+    if (ParamSHC_CShading1)
         _modes.push_back(new ModeShading(1));
 
     _modeIdle = new ModeIdle();
@@ -76,15 +76,15 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     auto index = SHC_KoCalcIndex(ko.asap());
     switch (index)
     {
-    case SHC_KoCHLock:
+    case SHC_KoCLock:
         _channelLockActive = ko.value(DPT_Switch);
-        KoSHC_CHLockActive.value(_channelLockActive, DPT_Switch);
+        KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
         break;
-     case SHC_KoCHShadingControl:
+     case SHC_KoCShadingControl:
         _shadingControlActive = ko.value(DPT_Switch);
         _waitTimeForReactivateShadingAfterManualStarted = 0;
         _waitForShadingPeriodEnd = false;
-        KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
+        KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
         break;
     }
     _positionController.processInputKo(ko);
@@ -109,39 +109,39 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     }
     else if (cmd == "s1")
     {
-        KoSHC_CHShadingControl.value(1, DPT_Switch);
-        processInputKo(KoSHC_CHShadingControl);
+        KoSHC_CShadingControl.value(1, DPT_Switch);
+        processInputKo(KoSHC_CShadingControl);
         return true;
     }
     else if (cmd == "s0")
     {
-        KoSHC_CHShadingControl.value(0, DPT_Switch);
-        processInputKo(KoSHC_CHShadingControl);
+        KoSHC_CShadingControl.value(0, DPT_Switch);
+        processInputKo(KoSHC_CShadingControl);
         return true;
     }
     else if (cmd == "w1")
     {
-        KoSHC_CHModeWindowOpenOpened1.value(1, DPT_OpenClose);
-        processInputKo(KoSHC_CHModeWindowOpenOpened1);
+        KoSHC_CWindowOpenOpened1.value(1, DPT_OpenClose);
+        processInputKo(KoSHC_CWindowOpenOpened1);
         return true;
     }
     else if (cmd == "w0")
     {
-        KoSHC_CHModeWindowOpenOpened1.value(0, DPT_OpenClose);
-        processInputKo(KoSHC_CHModeWindowOpenOpened1);
+        KoSHC_CWindowOpenOpened1.value(0, DPT_OpenClose);
+        processInputKo(KoSHC_CWindowOpenOpened1);
         return true;
     }
-#ifdef KoSHC_CHModeWindowOpenOpened2
+#ifdef KoSHC_CWindowOpenOpened2
     else if (cmd == "wt1")
     {
-        KoSHC_CHModeWindowOpenOpened2.value(1, DPT_OpenClose);
-        processInputKo(KoSHC_CHModeWindowOpenOpened2);
+        KoSHC_CWindowOpenOpened2.value(1, DPT_OpenClose);
+        processInputKo(KoSHC_CWindowOpenOpened2);
         return true;
     }
     else if (cmd == "wt0")
     {
-        KoSHC_CHModeWindowOpenOpened2.value(0, DPT_OpenClose);
-        processInputKo(KoSHC_CHModeWindowOpenOpened2);
+        KoSHC_CWindowOpenOpened2.value(0, DPT_OpenClose);
+        processInputKo(KoSHC_CWindowOpenOpened2);
         return true;
     }
 #endif
@@ -149,8 +149,8 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
 }
 void ShutterControllerChannel::activateShading()
 {
-    KoSHC_CHShadingControl.value(true, DPT_Switch);
-    processInputKo(KoSHC_CHShadingControl);
+    KoSHC_CShadingControl.value(true, DPT_Switch);
+    processInputKo(KoSHC_CShadingControl);
 }
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
@@ -163,19 +163,19 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     {
         _currentMode = _modeIdle;
         _currentMode->start(callContext, callContext.modeCurrentActive, _positionController);
-        KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
+        KoSHC_CActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
     }
     callContext.modeCurrentActive = _currentMode;
     
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
-        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > ParamSHC_ChannelWaitTimeAfterManualUsageForShading)
+        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > ParamSHC_CManualShadingWaitTime)
         {
             // reactivate
             _waitTimeForReactivateShadingAfterManualStarted = 0;
-            _shadingControlActive = KoSHC_CHShadingControl.value(DPT_Switch);
-            KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
+            _shadingControlActive = KoSHC_CShadingControl.value(DPT_Switch);
+            KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
         }
     }
     else if (_waitForShadingPeriodEnd)
@@ -198,8 +198,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (allShadingPeriodsEnd)
         {
             _waitForShadingPeriodEnd = false;
-            _shadingControlActive = KoSHC_CHShadingControl.value(DPT_Switch);
-            KoSHC_CHShadingControlActive.value(_shadingControlActive, DPT_Switch);
+            _shadingControlActive = KoSHC_CShadingControl.value(DPT_Switch);
+            KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
         }
     }
     // State machine handling for mode activateion
@@ -214,7 +214,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         {
             if (mode == _currentMode)
                 currentModeAllowed = true;
-            if (_channelLockActive && (mode != _modeManual || !ParamSHC_ChannelModeManualIgnoreChannelLock))
+            if (_channelLockActive && (mode != _modeManual || !ParamSHC_CManualIgnoreChannelLock))
             {
                 if (callContext.diagnosticLog)
                     logInfoP("-> global channel lock active, not allowed");
@@ -258,7 +258,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             if (_currentMode->isModeShading() || (_currentMode->isModeWindowOpen() && _handleWindowOpenAsShading != nullptr))
             {
                 _shadingControlActive = false;
-                if (ParamSHC_ChannelWaitTimeAfterManualUsageForShading != 0)
+                if (ParamSHC_CManualShadingWaitTime != 0)
                     _waitTimeForReactivateShadingAfterManualStarted = callContext.currentMillis;
                 else
                     _waitForShadingPeriodEnd = true;
@@ -299,7 +299,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             shadingStarted();
         }
         _currentMode->start(callContext, previousMode, _positionController);
-        KoSHC_CHActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
+        KoSHC_CActiveMode.value(_currentMode->sceneNumber() - 1, DPT_SceneNumber);
         callContext.modeNewStarted = true;
     }
     _currentMode->control(callContext, _positionController);
@@ -314,19 +314,19 @@ void ShutterControllerChannel::shadingStarted()
 {
     logInfoP("Shading started");
     _anyShadingModeActive = true;
-    KoSHC_CHShadingActive.value(true, DPT_Switch);
+    KoSHC_CShadingActive.value(true, DPT_Switch);
 }
 
 void ShutterControllerChannel::shadingStopped()
 {
     logInfoP("Shading stopped");  
     _anyShadingModeActive = false;
-    KoSHC_CHShadingActive.value(false, DPT_Switch);
+    KoSHC_CShadingActive.value(false, DPT_Switch);
     // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
     // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
     // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
     // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
-    switch (ParamSHC_ChannelAfterShading)
+    switch (ParamSHC_CAfterShading)
     {
     case 1:
         _positionController.restoreLastManualPosition();
