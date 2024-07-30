@@ -4,6 +4,7 @@
 #include "ModeNight.h"
 #include "ModeShading.h"
 #include "ModeIdle.h"
+#include "ShutterSimulation.h"
 
 ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
     : _modes(), _positionController(channelIndex)
@@ -18,6 +19,27 @@ const std::string ShutterControllerChannel::name()
 
 void ShutterControllerChannel::setup()
 {
+    _measurementRoomTemperature.init(
+        "RoomTemperature", 
+        &KoSHC_CRoomTemp, 
+        ParamSHC_CRoomTempWatchdog, 
+        KNXValue(ParamSHC_CRoomTempFallback), 
+        DPT_Value_Temp, 
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_CRoomTempWatchdogBehavior);
+
+    // <Enumeration Text="Nein" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Heizungsanforderung (EIN/AUS)" Value="2" Id="%ENID%" />
+    _measurementHeading.init(
+        "Heading", 
+        ParamSHC_CHeatingInput > 0 ? &KoSHC_CHeading : nullptr, 
+        ParamSHC_CHeatingWatchdog, 
+        ParamSHC_CHeatingInput == 1 ? KNXValue(ParamSHC_CHeadingFallbackPercent) : KNXValue(ParamSHC_CHeadingFallback),  
+        ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_CHeatingWatchdogBehavior);
+
+
+
     KoSHC_CShutterPercentInput.requestObjectRead();
     if (ParamSHC_CType == 1)
         KoSHC_CShutterSlatInput.requestObjectRead();
@@ -72,6 +94,9 @@ void ShutterControllerChannel::setup()
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
 {
+    _measurementHeading.processIputKo(ko);
+    _measurementRoomTemperature.processIputKo(ko);
+
     // channel ko
     auto index = SHC_KoCalcIndex(ko.asap());
     switch (index)
@@ -107,40 +132,60 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         }
         return true;
     }
-    else if (cmd == "s1")
+    else if (cmd.rfind("sim") == 0)
     {
-        KoSHC_CShadingControl.value(1, DPT_Switch);
+        if (std::stoi(cmd.substr(3)))
+        {
+            if (_positionController.startSimulation())
+            {
+                logInfoP("Simulation started");
+            }
+            else
+            {
+                logInfoP("Simulation already started");
+            }
+        } 
+        else
+        {
+            if (_positionController.stopSimulation())
+            {
+                logInfoP("Simulation stopped");
+            }
+            else
+            {
+                logInfoP("Simulation not started");
+            }
+        }
+        return true;
+    }
+    else if (cmd.rfind("s") == 0)
+    {
+        KoSHC_CShadingControl.value(std::stoi(cmd.substr(1)), DPT_Switch);
         processInputKo(KoSHC_CShadingControl);
         return true;
     }
-    else if (cmd == "s0")
+    else if (cmd.rfind("t") == 0)
     {
-        KoSHC_CShadingControl.value(0, DPT_Switch);
-        processInputKo(KoSHC_CShadingControl);
+        KoSHC_CRoomTemp.valueNoSend(std::stoi(cmd.substr(1)), DPT_Value_Temp);
+        processInputKo(KoSHC_CloudsInput);
         return true;
     }
-    else if (cmd == "w1")
+    else if (cmd.rfind("h") == 0)
     {
-        KoSHC_CWindowOpenOpened1.value(1, DPT_OpenClose);
-        processInputKo(KoSHC_CWindowOpenOpened1);
+        KoSHC_CRoomTemp.valueNoSend(std::stoi(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
+        processInputKo(KoSHC_CRoomTemp);
         return true;
     }
-    else if (cmd == "w0")
+    else if (cmd.rfind("w"))
     {
-        KoSHC_CWindowOpenOpened1.value(0, DPT_OpenClose);
+        KoSHC_CWindowOpenOpened1.value(std::stoi(cmd.substr(1)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened1);
         return true;
     }
 #ifdef KoSHC_CWindowOpenOpened2
-    else if (cmd == "wt1")
+    else if (cmd.rfind("wt"))
     {
-        KoSHC_CWindowOpenOpened2.value(1, DPT_OpenClose);
-        processInputKo(KoSHC_CWindowOpenOpened2);
-        return true;
-    }
-    else if (cmd == "wt0")
-    {
-        KoSHC_CWindowOpenOpened2.value(0, DPT_OpenClose);
+        KoSHC_CWindowOpenOpened2.value(std::stoi(cmd.substr(2)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened2);
         return true;
     }
@@ -154,11 +199,17 @@ void ShutterControllerChannel::activateShading()
 }
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
+    _measurementHeading.update(callContext.currentMillis, callContext.diagnosticLog);
+    _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
+
     ModeBase *nextMode = nullptr;
     callContext.hasSlat = _positionController.hasSlat();
     callContext.modeNewStarted = false;
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
+    callContext.measurementHeading = &_measurementHeading;
+    callContext.measurementRoomTemperature = &_measurementRoomTemperature;
+    
     if (_currentMode == nullptr)
     {
         _currentMode = _modeIdle;

@@ -12,9 +12,13 @@ class ModeShading : public ModeBase
     unsigned long _waitTimeAfterMeasurmentValueChange = 0;
     bool _lastTimeAndSunFrameAllowed = false;
     bool _needWaitTime = false;
+    unsigned long _lastHeadingTimeStamp = 0;
+    bool _heatingOff = true;
     int16_t koChannelOffset();
     GroupObject& getKo(uint8_t ko);
     bool allowedByMeasurmentValues(const CallContext& callContext);
+    bool handleMeasurmentValue(bool& allowed, bool enabled, const MeasurementWatchdog *measurementWatchdog, const CallContext &callContext, bool (*predicate)(const MeasurementWatchdog *, uint8_t _channelIndex, uint8_t _index));
+
 public:
     ModeShading(uint8_t index);
     bool allowedByTimeAndSun(const CallContext& callContext);

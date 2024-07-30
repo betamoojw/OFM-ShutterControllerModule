@@ -5,6 +5,7 @@
 class ModeIdle;
 class ModeManual;
 class ModeBase;
+class MeasurementWatchdog;
 
 class CallContext
 {
@@ -34,4 +35,12 @@ class CallContext
         const ModeIdle* modeIdle;
         const ModeManual* modeManual;
         const ModeBase* modeCurrentActive;
+        MeasurementWatchdog* measurementTemperature;
+        MeasurementWatchdog* measurementTemperatureForecast;
+        MeasurementWatchdog* measurementBrightness;
+        MeasurementWatchdog* measurementUVIndex;
+        MeasurementWatchdog* measurementRain;
+        MeasurementWatchdog* measurementClouds;
+        MeasurementWatchdog* measurementRoomTemperature;
+        MeasurementWatchdog* measurementHeading;
 };

@@ -2,6 +2,7 @@
 #include "OpenKNX.h"
 #include "ChannelOwnerModule.h"
 #include "CallContext.h"
+#include "MeasurementWatchdog.h"
 
 class ShutterControllerModule : public ShutterControllerChannelOwnerModule
 {
@@ -12,6 +13,12 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
     OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */) override; 
     uint8_t _lastMinute = 61;
     CallContext _callContext = CallContext();
+    MeasurementWatchdog _measurementTemperature = MeasurementWatchdog();
+    MeasurementWatchdog _measurementTemperatureForecast = MeasurementWatchdog();
+    MeasurementWatchdog _measurementBrightness = MeasurementWatchdog();
+    MeasurementWatchdog _measurementUVIndex = MeasurementWatchdog();
+    MeasurementWatchdog _measurementRain = MeasurementWatchdog();
+    MeasurementWatchdog _measurementClouds = MeasurementWatchdog();
   public:
     ShutterControllerModule();
     void loop() override;

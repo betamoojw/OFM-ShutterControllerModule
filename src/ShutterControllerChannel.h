@@ -3,12 +3,16 @@
 #include "ModeBase.h"
 #include "CallContext.h"
 #include "PositionController.h"
+#include "MeasurementWatchdog.h"
 
 class ModeWindowOpen;
 class ModeShading;
 
 class ShutterControllerChannel : public OpenKNX::Channel
 {
+    private:
+        MeasurementWatchdog _measurementRoomTemperature = MeasurementWatchdog();
+        MeasurementWatchdog _measurementHeading = MeasurementWatchdog();
         volatile bool _triggered = false;
         bool _channelLockActive = false;
         std::string _name = std::string();

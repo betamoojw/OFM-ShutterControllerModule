@@ -1,13 +1,13 @@
 #include "ModeShading.h"
 #include "Timer.h"
 #include "PositionController.h"
+#include "MeasurementWatchdog.h"
 
 #ifdef SHC_KoCShading2Active
 // redefine SHC_ParamCalcIndex to add offset for Shading Mode 2
 #undef SHC_ParamCalcIndex
 #define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CShading2 - SHC_CShading1) * (_index - 1))
 #endif
-
 
 ModeShading::ModeShading(uint8_t index)
     : _index(index)
@@ -74,11 +74,9 @@ bool ModeShading::allowed(const CallContext &callContext)
             if (allowedByMeasurementValues && _active)
                 _waitTimeAfterMeasurmentValueChange = 0; // Currently active and allowed, not need to wait
 
-        
             logDebugP("Need wait time: %d", (int)_needWaitTime);
             logDebugP("Wait time start set: %d", (int)(_waitTimeAfterMeasurmentValueChange != 0));
             logDebugP("Allowed by sun: %d", (int)_lastTimeAndSunFrameAllowed);
-   
         }
     }
     if (_waitTimeAfterMeasurmentValueChange != 0)
@@ -91,7 +89,7 @@ bool ModeShading::allowed(const CallContext &callContext)
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Stop wait time %ds not reached: %ds", (int) waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
+                    logInfoP("Stop wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
                 return lastState;
             }
         }
@@ -102,7 +100,7 @@ bool ModeShading::allowed(const CallContext &callContext)
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Start wait time %ds not reached: %ds", (int) waitTimeInMinutes * 60, (int) ((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
+                    logInfoP("Start wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
                 return lastState;
             }
         }
@@ -187,65 +185,202 @@ bool ModeShading::allowedByTimeAndSun(const CallContext &callContext)
     }
     return allowed;
 }
+
+bool ModeShading::handleMeasurmentValue(bool& allowed, bool enabled, const MeasurementWatchdog *measurementWatchdog, const CallContext &callContext, bool (*predicate)(const MeasurementWatchdog *, uint8_t _channelIndex, uint8_t _index))
+{
+    if (!enabled)
+        return true;
+    if (measurementWatchdog->ignoreValue())
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("%s: value ignore", measurementWatchdog->logPrefix().c_str());
+        return true;
+    }
+
+    if (measurementWatchdog->waitForValue())
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("%s: wait for value", measurementWatchdog->logPrefix().c_str());
+
+        allowed = false;
+        return false;
+    }
+    if (!predicate(measurementWatchdog, _channelIndex, _index))
+    {
+        if (callContext.diagnosticLog)
+              logInfoP("%s: value not allowed", measurementWatchdog->logPrefix().c_str());
+         allowed = false;
+         return false;
+    }
+    return true;
+}
+
 bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
 {
     bool diagnosticLog = callContext.diagnosticLog;
     bool allowed = true;
-    if (ParamSHC_HasTemperaturInput && ParamSHC_CShading1TempActive && (float)KoSHC_TempInput.value(DPT_Value_Temp) < ParamSHC_CShading1TempMin)
+   
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1TempActive,
+        callContext.measurementTemperature, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return (float) m->getValue() >= ParamSHC_CShading1TempMin;});
+
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1TempForecastActive,
+        callContext.measurementTemperatureForecast, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return (float) m->getValue() >= ParamSHC_CShading1TempForecastMin;});
+
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1BrightnessActive,
+        callContext.measurementBrightness, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return (double) m->getValue() >= 1000 * ParamSHC_CShading1BrightnessMin;});
+
+    
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1UVIActive,
+        callContext.measurementUVIndex, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return (float) m->getValue() >= ParamSHC_CShading1UVIMin;});
+
+   
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1RainActive,
+        callContext.measurementRain, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return !(bool) m->getValue();});
+
+
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1Clouds != 101,
+        callContext.measurementClouds, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return (uint8_t) m->getValue() <= ParamSHC_CShading1Clouds;});
+
+
+    handleMeasurmentValue(
+        allowed, 
+        ParamSHC_CShading1RoomTemperaturActive,
+        callContext.measurementRoomTemperature, 
+        callContext, 
+        [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+        { return (float) m->getValue() >= ParamSHC_CRoomTemp;});    
+
+
+    // <Enumeration Text="Nein" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Heizungsanforderung (EIN/AUS)" Value="2" Id="%ENID%" />   
+    bool heatingOff;
+    if (ParamSHC_CHeatingInput == 1)
     {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("Temperatur %.1f is lower than %d", (double)KoSHC_TempInput.value(DPT_Value_Temp), (int)ParamSHC_CShading1TempMin);
-        else
-            return false;
+        heatingOff = handleMeasurmentValue(
+            allowed, 
+            ParamSHC_CShading1HeatingActive != 0,  // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+            callContext.measurementHeading, 
+            callContext, 
+            [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+            { return (uint8_t) m->getValue() <= ParamSHC_CShading1MaxHeatingValue;});
     }
-    if (ParamSHC_HasTemperaturForecastInput && ParamSHC_CShading1TempForecast && (float)KoSHC_TempForecastInput.value(DPT_Value_Temp) < ParamSHC_CShading1TempForecastMin)
+    else
     {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("Temperaturforecast %.1f is lower than %d", (double)KoSHC_TempForecastInput.value(DPT_Value_Temp), (int)ParamSHC_CShading1TempForecastMin);
-        else
-            return false;
+        heatingOff = handleMeasurmentValue(
+            allowed, 
+            ParamSHC_CShading1HeatingActive != 0,  // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+            callContext.measurementHeading, 
+            callContext, 
+            [](const MeasurementWatchdog* m, auto _channelIndex, uint8_t _index) 
+            { return !(bool) m->getValue();});
     }
-    if (ParamSHC_HasBrightnessInput && ParamSHC_CShading1BrightnessActiv && (float)KoSHC_BrightnessInput.value(DPT_Value_Lux) < 1000 * ParamSHC_CShading1BrightnessMin)
+    if (_heatingOff != heatingOff)
     {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("Brightness %.1f is lower than %d", (double)KoSHC_BrightnessInput.value(DPT_Value_Lux), (int)1000 * ParamSHC_CShading1BrightnessMin);
+        _heatingOff = heatingOff;
+        if (heatingOff)
+            _waitTimeAfterMeasurmentValueChange = callContext.currentMillis;
         else
-            return false;
+            _waitTimeAfterMeasurmentValueChange = 0;
     }
-    if (ParamSHC_HasUVIInput && ParamSHC_CShading1UVIActiv && (float)KoSHC_UVIInput.value(DPT_DecimalFactor) < ParamSHC_CShading1UVIMin)
+    if (_waitTimeAfterMeasurmentValueChange != 0)
     {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("UV index %.1f is lower than %d", (double)KoSHC_UVIInput.value(DPT_DecimalFactor), (int)ParamSHC_CShading1UVIMin);
+
+        // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+        // <Enumeration Text="ausgeschaltete Heizung" Value="1" Id="%ENID%" />
+        // <Enumeration Text="mindestens 1 Stunde ausgeschalten" Value="2" Id="%ENID%" />
+        // <Enumeration Text="mindestens 2 Stunde ausgeschalten" Value="3" Id="%ENID%" />
+        // <Enumeration Text="mindestens 3 Stunde ausgeschalten" Value="4" Id="%ENID%" />
+        // <Enumeration Text="mindestens 6 Stunde ausgeschalten" Value="5" Id="%ENID%" />
+        // <Enumeration Text="mindestens 8 Stunde ausgeschalten" Value="6" Id="%ENID%" />
+        // <Enumeration Text="mindestens 10 Stunde ausgeschalten" Value="7" Id="%ENID%" />
+        // <Enumeration Text="mindestens 12 Stunde ausgeschalten" Value="8" Id="%ENID%" />
+        // <Enumeration Text="mindestens 1 Tag ausgeschalten" Value="9" Id="%ENID%" />
+        // <Enumeration Text="mindestens 2 Tag ausgeschalten" Value="10" Id="%ENID%" />
+        unsigned long waitTimeInMillis= 0;
+        switch (ParamSHC_CShading1HeatingActive)
+        {
+        case 0:
+            waitTimeInMillis = 0;
+            break;
+        case 1:
+            waitTimeInMillis = 0;
+            break;  
+        case 2:
+            waitTimeInMillis = 1 * 60 * 60 * 1000;
+            break;
+        case 3:       
+            waitTimeInMillis = 2 * 60 * 60 * 1000;
+            break;
+        case 4:
+            waitTimeInMillis = 3 * 60 * 60 * 1000;
+            break;
+        case 5:
+            waitTimeInMillis = 6 * 60 * 60 * 1000;
+            break;
+        case 6:      
+            waitTimeInMillis = 8 * 60 * 60 * 1000;
+            break;
+        case 7:
+            waitTimeInMillis = 10 * 60 * 60 * 1000;
+            break;
+        case 8:
+            waitTimeInMillis = 12 * 60 * 60 * 1000;
+            break;
+        case 9:
+            waitTimeInMillis = 24 * 60 * 60 * 1000;
+            break;
+        case 10:    
+            waitTimeInMillis = 48 * 60 * 60 * 1000;
+            break;
+        }
+
+        if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange > waitTimeInMillis)
+        {
+            if (diagnosticLog)
+                logInfoP("Heating off wait time not reached");
+            allowed = false;
+        }
         else
-            return false;
-    }
-    if (ParamSHC_HasRainInput && ParamSHC_CShading1RainActiv && KoSHC_RainInput.value(DPT_Switch))
-    {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("Rain lock");
-        else
-            return false;
-    }
-    if (ParamSHC_HasCloudsInput && (uint8_t)KoSHC_CloudsInput.value(DPT_Scaling) > ParamSHC_CShading1Clouds)
-    {
-        allowed = false;
-        if (diagnosticLog)
-            logInfoP("Clouds %d more than %d", (int)KoSHC_CloudsInput.value(DPT_Scaling), (int)ParamSHC_CShading1Clouds);
-        else
-            return false;
+        {
+            _waitTimeAfterMeasurmentValueChange = 0;
+        }
     }
     if (!callContext.modeCurrentActive->isModeShading() && (uint8_t)KoSHC_CShutterPercentInput.value(DPT_Scaling) > ParamSHC_CShading1OnlyIfLessThan)
     {
-        allowed = false;
         if (diagnosticLog)
             logInfoP("Shutter %d more than %d", (int)KoSHC_CShutterPercentInput.value(DPT_Scaling), (int)ParamSHC_CShading1OnlyIfLessThan);
-        else
-            return false;
+        allowed = false;
     }
     return allowed;
 }
@@ -264,7 +399,7 @@ GroupObject &ModeShading::getKo(uint8_t ko)
     return knx.getGroupObject(ko + koChannelOffset());
 }
 
-void ModeShading::start(const CallContext &callContext, const ModeBase *previous, PositionController& positionController)
+void ModeShading::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
 {
     _active = true;
     getKo(SHC_KoCShading1Active).value(true, DPT_Switch);
@@ -278,7 +413,7 @@ void ModeShading::start(const CallContext &callContext, const ModeBase *previous
         positionController.setAutomaticSlat(ParamSHC_CShading1SlatShadingPosition);
 }
 
-void ModeShading::control(const CallContext &callContext, PositionController& positionController)
+void ModeShading::control(const CallContext &callContext, PositionController &positionController)
 {
     if (!callContext.modeNewStarted && !callContext.minuteChanged && !callContext.diagnosticLog)
         return;
@@ -312,12 +447,11 @@ void ModeShading::control(const CallContext &callContext, PositionController& po
     }
 }
 
-void ModeShading::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
+void ModeShading::stop(const CallContext &callContext, const ModeBase *next, PositionController &positionController)
 {
     _active = false;
     _waitTimeAfterMeasurmentValueChange = 0;
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
-
 }
 void ModeShading::processInputKo(GroupObject &ko)
 {
@@ -334,10 +468,10 @@ void ModeShading::processInputKo(GroupObject &ko)
     // global ko
     switch (ko.asap())
     {
-        case SHC_KoCShadingControl:
-            // Manual activativation / deativiation stop wait time
-            _waitTimeAfterMeasurmentValueChange = 0;
-            return;
+    case SHC_KoCShadingControl:
+        // Manual activativation / deativiation stop wait time
+        _waitTimeAfterMeasurmentValueChange = 0;
+        return;
     }
     _recalcMeasurmentValues = true;
 }

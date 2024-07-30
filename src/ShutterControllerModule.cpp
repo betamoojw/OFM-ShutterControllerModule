@@ -44,11 +44,21 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc<CC> s<0|1>", "Disabled or enable shadow of channel CC. i.e. sc01 s1");
     openknx.console.printHelpLine("sc<CC> w<0|1>", "Close or open window of channel CC. i.e. sc01 w1");
     openknx.console.printHelpLine("sc<CC> wt<0|1>", "Tilt window of channel CC. i.e. sc01 wt1");
+    openknx.console.printHelpLine("sc<CC> t<value>", "Room temperature. i.e. sc01 t50");
+    openknx.console.printHelpLine("sc<CC> h<value>", "Room heating %. i.e. sc01 h50");
 }
 
 void ShutterControllerModule::loop()
 {
     ShutterControllerChannelOwnerModule::loop();
+
+    _measurementTemperature.update(_callContext.currentMillis, _callContext.diagnosticLog);
+    _measurementTemperatureForecast.update(_callContext.currentMillis, _callContext.diagnosticLog);
+    _measurementBrightness.update(_callContext.currentMillis, _callContext.diagnosticLog);
+    _measurementUVIndex.update(_callContext.currentMillis, _callContext.diagnosticLog);
+    _measurementRain.update(_callContext.currentMillis, _callContext.diagnosticLog);
+    _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
+
     _callContext.currentMillis = millis();
     if (_callContext.currentMillis == 0)
         _callContext.currentMillis = 1; // 0 can be used as special marker -> skip 0
@@ -314,11 +324,72 @@ void ShutterControllerModule::processInputKo(GroupObject &ko)
         setDailyShadingActivation(ko.value(DPT_Switch));
         return;
     }
+    _measurementTemperature.processIputKo(ko);
+    _measurementTemperatureForecast.processIputKo(ko);
+    _measurementBrightness.processIputKo(ko);
+    _measurementUVIndex.processIputKo(ko);
+    _measurementRain.processIputKo(ko);
+    _measurementClouds.processIputKo(ko);
+    
     ShutterControllerChannelOwnerModule::processInputKo(ko);
 }
 
 void ShutterControllerModule::setup()
 {
+    _measurementTemperature.init(
+        "Temperature",
+        ParamSHC_HasTemperaturInput ? &KoSHC_TempInput : nullptr,
+        ParamSHC_TempWatchdog,
+        KNXValue(ParamSHC_TempFallback),
+        DPT_Value_Temp,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_TempFallbackMode);
+    _callContext.measurementTemperature = &_measurementTemperature;
+
+    _measurementTemperatureForecast.init(
+        "Temperature Forecast",
+        ParamSHC_HasTemperaturForecastInput ? &KoSHC_TempForecastInput : nullptr,
+        ParamSHC_TempForecastWatchdog,
+        KNXValue(ParamSHC_TempForecastFallback),
+        DPT_Value_Temp,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_TempForecastFallbackMode);
+    _callContext.measurementTemperatureForecast = &_measurementTemperatureForecast;
+
+    _measurementBrightness.init(
+        "Brightness",
+        ParamSHC_HasBrightnessInput ? &KoSHC_BrightnessInput : nullptr,
+        ParamSHC_BrightnessWatchdog,
+        KNXValue(ParamSHC_BrightnessFallback),
+        DPT_Value_Lux,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_BrightnessFallbackMode);
+    _callContext.measurementBrightness = &_measurementBrightness;    
+
+    _measurementUVIndex.init(
+        "UV Index",
+        ParamSHC_HasUVIInput ? &KoSHC_UVIInput : nullptr,
+        ParamSHC_UVIWatchdog,
+        KNXValue(ParamSHC_UVIFallback),
+        DPT_DecimalFactor,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_UVIFallbackMode);
+    _callContext.measurementUVIndex = &_measurementUVIndex;
+
+    _measurementRain.init(  
+        "Rain",
+        ParamSHC_HasRainInput ? &KoSHC_RainInput : nullptr,
+        ParamSHC_RainWatchdog,
+        KNXValue(ParamSHC_RainFallback),
+        DPT_Switch,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_RainFallbackMode);
+    _callContext.measurementRain = &_measurementRain;
+
+    _measurementClouds.init(
+        "Clouds",
+        ParamSHC_HasCloudsInput ? &KoSHC_CloudsInput : nullptr,
+        ParamSHC_CloudsWatchdog,
+        KNXValue(ParamSHC_CloudsFallback),
+        DPT_Scaling,
+        (MeasurementWatchdogFallbackBehavior) ParamSHC_CloudsFallbackMode);
+    _callContext.measurementClouds = &_measurementClouds;
+
     // <Enumeration Text="Aus" Value="0" Id="%ENID%" />
     // <Enumeration Text="Ein" Value="1" Id="%ENID%" />
     // <Enumeration Text="Über KO, Standard AUS" Value="2" Id="%ENID%" />

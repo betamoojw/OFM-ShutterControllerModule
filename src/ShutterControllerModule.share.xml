@@ -237,6 +237,8 @@
 									<Enumeration Text="2 Stunden" Value="4" Id="%ENID%" />
 									<Enumeration Text="3 Stunden" Value="5" Id="%ENID%" />
 									<Enumeration Text="4 Stunden" Value="6" Id="%ENID%" />
+									<Enumeration Text="8 Stunden" Value="7" Id="%ENID%" />
+									<Enumeration Text="12 Stunden" Value="8" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 

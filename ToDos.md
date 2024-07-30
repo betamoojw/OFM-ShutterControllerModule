@@ -8,7 +8,7 @@
 - Beschattungsmodus Auswahl auf Drop-Down umstellen und Beschattungseinstellungen nur anzeigen wenn Beschattungsmodus aktiv
 
 
-- Code für Messwerte fallback
-- Nach Start warten auf Messwerte
-- Code Letzte Heizanforderung vor mindestens X Minuten/Stunden
+- Kurzer Tastendruck bei geöffneter Jalousie (Automatik ein/aus, runter fahren)
+- Langer Tastendruck "auf" bei geöffneter Jalousie (Automatik ein/aus, runter fahren)
+- Shadow diagnostic KO
 

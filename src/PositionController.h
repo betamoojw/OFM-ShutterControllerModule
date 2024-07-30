@@ -2,9 +2,11 @@
 #include "OpenKNX.h"
 
 class CallContext;
+class ShutterSimulation;
 
 class PositionController
 {
+    ShutterSimulation* _shutterSimulation = nullptr;
     uint8_t _lastManaulPosition = 0;
     uint8_t _lastManualSlat = 0;
     uint8_t _setPosition = 255;
@@ -27,4 +29,6 @@ public:
     void restoreLastManualPosition(); 
     void processInputKo(GroupObject &ko);
     void control(const CallContext& callContext);
+    bool startSimulation();
+    bool stopSimulation();
 };

@@ -1,6 +1,7 @@
 #include "PositionController.h"
 #include "knxprod.h"
 #include "CallContext.h"
+#include "ShutterSimulation.h"
 
 PositionController::PositionController(uint8_t channelIndex)
     : _channelIndex(channelIndex)
@@ -58,6 +59,8 @@ void PositionController::setManualStep(bool step)
     {
         logInfoP("Set step: %d", (int)step);
         KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
+        if (_shutterSimulation != nullptr)
+            _shutterSimulation->processInputKo(KoSHC_CShutterStopStepOutput);
         _startWaitForManualPositionFeedback = millis();
         if (_startWaitForManualPositionFeedback == 0)
             _startWaitForManualPositionFeedback = 1;
@@ -90,7 +93,10 @@ void PositionController::setManualUpDown(bool up)
     {
     case 1:
         logInfoP("Set up: %d", (int)up);
-        KoSHC_CShutterUpDownOutput.value(up, DPT_UpDown);
+        KoSHC_CShutterUpDownOutput.value(up, DPT_UpDown);     
+        if (_shutterSimulation != nullptr)
+            _shutterSimulation->processInputKo(KoSHC_CShutterUpDownOutput);
+   
         break;
     case 2:
         _setPosition = up ? 0 : 100;
@@ -106,6 +112,8 @@ void PositionController::restoreLastManualPosition()
 }
 void PositionController::processInputKo(GroupObject &ko)
 {
+    if (_shutterSimulation != nullptr)
+        _shutterSimulation->processInputKo(ko);
     switch (ko.asap())
     {
     case SHC_KoCShutterPercentInput:
@@ -124,6 +132,8 @@ void PositionController::processInputKo(GroupObject &ko)
 }
 void PositionController::control(const CallContext &callContext)
 {
+    if (_shutterSimulation != nullptr)
+        _shutterSimulation->update(callContext);
     auto now = millis();
     if (now - _startWaitForManualSlatPositionFeedback > 3000)
     {
@@ -133,12 +143,16 @@ void PositionController::control(const CallContext &callContext)
     {
         logInfoP("Set position: %d", (int)_setPosition);
         KoSHC_CShutterPercentOutput.value(_setPosition, DPT_Scaling);
+        if (_shutterSimulation != nullptr)
+            _shutterSimulation->processInputKo(KoSHC_CShutterPercentOutput);
         _setPosition = 255;
     }
     if (_setSlat != 255)
     {
         logInfoP("Set slat position: %d", (int)_setSlat);
         KoSHC_CShutterSlatOutput.value(_setSlat, DPT_Scaling);
+        if (_shutterSimulation != nullptr)
+            _shutterSimulation->processInputKo(KoSHC_CShutterSlatOutput);
         _setSlat = 255;
     }
     if (callContext.diagnosticLog)
@@ -147,4 +161,23 @@ void PositionController::control(const CallContext &callContext)
         if (_hasSlat)
             logInfoP("Last manual slat position: %d", (int)_lastManualSlat);
     }
+}
+bool PositionController::startSimulation()
+{
+    if (_shutterSimulation == nullptr)
+    {
+        _shutterSimulation = new ShutterSimulation(_channelIndex, *this);
+        return true;
+    }
+    return false;
+}
+bool PositionController::stopSimulation()
+{
+    if (_shutterSimulation != nullptr)
+    {
+        delete _shutterSimulation;
+        _shutterSimulation = nullptr;
+        return true;
+    }
+    return false;
 }

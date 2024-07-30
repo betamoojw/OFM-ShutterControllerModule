@@ -34,16 +34,16 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+20%" Offset="0" BitOffset="1" Name="C%C%Shading%Pn%TempActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperaturgrenze" Value="1" />
 
 								<!-- Temperaturprognose Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+22%" Offset="0" BitOffset="2" Name="C%C%Shading%Pn%TempForecast" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperaturprognose" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+22%" Offset="0" BitOffset="2" Name="C%C%Shading%Pn%TempForecastActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperaturprognose" Value="0" />
 
 								<!-- Helligkeit Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+24%" Offset="0" BitOffset="3" Name="C%C%Shading%Pn%BrightnessActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeitlimit" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+24%" Offset="0" BitOffset="3" Name="C%C%Shading%Pn%BrightnessActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeitlimit" Value="0" />
 
 								<!-- UV-Index Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+27%" Offset="0" BitOffset="4" Name="C%C%Shading%Pn%UVIActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="UV-Index" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+27%" Offset="0" BitOffset="4" Name="C%C%Shading%Pn%UVIActive" ParameterType="%AID%_PT-OnOffYesNo" Text="UV-Index" Value="0" />
 
 								<!-- Regen Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+29%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%RainActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Bei Regen nicht beschatten" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+29%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%RainActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Bei Regen nicht beschatten" Value="1" />
 
 								<!-- Lammellenstellung Höhenwinkelabhängig -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="6" Name="C%C%Shading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
@@ -116,7 +116,7 @@
 
 
 								<!-- Raumtemperatur Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+43%" Offset="31" BitOffset="0" Name="C%C%Shading%Pn%RoomTemperaturActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+43%" Offset="31" BitOffset="0" Name="C%C%Shading%Pn%RoomTemperaturActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="31" BitOffset="1" Name="C%C%Shading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
 
