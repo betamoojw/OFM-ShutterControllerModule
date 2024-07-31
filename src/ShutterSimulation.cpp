@@ -1,14 +1,14 @@
 #include "ShutterSimulation.h"
 #include "PositionController.h"
 
-ShutterSimulation::ShutterSimulation(uint8_t channelIndex, PositionController& positionController)
+ShutterSimulation::ShutterSimulation(uint8_t channelIndex, PositionController &positionController)
     : _channelIndex(channelIndex), _positionController(positionController)
 {
     _logPrefix = "Simulation";
     _logPrefix += channelIndex + 1;
 }
 
-const std::string& ShutterSimulation::logPrefix()
+const std::string &ShutterSimulation::logPrefix()
 {
     return _logPrefix;
 }
@@ -23,6 +23,63 @@ void ShutterSimulation::processInputKo(GroupObject &ko)
         break;
     case SHC_KoCShutterSlatOutput:
         _targetSlatPosition = ko.value(DPT_Scaling);
+        break;
+    case SHC_KoCManualPercent:
+        targetPosition = ko.value(DPT_Scaling);
+        if (targetPosition < _targetPosition)
+            _targetSlatPosition = 0;
+        else if (targetPosition > _targetPosition)
+            _targetSlatPosition = 100;
+        break;
+    case SHC_KoCManualSlatPercent:
+        _targetSlatPosition = ko.value(DPT_Scaling);
+        break;
+    case SHC_KoCManualUpDown:
+        if (ko.value(DPT_Switch))
+        {
+            targetPosition = 100;
+            _targetSlatPosition = 100;
+        }
+        else
+        {
+            targetPosition = 0;
+            _targetSlatPosition = 0;
+        }
+        break;
+    case SHC_KoCManualStepStop:
+        if (_targetPosition != _currentPosition || _targetSlatPosition != _currentSlatPosition)
+        {
+            // stop
+            targetPosition = _currentPosition;
+            _targetSlatPosition = _currentSlatPosition;
+        }
+        else
+        {
+            if (ko.value(DPT_Step))
+            {
+                // erhöhen
+                if (_targetSlatPosition != 0)
+                {
+                    _targetSlatPosition = max(_targetSlatPosition - 20, 0);
+                }
+                else if (_targetPosition != 0)
+                {
+                   _targetPosition = max(_targetPosition - 2, 0);
+                }
+            }
+            else
+            {
+                // verringern               
+                if (_targetSlatPosition != 100)
+                {
+                    _targetSlatPosition = min(_targetSlatPosition + 20, 100);
+                }
+                else if (_targetPosition != 100)
+                {
+                    _targetPosition = min(_targetPosition + 2, 100);
+                }
+            }
+        }
         break;
     }
     if (targetPosition != _targetPosition)
@@ -47,7 +104,7 @@ void ShutterSimulation::update(const CallContext &callContext)
     {
         if (_targetPosition != _currentPosition)
         {
-             if (millis() - _lastPositionChange > 800)
+            if (millis() - _lastPositionChange > 800)
             {
                 if (_targetPosition > _currentPosition)
                 {
