@@ -379,7 +379,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     if (!callContext.modeCurrentActive->isModeShading() && (uint8_t)KoSHC_CShutterPercentInput.value(DPT_Scaling) > ParamSHC_CShading1OnlyIfLessThan)
     {
         if (diagnosticLog)
-            logInfoP("Shutter %d more than %d", (int)KoSHC_CShutterPercentInput.value(DPT_Scaling), (int)ParamSHC_CShading1OnlyIfLessThan);
+            logInfoP("Shutter %d more than %d", (int)(uint8_t) KoSHC_CShutterPercentInput.value(DPT_Scaling), (int)ParamSHC_CShading1OnlyIfLessThan);
         allowed = false;
     }
     return allowed;
@@ -436,10 +436,10 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
         if (callContext.diagnosticLog)
             logInfoP("Calculated slat position %d", (int)slatPosition);
 
-        if (!callContext.modeNewStarted && abs((int)KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_CShading1MinChangeForSlatAdaption)
+        if (!callContext.modeNewStarted && abs((uint8_t) KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_CShading1MinChangeForSlatAdaption)
         {
             if (callContext.diagnosticLog)
-                logInfoP("Slat position %d difference is less then %d", (int)abs((int)KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_CShading1MinChangeForSlatAdaption);
+                logInfoP("Slat position %d difference is less then %d", (int)abs((uint8_t) KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_CShading1MinChangeForSlatAdaption);
 
             return; // Do not change, to less difference
         }

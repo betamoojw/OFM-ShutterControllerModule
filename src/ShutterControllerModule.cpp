@@ -180,7 +180,7 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         else if (moduleCommand.rfind("b") == 0)
         {
             logInfoP("Set brightness");
-            KoSHC_BrightnessInput.valueNoSend(std::stoi(moduleCommand.substr(1)), DPT_Value_Lux);
+            KoSHC_BrightnessInput.valueNoSend((uint8_t) std::stoi(moduleCommand.substr(1)), DPT_Value_Lux);
             processInputKo(KoSHC_BrightnessInput);
             return true;
         }
@@ -194,14 +194,14 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         else if (moduleCommand.rfind("r") == 0)
         {
             logInfoP("Set rain");
-            KoSHC_RainInput.valueNoSend(std::stoi(moduleCommand.substr(1)), DPT_Switch);
+            KoSHC_RainInput.valueNoSend(1 == std::stoi(moduleCommand.substr(1)), DPT_Switch);
             processInputKo(KoSHC_RainInput);
             return true;
         }
         else if (moduleCommand.rfind("c") == 0)
         {
             logInfoP("Set clouds");
-            KoSHC_CloudsInput.valueNoSend(std::stoi(moduleCommand.substr(1)), DPT_Scaling);
+            KoSHC_CloudsInput.valueNoSend((uint8_t) std::stoi(moduleCommand.substr(1)), DPT_Scaling);
             processInputKo(KoSHC_CloudsInput);
             return true;
         }
@@ -385,7 +385,7 @@ void ShutterControllerModule::setup()
         "Clouds",
         ParamSHC_HasCloudsInput ? &KoSHC_CloudsInput : nullptr,
         ParamSHC_CloudsWatchdog,
-        KNXValue(ParamSHC_CloudsFallback),
+        KNXValue((uint8_t) ParamSHC_CloudsFallback),
         DPT_Scaling,
         (MeasurementWatchdogFallbackBehavior) ParamSHC_CloudsFallbackMode);
     _callContext.measurementClouds = &_measurementClouds;

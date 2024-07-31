@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+	<op:config name="%SHC_NumChannelsDefault%" value="0" />
 	<ManufacturerData>
 		<Manufacturer>
 			<ApplicationPrograms>
@@ -273,7 +274,7 @@
 							<Union SizeInBit="152">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Anzahl der Kanäle -->
-								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="0" SuffixText=" von %N%" />
+								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="%SHC_NumChannelsDefault%" SuffixText=" von %N%" />
 
 								<!-- Temperatur Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00001" Offset="1" BitOffset="0" Name="HasTemperaturInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperatur" Value="1" />
