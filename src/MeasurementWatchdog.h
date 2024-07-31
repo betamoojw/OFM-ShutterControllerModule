@@ -27,7 +27,9 @@ enum MeasurementWatchdogFallbackBehavior : uint8_t
 class MeasurementWatchdog 
 {
 private:
+    const static unsigned long _waitForValueTimeout = 10000;
     std::string _name;
+    bool _changed = true;
     MeasurementWatchdogState _state = MeasurementWatchdogState::MeasurementWatchdogStateNotInitialized;
     unsigned long _timeoutMillis = 0;
     unsigned long _waitTimeStartMillis = 0;
@@ -35,6 +37,8 @@ private:
     KNXValue _fallbackValue = KNXValue(false);
     Dpt _dpt;
     MeasurementWatchdogFallbackBehavior _fallbackBehaviour = MeasurementWatchdogFallbackBehavior::IgnoreValue;
+    void setState(MeasurementWatchdogState state);
+    void logState(bool incudeValue);
 public:
     MeasurementWatchdog();
     const std::string& logPrefix() const;
@@ -45,4 +49,6 @@ public:
     bool ignoreValue() const;
     bool waitForValue() const;
     void processIputKo(GroupObject& go);
+    bool isChanged() const;
+    bool resetChanged();
 };

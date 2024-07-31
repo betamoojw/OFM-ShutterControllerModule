@@ -2,7 +2,6 @@
 
 MeasurementWatchdog::MeasurementWatchdog()
 {
-
 }
 
 const std::string &MeasurementWatchdog::logPrefix() const
@@ -10,7 +9,7 @@ const std::string &MeasurementWatchdog::logPrefix() const
     return _name;
 }
 
-void MeasurementWatchdog::init(const char* name, GroupObject *groupObject, uint8_t timeoutParameterValue, const KNXValue &fallbackValue, const Dpt &dpt, MeasurementWatchdogFallbackBehavior fallbackBehaviour)
+void MeasurementWatchdog::init(const char *name, GroupObject *groupObject, uint8_t timeoutParameterValue, const KNXValue &fallbackValue, const Dpt &dpt, MeasurementWatchdogFallbackBehavior fallbackBehaviour)
 {
     _name = name;
     _groupObject = groupObject;
@@ -19,7 +18,7 @@ void MeasurementWatchdog::init(const char* name, GroupObject *groupObject, uint8
     _fallbackBehaviour = fallbackBehaviour;
     if (_groupObject == nullptr)
     {
-        _state = MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue;
+        setState(MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue);
         return;
     }
     // <Enumeration Text="Aus" Value="0" Id="%ENID%" />
@@ -60,33 +59,40 @@ void MeasurementWatchdog::init(const char* name, GroupObject *groupObject, uint8
         _timeoutMillis = 12 * 60 * 60 * 1000;
         break;
     }
-    _state = MeasurementWatchdogState::MeasurementWatchdogStateInitialize;
+    logInfoP("Watchdog time %ds", _timeoutMillis / 1000);
+
+    setState(MeasurementWatchdogState::MeasurementWatchdogStateInitialize);
 }
 
 void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog)
 {
     if (_groupObject == nullptr)
+    {
+        if (diagnosticLog)
+            logInfoP("KO not available");
         return;
+    }
     switch (_state)
     {
     case MeasurementWatchdogState::MeasurementWatchdogStateInitialize:
         _waitTimeStartMillis = currentMillis;
-        _state = MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue;
+        setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue);
         _groupObject->requestObjectRead();
         break;
     case MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue:
-        if (_timeoutMillis > 0 && currentMillis - _waitTimeStartMillis > 10000)
+        if (_timeoutMillis > 0 && currentMillis - _waitTimeStartMillis > _waitForValueTimeout)
         {
             switch (_fallbackBehaviour)
             {
             case MeasurementWatchdogFallbackBehavior::RequestValueAndProvideFallbackValue:
             case MeasurementWatchdogFallbackBehavior::ProvideFallbackValue:
-                _groupObject->value(_fallbackValue, _dpt);
-                _state = MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue;
+                _groupObject->valueNoSend(_fallbackValue, _dpt);
+                setState(MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue);
+                logErrorP("Use fallback value %lf", (double)_fallbackValue);
                 break;
             case MeasurementWatchdogFallbackBehavior::IgnoreValue:
             case MeasurementWatchdogFallbackBehavior::RequestValueAndIgnore:
-                _state = MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue;
+                setState(MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue);
                 break;
             }
         }
@@ -99,14 +105,15 @@ void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog
             case MeasurementWatchdogFallbackBehavior::RequestValueAndIgnore:
             case MeasurementWatchdogFallbackBehavior::RequestValueAndProvideFallbackValue:
                 _groupObject->requestObjectRead();
-                _state = MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue;
+                setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue);
                 break;
             case MeasurementWatchdogFallbackBehavior::ProvideFallbackValue:
-                _groupObject->value(_fallbackValue, _dpt);
-                _state = MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue;
+                _groupObject->valueNoSend(_fallbackValue, _dpt);
+                setState(MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue);
+                logErrorP("Use fallback value %lf", (double)_fallbackValue);
                 break;
             case MeasurementWatchdogFallbackBehavior::IgnoreValue:
-                _state = MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue;
+                setState(MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue);
                 break;
             }
         }
@@ -117,33 +124,48 @@ void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog
     }
     if (diagnosticLog)
     {
-        switch (_state)
-        {
-            case MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue:
-                logInfoP("State: wait for response value");
-                logInfoP("Timeout in: %lu", 10000 - (currentMillis - _waitTimeStartMillis));
-                break;
-            case MeasurementWatchdogState::MeasurementWatchdogStateWaitForTimeout:
-                logInfoP("State: wait for timeout");
-                logInfoP("Timeout in: %lu", _timeoutMillis - (currentMillis - _waitTimeStartMillis));
-                break;
-            case MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue:
-                logInfoP("State: fallback value");
-                break;
-            case MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue:
-                logInfoP("State: ignore value)");
-                break;
-            case MeasurementWatchdogState::MeasurementWatchdogStateInitialize:
-                logInfoP("State: initialize");
-                break;
-            case MeasurementWatchdogState::MeasurementWatchdogStateNotInitialized:
-                logInfoP("State: not initialized");
-                break; 
-        }
-        if (ignoreValue())
-            logInfoP("Ignore Value");
-        else
-            logInfoP("Value: %s", (double) getValue());
+        logState(true);
+    }
+}
+
+void MeasurementWatchdog::logState(bool includeValue)
+{
+    switch (_state)
+    {
+    case MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue:
+        logInfoP("State: wait for response value");
+        if (includeValue)
+            logInfoP("Timeout in: %lus", (unsigned long) (_waitForValueTimeout - (millis() - _waitTimeStartMillis))/1000);
+        break;
+    case MeasurementWatchdogState::MeasurementWatchdogStateWaitForTimeout:
+        logInfoP("State: wait for timeout");
+        if (includeValue)
+            logInfoP("Timeout in: %lus", (unsigned long) (_timeoutMillis - (millis() - _waitTimeStartMillis))/1000);
+        break;
+    case MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue:
+        logInfoP("State: fallback value");
+        break;
+    case MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue:
+        logInfoP("State: ignore value)");
+        break;
+    case MeasurementWatchdogState::MeasurementWatchdogStateInitialize:
+        logInfoP("State: initialize");
+        break;
+    case MeasurementWatchdogState::MeasurementWatchdogStateNotInitialized:
+        logInfoP("State: not initialized");
+        break;
+    }
+    if (includeValue && !ignoreValue() && !waitForValue())
+        logInfoP("Value: %lf", (double)getValue());
+}
+
+void MeasurementWatchdog::setState(MeasurementWatchdogState state)
+{
+    if (_state != state)
+    {
+        _state = state;
+        logState(false);
+        _changed = true;
     }
 }
 
@@ -166,8 +188,25 @@ void MeasurementWatchdog::processIputKo(GroupObject &go)
 {
     if (_groupObject != nullptr && go.asap() == _groupObject->asap())
     {
-        _state = MeasurementWatchdogState::MeasurementWatchdogStateWaitForTimeout;
+        setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForTimeout);
+        _changed = true;
         if (_timeoutMillis > 0)
+        {
             _waitTimeStartMillis = millis();
+            if (_waitTimeStartMillis == 0)
+                _waitTimeStartMillis = 1;
+        }
     }
+}
+
+bool MeasurementWatchdog::isChanged() const
+{
+    return _changed;
+}
+
+bool MeasurementWatchdog::resetChanged()
+{
+    bool changed = _changed;
+    _changed = false;
+    return changed;
 }

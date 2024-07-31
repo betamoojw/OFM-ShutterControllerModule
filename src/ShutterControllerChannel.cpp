@@ -21,7 +21,7 @@ void ShutterControllerChannel::setup()
 {
     _measurementRoomTemperature.init(
         "RoomTemperature", 
-        &KoSHC_CRoomTemp, 
+        ParamSHC_CRoomTemp ? &KoSHC_CRoomTemp : nullptr, 
         ParamSHC_CRoomTempWatchdog, 
         KNXValue(ParamSHC_CRoomTempFallback), 
         DPT_Value_Temp, 
@@ -359,6 +359,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
     callContext.modeCurrentActive = nullptr;
+    _measurementHeading.resetChanged();
+    _measurementRoomTemperature.resetChanged();
 }
 
 void ShutterControllerChannel::shadingStarted()

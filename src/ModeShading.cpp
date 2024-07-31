@@ -38,6 +38,16 @@ bool ModeShading::modeWindowOpenAllowed() const
 }
 bool ModeShading::allowed(const CallContext &callContext)
 {
+    _recalcMeasurmentValues |= 
+        callContext.measurementBrightness->isChanged() || 
+        callContext.measurementClouds->isChanged() || 
+        callContext.measurementHeading->isChanged() || 
+        callContext.measurementRain->isChanged() || 
+        callContext.measurementRoomTemperature->isChanged() || 
+        callContext.measurementTemperature->isChanged() || 
+        callContext.measurementTemperatureForecast->isChanged() || 
+        callContext.measurementUVIndex->isChanged();
+
     auto diagnosticLog = callContext.diagnosticLog;
     if (_lockActive)
     {

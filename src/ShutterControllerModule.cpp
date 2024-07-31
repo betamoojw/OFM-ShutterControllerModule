@@ -51,6 +51,7 @@ void ShutterControllerModule::showHelp()
 void ShutterControllerModule::loop()
 {
     ShutterControllerChannelOwnerModule::loop();
+    _callContext.currentMillis = millis();
 
     _measurementTemperature.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementTemperatureForecast.update(_callContext.currentMillis, _callContext.diagnosticLog);
@@ -59,7 +60,7 @@ void ShutterControllerModule::loop()
     _measurementRain.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
 
-    _callContext.currentMillis = millis();
+    
     if (_callContext.currentMillis == 0)
         _callContext.currentMillis = 1; // 0 can be used as special marker -> skip 0
     Timer &timer = Timer::instance();
@@ -124,6 +125,7 @@ void ShutterControllerModule::loop()
         _callContext.azimuth = cSunCoordinates.dAzimuth;
         _callContext.elevation = 90 - cSunCoordinates.dZenithAngle;
     }
+    _callContext.diagnosticLog = false;
     auto numberOfChannels = getNumberOfChannels();
     for (uint8_t i = 0; i < numberOfChannels; i++)
     {
@@ -139,6 +141,12 @@ void ShutterControllerModule::loop()
             channel->execute(_callContext);
         }
     }
+    _measurementTemperature.resetChanged();
+    _measurementTemperatureForecast.resetChanged();
+    _measurementBrightness.resetChanged();
+    _measurementUVIndex.resetChanged();
+    _measurementRain.resetChanged();
+    _measurementClouds.resetChanged();
 }
 
 bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnoseKo)
@@ -157,6 +165,8 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
             logInfoP("Aizmut: %.2f°", (double)_callContext.azimuth);
             logInfoP("Elevation: %.2f°", (double)_callContext.elevation);
         }
+        _callContext.diagnosticLog = true;
+        loop();
         return true;
     }
     else if (cmd.rfind("sc ") == 0)
