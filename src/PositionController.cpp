@@ -181,3 +181,8 @@ bool PositionController::stopSimulation()
     }
     return false;
 }
+
+bool PositionController::simulationStarted()
+{
+    return _shutterSimulation != nullptr;
+}

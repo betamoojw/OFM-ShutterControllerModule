@@ -6,6 +6,9 @@ ShutterSimulation::ShutterSimulation(uint8_t channelIndex, PositionController &p
 {
     _logPrefix = "Simulation";
     _logPrefix += channelIndex + 1;
+    KoSHC_CShutterPercentInput.value(_currentPosition, DPT_Scaling);
+    if (positionController.hasSlat())
+        KoSHC_CShutterSlatInput.value(_currentSlatPosition, DPT_Scaling);
 }
 
 const std::string &ShutterSimulation::logPrefix()
@@ -52,44 +55,55 @@ void ShutterSimulation::processInputKo(GroupObject &ko)
             // stop
             targetPosition = _currentPosition;
             _targetSlatPosition = _currentSlatPosition;
+            logDebugP("Stop");
         }
         else
         {
             if (ko.value(DPT_Step))
             {
                 // erhöhen
+                logDebugP("Erhöhen");
                 if (_targetSlatPosition != 0)
                 {
                     _targetSlatPosition = max(_targetSlatPosition - 20, 0);
                 }
                 else if (_targetPosition != 0)
                 {
-                   _targetPosition = max(_targetPosition - 2, 0);
+                    _targetPosition = max(_targetPosition - 2, 0);
                 }
             }
             else
             {
-                // verringern               
+                // verringern
+                logDebugP("Verringern");
                 if (_targetSlatPosition != 100)
                 {
+                    logDebugP("Slat: %d", (int)_targetSlatPosition);
                     _targetSlatPosition = min(_targetSlatPosition + 20, 100);
+                      logDebugP("Slat: %d", (int)_targetSlatPosition);
                 }
                 else if (_targetPosition != 100)
                 {
+                    logDebugP("Position: %d", (int)_targetPosition);
                     _targetPosition = min(_targetPosition + 2, 100);
+                    logDebugP("Position: %d", (int)_targetPosition);
                 }
             }
         }
         break;
+    default:
+        return;
     }
     if (targetPosition != _targetPosition)
     {
         _targetPosition = targetPosition;
-        if (_targetPosition != _currentPosition)
-            _lastPositionChange = millis();
-        else if (_targetSlatPosition != _currentSlatPosition)
-            _lastPositionChange = 0;
+        if (_targetPosition != _currentPosition || _targetSlatPosition != _currentSlatPosition)
+            setMoving(true);
+        else
+            setMoving(false);
     }
+    logDebugP("Simulated target position: %d", (int)_targetPosition);
+    logDebugP("Simulated target slat position: %d", (int)_targetSlatPosition);
 }
 
 void ShutterSimulation::update(const CallContext &callContext)
@@ -104,7 +118,7 @@ void ShutterSimulation::update(const CallContext &callContext)
     {
         if (_targetPosition != _currentPosition)
         {
-            if (millis() - _lastPositionChange > 800)
+            if (callContext.currentMillis - _lastPositionChange > 800)
             {
                 if (_targetPosition > _currentPosition)
                 {
@@ -121,30 +135,27 @@ void ShutterSimulation::update(const CallContext &callContext)
                     if (abs((uint8_t)KoSHC_CShutterPercentInput.value(DPT_Scaling)) - _currentPosition >= 10)
                     {
                         KoSHC_CShutterPercentInput.value(_currentPosition, DPT_Scaling);
-                        logInfoP("Postion: %d", (int)_currentPosition);
-                        _positionController.processInputKo(KoSHC_CShutterPercentInput);
+                        logDebugP("Postion: %d", (int)_currentPosition);
                     }
-                    _lastPositionChange = callContext.currentMillis;
+                    setMoving(true);
                 }
                 else
                 {
                     KoSHC_CShutterPercentInput.value(_currentPosition, DPT_Scaling);
                     logInfoP("Postion: %d", (int)_currentPosition);
-                    _positionController.processInputKo(KoSHC_CShutterPercentInput);
                     if (callContext.hasSlat)
                     {
                         KoSHC_CShutterSlatInput.value(_currentSlatPosition, DPT_Scaling);
-                        logInfoP("Slat: %d", (int)_currentSlatPosition);
-                        _positionController.processInputKo(KoSHC_CShutterSlatInput);
+                        logDebugP("Slat: %d", (int)_currentSlatPosition);
                     }
                     if (_targetSlatPosition != _currentSlatPosition)
-                        _lastPositionChange = 0;
+                        setMoving(false);
                 }
             }
         }
         else if (_targetSlatPosition != _currentSlatPosition)
         {
-            if (millis() - _lastPositionChange > 10)
+            if (callContext.currentMillis - _lastPositionChange > 10)
             {
                 if (_targetSlatPosition > _currentSlatPosition)
                     _currentSlatPosition++;
@@ -152,18 +163,53 @@ void ShutterSimulation::update(const CallContext &callContext)
                     _currentSlatPosition--;
 
                 if (_targetSlatPosition != _currentSlatPosition)
-                    _lastPositionChange = callContext.currentMillis;
+                    setMoving(true);
                 else
                 {
-                    _lastPositionChange = 0;
+                    setMoving(false);
                     if (callContext.hasSlat)
                     {
                         KoSHC_CShutterSlatInput.value(_currentSlatPosition, DPT_Scaling);
-                        logInfoP("Slat: %d", (int)_currentSlatPosition);
-                        _positionController.processInputKo(KoSHC_CShutterSlatInput);
+                        logDebugP("Slat: %d", (int)_currentSlatPosition);
                     }
                 }
             }
         }
+        if (_lastGroupObjectUpdate != 0 && callContext.currentMillis - _lastGroupObjectUpdate > 10000)
+        {
+            if (KoSHC_CShutterPercentInput.commFlag() != ComFlag::WriteRequest)
+                if (KoSHC_CShutterPercentInput.valueCompare(_currentPosition, DPT_Scaling))
+                    logDebugP("Position: %d", (int)_currentPosition);
+            if (callContext.hasSlat)
+            {
+                if (KoSHC_CShutterSlatInput.commFlag() != ComFlag::WriteRequest)
+                    if (KoSHC_CShutterSlatInput.valueCompare(_currentSlatPosition, DPT_Scaling))
+                        logDebugP("Slat: %d", (int)_currentSlatPosition);
+            }
+            _lastGroupObjectUpdate = callContext.currentMillis;
+        }
+    }
+}
+
+void ShutterSimulation::setMoving(bool moving)
+{
+    if (moving)
+    {
+        if (_lastPositionChange == 0)
+            logDebugP("Moving");
+        _lastPositionChange = max(millis(), 1ul);
+        if (_lastGroupObjectUpdate == 0)
+            _lastGroupObjectUpdate = _lastPositionChange;
+    }
+    else
+    {
+        if (_lastPositionChange != 0)
+            logDebugP("Stopped");
+        _lastPositionChange = 0;
+        _lastGroupObjectUpdate = 0;
+        if (KoSHC_CShutterPercentInput.valueCompare(_currentPosition, DPT_Scaling))
+            logDebugP("Position: %d", (int)_currentPosition);
+        if (KoSHC_CShutterSlatInput.valueCompare(_currentSlatPosition, DPT_Scaling))
+            logDebugP("Slat: %d", (int)_currentSlatPosition);
     }
 }

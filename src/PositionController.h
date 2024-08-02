@@ -31,4 +31,5 @@ public:
     void control(const CallContext& callContext);
     bool startSimulation();
     bool stopSimulation();
+    bool simulationStarted();
 };

@@ -134,7 +134,14 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     }
     else if (cmd.rfind("sim") == 0)
     {
-        if (std::stoi(cmd.substr(3)))
+        if (cmd.length() == 3)
+        {
+            if (_positionController.simulationStarted())
+                logInfoP("Simulation started");
+            else
+                logInfoP("Simulation already started");
+        }
+        else if (std::stoi(cmd.substr(3)))
         {
             if (_positionController.startSimulation())
             {
@@ -160,24 +167,44 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     }
     else if (cmd.rfind("s") == 0)
     {
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value 0 or 1");
+            return true;
+        }
         KoSHC_CShadingControl.value((uint8_t) std::stoi(cmd.substr(1)), DPT_Switch);
         processInputKo(KoSHC_CShadingControl);
         return true;
     }
     else if (cmd.rfind("t") == 0)
     {
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value 0 or 1");
+            return true;
+        }
         KoSHC_CRoomTemp.valueNoSend((uint8_t) std::stoi(cmd.substr(1)), DPT_Value_Temp);
         processInputKo(KoSHC_CloudsInput);
         return true;
     }
     else if (cmd.rfind("h") == 0)
     {
-        KoSHC_CRoomTemp.valueNoSend((uint8_t) std::stoi(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value");
+            return true;
+        }
+        KoSHC_CRoomTemp.valueNoSend((float) std::stof(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
         processInputKo(KoSHC_CRoomTemp);
         return true;
     }
     else if (cmd.rfind("w"))
     {
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value 0 or 1");
+            return true;
+        }
         KoSHC_CWindowOpenOpened1.value((uint8_t) std::stoi(cmd.substr(1)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened1);
         return true;
@@ -185,6 +212,11 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
 #ifdef KoSHC_CWindowOpenOpened2
     else if (cmd.rfind("wt"))
     {
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value 0 or 1");
+            return true;
+        }
         KoSHC_CWindowOpenOpened2.value((uint8_t) std::stoi(cmd.substr(2)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened2);
         return true;

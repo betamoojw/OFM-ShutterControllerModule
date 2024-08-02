@@ -50,10 +50,15 @@ bool ModeManual::allowed(const CallContext &callContext)
     _changedGroupObjects.clear();
     if (_waitTimeStart != 0)
     {
+        if (callContext.diagnosticLog)
+                logInfoP("Wait time acitve: %d", (int)(callContext.currentMillis - _waitTimeStart));
+
         if (callContext.currentMillis - _waitTimeStart < 10 * 60 * 1000)
             return _allowed; // In wait time
         _waitTimeStart = 0;
     }
+    if (callContext.diagnosticLog)
+        logInfoP("No manual change detected");
     return false;
 }
 void ModeManual::start(const CallContext& callContext, const ModeBase *previous, PositionController& positionController)
@@ -114,23 +119,39 @@ void ModeManual::processInputKo(GroupObject &ko)
         if (ParamSHC_CIgnoreFirstManualCommandIfShadingActiv)
             return;
     }
-    switch (ko.asap())
+    switch (SHC_KoCalcIndex(asap))
     {
     case SHC_KoCManuelStopStart:
         if (!ko.value(DPT_Switch))
         {
+            logDebugP("Manual stop");
             _waitTimeStart = 0; // Stop manual mode immeditaly
             return;
         }
+        logDebugP("Manual start");
          _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;
-    case SHC_KoCManualPercent:
     case SHC_KoCManualStepStop:
-    case SHC_KoCManualUpDown:
-    case SHC_KoCManualSlatPercent:
+        logDebugP("Manual change: %s",(bool) ko.value(DPT_Switch) ? "increase" : "decrease");
         _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;
+    case SHC_KoCManualUpDown:
+        logDebugP("Manual change: %s",(bool) ko.value(DPT_Switch) ? "down" : "up");
+        _changedGroupObjects.push_back(&ko);
+        _requestStart = true;
+        break;
+    case SHC_KoCManualPercent:
+        logDebugP("Manual position: %d%%", (uint8_t) ko.value(DPT_Scaling));
+        break;
+    case SHC_KoCManualSlatPercent:
+        logDebugP("Manual slat: %d%%", (uint8_t) ko.value(DPT_Scaling));
+        break;
+    default:
+        return;
     }
+    _changedGroupObjects.push_back(&ko);
+    _requestStart = true;
+
 }

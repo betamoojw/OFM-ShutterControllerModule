@@ -46,6 +46,7 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc<CC> wt<0|1>", "Tilt window of channel CC. i.e. sc01 wt1");
     openknx.console.printHelpLine("sc<CC> t<value>", "Room temperature. i.e. sc01 t50");
     openknx.console.printHelpLine("sc<CC> h<value>", "Room heating %. i.e. sc01 h50");
+    openknx.console.printHelpLine("sc<CC> sim<0|1>", "Start or stop shutter simulation CC. i.e. sc01 sim1");
 }
 
 void ShutterControllerModule::loop()

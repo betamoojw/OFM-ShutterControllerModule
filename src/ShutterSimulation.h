@@ -13,7 +13,9 @@ class ShutterSimulation
         uint8_t _currentSlatPosition = 0;
         uint8_t _targetSlatPosition = 0;
         unsigned long _lastPositionChange = 0;
+        unsigned long _lastGroupObjectUpdate = 0;
         std::string _logPrefix;
+        void setMoving(bool moving);
     public:
         ShutterSimulation(uint8_t channelIndex, PositionController& positionController);
         void processInputKo(GroupObject& ko);

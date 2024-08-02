@@ -314,13 +314,13 @@
 							<!-- Modus Handbetrieb Sperre Rückmeldung -->
 							<ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ManualLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
-							<ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="C%C%ManualUpDown" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="C%C%ManualUpDown" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Stopp/Schritt -->
-							<ComObject Id="%AID%_O-%TT%%CC%017" Number="%K17%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="C%C%ManualStepStop" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%017" Number="%K17%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="C%C%ManualStepStop" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Prozent -->
-							<ComObject Id="%AID%_O-%TT%%CC%018" Number="%K18%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%018" Number="%K18%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
-							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Modus Nacht Aktiv -->
 							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
