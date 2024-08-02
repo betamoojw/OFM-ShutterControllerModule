@@ -198,30 +198,31 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         processInputKo(KoSHC_CRoomTemp);
         return true;
     }
-    else if (cmd.rfind("w"))
-    {
-        if (cmd.length() == 1)
-        {
-            logErrorP("Missing value 0 or 1");
-            return true;
-        }
-        KoSHC_CWindowOpenOpened1.value((uint8_t) std::stoi(cmd.substr(1)), DPT_OpenClose);
-        processInputKo(KoSHC_CWindowOpenOpened1);
-        return true;
-    }
 #ifdef KoSHC_CWindowOpenOpened2
-    else if (cmd.rfind("wt"))
+    else if (cmd.rfind("wt") == 0)
     {
-        if (cmd.length() == 1)
+        if (cmd.length() == 2)
         {
             logErrorP("Missing value 0 or 1");
             return true;
         }
-        KoSHC_CWindowOpenOpened2.value((uint8_t) std::stoi(cmd.substr(2)), DPT_OpenClose);
+        KoSHC_CWindowOpenOpened2.valueNoSend((uint8_t) std::stoi(cmd.substr(2)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened2);
         return true;
     }
 #endif
+    else if (cmd.rfind("w") == 0)
+    {
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value 0 or 1");
+            return true;
+        }
+        KoSHC_CWindowOpenOpened1.valueNoSend((uint8_t) std::stoi(cmd.substr(1)), DPT_OpenClose);
+        processInputKo(KoSHC_CWindowOpenOpened1);
+        return true;
+    }
+
     return false;
 }
 void ShutterControllerChannel::activateShading()

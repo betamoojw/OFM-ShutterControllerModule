@@ -406,7 +406,7 @@ int16_t ModeShading::koChannelOffset()
 
 GroupObject &ModeShading::getKo(uint8_t ko)
 {
-    return knx.getGroupObject(ko + koChannelOffset());
+    return knx.getGroupObject(SHC_KoCalcNumber(ko) + koChannelOffset());
 }
 
 void ModeShading::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
@@ -466,7 +466,7 @@ void ModeShading::stop(const CallContext &callContext, const ModeBase *next, Pos
 void ModeShading::processInputKo(GroupObject &ko)
 {
     // channel ko
-    switch (ko.asap() - koChannelOffset())
+    switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())
     {
     case SHC_KoCShading1Lock:
         _lockActive = ko.value(DPT_Switch);

@@ -142,7 +142,7 @@ void ShutterSimulation::update(const CallContext &callContext)
                 else
                 {
                     KoSHC_CShutterPercentInput.value(_currentPosition, DPT_Scaling);
-                    logInfoP("Postion: %d", (int)_currentPosition);
+                    logDebugP("Postion: %d", (int)_currentPosition);
                     if (callContext.hasSlat)
                     {
                         KoSHC_CShutterSlatInput.value(_currentSlatPosition, DPT_Scaling);

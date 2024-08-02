@@ -21,7 +21,7 @@ int16_t ModeWindowOpen::koChannelOffset()
 
 GroupObject &ModeWindowOpen::getKo(uint8_t ko)
 {
-    return knx.getGroupObject(ko + koChannelOffset());
+    return knx.getGroupObject(SHC_KoCalcNumber(ko) + koChannelOffset());
 }
 
 const char *ModeWindowOpen::name() const
@@ -180,11 +180,16 @@ void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, 
 }
 void ModeWindowOpen::processInputKo(GroupObject &ko)
 {
-    switch (ko.asap()- koChannelOffset() + SHC_KoOffset)
+    switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())
     {
      case SHC_KoCWindowOpenOpened1:
-        if (!ko.value(DPT_OpenClose))
+        if (ko.value(DPT_OpenClose))
+            logInfoP("opened");
+        else
+        {
+            logInfoP("closed");
             _deactivatedWhileOpen = false;
+        }
         _recalcAllowed = true;
         break;
      case SHC_KoCWindowOpenLock1:
