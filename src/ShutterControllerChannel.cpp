@@ -20,25 +20,23 @@ const std::string ShutterControllerChannel::name()
 void ShutterControllerChannel::setup()
 {
     _measurementRoomTemperature.init(
-        "RoomTemperature", 
-        ParamSHC_CRoomTemp ? &KoSHC_CRoomTemp : nullptr, 
-        ParamSHC_CRoomTempWatchdog, 
-        KNXValue(ParamSHC_CRoomTempFallback), 
-        DPT_Value_Temp, 
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_CRoomTempWatchdogBehavior);
+        "RoomTemperature",
+        ParamSHC_CRoomTemp ? &KoSHC_CRoomTemp : nullptr,
+        ParamSHC_CRoomTempWatchdog,
+        KNXValue(ParamSHC_CRoomTempFallback),
+        DPT_Value_Temp,
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_CRoomTempWatchdogBehavior);
 
     // <Enumeration Text="Nein" Value="0" Id="%ENID%" />
     // <Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
     // <Enumeration Text="Heizungsanforderung (EIN/AUS)" Value="2" Id="%ENID%" />
     _measurementHeading.init(
-        "Heading", 
-        ParamSHC_CHeatingInput > 0 ? &KoSHC_CHeading : nullptr, 
-        ParamSHC_CHeatingWatchdog, 
-        ParamSHC_CHeatingInput == 1 ? KNXValue((uint8_t) ParamSHC_CHeadingFallbackPercent) : KNXValue(ParamSHC_CHeadingFallback),  
+        "Heading",
+        ParamSHC_CHeatingInput > 0 ? &KoSHC_CHeading : nullptr,
+        ParamSHC_CHeatingWatchdog,
+        ParamSHC_CHeatingInput == 1 ? KNXValue((uint8_t)ParamSHC_CHeadingFallbackPercent) : KNXValue(ParamSHC_CHeadingFallback),
         ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_CHeatingWatchdogBehavior);
-
-
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_CHeatingWatchdogBehavior);
 
     KoSHC_CShutterPercentInput.requestObjectRead();
     if (ParamSHC_CType == 1)
@@ -59,7 +57,7 @@ void ShutterControllerChannel::setup()
     {
         _modes.push_back(new ModeWindowOpen(i));
     }
-  
+
     _modes.push_back(_modeManual);
 
     if (ParamSHC_CNight)
@@ -105,7 +103,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
         _channelLockActive = ko.value(DPT_Switch);
         KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
         break;
-     case SHC_KoCShadingControl:
+    case SHC_KoCShadingControl:
         _shadingControlActive = ko.value(DPT_Switch);
         _waitTimeForReactivateShadingAfterManualStarted = 0;
         _waitForShadingPeriodEnd = false;
@@ -134,34 +132,32 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     }
     else if (cmd.rfind("sim") == 0)
     {
-        if (cmd.length() == 3)
+        if (cmd.length() > 3)
         {
-            if (_positionController.simulationStarted())
-                logInfoP("Simulation started");
-            else
-                logInfoP("Simulation already started");
+            switch (std::stoi(cmd.substr(3)))
+            {
+            case 0:
+                _positionController.stopSimulation();
+                break;
+            case 1:
+                _positionController.startSimulation(false);
+                break;
+            case 2:
+                _positionController.startSimulation(true);
+                break;
+            }
         }
-        else if (std::stoi(cmd.substr(3)))
+        switch (_positionController.simulationMode())
         {
-            if (_positionController.startSimulation())
-            {
-                logInfoP("Simulation started");
-            }
-            else
-            {
-                logInfoP("Simulation already started");
-            }
-        } 
-        else
-        {
-            if (_positionController.stopSimulation())
-            {
-                logInfoP("Simulation stopped");
-            }
-            else
-            {
-                logInfoP("Simulation not started");
-            }
+        case 0:
+            logInfoP("Simulation not started");
+            break;
+        case 1:
+            logInfoP("Simulation started");
+            break;
+        case 2:
+            logInfoP("Fast simulation started");
+            break;
         }
         return true;
     }
@@ -172,7 +168,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             logErrorP("Missing value 0 or 1");
             return true;
         }
-        KoSHC_CShadingControl.value((uint8_t) std::stoi(cmd.substr(1)), DPT_Switch);
+        KoSHC_CShadingControl.value((uint8_t)std::stoi(cmd.substr(1)), DPT_Switch);
         processInputKo(KoSHC_CShadingControl);
         return true;
     }
@@ -183,7 +179,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             logErrorP("Missing value 0 or 1");
             return true;
         }
-        KoSHC_CRoomTemp.valueNoSend((uint8_t) std::stoi(cmd.substr(1)), DPT_Value_Temp);
+        KoSHC_CRoomTemp.valueNoSend((uint8_t)std::stoi(cmd.substr(1)), DPT_Value_Temp);
         processInputKo(KoSHC_CloudsInput);
         return true;
     }
@@ -194,8 +190,54 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             logErrorP("Missing value");
             return true;
         }
-        KoSHC_CRoomTemp.valueNoSend((float) std::stof(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
+        KoSHC_CRoomTemp.valueNoSend((float)std::stof(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
         processInputKo(KoSHC_CRoomTemp);
+        return true;
+    }
+    else if (cmd == "m^")
+    {
+        KoSHC_CManualUpDown.valueNoSend(0, DPT_UpDown);
+        processInputKo(KoSHC_CManualUpDown);
+        return true;
+    }
+    else if (cmd == "mv")
+    {
+        KoSHC_CManualUpDown.valueNoSend(1, DPT_UpDown);
+        processInputKo(KoSHC_CManualUpDown);
+        return true;
+    }
+    else if (cmd == "m-")
+    {
+        KoSHC_CManualStepStop.valueNoSend(0, DPT_UpDown);
+        processInputKo(KoSHC_CManualStepStop);
+        return true;
+    }
+    else if (cmd == "m+")
+    {
+        KoSHC_CManualStepStop.valueNoSend(1, DPT_UpDown);
+        processInputKo(KoSHC_CManualStepStop);
+        return true;
+    }
+    else if (cmd.rfind("ms") == 0 && _positionController.hasSlat())
+    { 
+        if (cmd.length() == 2)
+        {
+            logErrorP("Missing value");
+            return true;
+        }
+        KoSHC_CManualSlatPercent.valueNoSend((uint8_t)std::stoi(cmd.substr(2)), DPT_Scaling);
+        processInputKo(KoSHC_CManualSlatPercent);
+        return true;
+    }
+    else if (cmd.rfind("m") == 0)
+    {
+        if (cmd.length() == 1)
+        {
+            logErrorP("Missing value");
+            return true;
+        }
+        KoSHC_CManualPercent.valueNoSend((uint8_t)std::stoi(cmd.substr(1)), DPT_Scaling);
+        processInputKo(KoSHC_CManualPercent);
         return true;
     }
 #ifdef KoSHC_CWindowOpenOpened2
@@ -206,7 +248,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             logErrorP("Missing value 0 or 1");
             return true;
         }
-        KoSHC_CWindowOpenOpened2.valueNoSend((uint8_t) std::stoi(cmd.substr(2)), DPT_OpenClose);
+        KoSHC_CWindowOpenOpened2.valueNoSend((uint8_t)std::stoi(cmd.substr(2)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened2);
         return true;
     }
@@ -218,7 +260,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             logErrorP("Missing value 0 or 1");
             return true;
         }
-        KoSHC_CWindowOpenOpened1.valueNoSend((uint8_t) std::stoi(cmd.substr(1)), DPT_OpenClose);
+        KoSHC_CWindowOpenOpened1.valueNoSend((uint8_t)std::stoi(cmd.substr(1)), DPT_OpenClose);
         processInputKo(KoSHC_CWindowOpenOpened1);
         return true;
     }
@@ -242,15 +284,15 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.modeManual = _modeManual;
     callContext.measurementHeading = &_measurementHeading;
     callContext.measurementRoomTemperature = &_measurementRoomTemperature;
-    
+
     if (_currentMode == nullptr)
     {
         _currentMode = _modeIdle;
         _currentMode->start(callContext, callContext.modeCurrentActive, _positionController);
-        KoSHC_CActiveMode.value((uint8_t) (_currentMode->sceneNumber() - 1), DPT_SceneNumber);
+        KoSHC_CActiveMode.value((uint8_t)(_currentMode->sceneNumber() - 1), DPT_SceneNumber);
     }
     callContext.modeCurrentActive = _currentMode;
-    
+
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
@@ -364,7 +406,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                 if (nextMode->isModeWindowOpen() && currentModeAllowed)
                 {
                     // shading still allowed, handle windowOpen as shading mode
-                    _handleWindowOpenAsShading = (ModeShading*) _currentMode;
+                    _handleWindowOpenAsShading = (ModeShading *)_currentMode;
                 }
                 else
                 {
@@ -383,7 +425,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             shadingStarted();
         }
         _currentMode->start(callContext, previousMode, _positionController);
-        KoSHC_CActiveMode.value((uint8_t) (_currentMode->sceneNumber() - 1), DPT_SceneNumber);
+        KoSHC_CActiveMode.value((uint8_t)(_currentMode->sceneNumber() - 1), DPT_SceneNumber);
         callContext.modeNewStarted = true;
     }
     _currentMode->control(callContext, _positionController);
@@ -405,7 +447,7 @@ void ShutterControllerChannel::shadingStarted()
 
 void ShutterControllerChannel::shadingStopped()
 {
-    logInfoP("Shading stopped");  
+    logInfoP("Shading stopped");
     _anyShadingModeActive = false;
     KoSHC_CShadingActive.value(false, DPT_Switch);
     // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
@@ -417,9 +459,9 @@ void ShutterControllerChannel::shadingStopped()
     case 1:
         _positionController.restoreLastManualPosition();
         break;
-    case 2: // Fährt auf
+    case 2:                                       // Fährt auf
         _positionController.setManualPosition(0); // Handled as manual operation because the value should be stored
-        _positionController.setManualSlat(0); // Handled as manual operation because the value should be stored
+        _positionController.setManualSlat(0);     // Handled as manual operation because the value should be stored
         break;
     case 3:
         _positionController.setManualSlat(50); // Handled as manual operation because the value should be stored

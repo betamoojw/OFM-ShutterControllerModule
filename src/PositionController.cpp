@@ -162,13 +162,15 @@ void PositionController::control(const CallContext &callContext)
             logInfoP("Last manual slat position: %d", (int)_lastManualSlat);
     }
 }
-bool PositionController::startSimulation()
+bool PositionController::startSimulation(bool fastSimulation)
 {
     if (_shutterSimulation == nullptr)
     {
         _shutterSimulation = new ShutterSimulation(_channelIndex, *this);
+        _shutterSimulation->setFastSimulation(fastSimulation);  
         return true;
     }
+    _shutterSimulation->setFastSimulation(fastSimulation);  
     return false;
 }
 bool PositionController::stopSimulation()
@@ -182,7 +184,7 @@ bool PositionController::stopSimulation()
     return false;
 }
 
-bool PositionController::simulationStarted()
+uint8_t PositionController::simulationMode()
 {
-    return _shutterSimulation != nullptr;
+    return _shutterSimulation != nullptr ? (_shutterSimulation->getFastSimulation() ? 2 : 1) : 0;
 }

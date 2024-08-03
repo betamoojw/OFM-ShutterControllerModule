@@ -29,7 +29,7 @@ public:
     void restoreLastManualPosition(); 
     void processInputKo(GroupObject &ko);
     void control(const CallContext& callContext);
-    bool startSimulation();
+    bool startSimulation(bool fastSimulation);
     bool stopSimulation();
-    bool simulationStarted();
+    uint8_t simulationMode();
 };

@@ -118,7 +118,7 @@ void ShutterSimulation::update(const CallContext &callContext)
     {
         if (_targetPosition != _currentPosition)
         {
-            if (callContext.currentMillis - _lastPositionChange > 800)
+            if (callContext.currentMillis - _lastPositionChange > (_fastSimulation ? 80 : 800))
             {
                 if (_targetPosition > _currentPosition)
                 {
@@ -175,7 +175,7 @@ void ShutterSimulation::update(const CallContext &callContext)
                 }
             }
         }
-        if (_lastGroupObjectUpdate != 0 && callContext.currentMillis - _lastGroupObjectUpdate > 10000)
+        if (_lastGroupObjectUpdate != 0 && callContext.currentMillis - _lastGroupObjectUpdate > (_fastSimulation ? 1000 : 10000))
         {
             if (KoSHC_CShutterPercentInput.commFlag() != ComFlag::WriteRequest)
                 if (KoSHC_CShutterPercentInput.valueCompare(_currentPosition, DPT_Scaling))
@@ -189,6 +189,16 @@ void ShutterSimulation::update(const CallContext &callContext)
             _lastGroupObjectUpdate = callContext.currentMillis;
         }
     }
+}
+
+void ShutterSimulation::setFastSimulation(bool fastSimulation)
+{
+    _fastSimulation = fastSimulation;
+}
+
+bool ShutterSimulation::getFastSimulation()
+{
+    return _fastSimulation;
 }
 
 void ShutterSimulation::setMoving(bool moving)
