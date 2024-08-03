@@ -100,6 +100,7 @@ void ModeManual::control(const CallContext &callContext, PositionController& pos
 }
 void ModeManual::stop(const CallContext& callContext, const ModeBase *next, PositionController& positionController)
 {
+    _waitTimeStart = 0;
     KoSHC_CManuelActiv.value(false, DPT_Switch);
 }
 void ModeManual::processInputKo(GroupObject &ko)

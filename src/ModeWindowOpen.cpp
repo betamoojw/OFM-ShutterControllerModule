@@ -81,7 +81,7 @@ bool ModeWindowOpen::allowed(const CallContext &callContext)
     }
     return _allowed;
 }
-void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previous, PositionController& positionController)
+void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
 {
     _positionToRestore = -1;
     _slatToRestore = -1;
@@ -126,10 +126,10 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
         {
             int8_t currentSlatValue = -1;
             if (KoSHC_CShutterSlatOutput.commFlag() == ComFlag::WriteRequest)
-                currentSlatValue = (uint8_t) KoSHC_CShutterSlatOutput.value(DPT_Scaling);
+                currentSlatValue = (uint8_t)KoSHC_CShutterSlatOutput.value(DPT_Scaling);
             else if (KoSHC_CShutterSlatInput.initialized())
                 currentSlatValue = KoSHC_CShutterSlatInput.value(DPT_Scaling);
-        
+
             auto slatPosition = ParamSHC_CWindowOpenSlatPosition1;
 
             // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -156,25 +156,31 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
         }
     }
 }
-void ModeWindowOpen::control(const CallContext &callContext, PositionController& positionController)
+void ModeWindowOpen::control(const CallContext &callContext, PositionController &positionController)
 {
 }
-void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
+void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, PositionController &positionController)
 {
-    if ((ModeBase*) callContext.modeManual == next && getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
+    if ((ModeBase *)callContext.modeManual == next)
     {
-        _deactivatedWhileOpen = true;
-        _recalcAllowed = false;
+        if (getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
+        {
+            _deactivatedWhileOpen = true;
+            _recalcAllowed = false;
+        }
     }
-    if (_positionToRestore != -1)
+    else
     {
-        positionController.setAutomaticPosition(_positionToRestore);
-        _positionToRestore = -1;
-    }
-    if (_slatToRestore != -1)
-    {
-        positionController.setAutomaticSlat(_slatToRestore);
-        _slatToRestore = -1;
+        if (_positionToRestore != -1)
+        {
+            positionController.setAutomaticPosition(_positionToRestore);
+            _positionToRestore = -1;
+        }
+        if (_slatToRestore != -1)
+        {
+            positionController.setAutomaticSlat(_slatToRestore);
+            _slatToRestore = -1;
+        }
     }
     getKo(SHC_KoCWindowOpenModeActive1).value(false, DPT_Switch);
 }
@@ -182,7 +188,7 @@ void ModeWindowOpen::processInputKo(GroupObject &ko)
 {
     switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())
     {
-     case SHC_KoCWindowOpenOpened1:
+    case SHC_KoCWindowOpenOpened1:
         if (ko.value(DPT_OpenClose))
             logInfoP("opened");
         else
@@ -192,7 +198,7 @@ void ModeWindowOpen::processInputKo(GroupObject &ko)
         }
         _recalcAllowed = true;
         break;
-     case SHC_KoCWindowOpenLock1:
+    case SHC_KoCWindowOpenLock1:
         _recalcAllowed = true;
         break;
     }
