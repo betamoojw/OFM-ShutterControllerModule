@@ -538,39 +538,7 @@
 														<!-- Anzahl Beschattungs Mode-->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" />
 
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
-
-														<!-- Handbetrieb Auf/Ab Type-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
-															<when test="0">
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt lediglich die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
-															</when>
-															<when test="1">
-																<!-- Auf/Ab Ausgang verwenden -->
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
-
-																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-
-																<!-- Mode Manual ignoriert Kanal Lock -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
-
-																<!-- Auf/Ab Ausgang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
-
-															</when>
-															<when test="2">
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
-
-																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-
-																<!-- Mode Manual ignoriert Kanal Lock -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
-
-															</when>
-														</choose>
+														
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungseinstellung" UIHint="Headline" />
 
@@ -659,6 +627,46 @@
 											<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
 												<when test="&gt;0">
 													<!-- Gerätetype aktiviert -->
+
+													<!-- Handbetrieb -->
+													<ParameterBlock Id="%AID%_PB-%C%16" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
+
+														<!-- Handbetrieb Auf/Ab Type-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+															<when test="0">
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt lediglich die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
+															</when>
+															<when test="1">
+																<!-- Auf/Ab Ausgang verwenden -->
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
+
+																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+
+																<!-- Mode Manual ignoriert Kanal Lock -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
+
+																<!-- Auf/Ab Ausgang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
+
+															</when>
+															<when test="2">
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
+
+																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+
+																<!-- Mode Manual ignoriert Kanal Lock -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
+
+															</when>
+														</choose>
+													</ParameterBlock>
+
+
 
 													<!-- Nacht Modus -->
 													<choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
