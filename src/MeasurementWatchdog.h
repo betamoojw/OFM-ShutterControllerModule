@@ -28,6 +28,7 @@ class MeasurementWatchdog
 {
 private:
     const static unsigned long _waitForValueTimeout = 10000;
+    static bool _missingValue;
     std::string _name;
     bool _changed = true;
     MeasurementWatchdogState _state = MeasurementWatchdogState::MeasurementWatchdogStateNotInitialized;
@@ -40,6 +41,8 @@ private:
     void setState(MeasurementWatchdogState state);
     void logState(bool incudeValue);
 public:
+    static void resetMissingValue();
+    static bool missingValue();
     MeasurementWatchdog();
     const std::string& logPrefix() const;
     void init(const char* name, GroupObject* groupObject, uint8_t timeoutParameterValue, const KNXValue& fallbackValue, const Dpt& dpt, MeasurementWatchdogFallbackBehavior fallbackBehaviour);

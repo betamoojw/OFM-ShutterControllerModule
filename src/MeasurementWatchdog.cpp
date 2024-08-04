@@ -1,5 +1,17 @@
 #include "MeasurementWatchdog.h"
 
+bool MeasurementWatchdog::_missingValue = true;
+
+void MeasurementWatchdog::resetMissingValue()
+{
+    _missingValue = true;
+}
+
+bool MeasurementWatchdog::missingValue()
+{
+    return _missingValue;
+}
+
 MeasurementWatchdog::MeasurementWatchdog()
 {
 }
@@ -78,6 +90,7 @@ void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog
         _waitTimeStartMillis = currentMillis;
         setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue);
         _groupObject->requestObjectRead();
+        _missingValue = true;
         break;
     case MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue:
         if (_timeoutMillis > 0 && currentMillis - _waitTimeStartMillis > _waitForValueTimeout)
@@ -96,6 +109,7 @@ void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog
                 break;
             }
         }
+        _missingValue = true;
         break;
     case MeasurementWatchdogState::MeasurementWatchdogStateWaitForTimeout:
         if (_timeoutMillis > 0 && currentMillis - _waitTimeStartMillis > _timeoutMillis)
@@ -119,7 +133,10 @@ void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog
         }
         break;
     case MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue:
+        _missingValue = true;
+        break;
     case MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue:
+        _missingValue = true;
         break;
     }
     if (diagnosticLog)

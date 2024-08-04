@@ -268,6 +268,8 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<op:include href="ShutterControllerModule.templ.xml" xpath="//Static/ParameterTypes/*" type="template" prefix="SHC" IsInner="true" />
+						
 						</ParameterTypes>
 
 						<Parameters>
@@ -307,7 +309,7 @@
 								<Parameter Id="%AID%_UP-%TT%00009" Offset="3" BitOffset="4" Name="TempFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Temperatur Fallback -->
-								<Parameter Id="%AID%_UP-%TT%00010" Offset="4" BitOffset="0" Name="TempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" SuffixText="°C" Value="30" />
+								<Parameter Id="%AID%_UP-%TT%00010" Offset="4" BitOffset="0" Name="TempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
 
 								<!-- Temperatur Prognose Watchdog -->
@@ -317,7 +319,7 @@
 								<Parameter Id="%AID%_UP-%TT%00012" Offset="5" BitOffset="4" Name="TempForecastFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Temperatur Prognose Fallback -->
-								<Parameter Id="%AID%_UP-%TT%00013" Offset="6" BitOffset="0" Name="TempForecastFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" SuffixText="°C" Value="30" />
+								<Parameter Id="%AID%_UP-%TT%00013" Offset="6" BitOffset="0" Name="TempForecastFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
 
 								<!-- Helligkeit Watchdog -->
@@ -457,7 +459,8 @@
 							<ComObject Number="6" Id="%AID%_O-%TT%00006" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="RainInput" Text="Regen Eingang" FunctionText="Regen Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Wolken Eingang -->
 							<ComObject Number="7" Id="%AID%_O-%TT%00007" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CloudsInput" Text="Wolken Eingang" FunctionText="Wolken Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
-
+							<!-- Messwertfehler -->
+							<ComObject Number="8" Id="%AID%_O-%TT%00008" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="MeasurementError" Text="Fehlender Messwert" FunctionText="Fehlender Messwert" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />						
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->
@@ -476,6 +479,8 @@
 							<ComObjectRef Id="%AID%_O-%TT%00006_R-%TT%0000601" RefId="%AID%_O-%TT%00006" />
 							<!-- Wolken Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" />
+							<!-- Fehlender Messwert -->
+							<ComObjectRef Id="%AID%_O-%TT%00008_R-%TT%0000801" RefId="%AID%_O-%TT%00008" />
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
@@ -485,6 +490,9 @@
 
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Settings">
 
+								<!-- Fehlender Messwert -->
+								<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
+					
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Jalousiensteuerung" UIHint="Headline"/>
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />

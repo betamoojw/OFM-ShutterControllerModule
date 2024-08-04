@@ -55,6 +55,7 @@ void ShutterControllerModule::showHelp()
 
 void ShutterControllerModule::loop()
 {
+    MeasurementWatchdog::resetMissingValue();
     ShutterControllerChannelOwnerModule::loop();
     _callContext.currentMillis = millis();
 
@@ -145,6 +146,12 @@ void ShutterControllerModule::loop()
 
             channel->execute(_callContext);
         }
+    }
+    if (_lastMissingValue != MeasurementWatchdog::missingValue())
+    {
+        _lastMissingValue = MeasurementWatchdog::missingValue();
+        logInfoP("Missing value: %d", (int) _lastMissingValue);
+        KoSHC_MeasurementError.value(_lastMissingValue, DPT_Switch);
     }
     _measurementTemperature.resetChanged();
     _measurementTemperatureForecast.resetChanged();

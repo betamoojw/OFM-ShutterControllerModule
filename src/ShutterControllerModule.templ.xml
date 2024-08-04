@@ -23,7 +23,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="36" increment="37" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="34" increment="5" />
+						<op:param name="%En%" value="34" increment="6" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -33,6 +33,16 @@
 					</op:part>
 
 					<Static>
+						<ParameterTypes>
+							<ParameterType Id="%AID%_PT-NumberOfShading" Name="NumberOfShading">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
+									<!-- ShutterControllerModule.ModeShading.xml will be included here -->
+									<op:usePart name="ModeShading" xpath="//ParameterTypes/ParameterType[@Name='NumberOfShadingEnumValue']/TypeRestriction/*" />
+
+								</TypeRestriction>
+							</ParameterType>
+						</ParameterTypes>
 						<Parameters>
 
 							<!-- Kanal Name -->
@@ -130,7 +140,8 @@
 								<!-- Anzahl Fenster Offen Mode-->
 								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="C%C%WindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster Offen" Value="0" />
 
-								<!-- 4 Bit free -->
+								<!-- Anzahl Beschattungs Mode-->
+								<Parameter Id="%AID%_UP-%TT%%CC%034" Offset="21" BitOffset="4" Name="C%C%ShadingCount" ParameterType="%AID%_PT-NumberOfShading" Text="Beschattungsmodus Anzahl" Value="1" />
 
 
 								<!-- Heizung Watchdog -->
@@ -140,7 +151,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%028" Offset="23" BitOffset="4" Name="C%C%HeatingWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Heizung Fallback % -->
-								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
 								<!-- Heizung Fallback Ein/Aus -->
 								<Parameter Id="%AID%_UP-%TT%%CC%030" Offset="24" BitOffset="0" Name="C%C%HeadingFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" />
 
@@ -152,10 +163,10 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%032" Offset="26" BitOffset="4" Name="C%C%RoomTempWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Raumtemperatur Fallback -->
-								<Parameter Id="%AID%_UP-%TT%%CC%033" Offset="27" BitOffset="0" Name="C%C%RoomTempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%033" Offset="27" BitOffset="0" Name="C%C%RoomTempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
 								<!-- Next offset: 28-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%033 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%035 -->
 
 
 							</Union>
@@ -263,6 +274,9 @@
 							<ParameterRef Id="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" RefId="%AID%_UP-%TT%%CC%032" />
 							<!-- Raumtemperatur Fallback -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" RefId="%AID%_UP-%TT%%CC%033" />
+
+							<!-- Anzahl Beschattungs Mode-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" RefId="%AID%_UP-%TT%%CC%034"/>
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
@@ -434,9 +448,6 @@
 							<!-- Fenster Kippstellung Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%913_R-%TT%%CC%91301" RefId="%AID%_O-%TT%%CC%913" Text="%C%: Fenster gekippt Sperre Aktiv" FunctionText="{{0:-}} Fenster gekippt Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 
-
-
-
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
 					</Static>
@@ -524,9 +535,8 @@
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
 
 
-														<!-- ShutterControllerModule.ModeShading.xml will be included here -->
-														<op:usePart name="ModeShading" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='ChannelParameters']/*" />
-
+														<!-- Anzahl Beschattungs Mode-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" />
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 

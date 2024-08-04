@@ -10,6 +10,5 @@
 
 - Kurzer Tastendruck bei geöffneter Jalousie (Automatik ein/aus, runter fahren)
 - Langer Tastendruck "auf" bei geöffneter Jalousie (Automatik ein/aus, runter fahren)
-- Shadow diagnostic KO
 - Time in Common
 

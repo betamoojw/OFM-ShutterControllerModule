@@ -63,24 +63,12 @@ void ShutterControllerChannel::setup()
     if (ParamSHC_CNight)
         _modes.push_back(new ModeNight());
 
-// up to 4 instances can be defined of ModeShading in ShutterControllerModule.templ.xml
-#ifdef ParamSHC_CShading5
-#error Not more the 4 instances allowed for ModeShading in ShutterControllerModule.templ.xml
-#endif
-#ifdef ParamSHC_CShading4
-    if (ParamSHC_CShading4)
-        _modes.push_back(new ModeShading(4));
-#endif
-#ifdef ParamSHC_CShading3
-    if (ParamSHC_CShading3)
-        _modes.push_back(new ModeShading(3));
-#endif
-#ifdef ParamSHC_CShading2
-    if (ParamSHC_CShading2)
-        _modes.push_back(new ModeShading(2));
-#endif
-    if (ParamSHC_CShading1)
-        _modes.push_back(new ModeShading(1));
+
+    auto numberOfShadings = ParamSHC_CShadingCount;
+    for (size_t i = numberOfShadings; i > 0; i--)
+    {
+       _modes.push_back(new ModeShading(i));
+    }    
 
     _modeIdle = new ModeIdle();
     _modes.push_back(_modeIdle);
@@ -314,7 +302,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             if (mode->isModeShading())
             {
                 auto modeShading = (ModeShading *)mode;
-                if (modeShading->allowedByTimeAndSun(callContext))
+                if (modeShading->allowedBySun(callContext))
                 {
                     allShadingPeriodsEnd = false;
                     break;

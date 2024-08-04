@@ -8,6 +8,7 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
 {
   private: 
     bool _shadingDailyActivation = false;
+    bool _lastMissingValue = false;
     void setDailyShadingActivation(bool active);
   protected:
     OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */) override; 
