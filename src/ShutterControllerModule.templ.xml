@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeWindowOpen.xml" name="ModeWindowOpen" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="28" increment="4" />
+						<op:param name="%ParamOffset%" value="29" increment="4" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="26" increment="4" />
 						<!-- ModeWindowOpen number -->
@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="36" increment="37" />
+						<op:param name="%ParamOffset%" value="37" increment="37" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="34" increment="6" />
 						<!-- ModeShading number -->
@@ -35,7 +35,7 @@
 					<Static>
 						<ParameterTypes>
 							<ParameterType Id="%AID%_PT-NumberOfShading" Name="NumberOfShading">
-								<TypeRestriction Base="Value" SizeInBit="8">
+								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
 									<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 									<op:usePart name="ModeShading" xpath="//ParameterTypes/ParameterType[@Name='NumberOfShadingEnumValue']/TypeRestriction/*" />
@@ -165,8 +165,16 @@
 								<!-- Raumtemperatur Fallback -->
 								<Parameter Id="%AID%_UP-%TT%%CC%033" Offset="27" BitOffset="0" Name="C%C%RoomTempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
-								<!-- Next offset: 28-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%035 -->
+
+								<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
+							    <Parameter Id="%AID%_UP-%TT%%CC%035" Offset="28" BitOffset="0" Name="C%C%ShortKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Kurzer Druck 'Nach oben'" Value="0"  />
+
+								<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
+								<Parameter Id="%AID%_UP-%TT%%CC%036" Offset="28" BitOffset="4" Name="C%C%LongKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Langer Druck 'Nach oben'" Value="0"  />
+	
+
+								<!-- Next offset: 29-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%037 -->
 
 
 							</Union>
@@ -277,6 +285,12 @@
 
 							<!-- Anzahl Beschattungs Mode-->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" RefId="%AID%_UP-%TT%%CC%034"/>
+
+							<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" RefId="%AID%_UP-%TT%%CC%035" />
+
+							<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" RefId="%AID%_UP-%TT%%CC%036" />
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
@@ -455,9 +469,9 @@
 						<ChannelIndependentBlock>
 							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 								<when test="&gt;=%C%">
-									<ParameterBlock Id="%AID%_PB-%C%1" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Shading">
+									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Shading">
 										<Channel Id="%AID%_CH-SHC%CC%" Name="f%CC%SHC" Number="SHC%CC%" Text="Kanal %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
-											<ParameterBlock Id="%AID%_PB-%TT%%CC%01" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
+											<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
 
 												<!-- Kanal Name -->
 												<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
@@ -614,7 +628,7 @@
 													<!-- Gerätetype aktiviert -->
 
 													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-%C%16" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
+													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
@@ -643,30 +657,68 @@
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt lediglich die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
 															</when>
 															<when test="1">
-																<!-- Auf/Ab Ausgang verwenden -->
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
-
-																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-
+											
 																<!-- Mode Manual ignoriert Kanal Lock -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
 
 																<!-- Auf/Ab Ausgang -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
 
+																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																	<when test="&gt;0">
+																		<!-- Mindestens ein Beschattungsmodus -->
+																	
+																		<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+																	</when>
+																</choose>
 															</when>
 															<when test="2">
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
 
-																<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-
 																<!-- Mode Manual ignoriert Kanal Lock -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
 
+																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																	<when test="&gt;0">
+																		<!-- Mindestens ein Beschattungsmodus -->
+																			<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+																	</when>
+																</choose>
 															</when>
 														</choose>
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
+													
+														<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
+															<when test="1"> 
+																<!-- Beschattungsautomatik EIN/AUS -->
+																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																	<when test="0">
+																		<!-- Keine Beschattungsmodus -->
+																		<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
+																	</when>
+																</choose>
+															</when>
+														</choose>
+														<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
+															<when test="1"> 
+																<!-- Beschattungsautomatik EIN/AUS -->
+																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																	<when test="0">
+																		<!-- Keine Beschattungsmodus -->
+																		<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
+																	</when>
+																</choose>
+															</when>
+														</choose>
+
 													</ParameterBlock>
 
 
@@ -685,7 +737,7 @@
 															<!-- Modus Nacht Sperre Rückmeldung -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
 
-															<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
+															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />

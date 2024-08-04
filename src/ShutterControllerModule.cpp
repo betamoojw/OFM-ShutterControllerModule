@@ -450,8 +450,16 @@ void ShutterControllerModule::setup()
 
 OpenKNX::Channel *ShutterControllerModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
 {
-    if (ParamSHC_CDeactivated)
+    if (ParamSHC_CType == 0)
+    {
+        logDebugP("Channel %d not used", _channelIndex); 
         return nullptr;
+    }
+    if (ParamSHC_CDeactivated)
+    {
+        logDebugP("Channel %d deactivated", _channelIndex); 
+        return nullptr;
+    }
     return new ShutterControllerChannel(_channelIndex);
 }
 

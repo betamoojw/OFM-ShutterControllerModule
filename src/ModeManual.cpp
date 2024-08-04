@@ -6,7 +6,7 @@ const char *ModeManual::name() const
     return "Manual";
 }
 
-uint8_t ModeManual::sceneNumber() const 
+uint8_t ModeManual::sceneNumber() const
 {
     return 11;
 }
@@ -51,9 +51,12 @@ bool ModeManual::allowed(const CallContext &callContext)
     if (_waitTimeStart != 0)
     {
         if (callContext.diagnosticLog)
-                logInfoP("Wait time acitve: %d", (int)(callContext.currentMillis - _waitTimeStart));
+            logInfoP("Wait time acitve: %d", (int)(callContext.currentMillis - _waitTimeStart));
 
-        if (callContext.currentMillis - _waitTimeStart < 10 * 60 * 1000)
+        auto timeout = 10 * 60 * 1000; // 10 minutes
+        if (callContext.fastSimulationActive)
+            timeout /= 10;
+        if (callContext.currentMillis - _waitTimeStart <  timeout)
             return _allowed; // In wait time
         _waitTimeStart = 0;
     }
@@ -61,11 +64,11 @@ bool ModeManual::allowed(const CallContext &callContext)
         logInfoP("No manual change detected");
     return false;
 }
-void ModeManual::start(const CallContext& callContext, const ModeBase *previous, PositionController& positionController)
+void ModeManual::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
 {
     KoSHC_CManuelActiv.value(true, DPT_Switch);
 }
-void ModeManual::control(const CallContext &callContext, PositionController& positionController)
+void ModeManual::control(const CallContext &callContext, PositionController &positionController)
 {
     if (_changedGroupObjects.empty())
         return;
@@ -98,15 +101,52 @@ void ModeManual::control(const CallContext &callContext, PositionController& pos
     }
     _changedGroupObjects.clear();
 }
-void ModeManual::stop(const CallContext& callContext, const ModeBase *next, PositionController& positionController)
+void ModeManual::stop(const CallContext &callContext, const ModeBase *next, PositionController &positionController)
 {
     _waitTimeStart = 0;
     KoSHC_CManuelActiv.value(false, DPT_Switch);
 }
-void ModeManual::processInputKo(GroupObject &ko)
+void ModeManual::processInputKo(GroupObject &ko, PositionController &positionController)
 {
-    auto asap = ko.asap();
-    if (asap == SHC_KoCManualLock)
+    auto koIndex = SHC_KoCalcIndex(ko.asap());
+
+    // special key handling if opened
+    if (positionController.state() == PositionControllerState::Idle && positionController.position() == 0)
+    {
+        uint8_t specialHandling = 0;
+        switch (koIndex)
+        {
+        case SHC_KoCManualStepStop:
+            if ((bool) ko.value(DPT_Step) == false)
+                specialHandling = ParamSHC_CShortKeyPressUpIfOpen;
+            break;
+        case SHC_KoCManualUpDown:
+            if ((bool) ko.value(DPT_Step) == false)
+                specialHandling = ParamSHC_CLongKeyPressUpIfOpen;
+            break;
+        }
+        // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Jalousie schließen" Value="2" Id="%ENID%" />
+        switch (specialHandling)
+        {
+        case 1:
+        {
+            auto newValue = !KoSHC_CShadingActive.value(DPT_Switch);
+            logInfoP("Special key handling: Toggle shading to %s", newValue ? "ON" : "OFF");
+            KoSHC_CShadingActive.value(newValue, DPT_Switch);
+            break;
+        }
+        case 2:
+        {
+            logInfoP("Special key handling: Close shading");
+            KoSHC_CManualUpDown.value(true, DPT_Switch);
+            break;
+        }
+        }
+    }
+
+    if (koIndex == SHC_KoCManualLock)
     {
         KoSHC_CManualLockActive.value(ko.value(DPT_Switch), DPT_Switch);
         _recalcAllowed = true;
@@ -120,7 +160,7 @@ void ModeManual::processInputKo(GroupObject &ko)
         if (ParamSHC_CIgnoreFirstManualCommandIfShadingActiv)
             return;
     }
-    switch (SHC_KoCalcIndex(asap))
+    switch (koIndex)
     {
     case SHC_KoCManuelStopStart:
         if (!ko.value(DPT_Switch))
@@ -130,29 +170,28 @@ void ModeManual::processInputKo(GroupObject &ko)
             return;
         }
         logDebugP("Manual start");
-         _changedGroupObjects.push_back(&ko);
+        _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;
     case SHC_KoCManualStepStop:
-        logDebugP("Manual change: %s",(bool) ko.value(DPT_Switch) ? "increase" : "decrease");
+        logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "increase" : "decrease");
         _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;
     case SHC_KoCManualUpDown:
-        logDebugP("Manual change: %s",(bool) ko.value(DPT_Switch) ? "down" : "up");
+        logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "down" : "up");
         _changedGroupObjects.push_back(&ko);
         _requestStart = true;
         break;
     case SHC_KoCManualPercent:
-        logDebugP("Manual position: %d%%", (uint8_t) ko.value(DPT_Scaling));
+        logDebugP("Manual position: %d%%", (uint8_t)ko.value(DPT_Scaling));
         break;
     case SHC_KoCManualSlatPercent:
-        logDebugP("Manual slat: %d%%", (uint8_t) ko.value(DPT_Scaling));
+        logDebugP("Manual slat: %d%%", (uint8_t)ko.value(DPT_Scaling));
         break;
     default:
         return;
     }
     _changedGroupObjects.push_back(&ko);
     _requestStart = true;
-
 }

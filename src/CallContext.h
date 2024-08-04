@@ -11,6 +11,7 @@ class CallContext
 {
     public:
         bool modeNewStarted;
+        bool fastSimulationActive;
         bool hasSlat;
         bool diagnosticLog;
         unsigned long currentMillis;

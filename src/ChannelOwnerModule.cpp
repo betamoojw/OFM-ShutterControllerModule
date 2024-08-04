@@ -40,9 +40,14 @@ void ShutterControllerChannelOwnerModule::setupChannels(uint8_t numberOfChannels
         logDebugP("Setting up %d channels", _numberOfChannels);
         for (uint8_t _channelIndex = 0; _channelIndex < _numberOfChannels; _channelIndex++)
         {
-            logDebugP("Create channel %d", _channelIndex);  
+            logDebugP("Creating channel %d", _channelIndex);  
             logIndentUp();
-            _pChannels[_channelIndex] = createChannel(_channelIndex);
+            auto channel = createChannel(_channelIndex);
+            _pChannels[_channelIndex] = channel;
+            if (channel != nullptr)
+                logDebugP("Channel %d created", _channelIndex); 
+            else
+                logDebugP("Channel %d not created", _channelIndex); 
             logIndentDown();
         }
         for (uint8_t _channelIndex = 0; _channelIndex < _numberOfChannels; _channelIndex++)

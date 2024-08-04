@@ -268,6 +268,14 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-KeySpecialFunctions" Name="KeySpecialFunctions">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
+									<Enumeration Text="Jalousie schließen" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
 							<op:include href="ShutterControllerModule.templ.xml" xpath="//Static/ParameterTypes/*" type="template" prefix="SHC" IsInner="true" />
 						
 						</ParameterTypes>
@@ -485,8 +493,6 @@
 					</Static>
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
-							<!-- <ParameterBlock Id="%AID%_PB-nnn" Name="Docu%TT%" Text="Dokumentation" Icon="information-outline" HelpContext="SHC-Documentation">
-							</ParameterBlock> -->
 
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Settings">
 
@@ -718,7 +724,7 @@
 									<!-- More Page -->
 									<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 										<when test="&lt;%N%">
-											<ParameterBlock Id="%AID%_PB-nnn" Name="IWAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">												<!-- HelpContext="Empty" -->
+											<ParameterBlock Id="%AID%_PB-nnn" Name="SHCAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">												<!-- HelpContext="Empty" -->
 												<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 												<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
 												<!-- HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" /-->

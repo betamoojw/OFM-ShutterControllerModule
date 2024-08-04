@@ -184,7 +184,7 @@ void ModeWindowOpen::stop(const CallContext &callContext, const ModeBase *next, 
     }
     getKo(SHC_KoCWindowOpenModeActive1).value(false, DPT_Switch);
 }
-void ModeWindowOpen::processInputKo(GroupObject &ko)
+void ModeWindowOpen::processInputKo(GroupObject &ko, PositionController& positionController)
 {
     switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())
     {

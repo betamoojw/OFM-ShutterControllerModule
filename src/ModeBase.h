@@ -22,7 +22,7 @@ public:
     virtual void start(const CallContext& callContext, const ModeBase* previous, PositionController& positionController) = 0;
     virtual void control(const CallContext& callContext, PositionController& positionController) = 0;
     virtual void stop(const CallContext& callContext, const ModeBase* next, PositionController& positionController) = 0;
-    virtual void processInputKo(GroupObject &ko) = 0;
+    virtual void processInputKo(GroupObject &ko, PositionController& positionController) = 0;
     virtual bool isModeShading() const;
     virtual bool isModeWindowOpen() const;
 };

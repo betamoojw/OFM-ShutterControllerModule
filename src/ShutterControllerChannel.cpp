@@ -101,7 +101,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     _positionController.processInputKo(ko);
     for (auto mode : _modes)
     {
-        mode->processInputKo(ko);
+        mode->processInputKo(ko, _positionController);
     }
 }
 
@@ -266,6 +266,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
 
     ModeBase *nextMode = nullptr;
+    callContext.fastSimulationActive = _positionController.simulationMode() == 2;
     callContext.hasSlat = _positionController.hasSlat();
     callContext.modeNewStarted = false;
     callContext.modeIdle = _modeIdle;
@@ -284,7 +285,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
-        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > ParamSHC_CManualShadingWaitTime)
+        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > callContext.fastSimulationActive ?  ParamSHC_CManualShadingWaitTime / 10 : ParamSHC_CManualShadingWaitTime)
         {
             // reactivate
             _waitTimeForReactivateShadingAfterManualStarted = 0;
@@ -386,7 +387,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
 
         if (_currentMode != nullptr)
         {
-            logDebugP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
+            logInfoP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
             _handleWindowOpenAsShading = nullptr;
             _currentMode->stop(callContext, nextMode, _positionController);
             if (!nextMode->isModeShading() && _anyShadingModeActive)

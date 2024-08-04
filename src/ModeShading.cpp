@@ -15,6 +15,7 @@ ModeShading::ModeShading(uint8_t index)
 {
     _name = "Shading";
     _name += std::to_string(index);
+    logInfoP("ModeShading %s created", _name.c_str());
 }
 
 const char *ModeShading::name() const
@@ -38,17 +39,7 @@ bool ModeShading::modeWindowOpenAllowed() const
     return ParamSHC_CShading1WindowOpenAllowed;
 }
 bool ModeShading::allowed(const CallContext &callContext)
-{
-    if (callContext.modeCurrentActive->isModeWindowOpen())
-        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonWindowOpen;
-    else
-        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonWindowOpen;
-
-    if (callContext.modeCurrentActive == (const ModeBase*) callContext.modeManual)
-        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonManualUsage;
-    else
-        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonManualUsage;
-
+{  
     _recalcMeasurmentValues |= 
         callContext.measurementBrightness->isChanged() || 
         callContext.measurementClouds->isChanged() || 
@@ -64,8 +55,11 @@ bool ModeShading::allowed(const CallContext &callContext)
     {
         if (diagnosticLog)
             logInfoP("Lock KO activ");
-        else
-            return false;
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonLock;
+    }
+    else
+    {
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonLock;
     }
     bool allowedSun = allowedBySun(callContext);
     if (allowedSun != _lastSunFrameAllowed)
@@ -97,6 +91,9 @@ bool ModeShading::allowed(const CallContext &callContext)
             logDebugP("Allowed by sun: %d", (int)_lastSunFrameAllowed);
         }
     }
+    // Handle start and stop wait time
+    bool stopWaitTimeActive = false;
+    bool startWaitTimeActive = false;
     if (_waitTimeAfterMeasurmentValueChange != 0)
     {
         bool lastState = !_allowedByMeasurementValues;
@@ -107,8 +104,8 @@ bool ModeShading::allowed(const CallContext &callContext)
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Stop wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
-                return lastState;
+                    logInfoP("Stop wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));               
+                stopWaitTimeActive = true;
             }
         }
         else
@@ -119,23 +116,45 @@ bool ModeShading::allowed(const CallContext &callContext)
             {
                 if (callContext.diagnosticLog)
                     logInfoP("Start wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
-                return lastState;
+                startWaitTimeActive = true;
             }
         }
         _waitTimeAfterMeasurmentValueChange = 0;
     }
+ 
+    // Handle not allowed reason
+    if (startWaitTimeActive)
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonStartWaitTime;
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonStartWaitTime;
+  
+    if (callContext.modeCurrentActive->isModeWindowOpen())
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonWindowOpen;
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonWindowOpen;
+
+    if (callContext.modeCurrentActive == (const ModeBase*) callContext.modeManual)
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonManualUsage;
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonManualUsage;
+
     if (diagnosticLog)
-    {
         logInfoP("Not allowed reason: %d", (int)_notAllowedReason);
-    }
+
     if (_lastNotAllowedReason != _notAllowedReason)
     {
+        logDebugP("Not allowed reason changed: %d", (int)_notAllowedReason);
         _lastNotAllowedReason = _notAllowedReason;
-        if (!diagnosticLog)
-            logDebugP("Not allowed reason: %d", (int)_notAllowedReason);
         getKo(SHC_KoCShading1DiagnoseNotAllowed).value(_notAllowedReason, DPT_CombinedInfoOnOff);
     }
-    return _allowedByMeasurementValues && _lastSunFrameAllowed;
+    // Return result
+    if (!_lastSunFrameAllowed)
+        return false;
+    if (startWaitTimeActive)
+        return false;
+    if (stopWaitTimeActive)
+        return true;
+    return _allowedByMeasurementValues;
 }
 
 bool ModeShading::allowedBySun(const CallContext &callContext)
@@ -511,7 +530,7 @@ void ModeShading::stop(const CallContext &callContext, const ModeBase *next, Pos
     _waitTimeAfterMeasurmentValueChange = 0;
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
 }
-void ModeShading::processInputKo(GroupObject &ko)
+void ModeShading::processInputKo(GroupObject &ko, PositionController& positionController)
 {
     // channel ko
     switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())

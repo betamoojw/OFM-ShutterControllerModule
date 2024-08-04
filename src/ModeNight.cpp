@@ -198,7 +198,7 @@ void ModeNight::stop(const CallContext &callContext, const ModeBase *next, Posit
     }
 }
 
-void ModeNight::processInputKo(GroupObject &ko)
+void ModeNight::processInputKo(GroupObject &ko, PositionController& positionController)
 {
     switch (ko.asap())
     {

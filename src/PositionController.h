@@ -4,10 +4,18 @@
 class CallContext;
 class ShutterSimulation;
 
+enum class PositionControllerState
+{
+    Idle,
+    MovingDown,
+    MovingUp
+};
+
 class PositionController
 {
     ShutterSimulation* _shutterSimulation = nullptr;
-    uint8_t _lastManaulPosition = 0;
+    PositionControllerState _state = PositionControllerState::Idle;
+    uint8_t _lastManualPosition = 0;
     uint8_t _lastManualSlat = 0;
     uint8_t _setPosition = 255;
     uint8_t _setSlat = 255;
@@ -15,8 +23,12 @@ class PositionController
     bool _hasSlat = false;
     unsigned long _startWaitForManualPositionFeedback = 0;
     unsigned long _startWaitForManualSlatPositionFeedback = 0;
+    unsigned long _waitForMovingFinshed = 0;
+    unsigned long _waitForMovingTimeout = 0; 
     std::string _logPrefix = "";
     const std::string& logPrefix();
+    void setState(PositionControllerState state);
+    void setMovingTimeout(unsigned long timeout);
 public:
     PositionController(uint8_t channelIndex);
     bool hasSlat() const;
@@ -32,4 +44,6 @@ public:
     bool startSimulation(bool fastSimulation);
     bool stopSimulation();
     uint8_t simulationMode();
+    PositionControllerState state();
+    uint8_t position();
 };

@@ -31,6 +31,6 @@ void ModeIdle::control(const CallContext &callContext, PositionController& posit
 void ModeIdle::stop(const CallContext& callContext, const ModeBase* next, PositionController& positionController)
 {
 }
-void ModeIdle::processInputKo(GroupObject &ko)
+void ModeIdle::processInputKo(GroupObject &ko, PositionController& positionController)
 {
 }

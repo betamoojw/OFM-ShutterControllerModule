@@ -319,7 +319,7 @@
 															</when>
 														</choose>
 
-														<ParameterBlock Id="%AID%_PB-%C%17" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="Empty">
+														<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="Empty">
 													
 															<ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
 															

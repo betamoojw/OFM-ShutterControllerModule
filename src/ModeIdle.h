@@ -12,5 +12,5 @@ protected:
     void start(const CallContext& callContext, const ModeBase* previous, PositionController& positionController) override;
     void control(const CallContext& callContext, PositionController& positionController) override;
     void stop(const CallContext& callContext, const ModeBase* next, PositionController& positionController) override;
-    void processInputKo(GroupObject &ko) override;
+    void processInputKo(GroupObject &ko, PositionController& positionController) override;
 };
