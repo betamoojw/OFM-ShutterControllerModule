@@ -489,12 +489,6 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
 
 
-														<!-- Beschattung Einschalten -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
-														<!-- Beschattung Einschalten Rückmeldung -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
-														<!-- Beschattung Aktiv -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
 														<!-- Sperre Kanal -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
 														<!-- Sperre Kanal Aktiv -->
@@ -503,6 +497,126 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
 
 
+
+												
+														<!-- Kanal Deaktivieren -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
+
+														<!-- Nacht Modus -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
+
+
+														<!-- Anzahl Fenster Offen Mode-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
+
+
+														<!-- Anzahl Beschattungs Mode-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+															<when test="&gt;0">
+
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungseinstellung" UIHint="Headline" />
+
+																<!-- Beschattung Einschalten -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
+																<!-- Beschattung Einschalten Rückmeldung -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
+																<!-- Beschattung Aktiv -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
+										
+																<!-- Beschattungsunterbrechnung nach Handbetrieb -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
+
+																<!-- Nach Beschattung -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
+
+
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
+
+																<!-- Heizung Eingang -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
+																	<when test="1">
+																		<!-- Heizung Stellwert % Eingang -->
+																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
+
+																		<!-- Heizung Watchdog -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
+																			<when test="&gt;0">
+																				<!-- Heizung Watchdog Fallback-->
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
+																					<when test="2 3">
+																						<!-- Heizung Fallback % -->
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose>
+																	</when>
+																	<when test="2">
+																		<!-- Heizungsanforderung Eingang -->
+																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
+
+																		<!-- Heizung Watchdog -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
+																			<when test="&gt;0">
+																				<!-- Heizung Watchdog Fallback-->
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
+																					<when test="2 3">
+																						<!-- Heizung Fallback Ein/Aus -->
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
+
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+																<!-- Raumtemperatur Eingang -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
+																	<when test="1">
+																		<!-- Raumtemperatur Eingang -->
+																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
+
+																		<!-- Raumtemperatur Watchdog -->
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
+																			<when test="&gt;0">
+																				<!-- Raumtemperatur Watchdog Fallback-->
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
+																					<when test="2 3">
+																						<!-- Raumtemperatur Fallback Ein/Aus -->
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
+															</when>
+														</choose>
+													</when>
+												</choose>
+											</ParameterBlock>
+											<!-- Gerätetype -->
+											<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+												<when test="&gt;0">
+													<!-- Gerätetype aktiviert -->
+
+													<!-- Handbetrieb -->
+													<ParameterBlock Id="%AID%_PB-%C%16" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
+
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
 														<!-- Modus Handbetrieb Stop/Start -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
@@ -521,118 +635,7 @@
 														<!-- Handbetrieb Steuerung Lamelle Prozent -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
 
-
-														<!-- Kanal Deaktivieren -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
-
-														<!-- Nacht Modus -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
-
-
-														<!-- Anzahl Fenster Offen Mode-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
-
-
-														<!-- Anzahl Beschattungs Mode-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" />
-
-														
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungseinstellung" UIHint="Headline" />
-
-														<!-- Beschattungsunterbrechnung nach Handbetrieb -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
-
-														<!-- Nach Beschattung -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
-
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
-
-														<!-- Heizung Eingang -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
-															<when test="1">
-																<!-- Heizung Stellwert % Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
-
-																<!-- Heizung Watchdog -->
-																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
-																	<when test="&gt;0">
-																		<!-- Heizung Watchdog Fallback-->
-																		<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
-																			<when test="2 3">
-																				<!-- Heizung Fallback % -->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-															</when>
-															<when test="2">
-																<!-- Heizungsanforderung Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
-
-																<!-- Heizung Watchdog -->
-																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
-																	<when test="&gt;0">
-																		<!-- Heizung Watchdog Fallback-->
-																		<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
-																			<when test="2 3">
-																				<!-- Heizung Fallback Ein/Aus -->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-															</when>
-														</choose>
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-
-														<!-- Raumtemperatur Eingang -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
-															<when test="1">
-																<!-- Raumtemperatur Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
-
-																<!-- Raumtemperatur Watchdog -->
-																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
-																	<when test="&gt;0">
-																		<!-- Raumtemperatur Watchdog Fallback-->
-																		<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
-																			<when test="2 3">
-																				<!-- Raumtemperatur Fallback Ein/Aus -->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-															</when>
-														</choose>
-
-													</when>
-												</choose>
-											</ParameterBlock>
-											<!-- Gerätetype -->
-											<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-												<when test="&gt;0">
-													<!-- Gerätetype aktiviert -->
-
-													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-%C%16" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
-
+		
 														<!-- Handbetrieb Auf/Ab Type-->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
