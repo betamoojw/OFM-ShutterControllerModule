@@ -136,11 +136,11 @@
 
 							<ParameterType Id="%AID%_PT-NightModeStartBehavior" Name="NightModeStartBehavior">
 								<TypeRestriction Base="Value" SizeInBit="4">
-									<Enumeration Text="Kein Autstart" Value="0" Id="%ENID%" />
+									<Enumeration Text="Kein Autostart" Value="0" Id="%ENID%" />
 									<Enumeration Text="Uhrzeit" Value="1" Id="%ENID%" />
 									<Enumeration Text="Sonne" Value="2" Id="%ENID%" />
-									<Enumeration Text="Uhrzeit, Sonne (früheres Ergeignis)" Value="3" Id="%ENID%" />
-									<Enumeration Text="Uhrzeit, Sonne (späteres Ergeignis)" Value="4" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (früheres Ereignis)" Value="3" Id="%ENID%" />
+									<Enumeration Text="Uhrzeit, Sonne (späteres Ereignis)" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 
@@ -174,19 +174,19 @@
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
 									<Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
-									<Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
+									<Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 
 							<ParameterType Id="%AID%_PT-WaitTimeAfterManualUsageForShading" Name="WaitTimeAfterManualUsageForShading">
 								<TypeRestriction Base="Value" SizeInBit="8">
-									<Enumeration Text="für diese Periode deaktiveren" Value="0" Id="%ENID%" />
+									<Enumeration Text="für diese Periode deaktivieren" Value="0" Id="%ENID%" />
 									<Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
 									<Enumeration Text="2 Minuten" Value="2" Id="%ENID%" />
 									<Enumeration Text="5 Minuten" Value="5" Id="%ENID%" />
 									<Enumeration Text="10 Minuten" Value="10" Id="%ENID%" />
 									<Enumeration Text="15 Minuten" Value="15" Id="%ENID%" />
-									<Enumeration Text="30 Minuten " Value="30" Id="%ENID%" />
+									<Enumeration Text="30 Minuten" Value="30" Id="%ENID%" />
 									<Enumeration Text="1 Stunde" Value="101" Id="%ENID%" />
 									<Enumeration Text="2 Stunden" Value="102" Id="%ENID%" />
 									<Enumeration Text="3 Stunden" Value="103" Id="%ENID%" />
@@ -457,7 +457,7 @@
 							<ComObject Number="1" Id="%AID%_O-%TT%00001" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="ShadingControlDailyActivationStatus" Text="Beschattung täglich aktivieren Status" FunctionText="Beschattung täglich aktivieren Status" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Temperatur Eingang -->
 							<ComObject Number="2" Id="%AID%_O-%TT%00002" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="TempInput" Text="Temperatur Eingang" FunctionText="Temperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
-							<!-- Temperatur Progonse Eingang -->
+							<!-- Temperatur Prognose Eingang -->
 							<ComObject Number="3" Id="%AID%_O-%TT%00003" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="TempForecastInput" Text="Temperaturprognose Eingang" FunctionText="Temperaturprognose Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Helligkeit Eingang -->
 							<ComObject Number="4" Id="%AID%_O-%TT%00004" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput" Text="Helligkeit Eingang" FunctionText="Helligkeit Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
@@ -477,7 +477,7 @@
 							<ComObjectRef Id="%AID%_O-%TT%00001_R-%TT%0000101" RefId="%AID%_O-%TT%00001" />
 							<!-- Temperatur Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00002_R-%TT%0000201" RefId="%AID%_O-%TT%00002" />
-							<!-- Temperatur Progonse Eingang -->
+							<!-- Temperatur Prognose Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00003_R-%TT%0000301" RefId="%AID%_O-%TT%00003" />
 							<!-- Helligkeit Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%00004_R-%TT%0000401" RefId="%AID%_O-%TT%00004" />
@@ -574,7 +574,7 @@
 										<!-- Verfügbare Kanäle -->
 										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 											<when test="&gt;0">
-												<!-- Temperatur Progonse Eingang -->
+												<!-- Temperatur Prognose Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00003_R-%TT%0000301" />
 											</when>
 										</choose>

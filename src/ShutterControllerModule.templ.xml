@@ -106,7 +106,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="12" BitOffset="0" Name="C%C%NightSunRiseElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
 
 								<!-- Heizungs Anforderung-->
-								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="C%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heinzung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="C%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heizung" Value="0" />
 
 								<!-- 6 Bit free -->
 
@@ -378,25 +378,25 @@
 						<ComObjectRefs>
 
 							<!-- Jalousie Prozent Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" Text="%C%: Jalousie Prozent Ausgang" FunctionText="{{0:-}} Jalousie Prozent setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" Text="%C%: Jalousie Prozent Ausgang" FunctionText="{{0:-}} Jalousie Prozent setzen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_O-%TT%%CC%001" Text="%C%: Lamelle Prozent Ausgang" FunctionText="{{0:-}} Lamelle Prozent setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_O-%TT%%CC%001" Text="%C%: Lamelle Prozent Ausgang" FunctionText="{{0:-}} Lamelle Prozent setzen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Steuerung Auf/Ab Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="%C%: Auf/Ab Ausgang" FunctionText="{{0:-}} Auf/Ab setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="%C%: Auf/Ab Ausgang" FunctionText="{{0:-}} Auf/Ab setzen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Steuerung Stopp/Schritt Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_O-%TT%%CC%003" Text="%C%: Stopp/Schritt Ausgang" FunctionText="{{0:-}} Stopp/Schritt setzten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_O-%TT%%CC%003" Text="%C%: Stopp/Schritt Ausgang" FunctionText="{{0:-}} Stopp/Schritt setzen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Jalousie Prozent Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="%C%: Jalousie Prozent Eingang" FunctionText="{{0:-}} Jalousie Prozent Aktorrückmeldung" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="%C%: Jalousie Lammelle Eingang" FunctionText="{{0:-}} Jalousie Lamelle Aktorrückmeldung" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="%C%: Jalousie Lamelle Eingang" FunctionText="{{0:-}} Jalousie Lamelle Aktorrückmeldung" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Beschattung Einschalten -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_O-%TT%%CC%006" Text="%C%: Beschattung Einschalten" FunctionText="{{0:-}} Beschattung Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Beschattung Einschalten Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_O-%TT%%CC%007" Text="%C%: Beschattung Eingeschalten" FunctionText="{{0:-}} Beschattung Eingeschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_O-%TT%%CC%007" Text="%C%: Beschattung Eingeschaltet" FunctionText="{{0:-}} Beschattung Eingeschaltet" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Beschattung Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_O-%TT%%CC%008" Text="%C%: Beschattung Aktiv" FunctionText="{{0:-}} Beschattung Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Sperre Kanal -->
@@ -446,7 +446,7 @@
 							<!-- Fenster Offen Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" RefId="%AID%_O-%TT%%CC%900" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_O-%TT%%CC%901" Text="%C%: Fenster offen Kontakt" FunctionText="{{0:-}} Fenster offen Kontak" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_O-%TT%%CC%901" Text="%C%: Fenster offen Kontakt" FunctionText="{{0:-}} Fenster offen Kontakt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_O-%TT%%CC%902" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre Rückmeldung -->
@@ -456,7 +456,7 @@
 							<!-- Fenster Kippstellung Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" RefId="%AID%_O-%TT%%CC%910" Text="%C%: Fenster gekippt Aktiv" FunctionText="{{0:-}} Fenster gekippt Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Kippstellung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" RefId="%AID%_O-%TT%%CC%911" Text="%C%: Fenster gekippt Kontakt" FunctionText="{{0:-}} Fenster gekippt Kontak" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" RefId="%AID%_O-%TT%%CC%911" Text="%C%: Fenster gekippt Kontakt" FunctionText="{{0:-}} Fenster gekippt Kontakt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" RefId="%AID%_O-%TT%%CC%912" Text="%C%: Fenster gekippt Sperre" FunctionText="{{0:-}} Fenster gekippt Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre Rückmeldung -->

@@ -28,13 +28,13 @@
 								<!-- Position anfahren -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+0%" Offset="0" BitOffset="0" Name="C%C%WindowOpenPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
 
-								<!-- Lammellenstellung -->
+								<!-- Lamellenstellung -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+1%" Offset="0" BitOffset="4" Name="C%C%WindowOpenSlatPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="1" />
 
 								<!-- Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+2%" Offset="1" BitOffset="0" Name="C%C%WindowOpenPosition%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
 
-								<!-- Lammellenposition -->
+								<!-- Lamellenposition -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+3%" Offset="2" BitOffset="0" Name="C%C%WindowOpenSlatPosition%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
 							</Union>
 
@@ -48,13 +48,13 @@
 							<!-- Position anfahren -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" RefId="%AID%_UP-%TT%%CC%%PPP+0%" />
 
-							<!-- Lammellenstellung -->
+							<!-- Lamellenstellung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" RefId="%AID%_UP-%TT%%CC%%PPP+1%" />
 
 							<!-- Position -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" RefId="%AID%_UP-%TT%%CC%%PPP+2%" />
 
-							<!-- Lammellenposition -->
+							<!-- Lamellenposition -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_UP-%TT%%CC%%PPP+3%" />
 
 						</ParameterRefs>
@@ -124,12 +124,12 @@
 												<when test="1">
 													<!-- Gerätetype Jalousie -->
 
-													<!-- Lammellenstellung -->
+													<!-- Lamellenstellung -->
 													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
 													<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01">
 														<when test="&gt;0">
 
-															<!-- Lammellenposition -->
+															<!-- Lamellenposition -->
 															<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
 														</when>
 													</choose>
