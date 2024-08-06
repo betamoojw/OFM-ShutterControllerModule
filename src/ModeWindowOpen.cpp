@@ -98,7 +98,7 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
         auto position = ParamSHC_CWindowOpenPosition1;
 
         // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
-        //  <Enumeration Text="Nur wenn weiter geschlossen" Value="1" Id="%ENID%" />
+        //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
         //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
         switch (positionControl)
         {
@@ -133,7 +133,7 @@ void ModeWindowOpen::start(const CallContext &callContext, const ModeBase *previ
             auto slatPosition = ParamSHC_CWindowOpenSlatPosition1;
 
             // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
-            //  <Enumeration Text="Nur wenn weiter geschlossen" Value="1" Id="%ENID%" />
+            //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
             //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
             switch (slatPositionControl)
             {
