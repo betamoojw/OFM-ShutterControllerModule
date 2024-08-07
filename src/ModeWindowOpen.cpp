@@ -31,7 +31,7 @@ const char *ModeWindowOpen::name() const
 
 uint8_t ModeWindowOpen::sceneNumber() const
 {
-    return 13 + _index;
+    return 13 - 1 + _index; // 1 based index
 }
 
 void ModeWindowOpen::initGroupObjects()

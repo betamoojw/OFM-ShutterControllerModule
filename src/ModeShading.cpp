@@ -25,13 +25,15 @@ const char *ModeShading::name() const
 
 uint8_t ModeShading::sceneNumber() const
 {
-    return _index;
+    return _index; // 1 based index
 }
 
 void ModeShading::initGroupObjects()
 {
     getKo(SHC_KoCShading1LockActive).value(false, DPT_Switch);
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
+    getKo(SHC_KoCShading1DiagnoseNotAllowed).value((uint32_t) _notAllowedReason, DPT_CombinedInfoOnOff);
+ 
     _recalcMeasurmentValues = true;
 }
 bool ModeShading::modeWindowOpenAllowed() const
@@ -139,13 +141,13 @@ bool ModeShading::allowed(const CallContext &callContext)
         _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonManualUsage;
 
     if (diagnosticLog)
-        logInfoP("Not allowed reason: %d", (int)_notAllowedReason);
+        logInfoP("Not allowed reason: %lu", (unsigned long)_notAllowedReason);
 
     if (_lastNotAllowedReason != _notAllowedReason)
     {
-        logDebugP("Not allowed reason changed: %d", (int)_notAllowedReason);
+        logDebugP("Not allowed reason changed: %lu", (unsigned long)_notAllowedReason);
         _lastNotAllowedReason = _notAllowedReason;
-        getKo(SHC_KoCShading1DiagnoseNotAllowed).value(_notAllowedReason, DPT_CombinedInfoOnOff);
+        getKo(SHC_KoCShading1DiagnoseNotAllowed).value((uint32_t) _notAllowedReason, DPT_CombinedInfoOnOff);
     }
     // Return result
     if (!_lastSunFrameAllowed)

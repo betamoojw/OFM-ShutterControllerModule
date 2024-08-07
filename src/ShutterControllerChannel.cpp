@@ -76,6 +76,9 @@ void ShutterControllerChannel::setup()
     {
         mode->setup(_channelIndex);
     }
+#ifdef SIMULATION
+    _positionController.startSimulation(false);
+#endif    
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)

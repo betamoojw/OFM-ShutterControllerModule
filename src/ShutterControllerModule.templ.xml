@@ -330,7 +330,7 @@
 							<!-- Sperre Kanal Aktiv -->
 							<ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Aktiver Modus -->
-							<ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" ObjectSize="1 Byte" DatapointType="DPST-17-1" Name="C%C%ActiveMode" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" ObjectSize="1 Byte" DatapointType="DPST-17-1" Name="C%C%ActiveMode" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 
 							<!-- Modus Handbetrieb Start/Stop Manual -->
