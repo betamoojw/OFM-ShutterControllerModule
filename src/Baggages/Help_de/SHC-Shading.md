@@ -1,3 +1,0 @@
-### Beschattung
-
-Beschattungs Einstellungen

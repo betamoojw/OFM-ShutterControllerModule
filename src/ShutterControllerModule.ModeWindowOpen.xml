@@ -95,7 +95,7 @@
 										<!-- Fenster Offen Sperre Rückmeldung -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
 
-										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="Empty">
+										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-ModeWindowOpen">
 
 											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 												<when test="&gt;%Tn%">

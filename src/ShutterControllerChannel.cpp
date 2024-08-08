@@ -276,6 +276,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.modeManual = _modeManual;
     callContext.measurementHeading = &_measurementHeading;
     callContext.measurementRoomTemperature = &_measurementRoomTemperature;
+    callContext.channelLockActive = _channelLockActive;
 
     if (_currentMode == nullptr)
     {
@@ -320,6 +321,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
         }
     }
+    callContext.shadingControlActive = _shadingControlActive;
     // State machine handling for mode activateion
     bool currentModeAllowed = false;
     for (auto mode : _modes)

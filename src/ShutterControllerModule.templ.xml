@@ -111,7 +111,7 @@
 								<!-- 6 Bit free -->
 
 								<!-- Handbetrieb Auf/Ab Type-->
-								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="C%C%ManualUpDownType" ParameterType="%AID%_PT-UpDownTypeForManualControl" Text="Handbetrieb Auf/Ab an Aktor übergeben als" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="C%C%ManualUpDownType" ParameterType="%AID%_PT-UpDownTypeForManualControl" Text="Handbetriebseinstellung" Value="0" />
 								<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%ManualShadingWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
@@ -469,9 +469,12 @@
 						<ChannelIndependentBlock>
 							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 								<when test="&gt;=%C%">
-									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Shading">
+									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Channel">
 										<Channel Id="%AID%_CH-SHC%CC%" Name="f%CC%SHC" Number="SHC%CC%" Text="Kanal %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
 											<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
+
+												<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanal %C%" UIHint="Headline" />
+												<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 												<!-- Kanal Name -->
 												<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
@@ -628,7 +631,7 @@
 													<!-- Gerätetype aktiviert -->
 
 													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="Empty">
+													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-ModeManual">
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
@@ -737,11 +740,10 @@
 															<!-- Modus Nacht Sperre Rückmeldung -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
 
-															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="Empty">
+															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-ModeNight">
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-
+																
 																<!-- Fenster offen Mode -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 																	<when test="&gt;0">

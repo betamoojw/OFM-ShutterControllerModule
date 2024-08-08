@@ -494,7 +494,7 @@
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
 
-							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Settings">
+							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-General">
 
 								<!-- Fehlender Messwert -->
 								<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />

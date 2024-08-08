@@ -42,6 +42,31 @@ bool ModeShading::modeWindowOpenAllowed() const
 }
 bool ModeShading::allowed(const CallContext &callContext)
 {  
+    if (!callContext.shadingControlActive)
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Shading control KO not active");
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOff;
+    }
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOff;  
+    if (callContext.channelLockActive)
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Channel lock KO not active");
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonChannelLock;
+    }
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonChannelLock;
+    if (!callContext.timeAndSunValid)
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Time not valid");
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonTimeNotValid;
+    }
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonTimeNotValid;
+        
     _recalcMeasurmentValues |= 
         callContext.measurementBrightness->isChanged() || 
         callContext.measurementClouds->isChanged() || 
@@ -179,11 +204,11 @@ bool ModeShading::allowedBySun(const CallContext &callContext)
         allowed = false;
         if (diagnosticLog)
             logInfoP("Elevantion %.2f not between %d and %d", callContext.elevation, (int)ParamSHC_CShading1ElevationMin, (int)ParamSHC_CShading1ElevationMax);
-        _notAllowedReason |= ModeShadingNotAllowedReasonSunElevatnion;
+        _notAllowedReason |= ModeShadingNotAllowedReasonSunElevation;
     }
     else
     {
-        _notAllowedReason &= ~ModeShadingNotAllowedReasonSunElevatnion;
+        _notAllowedReason &= ~ModeShadingNotAllowedReasonSunElevation;
     }
 
     auto shadingBreak = ParamSHC_CShading1Break;
