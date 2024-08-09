@@ -26,12 +26,12 @@ bool ModeNight::allowed(const CallContext &callContext)
     {
         _lastDayUTC = callContext.UtcDay;
         // new day
-        sunRise = false;
-        startTime = false;
-        sunSet = false;
-        stopTime = false;
+        _sunRise = false;
+        _startTime = false;
+        _sunSet = false;
+        _stopTime = false;
     }
-    if (callContext.minuteChanged)
+    if (callContext.minuteChanged || callContext.diagnosticLog)
     {
         bool trigger = false;
         // 	<Enumeration Text="Kein Autstart" Value="0" Id="%ENID%" />
@@ -42,46 +42,62 @@ bool ModeNight::allowed(const CallContext &callContext)
         switch (ParamSHC_CNightStartBehavior)
         {
         case 1:
-            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
+            if (!_startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
             {
-                startTime = true;
+                logDebugP("Start time");
+                _startTime = true;
                 trigger = true;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Start Time: %s", _startTime ? "true" : "false");
             break;
         case 2:
-            if (!sunRise && callContext.UtcHour < 720 && callContext.elevation >= getElevationFromSunRiseParameter())
+            if (!_sunSet && callContext.UtcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
-                sunRise = true;
+                logDebugP("Sun set");
+                _sunSet;
                 trigger = true;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Sun Set: %s", _sunSet ? "true" : "false");
             break;
         case 3:
-            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
+            if (!_startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
             {
-                startTime = true;
+                logDebugP("Start time");
+                _startTime = true;
                 trigger = true;
             }
-            if (!sunRise && callContext.UtcHour < 720 && callContext.elevation >= getElevationFromSunRiseParameter())
+            if (!_sunSet && callContext.UtcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
-                sunRise = true;
+                logDebugP("Sun set");
+                _sunSet = true;
                 trigger = true;
             }
             break;
         case 4:
-            if (!startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
+            if (!_startTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightFromTime)))
             {
-                startTime = true;
-                trigger = sunRise;
+                logDebugP("Start time");
+                _startTime = true;
+                trigger = _sunSet;
             }
-            if (!sunRise && callContext.UtcHour < 720 && callContext.elevation >= getElevationFromSunRiseParameter())
+            if (!_sunSet && callContext.UtcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
-                sunRise = true;
-                trigger = startTime;
+                logDebugP("Sun set");
+                _sunSet = true;
+                trigger = _startTime;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Start Time: %s AND Sun Set: %s", _startTime ? "true" : "false", _sunSet ? "true" : "false");
             break;
         }
         if (trigger)
+        {
+            logDebugP("Night start triggered");
             _allowed = true;
+        }
+        trigger = false;
         // 	<Enumeration Text="Kein Autstart" Value="0" Id="%ENID%" />
         // 	<Enumeration Text="Uhrzeit" Value="1" Id="%ENID%" />
         // 	<Enumeration Text="Sonne" Value="2" Id="%ENID%" />
@@ -90,46 +106,65 @@ bool ModeNight::allowed(const CallContext &callContext)
         switch (ParamSHC_CNightEndBehavior)
         {
         case 1:
-            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
+            if (!_stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
             {
-                stopTime = true;
+                logDebugP("Stop time");
+                _stopTime = true;
                 trigger = true;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Stop Time: %s", _stopTime ? "true" : "false");
             break;
         case 2:
-            if (!sunSet && callContext.UtcHour > 720 && callContext.elevation <= getElevationFromSunSetParameter())
+            if (callContext.diagnosticLog)
+                logDebugP("Sun rise %d %lf %lf", callContext.UtcHour, callContext.elevation, getElevationFromSunRiseParameter());
+            if (!_sunRise && callContext.UtcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
             {
-                sunSet = true;
+                logDebugP("Sun rise");
+                _sunRise = true;
                 trigger = true;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Sun Rise: %s", _sunRise ? "true" : "false");
             break;
         case 3:
-            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
+            if (!_stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
             {
-                stopTime = true;
+                logDebugP("Stop time");
+                _stopTime = true;
                 trigger = true;
             }
-            if (!sunRise && callContext.UtcHour > 720 && callContext.elevation <= getElevationFromSunSetParameter())
+            if (!_sunRise && callContext.UtcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
             {
-                sunSet = true;
+                logDebugP("Sun rise");
+                _sunRise = true;
                 trigger = true;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Stop Time: %s OR Sun Rise: %s", _stopTime ? "true" : "false", _sunRise ? "true" : "false");
             break;
         case 4:
-            if (!stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
+            if (!_stopTime && callContext.minuteOfDay == knx.paramWord(SHC_ParamCalcIndex(SHC_CNightToTime)))
             {
-                stopTime = true;
-                trigger = sunRise;
+                logDebugP("Stop time");
+                _stopTime = true;
+                trigger = _sunRise;
             }
-            if (!sunRise && callContext.UtcHour > 720 && callContext.elevation <= getElevationFromSunSetParameter())
+            if (!_sunRise && callContext.UtcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
             {
-                sunSet = true;
-                trigger = stopTime;
+                logDebugP("Sun rise");
+                _sunRise = true;
+                trigger = _stopTime;
             }
+            if (callContext.diagnosticLog)
+                logDebugP("Stop Time: %s AND Sun Rise: %s", _stopTime ? "true" : "false", _sunRise ? "true" : "false");
             break;
         }
         if (trigger)
+        {
+            logInfoP("Night stop triggered");
             _allowed = false;
+        }
     }
     if (KoSHC_CNightLockActive.value(DPT_Switch))
     {
@@ -178,8 +213,9 @@ void ModeNight::start(const CallContext &callContext, const ModeBase *previous, 
     if (ParamSHC_CNightStartPositionEnabled)
     {
         // Use manual modes, because the position should be stored as last manual position
-        positionController.setManualPosition(ParamSHC_CNightStartPosition);
-        positionController.setManualSlat(ParamSHC_CNightStartSlatPosition);
+        logDebugP("Set night start position %d slat %d", (int) ParamSHC_CNightStartPosition, (int) ParamSHC_CNightStartSlatPosition);
+        positionController.setManualPosition(ParamSHC_CNightStartPosition, true);
+        positionController.setManualSlat(ParamSHC_CNightStartSlatPosition, true);
     }
 }
 
@@ -192,9 +228,10 @@ void ModeNight::stop(const CallContext &callContext, const ModeBase *next, Posit
     KoSHC_CNightActive.value(false, DPT_Switch);
     if (next != (const ModeBase *)callContext.modeManual && ParamSHC_CNightStopPositionEnabled)
     {
+        logDebugP("Set night stop position %d slat %d", (int) ParamSHC_CNightStartPosition, (int) ParamSHC_CNightStartSlatPosition);  
         // Use manual modes, because the position should be stored as last manual position
-        positionController.setManualPosition(ParamSHC_CNightStopPosition); 
-        positionController.setManualSlat(ParamSHC_CNightStopSlatPosition);
+        positionController.setManualPosition(ParamSHC_CNightStopPosition, true); 
+        positionController.setManualSlat(ParamSHC_CNightStopSlatPosition, true);
     }
 }
 

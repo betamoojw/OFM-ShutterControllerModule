@@ -454,11 +454,11 @@ void ShutterControllerChannel::shadingStopped()
         _positionController.restoreLastManualPosition();
         break;
     case 2:                                       // Fährt auf
-        _positionController.setManualPosition(0); // Handled as manual operation because the value should be stored
-        _positionController.setManualSlat(0);     // Handled as manual operation because the value should be stored
+        _positionController.setManualPosition(0, true); // Handled as manual operation because the value should be stored
+        _positionController.setManualSlat(0, true);     // Handled as manual operation because the value should be stored
         break;
     case 3:
-        _positionController.setManualSlat(50); // Handled as manual operation because the value should be stored
+        _positionController.setManualSlat(50, true); // Handled as manual operation because the value should be stored
         break;
     }
 }

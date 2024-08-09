@@ -6,10 +6,10 @@ class ModeNight : public ModeBase
     bool _allowed = false;
     bool _recalcAllowed = true;
     uint8_t _lastDayUTC = 0;
-    bool sunRise = false;
-    bool startTime = false;
-    bool sunSet = false;
-    bool stopTime = false;
+    bool _sunRise = false;
+    bool _startTime = false;
+    bool _sunSet = false;
+    bool _stopTime = false;
     double getElevationFromSunSetParameter();
     double getElevationFromSunRiseParameter();
 

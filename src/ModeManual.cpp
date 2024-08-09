@@ -83,7 +83,7 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
             switch (ko->asap())
             {
             case SHC_KoCManualPercent:
-                positionController.setManualPosition(ko->value(DPT_Scaling));
+                positionController.setManualPosition(ko->value(DPT_Scaling), false);
                 break;
             case SHC_KoCManualStepStop:
                 positionController.setManualStep(ko->value(DPT_Step));
@@ -92,7 +92,7 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
                 positionController.setManualUpDown(ko->value(DPT_UpDown));
                 break;
             case SHC_KoCManualSlatPercent:
-                positionController.setManualSlat(ko->value(DPT_Scaling));
+                positionController.setManualSlat(ko->value(DPT_Scaling), false);
                 break;
             default:
                 break;

@@ -72,9 +72,18 @@ void ShutterControllerModule::loop()
     Timer &timer = Timer::instance();
     _callContext.timeAndSunValid = timer.isTimerValid();
     _callContext.minuteChanged = false;
-    if (_callContext.timeAndSunValid && _lastMinute != timer.getMinute())
+    if (_callContext.timeAndSunValid && 
+        (_lastMinute != timer.getMinute() || 
+        _lastHour != timer.getHour() || 
+        _lastDay != timer.getDay() ||
+         _lastMonth != timer.getMonth() ||
+          _lastYear != timer.getYear()))
     {
         _lastMinute = timer.getMinute();
+        _lastHour = timer.getHour();
+        _lastDay = timer.getDay();
+        _lastMonth = timer.getMonth();
+        _lastYear = timer.getYear();  
 
         _callContext.minuteChanged = true;
         _callContext.hour = timer.getHour();

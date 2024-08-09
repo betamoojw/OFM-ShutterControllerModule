@@ -13,6 +13,10 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
   protected:
     OpenKNX::Channel* createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */) override; 
     uint8_t _lastMinute = 61;
+    uint8_t _lastHour = 25;
+    uint8_t _lastDay = 32;
+    uint8_t _lastMonth = 13;
+    uint16_t _lastYear = 0;
     CallContext _callContext = CallContext();
     MeasurementWatchdog _measurementTemperature = MeasurementWatchdog();
     MeasurementWatchdog _measurementTemperatureForecast = MeasurementWatchdog();

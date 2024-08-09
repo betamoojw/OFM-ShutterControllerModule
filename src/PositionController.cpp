@@ -32,7 +32,7 @@ void PositionController::setAutomaticSlat(uint8_t position)
     if (_hasSlat)
         _setSlat = position;
 }
-void PositionController::setManualPosition(uint8_t position)
+void PositionController::setManualPosition(uint8_t position, bool noControllingModeCheck)
 {
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
@@ -41,10 +41,10 @@ void PositionController::setManualPosition(uint8_t position)
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    if (ParamSHC_CManualUpDownType != 0)
+    if (noControllingModeCheck || ParamSHC_CManualUpDownType != 0)
         _setPosition = position;
 }
-void PositionController::setManualSlat(uint8_t position)
+void PositionController::setManualSlat(uint8_t position, bool noControllingModeCheck)
 {
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
@@ -53,7 +53,7 @@ void PositionController::setManualSlat(uint8_t position)
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    if (_hasSlat && ParamSHC_CManualUpDownType != 0)
+    if (_hasSlat && (noControllingModeCheck || ParamSHC_CManualUpDownType != 0))
         _setSlat = position;
 }
 void PositionController::setManualStep(bool step)
