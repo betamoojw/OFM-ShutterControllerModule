@@ -91,7 +91,7 @@ bool ModeShading::allowed(const CallContext &callContext)
     bool allowedSun = allowedBySun(callContext);
     if (allowedSun != _lastSunFrameAllowed)
     {
-        logDebugP("Allowed by time and sun: %d", (int)allowedSun);
+        logDebugP("Allowed by sun: %d", (int)allowedSun);
         _lastSunFrameAllowed = allowedSun;
         _needWaitTime = false;
     }
@@ -525,20 +525,26 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
     // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
     // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
-    if (positionController.hasSlat())
+    if (!positionController.hasSlat())
         return;
 
     // Jalousie
     if (ParamSHC_CShading1SlatElevationDepending)
     {
-        auto targetSlatPosition = (90 - callContext.elevation) / 90 * 50 + 50 + (double)ParamSHC_CShading1OffsetSlatPosition;
+        if (callContext.diagnosticLog)
+            logInfoP("ModeShading control 4");
+        auto targetSlatPosition = max((-1.131d * callContext.elevation + 101.41d) + (double)ParamSHC_CShading1OffsetSlatPosition, 50.d);
+   
+        //auto targetSlatPosition = (90 - callContext.elevation) / 90 * 50 + 50 + (double)ParamSHC_CShading1OffsetSlatPosition;
         if (targetSlatPosition < 0)
             targetSlatPosition = 0;
         else if (targetSlatPosition > 100)
             targetSlatPosition = 100;
         auto slatPosition = (uint8_t)targetSlatPosition;
         if (callContext.diagnosticLog)
-            logInfoP("Calculated slat position %d", (int)slatPosition);
+            logInfoP("Calculated slat position %d for %lf", (int)slatPosition, callContext.elevation);
+
+
 
         if (!callContext.modeNewStarted && abs((uint8_t) KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_CShading1MinChangeForSlatAdaption)
         {
