@@ -203,7 +203,7 @@ bool ModeShading::allowedBySun(const CallContext &callContext)
     {
         allowed = false;
         if (diagnosticLog)
-            logInfoP("Elevantion %.2f not between %d and %d", callContext.elevation, (int)ParamSHC_CShading1ElevationMin, (int)ParamSHC_CShading1ElevationMax);
+            logInfoP("Elevation %.2f not between %d and %d", callContext.elevation, (int)ParamSHC_CShading1ElevationMin, (int)ParamSHC_CShading1ElevationMax);
         _notAllowedReason |= ModeShadingNotAllowedReasonSunElevation;
     }
     else
