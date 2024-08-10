@@ -475,10 +475,10 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
             _waitTimeAfterMeasurmentValueChange = 0;
         }
     }
-    if (!callContext.modeCurrentActive->isModeShading() && (uint8_t)KoSHC_CShutterPercentInput.value(DPT_Scaling) > ParamSHC_CShading1OnlyIfLessThan)
+    if (!callContext.modeCurrentActive->isModeShading() && callContext.positionController->targetPosition() > ParamSHC_CShading1OnlyIfLessThan)
     {
         if (diagnosticLog)
-            logInfoP("Shutter %d more than %d", (int)(uint8_t) KoSHC_CShutterPercentInput.value(DPT_Scaling), (int)ParamSHC_CShading1OnlyIfLessThan);
+            logInfoP("Shutter %d more than %d", (int) callContext.positionController->targetPosition(), (int)ParamSHC_CShading1OnlyIfLessThan);
         _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonShutterPosition;
         allowed = false;
     }

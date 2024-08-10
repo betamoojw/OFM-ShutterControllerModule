@@ -42,8 +42,8 @@ void ShutterControllerChannel::setup()
     if (ParamSHC_CType == 1)
         KoSHC_CShutterSlatInput.requestObjectRead();
 
-    KoSHC_CShadingControl.value(_shadingControlActive, DPT_Switch);
-    KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
+    KoSHC_CShadingControl.value(shadingControlActive(), DPT_Switch);
+    KoSHC_CShadingControlActive.value(shadingControlActive(), DPT_Switch);
     KoSHC_CShadingActive.value(false, DPT_Switch);
 
     KoSHC_CLock.value(_channelLockActive, DPT_Switch);
@@ -63,12 +63,11 @@ void ShutterControllerChannel::setup()
     if (ParamSHC_CNight)
         _modes.push_back(new ModeNight());
 
-
     auto numberOfShadings = ParamSHC_CShadingCount;
     for (size_t i = numberOfShadings; i > 0; i--)
     {
-       _modes.push_back(new ModeShading(i));
-    }    
+        _modes.push_back(new ModeShading(i));
+    }
 
     _modeIdle = new ModeIdle();
     _modes.push_back(_modeIdle);
@@ -78,7 +77,7 @@ void ShutterControllerChannel::setup()
     }
 #ifdef SIMULATION
     _positionController.startSimulation(false);
-#endif    
+#endif
 }
 
 void ShutterControllerChannel::processInputKo(GroupObject &ko)
@@ -95,10 +94,11 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
         KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
         break;
     case SHC_KoCShadingControl:
-        _shadingControlActive = ko.value(DPT_Switch);
-        _waitTimeForReactivateShadingAfterManualStarted = 0;
-        _waitForShadingPeriodEnd = false;
-        KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
+        shadingControlActive(ko.value(DPT_Switch));
+        if (shadingControlActive() && _currentMode == _modeManual)
+        {
+            _modeManual->stopWaitTime();
+        }
         break;
     }
     _positionController.processInputKo(ko);
@@ -210,7 +210,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         return true;
     }
     else if (cmd.rfind("ms") == 0 && _positionController.hasSlat())
-    { 
+    {
         if (cmd.length() == 2)
         {
             logErrorP("Missing value");
@@ -269,6 +269,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
 
     ModeBase *nextMode = nullptr;
+    callContext.positionController = &_positionController;
     callContext.fastSimulationActive = _positionController.simulationMode() == 2;
     callContext.hasSlat = _positionController.hasSlat();
     callContext.modeNewStarted = false;
@@ -289,12 +290,11 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
-        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > callContext.fastSimulationActive ?  ParamSHC_CManualShadingWaitTime / 10 : ParamSHC_CManualShadingWaitTime)
+        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > callContext.fastSimulationActive ? ParamSHC_CManualShadingWaitTime / 10 : ParamSHC_CManualShadingWaitTime)
         {
             // reactivate
             _waitTimeForReactivateShadingAfterManualStarted = 0;
-            _shadingControlActive = KoSHC_CShadingControl.value(DPT_Switch);
-            KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
+            shadingControlActive(KoSHC_CShadingControl.value(DPT_Switch));
         }
     }
     else if (_waitForShadingPeriodEnd)
@@ -317,11 +317,10 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (allShadingPeriodsEnd)
         {
             _waitForShadingPeriodEnd = false;
-            _shadingControlActive = KoSHC_CShadingControl.value(DPT_Switch);
-            KoSHC_CShadingControlActive.value(_shadingControlActive, DPT_Switch);
+            shadingControlActive(KoSHC_CShadingControl.value(DPT_Switch));
         }
     }
-    callContext.shadingControlActive = _shadingControlActive;
+    callContext.shadingControlActive = shadingControlActive();
     // State machine handling for mode activateion
     bool currentModeAllowed = false;
     for (auto mode : _modes)
@@ -345,7 +344,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                     logInfoP("-> allowed");
                 if (nextMode == nullptr) // check if this is the first allowed mode
                 {
-                    if (!_shadingControlActive && mode->isModeShading())
+                    if (!shadingControlActive() && mode->isModeShading())
                     {
                         if (callContext.diagnosticLog)
                             logInfoP("-> but ignored, because global shadow not alloewd");
@@ -369,7 +368,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         logIndentDown();
     }
-
     if (_currentMode != nextMode)
     {
         if (nextMode == _modeManual)
@@ -377,7 +375,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             // If manual mode stops shading, temporary disable Shadingcontrol
             if (_currentMode->isModeShading() || (_currentMode->isModeWindowOpen() && _handleWindowOpenAsShading != nullptr))
             {
-                _shadingControlActive = false;
+                shadingControlActive(false);
                 if (ParamSHC_CManualShadingWaitTime != 0)
                     _waitTimeForReactivateShadingAfterManualStarted = callContext.currentMillis;
                 else
@@ -395,7 +393,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             logInfoP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
             _handleWindowOpenAsShading = nullptr;
             _currentMode->stop(callContext, nextMode, _positionController);
-            if (!nextMode->isModeShading() && _anyShadingModeActive)
+            if (!nextMode->isModeShading() && anyShadingModeActive())
             {
                 if (nextMode->isModeWindowOpen() && currentModeAllowed)
                 {
@@ -404,7 +402,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                 }
                 else
                 {
-                    shadingStopped();
+                    anyShadingModeActive(false);
                 }
             }
         }
@@ -414,9 +412,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         auto previousMode = _currentMode;
         _currentMode = nextMode;
-        if (_currentMode->isModeShading() && !_anyShadingModeActive)
+        if (_currentMode->isModeShading() && !anyShadingModeActive())
         {
-            shadingStarted();
+            anyShadingModeActive(true);
         }
         _currentMode->start(callContext, previousMode, _positionController);
         KoSHC_CActiveMode.value((uint8_t)(_currentMode->sceneNumber() - 1), DPT_SceneNumber);
@@ -432,33 +430,63 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _measurementRoomTemperature.resetChanged();
 }
 
-void ShutterControllerChannel::shadingStarted()
+bool ShutterControllerChannel::shadingControlActive()
 {
-    logInfoP("Shading started");
-    _anyShadingModeActive = true;
-    KoSHC_CShadingActive.value(true, DPT_Switch);
+    return __shadingControlActive;
 }
 
-void ShutterControllerChannel::shadingStopped()
+void ShutterControllerChannel::shadingControlActive(bool active)
 {
-    logInfoP("Shading stopped");
-    _anyShadingModeActive = false;
-    KoSHC_CShadingActive.value(false, DPT_Switch);
-    // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
-    // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
-    switch (ParamSHC_CAfterShading)
+    if (active)
     {
-    case 1:
-        _positionController.restoreLastManualPosition();
-        break;
-    case 2:                                       // Fährt auf
-        _positionController.setManualPosition(0, true); // Handled as manual operation because the value should be stored
-        _positionController.setManualSlat(0, true);     // Handled as manual operation because the value should be stored
-        break;
-    case 3:
-        _positionController.setManualSlat(50, true); // Handled as manual operation because the value should be stored
-        break;
+        logInfoP("Shading control started");
+        __shadingControlActive = true;
+        KoSHC_CShadingControlActive.value(true, DPT_Switch);
+        _waitTimeForReactivateShadingAfterManualStarted = 0;
+        _waitForShadingPeriodEnd = false;
+    }
+    else
+    {
+        logInfoP("Shading control stopped");
+        __shadingControlActive = false;
+        KoSHC_CShadingControlActive.value(false, DPT_Switch);
+    }
+}
+
+bool ShutterControllerChannel::anyShadingModeActive()
+{
+    return __anyShadingModeActive;
+}
+
+void ShutterControllerChannel::anyShadingModeActive(bool active)
+{
+    if (active)
+    {
+        logInfoP("Shading started");
+        __anyShadingModeActive = true;
+        KoSHC_CShadingActive.value(true, DPT_Switch);
+    }
+    else
+    {
+        logInfoP("Shading stopped");
+        __anyShadingModeActive = false;
+        KoSHC_CShadingActive.value(false, DPT_Switch);
+        // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
+        // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+        switch (ParamSHC_CAfterShading)
+        {
+        case 1:
+            _positionController.restoreLastManualPosition();
+            break;
+        case 2:                                             // Fährt auf
+            _positionController.setManualPosition(0, true); // Handled as manual operation because the value should be stored
+            _positionController.setManualSlat(0, true);     // Handled as manual operation because the value should be stored
+            break;
+        case 3:
+            _positionController.setManualSlat(50, true); // Handled as manual operation because the value should be stored
+            break;
+        }
     }
 }

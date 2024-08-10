@@ -6,6 +6,7 @@ class ModeIdle;
 class ModeManual;
 class ModeBase;
 class MeasurementWatchdog;
+class PositionController;
 
 class CallContext
 {
@@ -46,4 +47,5 @@ class CallContext
         MeasurementWatchdog* measurementClouds = nullptr;
         MeasurementWatchdog* measurementRoomTemperature = nullptr;
         MeasurementWatchdog* measurementHeading = nullptr;
+        const PositionController* positionController = nullptr;
 };

@@ -64,6 +64,15 @@ bool ModeManual::allowed(const CallContext &callContext)
         logInfoP("No manual change detected");
     return false;
 }
+void ModeManual::stopWaitTime()
+{
+    if (_waitTimeStart == 0)
+        return;
+    logInfoP("Stopping wait time");
+    _waitTimeStart = 0;
+    _firstManualCommandWhileShading = false;
+}
+
 void ModeManual::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
 {
     KoSHC_CManuelActiv.value(true, DPT_Switch);
