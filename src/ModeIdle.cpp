@@ -13,7 +13,11 @@ uint8_t ModeIdle::sceneNumber() const
 void ModeIdle::initGroupObjects()
 {
 }
-bool ModeIdle::modeWindowOpenAllowed() const
+bool ModeIdle::windowOpenAllowed() const
+{
+    return true;
+}
+bool ModeIdle::windowTiltAllowed() const
 {
     return true;
 }

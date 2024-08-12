@@ -79,7 +79,7 @@
 						<ChannelIndependentBlock>
 
 							<ParameterBlock Id="WindowOpenParameters">
-								<!-- Fenster offen Mode -->
+								<!-- Anzahl Fenster Offen Modus -->
 								<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 									<when test="&gt;=%Pn%">
 
@@ -97,11 +97,12 @@
 
 										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-ModeWindowOpen">
 
+											<!-- Anzahl Fenster Offen Modus -->
 											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
-												<when test="&gt;%Tn%">
+												<when test="&gt;%Pn%">
 													<Assign TargetParamRefRef="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Value="gekippt" />
 												</when>
-												<when test="&lt;=%Tn%">
+												<when test="%Pn%">
 													<Assign TargetParamRefRef="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Value="offen" />
 												</when>
 												

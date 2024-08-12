@@ -17,8 +17,3 @@ bool ModeBase::isModeShading() const
 {
     return false;
 }
-
-bool ModeBase::isModeWindowOpen() const
-{
-    return false;
-}

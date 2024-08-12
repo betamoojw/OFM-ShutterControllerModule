@@ -66,24 +66,23 @@ void ShutterControllerModule::loop()
     _measurementRain.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
 
-    
     if (_callContext.currentMillis == 0)
         _callContext.currentMillis = 1; // 0 can be used as special marker -> skip 0
     Timer &timer = Timer::instance();
     _callContext.timeAndSunValid = timer.isTimerValid();
     _callContext.minuteChanged = false;
-    if (_callContext.timeAndSunValid && 
-        (_lastMinute != timer.getMinute() || 
-        _lastHour != timer.getHour() || 
-        _lastDay != timer.getDay() ||
+    if (_callContext.timeAndSunValid &&
+        (_lastMinute != timer.getMinute() ||
+         _lastHour != timer.getHour() ||
+         _lastDay != timer.getDay() ||
          _lastMonth != timer.getMonth() ||
-          _lastYear != timer.getYear()))
+         _lastYear != timer.getYear()))
     {
         _lastMinute = timer.getMinute();
         _lastHour = timer.getHour();
         _lastDay = timer.getDay();
         _lastMonth = timer.getMonth();
-        _lastYear = timer.getYear();  
+        _lastYear = timer.getYear();
 
         _callContext.minuteChanged = true;
         _callContext.hour = timer.getHour();
@@ -159,7 +158,7 @@ void ShutterControllerModule::loop()
     if (_lastMissingValue != MeasurementWatchdog::missingValue())
     {
         _lastMissingValue = MeasurementWatchdog::missingValue();
-        logInfoP("Missing value: %d", (int) _lastMissingValue);
+        logInfoP("Missing value: %d", (int)_lastMissingValue);
         KoSHC_MeasurementError.value(_lastMissingValue, DPT_Switch);
     }
     _measurementTemperature.resetChanged();
@@ -196,6 +195,11 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         auto moduleCommand = cmd.substr(3);
         if (moduleCommand.rfind("t") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set temperature");
             KoSHC_TempInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
             processInputKo(KoSHC_TempInput);
@@ -203,6 +207,11 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("f") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set temperature forecast");
             KoSHC_TempForecastInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_Value_Temp);
             processInputKo(KoSHC_TempForecastInput);
@@ -210,13 +219,23 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("b") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set brightness");
-            KoSHC_BrightnessInput.valueNoSend((uint8_t) std::stoi(moduleCommand.substr(1)), DPT_Value_Lux);
+            KoSHC_BrightnessInput.valueNoSend((uint8_t)std::stoi(moduleCommand.substr(1)), DPT_Value_Lux);
             processInputKo(KoSHC_BrightnessInput);
             return true;
         }
         else if (moduleCommand.rfind("u") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set UVI");
             KoSHC_UVIInput.valueNoSend(std::stof(moduleCommand.substr(1)), DPT_DecimalFactor);
             processInputKo(KoSHC_UVIInput);
@@ -224,6 +243,11 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("r") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set rain");
             KoSHC_RainInput.valueNoSend(1 == std::stoi(moduleCommand.substr(1)), DPT_Switch);
             processInputKo(KoSHC_RainInput);
@@ -231,13 +255,23 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("c") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set clouds");
-            KoSHC_CloudsInput.valueNoSend((uint8_t) std::stoi(moduleCommand.substr(1)), DPT_Scaling);
+            KoSHC_CloudsInput.valueNoSend((uint8_t)std::stoi(moduleCommand.substr(1)), DPT_Scaling);
             processInputKo(KoSHC_CloudsInput);
             return true;
         }
         else if (moduleCommand.rfind("d") == 0)
         {
+            if (cmd.length() == 1)
+            {
+                logErrorP("Missing value");
+                return true;
+            }
             logInfoP("Set date/time");
             tm tm = {0};
             if (moduleCommand.length() == 1)
@@ -361,7 +395,7 @@ void ShutterControllerModule::processInputKo(GroupObject &ko)
     _measurementUVIndex.processIputKo(ko);
     _measurementRain.processIputKo(ko);
     _measurementClouds.processIputKo(ko);
-    
+
     ShutterControllerChannelOwnerModule::processInputKo(ko);
 }
 
@@ -373,7 +407,7 @@ void ShutterControllerModule::setup()
         ParamSHC_TempWatchdog,
         KNXValue(ParamSHC_TempFallback),
         DPT_Value_Temp,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_TempFallbackMode);
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_TempFallbackMode);
     _callContext.measurementTemperature = &_measurementTemperature;
 
     _measurementTemperatureForecast.init(
@@ -382,7 +416,7 @@ void ShutterControllerModule::setup()
         ParamSHC_TempForecastWatchdog,
         KNXValue(ParamSHC_TempForecastFallback),
         DPT_Value_Temp,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_TempForecastFallbackMode);
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_TempForecastFallbackMode);
     _callContext.measurementTemperatureForecast = &_measurementTemperatureForecast;
 
     _measurementBrightness.init(
@@ -391,8 +425,8 @@ void ShutterControllerModule::setup()
         ParamSHC_BrightnessWatchdog,
         KNXValue(ParamSHC_BrightnessFallback),
         DPT_Value_Lux,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_BrightnessFallbackMode);
-    _callContext.measurementBrightness = &_measurementBrightness;    
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_BrightnessFallbackMode);
+    _callContext.measurementBrightness = &_measurementBrightness;
 
     _measurementUVIndex.init(
         "UV Index",
@@ -400,25 +434,25 @@ void ShutterControllerModule::setup()
         ParamSHC_UVIWatchdog,
         KNXValue(ParamSHC_UVIFallback),
         DPT_DecimalFactor,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_UVIFallbackMode);
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_UVIFallbackMode);
     _callContext.measurementUVIndex = &_measurementUVIndex;
 
-    _measurementRain.init(  
+    _measurementRain.init(
         "Rain",
         ParamSHC_HasRainInput ? &KoSHC_RainInput : nullptr,
         ParamSHC_RainWatchdog,
         KNXValue(ParamSHC_RainFallback),
         DPT_Switch,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_RainFallbackMode);
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_RainFallbackMode);
     _callContext.measurementRain = &_measurementRain;
 
     _measurementClouds.init(
         "Clouds",
         ParamSHC_HasCloudsInput ? &KoSHC_CloudsInput : nullptr,
         ParamSHC_CloudsWatchdog,
-        KNXValue((uint8_t) ParamSHC_CloudsFallback),
+        KNXValue((uint8_t)ParamSHC_CloudsFallback),
         DPT_Scaling,
-        (MeasurementWatchdogFallbackBehavior) ParamSHC_CloudsFallbackMode);
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_CloudsFallbackMode);
     _callContext.measurementClouds = &_measurementClouds;
 
     // <Enumeration Text="Aus" Value="0" Id="%ENID%" />
@@ -461,12 +495,12 @@ OpenKNX::Channel *ShutterControllerModule::createChannel(uint8_t _channelIndex /
 {
     if (ParamSHC_CType == 0)
     {
-        logDebugP("Channel %d not used", _channelIndex); 
+        logDebugP("Channel %d not used", _channelIndex);
         return nullptr;
     }
     if (ParamSHC_CDeactivated)
     {
-        logDebugP("Channel %d deactivated", _channelIndex); 
+        logDebugP("Channel %d deactivated", _channelIndex);
         return nullptr;
     }
     return new ShutterControllerChannel(_channelIndex);

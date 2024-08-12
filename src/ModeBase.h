@@ -14,7 +14,8 @@ protected:
     const std::string& logPrefix();
 public:
     void setup(uint8_t _channelIndex);
-    virtual bool modeWindowOpenAllowed() const = 0;
+    virtual bool windowOpenAllowed() const = 0;
+    virtual bool windowTiltAllowed() const = 0;
     virtual const char* name() const = 0;
     virtual uint8_t sceneNumber() const = 0;
     virtual void initGroupObjects() = 0;
@@ -24,5 +25,4 @@ public:
     virtual void stop(const CallContext& callContext, const ModeBase* next, PositionController& positionController) = 0;
     virtual void processInputKo(GroupObject &ko, PositionController& positionController) = 0;
     virtual bool isModeShading() const;
-    virtual bool isModeWindowOpen() const;
 };

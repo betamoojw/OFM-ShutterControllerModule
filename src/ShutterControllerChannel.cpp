@@ -1,13 +1,13 @@
 #include "ShutterControllerChannel.h"
 #include "ModeManual.h"
-#include "ModeWindowOpen.h"
+#include "WindowOpenHandler.h"
 #include "ModeNight.h"
 #include "ModeShading.h"
 #include "ModeIdle.h"
 #include "ShutterSimulation.h"
 
 ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
-    : _modes(), _positionController(channelIndex)
+    : _modes(), _windowOpenHandlers(), _positionController(channelIndex)
 {
     _name = "SC";
 }
@@ -55,7 +55,7 @@ void ShutterControllerChannel::setup()
     logErrorP("Slat2: %d", ParamSHC_CWindowOpenSlatPositionControl2);
     for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
     {
-        _modes.push_back(new ModeWindowOpen(i));
+        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount != i));
     }
 
     _modes.push_back(_modeManual);
@@ -181,8 +181,8 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             logErrorP("Missing value");
             return true;
         }
-        KoSHC_CRoomTemp.valueNoSend((float)std::stof(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
-        processInputKo(KoSHC_CRoomTemp);
+        KoSHC_CHeading.valueNoSend((float)std::stof(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
+        processInputKo(KoSHC_CHeading);
         return true;
     }
     else if (cmd == "m^")
@@ -268,7 +268,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _measurementHeading.update(callContext.currentMillis, callContext.diagnosticLog);
     _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
 
-    ModeBase *nextMode = nullptr;
     callContext.positionController = &_positionController;
     callContext.fastSimulationActive = _positionController.simulationMode() == 2;
     callContext.hasSlat = _positionController.hasSlat();
@@ -302,8 +301,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         bool allShadingPeriodsEnd = true;
         for (auto mode : _modes)
         {
-            if (mode->isModeWindowOpen() && _handleWindowOpenAsShading != nullptr)
-                mode = _handleWindowOpenAsShading;
             if (mode->isModeShading())
             {
                 auto modeShading = (ModeShading *)mode;
@@ -321,8 +318,57 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
     }
     callContext.shadingControlActive = shadingControlActive();
+
+    // Handle window open
+    bool sceneChanged = false;
+    WindowOpenHandler *nextWindowOpenHandler = nullptr;
+    for (auto windowOpenHandler : _windowOpenHandlers)
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Window Handler: %s", windowOpenHandler->name());
+        logIndentUp();
+        if (windowOpenHandler->allowed(callContext))
+        {
+            if (nextWindowOpenHandler == nullptr)
+            {
+                nextWindowOpenHandler = windowOpenHandler;
+            }
+            else
+            {
+                if (callContext.diagnosticLog)
+                    logInfoP("-> but ignored because other mode has higher priority");
+            }
+        }
+        else
+        {
+            if (callContext.diagnosticLog)
+                logInfoP("-> not allowed");
+        }
+        logIndentDown();
+    }
+    if (_currentWindowOpenHandler != nextWindowOpenHandler)
+    {
+        sceneChanged = true;
+        if (_currentWindowOpenHandler != nullptr && nextWindowOpenHandler != nullptr)
+            logInfoP("Changing window open from %s to %s", _currentWindowOpenHandler->name(), nextWindowOpenHandler->name());
+        else
+        {
+            if (nextWindowOpenHandler != nullptr)
+                logInfoP("Start window open %s", nextWindowOpenHandler->name());
+            else 
+                logInfoP("Stop window open");
+        }
+        if (_currentWindowOpenHandler != nullptr)
+            _currentWindowOpenHandler->stop(callContext, nextWindowOpenHandler, _positionController);
+         _currentWindowOpenHandler = nextWindowOpenHandler;
+        if (_currentWindowOpenHandler != nullptr)
+            _currentWindowOpenHandler->start(callContext, _currentWindowOpenHandler, _positionController);
+    }
+    callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
+  
     // State machine handling for mode activateion
     bool currentModeAllowed = false;
+    ModeBase *nextMode = nullptr;
     for (auto mode : _modes)
     {
         if (callContext.diagnosticLog)
@@ -370,10 +416,11 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     }
     if (_currentMode != nextMode)
     {
+        sceneChanged = true;
         if (nextMode == _modeManual)
         {
             // If manual mode stops shading, temporary disable Shadingcontrol
-            if (_currentMode->isModeShading() || (_currentMode->isModeWindowOpen() && _handleWindowOpenAsShading != nullptr))
+            if (_currentMode->isModeShading())
             {
                 shadingControlActive(false);
                 if (ParamSHC_CManualShadingWaitTime != 0)
@@ -391,20 +438,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (_currentMode != nullptr)
         {
             logInfoP("Changing mode from %s to %s", _currentMode->name(), nextMode->name());
-            _handleWindowOpenAsShading = nullptr;
             _currentMode->stop(callContext, nextMode, _positionController);
             if (!nextMode->isModeShading() && anyShadingModeActive())
-            {
-                if (nextMode->isModeWindowOpen() && currentModeAllowed)
-                {
-                    // shading still allowed, handle windowOpen as shading mode
-                    _handleWindowOpenAsShading = (ModeShading *)_currentMode;
-                }
-                else
-                {
-                    anyShadingModeActive(false);
-                }
-            }
+                anyShadingModeActive(false);
         }
         else
         {
@@ -417,8 +453,18 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             anyShadingModeActive(true);
         }
         _currentMode->start(callContext, previousMode, _positionController);
-        KoSHC_CActiveMode.value((uint8_t)(_currentMode->sceneNumber() - 1), DPT_SceneNumber);
         callContext.modeNewStarted = true;
+    }
+    if (sceneChanged)
+    {
+        if (_currentWindowOpenHandler != nullptr)
+        {
+            KoSHC_CActiveMode.value((uint8_t)(_currentWindowOpenHandler->sceneNumber() - 1), DPT_SceneNumber);
+        }
+        else
+        {
+            KoSHC_CActiveMode.value((uint8_t)(_currentMode->sceneNumber() - 1), DPT_SceneNumber);
+        }
     }
     _currentMode->control(callContext, _positionController);
     _positionController.control(callContext);
@@ -478,14 +524,17 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
         switch (ParamSHC_CAfterShading)
         {
         case 1:
+            // Position vor Beschattungsstart
             _positionController.restoreLastManualPosition();
             break;
-        case 2:                                             // Fährt auf
-            _positionController.setManualPosition(0, true); // Handled as manual operation because the value should be stored
-            _positionController.setManualSlat(0, true);     // Handled as manual operation because the value should be stored
+        case 2:                                             
+            // Fährt auf
+            _positionController.setAutomaticPositionAndStoreForRestore(0); // Handled as manual operation because the value should be stored
+            _positionController.setAutomaticSlatAndStoreForRestore(0);     // Handled as manual operation because the value should be stored
             break;
         case 3:
-            _positionController.setManualSlat(50, true); // Handled as manual operation because the value should be stored
+            // Lamelle Waagrecht
+            _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
             break;
         }
     }

@@ -8,7 +8,7 @@
 					<op:partParams name="ModeShading">
 						<!-- Only developer hints for declaration: -->
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="25" increment="37" />
+						<op:param name="%ParamOffset%" value="25" increment="38" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -125,10 +125,12 @@
 								<!-- Raumtemperatur Aktiv -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+43%" Offset="31" BitOffset="0" Name="C%C%Shading%Pn%RoomTemperaturActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="31" BitOffset="1" Name="C%C%Shading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
-								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+48%" Offset="31" BitOffset="2" Name="C%C%Shading%Pn%DiagnoseKo" ParameterType="%AID%_PT-OnOffYesNo" Text="Diagnose KO für 'Nicht erlaubt'" Value="0" />
-
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="31" BitOffset="1" Name="C%C%Shading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster offen' Modus erlaubt" Value="1" />
+								<!-- Bestchattung Nicht erlaubt KO -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+48%" Offset="31" BitOffset="2" Name="C%C%Shading%Pn%DiagnoseKo" ParameterType="%AID%_PT-OnOffYesNo" Text="Diagnose Objekt für 'Nicht erlaubt'" Value="0" />
+								<!-- Fenster Kippmodus Modus in Beschattungsmodus erlaubt -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+49%"  Offset="31" BitOffset="2" Name="C%C%Shading%Pn%WindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
+		
 								<!-- 5 Bits free -->
 
 								<!-- Heizung Stellwert -->
@@ -139,10 +141,10 @@
 								<!-- ^^^ 4 Bytes ^^^ -->
 
 								<!-- Heizung Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="37" BitOffset="1" Name="C%C%Shading%Pn%HeatingActive" ParameterType="%AID%_PT-HeatingActive" Text="Heizung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="37" BitOffset="0" Name="C%C%Shading%Pn%HeatingActive" ParameterType="%AID%_PT-HeatingActive" Text="Heizung" Value="0" />
 
 								<!-- Next Offset = 38 -->
-								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+48% -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+50% -->
 							</Union>
 
 						</Parameters>
@@ -243,8 +245,11 @@
 							<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" RefId="%AID%_UP-%TT%%CC%%PPP+47%" />
 
-							<!-- Diagnose KO für 'Nicht erlaubt' -->
+							<!-- Diagnose Objekt für 'Nicht erlaubt' -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01" RefId="%AID%_UP-%TT%%CC%%PPP+48%" />
+
+							<!-- Fenster Kippmodus Modus in Beschattungsmodus erlaubt -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+49%_R-%TT%%CC%%PPP+49%01" RefId="%AID%_UP-%TT%%CC%%PPP+49%" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -342,12 +347,19 @@
 															<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 																<when test="&gt;0">
 																	<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+																	<!-- Anzahl der Fensterkontakte -->
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+																		<when test="2">
+																			<!-- Fenster gekippt Modus in Beschattungsmodus erlaubt -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+49%_R-%TT%%CC%%PPP+49%01" />
+																		</when>
+																	</choose>
 																	<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
 																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" />
 																</when>
 															</choose>
 
-															<!-- Diagnose KO für 'Nicht erlaubt' -->
+															<!-- Diagnose Objekt für 'Nicht erlaubt' -->
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01" />
 															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01">
 																<when test="1">

@@ -38,6 +38,7 @@ class ModeShading : public ModeBase
     bool _lockActive = false;
     bool _active = false;
     unsigned long _waitTimeAfterMeasurmentValueChange = 0;
+    unsigned long _waitTimeAfterHeatingValueChange = 0;
     bool _lastSunFrameAllowed = false;
     bool _needWaitTime = false;
     unsigned long _lastHeadingTimeStamp = 0;
@@ -54,7 +55,8 @@ protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;
     void initGroupObjects() override;
-    bool modeWindowOpenAllowed() const override;
+    bool windowOpenAllowed() const override;
+    bool windowTiltAllowed() const override;
     bool allowed(const CallContext& callContext) override; 
     void start(const CallContext& callContext, const ModeBase* previous, PositionController& positionController) override;
     void control(const CallContext& callContext, PositionController& positionController) override;

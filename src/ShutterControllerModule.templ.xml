@@ -13,7 +13,7 @@
 						<op:param name="%En%" value="26" increment="4" />
 						<!-- ModeWindowOpen number -->
 						<op:param name="%Pn%" value="1" />
-						<!-- Text select -->
+						<!-- Visibilty select -->
 						<op:param name="%Tn%" value="2" increment="-1"/>
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="900" increment="10" />
@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="37" increment="37" />
+						<op:param name="%ParamOffset%" value="37" increment="38" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="34" increment="6" />
 						<!-- ModeShading number -->
@@ -66,12 +66,15 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%014" Offset="1" BitOffset="3" Name="C%C%RoomTemp" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 
 								<!-- Fenster offen Modus in Nachtmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="C%C%NightWindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="Fenster offen Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%017" Offset="1" BitOffset="4" Name="C%C%NightWindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster offen' Modus erlaubt" Value="1" />
 
 								<!-- Mode Manual ignoriert Kanal Lock -->
 								<Parameter Id="%AID%_UP-%TT%%CC%025" Offset="1" BitOffset="5" Name="C%C%ManualIgnoreChannelLock" ParameterType="%AID%_PT-OnOffYesNo" Text="Handbedienung bei globaler Kanal-Sperre erlauben" Value="1"/>
 
-								<!-- 3 Bit free -->
+								<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
+								<Parameter Id="%AID%_UP-%TT%%CC%037" Offset="1" BitOffset="4" Name="C%C%NightWindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
+
+								<!-- 2 Bit free -->
 
 								<!-- Nacht Modus von -->
 								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
@@ -174,7 +177,7 @@
 	
 
 								<!-- Next offset: 29-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%037 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%038 -->
 
 
 							</Union>
@@ -263,6 +266,10 @@
 
 							<!-- Fenster offen Modus in Nachtmodus erlaubt -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_UP-%TT%%CC%017" />
+
+							<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" RefId="%AID%_UP-%TT%%CC%037" />
+
 
 							<!-- Nach Beschattung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
@@ -747,6 +754,13 @@
 																<!-- Fenster offen Mode -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 																	<when test="&gt;0">
+																		<!-- Anzahl der Fensterkontakte -->
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+																			<when test="2">
+																				<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" />
+																			</when>
+																		</choose>
 																		<!-- Fenster offen Modus in Nachtmodus erlaubt -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" />
 																	</when>

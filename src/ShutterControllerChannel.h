@@ -1,6 +1,7 @@
 #pragma once
 #include "OpenKNX.h"
 #include "ModeBase.h"
+#include "WindowOpenHandler.h"
 #include "CallContext.h"
 #include "PositionController.h"
 #include "MeasurementWatchdog.h"
@@ -16,13 +17,14 @@ class ShutterControllerChannel : public OpenKNX::Channel
         volatile bool _triggered = false;
         bool _channelLockActive = false;
         std::string _name = std::string();
+        std::vector<WindowOpenHandler*> _windowOpenHandlers;
+        WindowOpenHandler* _currentWindowOpenHandler = nullptr;
         std::vector<ModeBase*> _modes;
         ModeManual* _modeManual = nullptr;
         ModeIdle* _modeIdle = nullptr;
         ModeBase* _currentMode = nullptr;
         PositionController _positionController;
         bool _anyAutoModeActive = false;
-        ModeShading* _handleWindowOpenAsShading = nullptr;
         unsigned long _waitTimeForReactivateShadingAfterManualStarted = 0;
         bool _waitForShadingPeriodEnd = false;
        

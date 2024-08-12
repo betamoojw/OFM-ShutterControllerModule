@@ -36,10 +36,16 @@ void ModeShading::initGroupObjects()
  
     _recalcMeasurmentValues = true;
 }
-bool ModeShading::modeWindowOpenAllowed() const
+bool ModeShading::windowOpenAllowed() const
 {
     return ParamSHC_CShading1WindowOpenAllowed;
 }
+
+bool ModeShading::windowTiltAllowed() const
+{
+    return ParamSHC_CShading1WindowTiltAllowed;
+}
+
 bool ModeShading::allowed(const CallContext &callContext)
 {  
     if (!callContext.shadingControlActive)
@@ -95,6 +101,7 @@ bool ModeShading::allowed(const CallContext &callContext)
         _lastSunFrameAllowed = allowedSun;
         _needWaitTime = false;
     }
+    bool logWaitTimeResult = false;
     if (_recalcMeasurmentValues || callContext.diagnosticLog)
     {
         _recalcMeasurmentValues = false;
@@ -116,6 +123,7 @@ bool ModeShading::allowed(const CallContext &callContext)
             logDebugP("Need wait time: %d", (int)_needWaitTime);
             logDebugP("Wait time start set: %d", (int)(_waitTimeAfterMeasurmentValueChange != 0));
             logDebugP("Allowed by sun: %d", (int)_lastSunFrameAllowed);
+            logWaitTimeResult = true;
         }
     }
     // Handle start and stop wait time
@@ -127,26 +135,51 @@ bool ModeShading::allowed(const CallContext &callContext)
         if (lastState)
         {
             // Check end wait time
-            auto waitTimeInMinutes = (unsigned long)ParamSHC_CShading1WaitTimeEnd;
-            if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
+            auto waitTimeInSeconds = (unsigned long)ParamSHC_CShading1WaitTimeEnd * 60;
+            if (callContext.fastSimulationActive)
+                waitTimeInSeconds /= 10;
+            if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInSeconds * 1000)
             {
                 if (callContext.diagnosticLog)
-                    logInfoP("Stop wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));               
+                    logInfoP("Stop wait time %ds not reached: %ds", (int)waitTimeInSeconds, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));               
                 stopWaitTimeActive = true;
             }
+            else
+            {
+                if (callContext.diagnosticLog)
+                    logInfoP("Stop wait time %ds reached", (int)waitTimeInSeconds);
+                _waitTimeAfterMeasurmentValueChange = 0;
+                stopWaitTimeActive = false;
+            }
+            if (logWaitTimeResult)
+                logDebugP("Stop wait time active: %d", (int)stopWaitTimeActive);
         }
         else
         {
             // Check start wait time
-            auto waitTimeInMinutes = (unsigned long)ParamSHC_CShading1WaitTimeStart;
-            if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInMinutes * 60000)
+            auto waitTimeInSeconds = (unsigned long)ParamSHC_CShading1WaitTimeStart * 60;
+            if (callContext.fastSimulationActive)
+                waitTimeInSeconds /= 10;
+
+            if (logWaitTimeResult)
+                logDebugP("Wait time: %ds", (int)(waitTimeInSeconds));
+   
+            if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInSeconds * 1000)
             {
-                if (callContext.diagnosticLog)
-                    logInfoP("Start wait time %ds not reached: %ds", (int)waitTimeInMinutes * 60, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
+                if (callContext.diagnosticLog || logWaitTimeResult)
+                    logInfoP("Start wait time %ds not reached: %ds", (int)waitTimeInSeconds, (int)((callContext.currentMillis - _waitTimeAfterMeasurmentValueChange) / 1000));
                 startWaitTimeActive = true;
             }
+            else
+            {
+                if (callContext.diagnosticLog || logWaitTimeResult)
+                    logInfoP("Start wait time %ds reached", (int)waitTimeInSeconds);
+                _waitTimeAfterMeasurmentValueChange = 0;
+                startWaitTimeActive = false;
+            }
+            if (logWaitTimeResult)
+                logDebugP("Start wait time active: %d", (int)startWaitTimeActive);
         }
-        _waitTimeAfterMeasurmentValueChange = 0;
     }
  
     // Handle not allowed reason
@@ -155,7 +188,7 @@ bool ModeShading::allowed(const CallContext &callContext)
     else
         _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonStartWaitTime;
   
-    if (callContext.modeCurrentActive->isModeWindowOpen())
+    if (callContext.isWindowOpenActive)
         _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonWindowOpen;
     else
         _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonWindowOpen;
@@ -402,15 +435,17 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
             { return !(bool) m->getValue();},
             ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeating);
     }
+    bool logHeating = false;
     if (_heatingOff != heatingOff)
     {
         _heatingOff = heatingOff;
+        logHeating = true;
         if (heatingOff)
-            _waitTimeAfterMeasurmentValueChange = callContext.currentMillis;
+            _waitTimeAfterHeatingValueChange = callContext.currentMillis;
         else
-            _waitTimeAfterMeasurmentValueChange = 0;
+            _waitTimeAfterHeatingValueChange = 0;
     }
-    if (_waitTimeAfterMeasurmentValueChange != 0)
+    if (_waitTimeAfterHeatingValueChange != 0)
     {
 
         // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
@@ -461,18 +496,23 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
             waitTimeInMillis = 48 * 60 * 60 * 1000;
             break;
         }
+        if (callContext.fastSimulationActive)
+            waitTimeInMillis /= 10;
 
-        if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange > waitTimeInMillis)
+        if (callContext.currentMillis - _waitTimeAfterHeatingValueChange > waitTimeInMillis)
         {
-            if (diagnosticLog)
-                logInfoP("Heating off wait time not reached");
-            _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeatingInThePast;
-            allowed = false;
+            if (diagnosticLog || logHeating)
+                logInfoP("Heating off wait time %lumin reached",  (unsigned long) (waitTimeInMillis / 1000 / 60));   
+           
+            _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeatingInThePast;
+            _waitTimeAfterHeatingValueChange = 0;
         }
         else
         {
-            _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeatingInThePast;
-            _waitTimeAfterMeasurmentValueChange = 0;
+            if (diagnosticLog || logHeating)
+                logInfoP("Heating off wait time %lumin not reached: %lumin",  (unsigned long) (waitTimeInMillis / 1000 / 60), (unsigned long) ((callContext.currentMillis - _waitTimeAfterHeatingValueChange)/1000/60));   
+            _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeatingInThePast;
+            allowed = false;
         }
     }
     if (!callContext.modeCurrentActive->isModeShading() && callContext.positionController->targetPosition() > ParamSHC_CShading1OnlyIfLessThan)
@@ -543,8 +583,6 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
         auto slatPosition = (uint8_t)targetSlatPosition;
         if (callContext.diagnosticLog)
             logInfoP("Calculated slat position %d for %lf", (int)slatPosition, callContext.elevation);
-
-
 
         if (!callContext.modeNewStarted && abs((uint8_t) KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition) < ParamSHC_CShading1MinChangeForSlatAdaption)
         {

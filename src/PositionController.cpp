@@ -25,46 +25,77 @@ bool PositionController::hasSlat() const
 
 void PositionController::setAutomaticPosition(uint8_t automaticPosition)
 {
+    if (_positionLimit != 100)
+        _blockedPosition = automaticPosition;
+    if (_positionLimit < automaticPosition)
+    {
+        logDebugP("Position limit reached");
+        automaticPosition = _positionLimit;
+    }
     _setPosition = automaticPosition;
 }
+
 void PositionController::setAutomaticSlat(uint8_t automaticSlat)
 {
-    if (_hasSlat)
-        _setSlat = automaticSlat;
+    if (!_hasSlat)
+        return;
+    if (_slatLimit != 255)
+        _blockedSlat = automaticSlat;
+    if (_slatLimit < automaticSlat)
+    {
+        logDebugP("Slat limit reached");
+        automaticSlat = _slatLimit;
+    }
+    _setSlat = automaticSlat;
 }
-void PositionController::setManualPosition(uint8_t manualPosition, bool noControllingModeCheck)
+
+void PositionController::setAutomaticPositionAndStoreForRestore(uint8_t automaticPosition)
+{
+    _restorePosition = automaticPosition;
+    setAutomaticPosition(automaticPosition);
+}
+
+void PositionController::setAutomaticSlatAndStoreForRestore(uint8_t automaticSlat)
+{
+    _restoreSlat = automaticSlat;
+    setAutomaticSlat(automaticSlat);
+}
+
+void PositionController::setManualPosition(uint8_t manualPosition)
 {
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
 
-    _lastManualPosition = manualPosition;
+    _restorePosition = manualPosition;
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    if (noControllingModeCheck || ParamSHC_CManualUpDownType != 0)
+    if (ParamSHC_CManualUpDownType != 0)
     {
-        _setPosition = manualPosition;
+        setAutomaticPosition(manualPosition);
     }
     auto currentPosition = position();
     if (manualPosition != currentPosition)
     {
-        setState(_setPosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown);
-        _targetPosition = _setPosition;
+        setState(_setPosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown, "Manual position");
+        _calculatedTargetPosition = _setPosition;
         setMovingTimeout(MOVING_TIMEOUT);
-    }    
+    }
 }
-void PositionController::setManualSlat(uint8_t manualSlat, bool noControllingModeCheck)
+
+void PositionController::setManualSlat(uint8_t manualSlat)
 {
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
 
-    _lastManualSlat = manualSlat;
+    _restoreSlat = manualSlat;
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
-    if (_hasSlat && (noControllingModeCheck || ParamSHC_CManualUpDownType != 0))
-        _setSlat = manualSlat;
+    if (_hasSlat && (ParamSHC_CManualUpDownType != 0))
+        setAutomaticSlat(manualSlat);
 }
+
 void PositionController::setManualStep(bool step)
 {
     if (_hasSlat && ParamSHC_CManualUpDownType != 0)
@@ -84,25 +115,26 @@ void PositionController::setManualStep(bool step)
         }
     }
 }
+
 void PositionController::setManualUpDown(bool up)
 {
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
     if (up)
     {
-        _lastManualPosition = 0;
-        _lastManualSlat = 0;
+        _restorePosition = 0;
+        _restoreSlat = 0;
     }
     else
     {
-        _lastManualPosition = 100;
-        _lastManualSlat = 100;
+        _restorePosition = 100;
+        _restoreSlat = 100;
     }
     auto currentPosition = position();
-    if (currentPosition == 0 && _lastManualPosition)
+    if (currentPosition == 0 && _restorePosition)
     {
-        setState(_lastManualPosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown);
-        _targetPosition = _lastManualPosition;
+        setState(_restorePosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown, "Manual up down");
+        _calculatedTargetPosition = _restorePosition;
         setMovingTimeout(MOVING_TIMEOUT);
     }
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
@@ -122,13 +154,15 @@ void PositionController::setManualUpDown(bool up)
         break;
     }
 }
+
 void PositionController::restoreLastManualPosition()
 {
-    if (_lastManualPosition != 255)
-        _setPosition = _lastManualPosition;
-    if (_lastManualSlat != 255)
-        _setSlat = _lastManualSlat;
+    if (_restorePosition != 255)
+        _setPosition = _restorePosition;
+    if (_restoreSlat != 255)
+        _setSlat = _restoreSlat;
 }
+
 void PositionController::processInputKo(GroupObject &ko)
 {
     if (_shutterSimulation != nullptr)
@@ -141,7 +175,7 @@ void PositionController::processInputKo(GroupObject &ko)
     {
         uint8_t currentPosition = KoSHC_CShutterPercentInput.value(DPT_Scaling);
         if (currentPosition == 0 || currentPosition == 100)
-            setState(PositionControllerState::Idle);
+            setState(PositionControllerState::Idle, "SHC_KoCShutterPercentInput");
         else
 
             setMovingTimeout(MOVING_TIMEOUT_AFTER_FEEDBACK);
@@ -152,11 +186,11 @@ void PositionController::processInputKo(GroupObject &ko)
         uint8_t currentPosition = KoSHC_CShutterPercentInput.value(DPT_Scaling);
         uint8_t newPosition = ko.value(DPT_Scaling);
         if (newPosition < currentPosition)
-            setState(PositionControllerState::MovingDown);
+            setState(PositionControllerState::MovingUp, "SHC_KoCShutterPercentOutput");
         else if (newPosition > currentPosition)
-            setState(PositionControllerState::MovingUp);
+            setState(PositionControllerState::MovingDown, "SHC_KoCShutterPercentOutput");
         else
-            setState(PositionControllerState::Idle);
+            setState(PositionControllerState::Idle, "SHC_KoCShutterPercentOutput");
         break;
     }
     case SHC_KoCShutterSlatOutput:
@@ -164,11 +198,11 @@ void PositionController::processInputKo(GroupObject &ko)
         uint8_t currentPosition = KoSHC_CShutterSlatInput.value(DPT_Scaling);
         uint8_t newPosition = ko.value(DPT_Scaling);
         if (newPosition < currentPosition)
-            setState(PositionControllerState::MovingDown);
+            setState(PositionControllerState::MovingUp, "SHC_KoCShutterSlatOutput");
         else if (newPosition > currentPosition)
-            setState(PositionControllerState::MovingUp);
+            setState(PositionControllerState::MovingDown, "SHC_KoCShutterSlatOutput");
         else
-            setState(PositionControllerState::Idle);
+            setState(PositionControllerState::Idle, "SHC_KoCShutterSlatOutput");
         break;
     }
     case SHC_KoCShutterStopStepOutput:
@@ -177,14 +211,14 @@ void PositionController::processInputKo(GroupObject &ko)
     case SHC_KoCManualUpDown:
     {
         if (state() == PositionControllerState::MovingDown || state() == PositionControllerState::MovingUp)
-            setState(PositionControllerState::Idle);
+            setState(PositionControllerState::Idle, "Any Manual KO");
         else if ((bool)ko.value(DPT_Step) == false)
         {
             // Up
             uint8_t currentPosition = KoSHC_CShutterSlatInput.value(DPT_Scaling);
             if (currentPosition > 0)
             {
-                setState(PositionControllerState::MovingUp);
+                setState(PositionControllerState::MovingUp, "Any Manual KO");
                 if (koIndex == SHC_KoCShutterStopStepOutput || koIndex == SHC_KoCManualStepStop)
                     _waitForMovingTimeout = MOVING_TIMEOUT_AFTER_FEEDBACK;
             }
@@ -195,7 +229,7 @@ void PositionController::processInputKo(GroupObject &ko)
             uint8_t currentPosition = KoSHC_CShutterSlatInput.value(DPT_Scaling);
             if (currentPosition < 100)
             {
-                setState(PositionControllerState::MovingDown);
+                setState(PositionControllerState::MovingDown, "Any Manual KO");
                 if (koIndex == SHC_KoCShutterStopStepOutput || koIndex == SHC_KoCManualStepStop)
                     _waitForMovingTimeout = MOVING_TIMEOUT_AFTER_FEEDBACK;
             }
@@ -209,13 +243,13 @@ void PositionController::processInputKo(GroupObject &ko)
     case SHC_KoCShutterPercentInput:
         if (millis() - _startWaitForManualPositionFeedback < 3000)
         {
-            _lastManualPosition = (uint8_t)ko.value(DPT_Scaling);
+            _restorePosition = (uint8_t)ko.value(DPT_Scaling);
         }
         break;
     case SHC_KoCShutterSlatInput:
         if (millis() - _startWaitForManualSlatPositionFeedback < 3000)
         {
-            _lastManualSlat = (uint8_t)ko.value(DPT_Scaling);
+            _restoreSlat = (uint8_t)ko.value(DPT_Scaling);
         }
         break;
     }
@@ -236,9 +270,9 @@ void PositionController::control(const CallContext &callContext)
     auto now = callContext.currentMillis;
     if (_waitForMovingFinshed > 0 && now - _waitForMovingFinshed > _waitForMovingTimeout)
     {
-        logDebugP("Moving timeout %ds reached",(int) (_waitForMovingTimeout / 1000));
+        logDebugP("Moving timeout %ds reached", (int)(_waitForMovingTimeout / 1000));
         _waitForMovingFinshed = 0;
-        setState(PositionControllerState::Idle);
+        setState(PositionControllerState::Idle, "Control");
     }
 
     if (now - _startWaitForManualSlatPositionFeedback > 3000)
@@ -251,8 +285,8 @@ void PositionController::control(const CallContext &callContext)
         auto currentPosition = position();
         if (_setPosition != currentPosition)
         {
-            setState(_setPosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown);
-            _targetPosition = _setPosition;
+            setState(_setPosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown, "_setPosition");
+            _calculatedTargetPosition = _setPosition;
             setMovingTimeout(MOVING_TIMEOUT);
         }
 
@@ -271,14 +305,29 @@ void PositionController::control(const CallContext &callContext)
     }
     if (callContext.diagnosticLog)
     {
-        logInfoP("State: %s", _state == PositionControllerState::Idle ? "Idle" : _state == PositionControllerState::MovingDown ? "Moving down" : "Moving up");
+        logInfoP("State: %s", _state == PositionControllerState::Idle ? "Idle" : _state == PositionControllerState::MovingDown ? "Moving down"
+                                                                                                                               : "Moving up");
         logInfoP("Position: %d", (int)position());
-        logInfoP("Target position: %d", (int) targetPosition());
-        logInfoP("Last manual position: %d", (int)_lastManualPosition);
+        if (_positionLimit != 100)
+            logInfoP("Position limit: %d", (int)_positionLimit);
+        if (_blockedPosition != 255)
+            logInfoP("Blocked position: %d", (int)_blockedPosition);
+        logInfoP("Target position: %d", (int)targetPosition());
         if (_hasSlat)
-            logInfoP("Last manual slat position: %d", (int)_lastManualSlat);
+        {
+            logInfoP("Slat position: %d", (int)KoSHC_CShutterSlatInput.value(DPT_Scaling));
+            if (_slatLimit != 255)
+                logInfoP("Slat limit: %d", (int)_slatLimit);
+            if (_blockedSlat != 255)    
+                logInfoP("Blocked slat position: %d", (int)_blockedSlat);
+            logInfoP("Target slat position: %d", (int)_setSlat);
+        }
+        logInfoP("Last manual position: %d", (int)_restorePosition);
+        if (_hasSlat)
+            logInfoP("Last manual slat position: %d", (int)_restoreSlat);
     }
 }
+
 bool PositionController::startSimulation(bool fastSimulation)
 {
     if (_shutterSimulation == nullptr)
@@ -290,6 +339,7 @@ bool PositionController::startSimulation(bool fastSimulation)
     _shutterSimulation->setFastSimulation(fastSimulation);
     return false;
 }
+
 bool PositionController::stopSimulation()
 {
     if (_shutterSimulation != nullptr)
@@ -305,6 +355,7 @@ uint8_t PositionController::simulationMode() const
 {
     return _shutterSimulation != nullptr ? (_shutterSimulation->getFastSimulation() ? 2 : 1) : 0;
 }
+
 PositionControllerState PositionController::state() const
 {
     return _state;
@@ -317,12 +368,17 @@ uint8_t PositionController::position() const
 
 int8_t PositionController::targetPosition() const
 {
-    if (_targetPosition == 255)
+    if (_calculatedTargetPosition == 255)
         return position();
-    return _targetPosition;
+    return _calculatedTargetPosition;
 }
 
-void PositionController::setState(PositionControllerState state)
+uint8_t PositionController::slat() const
+{
+    return KoSHC_CShutterSlatInput.value(DPT_Scaling);
+}
+
+void PositionController::setState(PositionControllerState state, const char *reason)
 {
     if (_state != state)
     {
@@ -331,17 +387,88 @@ void PositionController::setState(PositionControllerState state)
         {
         case PositionControllerState::Idle:
             _waitForMovingFinshed = 0;
-            _targetPosition = 255;
-            logDebugP("State: Idle at %d", (int)position());
+            _calculatedTargetPosition = 255;
+            logDebugP("State: Idle at %d (%s)", (int)position(), reason);
             break;
         case PositionControllerState::MovingDown:
             setMovingTimeout(MOVING_TIMEOUT);
-            logDebugP("State: Moving down");
+            logDebugP("State: Moving down (%s)", reason);
             break;
         case PositionControllerState::MovingUp:
             setMovingTimeout(MOVING_TIMEOUT);
-            logDebugP("State: Moving up");
+            logDebugP("State: Moving up (%s)", reason);
             break;
         }
     }
+}
+
+void PositionController::resetPositionLowerLimit()
+{
+    setPositionLowerLimit(255, false);
+}
+
+void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveToLimit)
+{
+    if (positionLimit >= 100)
+        positionLimit = 255;
+    if (_positionLimit == 100)
+    {
+        logDebugP("Position limit disabled");
+        if (_blockedPosition != 255 && _setPosition == 255)
+        {
+            logDebugP("Set previous blocked position: %d", (int)_blockedPosition);
+            _setPosition = _blockedPosition;
+            _blockedPosition = 255;
+        }
+    }
+    else if (targetPosition() > positionLimit || moveToLimit)
+    {
+        _blockedPosition = targetPosition();
+        _calculatedTargetPosition = _positionLimit;
+        _setPosition = _positionLimit;
+        logDebugP("Position limit forces new position %d, store %d", (int)positionLimit, (int)_setPosition);
+    }
+    _positionLimit = positionLimit;
+ 
+}
+
+void PositionController::resetSlatLowerLimit()
+{
+    setSlatLowerLimit(255, false);
+}
+
+void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
+{
+    if (!_hasSlat)
+        return;
+    if (slatLimit >= 100)
+        slatLimit = 255;
+    if (slatLimit == _slatLimit)
+        return;
+    if (slatLimit == 255)
+    {
+        logDebugP("Slat limit disabled");
+        if (_blockedSlat != 255 && _setSlat == 255)
+        {
+            logDebugP("Set previous blocked slat position: %d", (int)_blockedSlat);
+            _setSlat = _blockedSlat;
+            _blockedSlat = 255;
+        }
+    }
+    else if (slat() > slatLimit || moveToLimit)
+    {
+        _blockedSlat = slat();
+        _setSlat = slatLimit;
+        logDebugP("Slat limit forces new slat %d, store %d", (int)slatLimit, (int)_setSlat);
+    }
+    _slatLimit = slatLimit;
+  
+}
+
+void PositionController::resetBlockedPositionAndLimits()
+{
+    _blockedPosition = 255;
+    _blockedSlat = 255;
+    _positionLimit = 255;
+    _slatLimit = 255;
 }

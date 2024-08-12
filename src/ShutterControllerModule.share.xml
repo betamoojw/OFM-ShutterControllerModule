@@ -205,8 +205,8 @@
 							<ParameterType Id="%AID%_PT-UsePositionIfWindowOpen" Name="UsePositionIfWindowOpen">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
-									<Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
-									<Enumeration Text="Immer" Value="2" Id="%ENID%" />
+									<Enumeration Text="Nur öffnen" Value="1" Id="%ENID%" />
+									<Enumeration Text="Öffnen und Schließen" Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 

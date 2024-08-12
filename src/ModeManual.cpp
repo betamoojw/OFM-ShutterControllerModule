@@ -15,7 +15,11 @@ void ModeManual::initGroupObjects()
 {
     KoSHC_CManualLockActive.value(false, DPT_Switch);
 }
-bool ModeManual::modeWindowOpenAllowed() const
+bool ModeManual::windowOpenAllowed() const
+{
+    return true;
+}
+bool ModeManual::windowTiltAllowed() const
 {
     return true;
 }
@@ -76,6 +80,7 @@ void ModeManual::stopWaitTime()
 void ModeManual::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
 {
     KoSHC_CManuelActiv.value(true, DPT_Switch);
+    positionController.resetBlockedPositionAndLimits();
 }
 void ModeManual::control(const CallContext &callContext, PositionController &positionController)
 {
@@ -92,7 +97,7 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
             switch (ko->asap())
             {
             case SHC_KoCManualPercent:
-                positionController.setManualPosition(ko->value(DPT_Scaling), false);
+                positionController.setManualPosition(ko->value(DPT_Scaling));
                 break;
             case SHC_KoCManualStepStop:
                 positionController.setManualStep(ko->value(DPT_Step));
@@ -101,7 +106,7 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
                 positionController.setManualUpDown(ko->value(DPT_UpDown));
                 break;
             case SHC_KoCManualSlatPercent:
-                positionController.setManualSlat(ko->value(DPT_Scaling), false);
+                positionController.setManualSlat(ko->value(DPT_Scaling));
                 break;
             default:
                 break;

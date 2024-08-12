@@ -13,6 +13,7 @@ class CallContext
     public:
         bool modeNewStarted = false;
         bool fastSimulationActive = false;
+        bool isWindowOpenActive = false;
         bool hasSlat = false;
         bool diagnosticLog = false;
         bool shadingControlActive = false;
