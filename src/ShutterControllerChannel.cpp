@@ -115,10 +115,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         if (_currentMode == nullptr)
             logInfoP("Not started");
         else
-        {
-            logInfoP("Current active mode: %s", _currentMode->name());
             diagnosticLogLoopRequest = true;
-        }
         return true;
     }
     else if (cmd.rfind("sim") == 0)
@@ -156,7 +153,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     {
         if (cmd.length() == 1)
         {
-            logErrorP("Missing value 0 or 1");
+            logInfo("Shading control: %s", shadingControlActive() ? "ON" : "OFF");
             return true;
         }
         KoSHC_CShadingControl.value((uint8_t)std::stoi(cmd.substr(1)), DPT_Switch);
@@ -167,7 +164,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     {
         if (cmd.length() == 1)
         {
-            logErrorP("Missing value 0 or 1");
+            _measurementRoomTemperature.logState(true);
             return true;
         }
         KoSHC_CRoomTemp.valueNoSend((uint8_t)std::stoi(cmd.substr(1)), DPT_Value_Temp);
@@ -178,7 +175,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     {
         if (cmd.length() == 1)
         {
-            logErrorP("Missing value");
+            _measurementHeading.logState(true);
             return true;
         }
         KoSHC_CHeading.valueNoSend((float)std::stof(cmd.substr(1)), ParamSHC_CHeatingInput == 1 ? DPT_Scaling : DPT_Switch);
@@ -474,6 +471,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.modeCurrentActive = nullptr;
     _measurementHeading.resetChanged();
     _measurementRoomTemperature.resetChanged();
+
+    if (callContext.diagnosticLog)
+        logInfoP("Current active mode: %s", _currentMode->name());
 }
 
 bool ShutterControllerChannel::shadingControlActive()

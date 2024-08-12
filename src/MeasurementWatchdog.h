@@ -39,8 +39,7 @@ private:
     Dpt _dpt;
     MeasurementWatchdogFallbackBehavior _fallbackBehaviour = MeasurementWatchdogFallbackBehavior::IgnoreValue;
     void setState(MeasurementWatchdogState state);
-    void logState(bool incudeValue);
-public:
+ public:
     static void resetMissingValue();
     static bool missingValue();
     MeasurementWatchdog();
@@ -54,4 +53,5 @@ public:
     void processIputKo(GroupObject& go);
     bool isChanged() const;
     bool resetChanged();
+    void logState(bool incudeValue);
 };

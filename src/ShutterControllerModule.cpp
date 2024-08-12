@@ -195,9 +195,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         auto moduleCommand = cmd.substr(3);
         if (moduleCommand.rfind("t") == 0)
         {
-            if (cmd.length() == 1)
+            if (moduleCommand.length() == 1)
             {
-                logErrorP("Missing value");
+                _measurementTemperature.logState(true);
                 return true;
             }
             logInfoP("Set temperature");
@@ -207,9 +207,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("f") == 0)
         {
-            if (cmd.length() == 1)
+            if (moduleCommand.length() == 1)
             {
-                logErrorP("Missing value");
+                _measurementTemperatureForecast.logState(true);
                 return true;
             }
             logInfoP("Set temperature forecast");
@@ -219,9 +219,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("b") == 0)
         {
-            if (cmd.length() == 1)
+            if (moduleCommand.length() == 1)
             {
-                logErrorP("Missing value");
+                _measurementBrightness.logState(true);
                 return true;
             }
             logInfoP("Set brightness");
@@ -231,9 +231,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("u") == 0)
         {
-            if (cmd.length() == 1)
+            if (moduleCommand.length() == 1)
             {
-                logErrorP("Missing value");
+                _measurementUVIndex.logState(true);
                 return true;
             }
             logInfoP("Set UVI");
@@ -243,9 +243,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("r") == 0)
         {
-            if (cmd.length() == 1)
+            if (moduleCommand.length() == 1)
             {
-                logErrorP("Missing value");
+                _measurementRain.logState(true);
                 return true;
             }
             logInfoP("Set rain");
@@ -255,9 +255,9 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("c") == 0)
         {
-            if (cmd.length() == 1)
+            if (moduleCommand.length() == 1)
             {
-                logErrorP("Missing value");
+                _measurementClouds.logState(true);
                 return true;
             }
             logInfoP("Set clouds");
@@ -267,9 +267,10 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("d") == 0)
         {
-            if (cmd.length() == 1)
+            Timer& timer = Timer::instance();
+            if (moduleCommand.length() == 1 && timer.isTimerValid())
             {
-                logErrorP("Missing value");
+                logInfoP("%04d-%02d-%02d %02d:%02d", (int)timer.getYear() , (int)timer.getMonth(), (int)timer.getDay(), (int)timer.getHour(), (int)timer.getMinute());
                 return true;
             }
             logInfoP("Set date/time");

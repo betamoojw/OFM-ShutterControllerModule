@@ -35,6 +35,7 @@ class ModeShading : public ModeBase
     uint32_t _lastNotAllowedReason = 1;
     bool _recalcMeasurmentValues = true;
     bool _allowedByMeasurementValues = false;
+    bool _allowedByMeasurementValuesAndHeatingOffWaitTime = false;
     bool _lockActive = false;
     bool _active = false;
     unsigned long _waitTimeAfterMeasurmentValueChange = 0;
