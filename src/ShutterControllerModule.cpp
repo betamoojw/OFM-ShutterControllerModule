@@ -39,12 +39,12 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc u<value>", "Set UV index. i.e. sb u1.5");
     openknx.console.printHelpLine("sc r<0|1>", "Set rain. i.e. sb r1");
     openknx.console.printHelpLine("sc c<value>", "Set clouds. i.e. sb c20");
-    openknx.console.printHelpLine("sc d<YYMMDDhh2mm>", "Set date/time . i.e. d d2304151733");
+    openknx.console.printHelpLine("sc d<YYMMDDhhmm>", "Set date/time . i.e. d d2304151733");
     openknx.console.printHelpLine("sc<CC>", "Show information of channel CC. i.e. sc01");
     openknx.console.printHelpLine("sc<CC> s<0|1>", "Disabled or enable shadow of channel CC. i.e. sc01 s1");
     openknx.console.printHelpLine("sc<CC> w<0|1>", "Close or open window of channel CC. i.e. sc01 w1");
     openknx.console.printHelpLine("sc<CC> wt<0|1>", "Tilt window of channel CC. i.e. sc01 wt1");
-    openknx.console.printHelpLine("sc<CC> t<value>", "Room temperature. i.e. sc01 t50");
+    openknx.console.printHelpLine("sc<CC> r<value>", "Room temperature. i.e. sc01 t50");
     openknx.console.printHelpLine("sc<CC> h<value>", "Room heating %. i.e. sc01 h50");
     openknx.console.printHelpLine("sc<CC> m<^|v>", "Manual up down. i.e. sc01 mv");
     openknx.console.printHelpLine("sc<CC> m<-|+>", "Manual step i.e. sc01 m+");

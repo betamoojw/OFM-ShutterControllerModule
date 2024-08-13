@@ -182,19 +182,24 @@ bool ModeShading::allowed(const CallContext &callContext)
     if (_allowedByMeasurementValuesAndHeatingOffWaitTime != allowedByMeasurementValuesAndHeatingOffWaitTime)
     {
         _allowedByMeasurementValuesAndHeatingOffWaitTime = allowedByMeasurementValuesAndHeatingOffWaitTime;
-        
+
         if (_active && !allowedByMeasurementValuesAndHeatingOffWaitTime)
             _needWaitTime = true; // not longer allowed and active, active wait time for deactivation and reactivation
-    
-        if (_active && _needWaitTime && !allowedByMeasurementValuesAndHeatingOffWaitTime)
-        {
-            logDebugP("Start stopping wait time");
-            _waitTimeAfterMeasurmentValueChange = callContext.currentMillis; // acivate stop wait time
-        }
-   
-        logWaitTimeResult = true;
-    }
 
+        if (_active)
+        {
+            if (_needWaitTime && !allowedByMeasurementValuesAndHeatingOffWaitTime)
+            {
+                logDebugP("Start stopping wait time");
+                _waitTimeAfterMeasurmentValueChange = callContext.currentMillis; // acivate stop wait time
+            }
+            else
+            {
+                logDebugP("Stop stopping wait time");
+                _waitTimeAfterMeasurmentValueChange = 0; // stop wait time, because allowed again
+            }
+        }
+    }
     // Handle start and stop wait time
     bool stopWaitTimeActive = false;
     bool startWaitTimeActive = false;
@@ -546,7 +551,6 @@ void ModeShading::start(const CallContext &callContext, const ModeBase *previous
 {
     _active = true;
     getKo(SHC_KoCShading1Active).value(true, DPT_Switch);
-
     positionController.setAutomaticPosition(ParamSHC_CShading1ShadingPosition);
 
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
