@@ -160,7 +160,7 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
         processInputKo(KoSHC_CShadingControl);
         return true;
     }
-    else if (cmd.rfind("t") == 0)
+    else if (cmd.rfind("r") == 0)
     {
         if (cmd.length() == 1)
         {
