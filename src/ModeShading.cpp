@@ -98,7 +98,7 @@ bool ModeShading::allowed(const CallContext &callContext)
     {
         logDebugP("Allowed by sun: %d", (int)allowedSun);
         _lastSunFrameAllowed = allowedSun;
-        _needWaitTime = false;
+        _needWaitTime = false; // shading peruiod changed, no wait time needed
     }
     bool logWaitTimeResult = false;
     if (_recalcMeasurmentValues || callContext.diagnosticLog)
@@ -182,20 +182,16 @@ bool ModeShading::allowed(const CallContext &callContext)
     if (_allowedByMeasurementValuesAndHeatingOffWaitTime != allowedByMeasurementValuesAndHeatingOffWaitTime)
     {
         _allowedByMeasurementValuesAndHeatingOffWaitTime = allowedByMeasurementValuesAndHeatingOffWaitTime;
-        logDebugP("Allowed by measurement values and heating off: %d", (int)allowedByMeasurementValuesAndHeatingOffWaitTime);
-        if (_needWaitTime)
-            _waitTimeAfterMeasurmentValueChange = callContext.currentMillis;
-        else
-            _waitTimeAfterMeasurmentValueChange = 0;
-        if (allowedByMeasurementValuesAndHeatingOffWaitTime)
-            _needWaitTime = true;
-
-        if (allowedByMeasurementValuesAndHeatingOffWaitTime && _active)
-            _waitTimeAfterMeasurmentValueChange = 0; // Currently active and allowed, not need to wait
-
-        logDebugP("Need wait time: %d", (int)_needWaitTime);
-        logDebugP("Wait time start set: %d", (int)(_waitTimeAfterMeasurmentValueChange != 0));
-        logDebugP("Allowed by sun: %d", (int)_lastSunFrameAllowed);
+        
+        if (_active && !allowedByMeasurementValuesAndHeatingOffWaitTime)
+            _needWaitTime = true; // not longer allowed and active, active wait time for deactivation and reactivation
+    
+        if (_active && _needWaitTime && !allowedByMeasurementValuesAndHeatingOffWaitTime)
+        {
+            logDebugP("Start stopping wait time");
+            _waitTimeAfterMeasurmentValueChange = callContext.currentMillis; // acivate stop wait time
+        }
+   
         logWaitTimeResult = true;
     }
 
@@ -204,8 +200,7 @@ bool ModeShading::allowed(const CallContext &callContext)
     bool startWaitTimeActive = false;
     if (_waitTimeAfterMeasurmentValueChange != 0)
     {
-        bool lastState = !_allowedByMeasurementValuesAndHeatingOffWaitTime;
-        if (lastState)
+        if (_active)
         {
             // Check end wait time
             auto waitTimeInSeconds = (unsigned long)ParamSHC_CShading1WaitTimeEnd * 60;
@@ -602,7 +597,13 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
 void ModeShading::stop(const CallContext &callContext, const ModeBase *next, PositionController &positionController)
 {
     _active = false;
-    _waitTimeAfterMeasurmentValueChange = 0;
+    if (_needWaitTime && !_allowedByMeasurementValuesAndHeatingOffWaitTime && _lastSunFrameAllowed)
+    {
+        logDebugP("Start starting wait time");
+        _waitTimeAfterMeasurmentValueChange = callContext.currentMillis; // start wait time for reactivation
+    }
+    else
+        _waitTimeAfterMeasurmentValueChange = 0;
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
 }
 void ModeShading::processInputKo(GroupObject &ko, PositionController &positionController)
