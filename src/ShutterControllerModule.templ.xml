@@ -415,7 +415,7 @@
 
 
 							<!-- Modus Handbetrieb Start/Stop Manual -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="%C%: Handbetrieb Stop/Start" FunctionText="{{0:-}} Handbetrieb Stopp/Start" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="%C%: Handbetrieb Aus-/Einschalten" FunctionText="{{0:-}} Handbetrieb Aus-/Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="%C%: Handbetrieb Aktiv" FunctionText="{{0:-}} Handbetrieb Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Sperre -->
