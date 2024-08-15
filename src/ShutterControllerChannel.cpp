@@ -184,25 +184,25 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
     }
     else if (cmd == "m^")
     {
-        KoSHC_CManualUpDown.valueNoSend(0, DPT_UpDown);
+        KoSHC_CManualUpDown.valueNoSend(false, DPT_UpDown);
         processInputKo(KoSHC_CManualUpDown);
         return true;
     }
     else if (cmd == "mv")
     {
-        KoSHC_CManualUpDown.valueNoSend(1, DPT_UpDown);
+        KoSHC_CManualUpDown.valueNoSend(true, DPT_UpDown);
         processInputKo(KoSHC_CManualUpDown);
         return true;
     }
     else if (cmd == "m-")
     {
-        KoSHC_CManualStepStop.valueNoSend(0, DPT_UpDown);
+        KoSHC_CManualStepStop.valueNoSend(false, DPT_UpDown);
         processInputKo(KoSHC_CManualStepStop);
         return true;
     }
     else if (cmd == "m+")
     {
-        KoSHC_CManualStepStop.valueNoSend(1, DPT_UpDown);
+        KoSHC_CManualStepStop.valueNoSend(true, DPT_UpDown);
         processInputKo(KoSHC_CManualStepStop);
         return true;
     }

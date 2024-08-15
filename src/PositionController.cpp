@@ -315,7 +315,7 @@ void PositionController::control(const CallContext &callContext)
         logInfoP("Target position: %d", (int)targetPosition());
         if (_hasSlat)
         {
-            logInfoP("Slat position: %d", (int)KoSHC_CShutterSlatInput.value(DPT_Scaling));
+            logInfoP("Slat position: %d", (int) (uint8_t)KoSHC_CShutterSlatInput.value(DPT_Scaling));
             if (_slatLimit != 255)
                 logInfoP("Slat limit: %d", (int)_slatLimit);
             if (_blockedSlat != 255)    
