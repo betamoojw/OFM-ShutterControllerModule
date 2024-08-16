@@ -31,11 +31,12 @@ class ShutterControllerChannel : public OpenKNX::Channel
 
         bool __shadingControlActive = false;
         void shadingControlActive(bool active);
-        bool shadingControlActive();
+        bool shadingControlActive() const;
        
         bool __anyShadingModeActive = false;
         void anyShadingModeActive(bool active);
-        bool anyShadingModeActive();
+        bool anyShadingModeActive() const;
+        unsigned long getManualShadingWaitTimeInMs() const;
     public:
         ShutterControllerChannel(uint8_t channelIndex);
         const std::string name() override;
@@ -43,7 +44,7 @@ class ShutterControllerChannel : public OpenKNX::Channel
         bool needCall();  
         const char* getPhoneNumber();
         uint8_t getCancelCallTime();
-        void processInputKo(GroupObject &ko) override;
+        void processInputKo(GroupObject &ko, CallContext* callContext = nullptr);
         bool processCommand(const std::string cmd, bool diagnoseKo, bool& diagnosticLogLoopRequest);
         void execute(CallContext& callContext);
         void activateShading();

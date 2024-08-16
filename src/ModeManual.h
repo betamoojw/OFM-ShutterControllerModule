@@ -10,6 +10,7 @@ class ModeManual : public ModeBase
     unsigned long _waitTimeStart = 0;
     std::vector<GroupObject*> _changedGroupObjects = std::vector<GroupObject*>();
     bool _requestStart = false;
+    unsigned long getWaitTimeAfterManualUsage() const;
  protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;

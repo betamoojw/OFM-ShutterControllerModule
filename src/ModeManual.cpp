@@ -23,6 +23,34 @@ bool ModeManual::windowTiltAllowed() const
 {
     return true;
 }
+
+unsigned long ModeManual::getWaitTimeAfterManualUsage() const
+{
+    // <Enumeration Text="Keine Wartezeit" Value="0" Id="%ENID%" />
+    // <Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
+    // <Enumeration Text="2 Minuten" Value="2" Id="%ENID%" />
+    // <Enumeration Text="5 Minuten" Value="5" Id="%ENID%" />
+    // <Enumeration Text="10 Minuten" Value="10" Id="%ENID%" />
+    // <Enumeration Text="15 Minuten" Value="15" Id="%ENID%" />
+    // <Enumeration Text="30 Minuten" Value="30" Id="%ENID%" />
+    // <Enumeration Text="1 Stunde" Value="101" Id="%ENID%" />
+    // <Enumeration Text="2 Stunden" Value="102" Id="%ENID%" />
+    // <Enumeration Text="3 Stunden" Value="103" Id="%ENID%" />
+    // <Enumeration Text="4 Stunden" Value="104" Id="%ENID%" />
+    // <Enumeration Text="5 Stunden" Value="105" Id="%ENID%" />
+    // <Enumeration Text="6 Stunden" Value="106" Id="%ENID%" />
+    // <Enumeration Text="7 Stunden" Value="107" Id="%ENID%" />
+    // <Enumeration Text="8 Stunden" Value="108" Id="%ENID%" />
+    // <Enumeration Text="9 Stunden" Value="109" Id="%ENID%" />
+    // <Enumeration Text="10 Stunden" Value="110" Id="%ENID%" />
+    // <Enumeration Text="11 Stunden" Value="111" Id="%ENID%" />
+    // <Enumeration Text="12 Stunden" Value="112" Id="%ENID%" />
+    auto value = ParamSHC_CManualWaitTime;
+    if (value < 100)
+        return value * 60 * 1000;
+    return (value - 100) * 60 * 60 * 1000;
+}
+
 bool ModeManual::allowed(const CallContext &callContext)
 {
     if (_shadingActive != callContext.modeCurrentActive->isModeShading())
@@ -54,12 +82,12 @@ bool ModeManual::allowed(const CallContext &callContext)
     _changedGroupObjects.clear();
     if (_waitTimeStart != 0)
     {
-        if (callContext.diagnosticLog)
-            logInfoP("Wait time acitve: %d", (int)(callContext.currentMillis - _waitTimeStart));
-
-        auto timeout = 10 * 60 * 1000; // 10 minutes
+        auto timeout = getWaitTimeAfterManualUsage();
         if (callContext.fastSimulationActive)
             timeout /= 10;
+        if (callContext.diagnosticLog)
+            logInfoP("Wait time %lus acitve. Waiting since: %lus", (unsigned long) timeout / 1000, (unsigned long) ((callContext.currentMillis - _waitTimeStart) / 1000 ));
+
         if (callContext.currentMillis - _waitTimeStart <  timeout)
             return _allowed; // In wait time
         _waitTimeStart = 0;

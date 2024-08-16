@@ -267,10 +267,10 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         }
         else if (moduleCommand.rfind("d") == 0)
         {
-            Timer& timer = Timer::instance();
+            Timer &timer = Timer::instance();
             if (moduleCommand.length() == 1 && timer.isTimerValid())
             {
-                logInfoP("%04d-%02d-%02d %02d:%02d", (int)timer.getYear() , (int)timer.getMonth(), (int)timer.getDay(), (int)timer.getHour(), (int)timer.getMinute());
+                logInfoP("%04d-%02d-%02d %02d:%02d", (int)timer.getYear(), (int)timer.getMonth(), (int)timer.getDay(), (int)timer.getHour(), (int)timer.getMinute());
                 return true;
             }
             logInfoP("Set date/time");
@@ -397,7 +397,15 @@ void ShutterControllerModule::processInputKo(GroupObject &ko)
     _measurementRain.processIputKo(ko);
     _measurementClouds.processIputKo(ko);
 
-    ShutterControllerChannelOwnerModule::processInputKo(ko);
+    //ShutterControllerChannelOwnerModule::processInputKo(ko);
+
+    auto numberOfChannels = getNumberOfChannels();
+    for (uint8_t i = 0; i < numberOfChannels; i++)
+    {
+        auto channel = (ShutterControllerChannel *)getChannel(i);
+        if (channel != nullptr)
+            channel->processInputKo(ko, &_callContext);
+    }
 }
 
 void ShutterControllerModule::setup()
@@ -424,7 +432,7 @@ void ShutterControllerModule::setup()
         "Brightness",
         ParamSHC_HasBrightnessInput ? &KoSHC_BrightnessInput : nullptr,
         ParamSHC_BrightnessWatchdog,
-        KNXValue(ParamSHC_BrightnessFallback),
+        KNXValue((float)ParamSHC_BrightnessFallback * 1000.F),
         DPT_Value_Lux,
         (MeasurementWatchdogFallbackBehavior)ParamSHC_BrightnessFallbackMode);
     _callContext.measurementBrightness = &_measurementBrightness;

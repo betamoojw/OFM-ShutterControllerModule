@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeWindowOpen.xml" name="ModeWindowOpen" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="29" increment="4" />
+						<op:param name="%ParamOffset%" value="30" increment="4" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="26" increment="4" />
 						<!-- ModeWindowOpen number -->
@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="37" increment="38" />
+						<op:param name="%ParamOffset%" value="38" increment="38" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="34" increment="6" />
 						<!-- ModeShading number -->
@@ -176,8 +176,12 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%036" Offset="28" BitOffset="4" Name="C%C%LongKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Langer Druck 'Nach oben'" Value="0"  />
 	
 
-								<!-- Next offset: 29-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%038 -->
+								<!-- Wartezeit nach Handbedienung-->
+								<Parameter Id="%AID%_UP-%TT%%CC%038" Offset="29" BitOffset="0" Name="C%C%ManualWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsage" Text="Sperrzeit für Automatiken nach Handbedienung" Value="5" />
+
+
+								<!-- Next offset: 30-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%039 -->
 
 
 							</Union>
@@ -298,6 +302,9 @@
 
 							<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" RefId="%AID%_UP-%TT%%CC%036" />
+
+							<!-- Wartezeit nach Handbedienung-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" RefId="%AID%_UP-%TT%%CC%038" />
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
@@ -699,6 +706,9 @@
 																</choose>
 															</when>
 														</choose>
+
+														<!-- Wartezeit nach Handbedienung-->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" />
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
 													

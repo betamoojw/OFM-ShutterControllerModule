@@ -80,7 +80,7 @@ void ShutterControllerChannel::setup()
 #endif
 }
 
-void ShutterControllerChannel::processInputKo(GroupObject &ko)
+void ShutterControllerChannel::processInputKo(GroupObject &ko, CallContext *callContext)
 {
     _measurementHeading.processIputKo(ko);
     _measurementRoomTemperature.processIputKo(ko);
@@ -101,7 +101,8 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
         }
         break;
     }
-    _positionController.processInputKo(ko);
+    if (!_positionController.processInputKo(ko, callContext))
+        return;
     for (auto mode : _modes)
     {
         mode->processInputKo(ko, _positionController);
@@ -260,6 +261,34 @@ void ShutterControllerChannel::activateShading()
     KoSHC_CShadingControl.value(true, DPT_Switch);
     processInputKo(KoSHC_CShadingControl);
 }
+
+unsigned long ShutterControllerChannel::getManualShadingWaitTimeInMs() const
+{
+    // <Enumeration Text="für diese Periode deaktivieren" Value="0" Id="%ENID%" />
+    // <Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
+    // <Enumeration Text="2 Minuten" Value="2" Id="%ENID%" />
+    // <Enumeration Text="5 Minuten" Value="5" Id="%ENID%" />
+    // <Enumeration Text="10 Minuten" Value="10" Id="%ENID%" />
+    // <Enumeration Text="15 Minuten" Value="15" Id="%ENID%" />
+    // <Enumeration Text="30 Minuten" Value="30" Id="%ENID%" />
+    // <Enumeration Text="1 Stunde" Value="101" Id="%ENID%" />
+    // <Enumeration Text="2 Stunden" Value="102" Id="%ENID%" />
+    // <Enumeration Text="3 Stunden" Value="103" Id="%ENID%" />
+    // <Enumeration Text="4 Stunden" Value="104" Id="%ENID%" />
+    // <Enumeration Text="5 Stunden" Value="105" Id="%ENID%" />
+    // <Enumeration Text="6 Stunden" Value="106" Id="%ENID%" />
+    // <Enumeration Text="7 Stunden" Value="107" Id="%ENID%" />
+    // <Enumeration Text="8 Stunden" Value="108" Id="%ENID%" />
+    // <Enumeration Text="9 Stunden" Value="109" Id="%ENID%" />
+    // <Enumeration Text="10 Stunden" Value="110" Id="%ENID%" />
+    // <Enumeration Text="11 Stunden" Value="111" Id="%ENID%" />
+    // <Enumeration Text="12 Stunden" Value="112" Id="%ENID%" />
+    auto value = ParamSHC_CManualShadingWaitTime;
+    if (value < 100)
+        return value * 60 * 1000;
+    return (value - 100) * 60 * 60 * 1000;
+}
+
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
     _measurementHeading.update(callContext.currentMillis, callContext.diagnosticLog);
@@ -286,7 +315,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
-        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > callContext.fastSimulationActive ? ParamSHC_CManualShadingWaitTime / 10 : ParamSHC_CManualShadingWaitTime)
+        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > callContext.fastSimulationActive ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs())
         {
             // reactivate
             _waitTimeForReactivateShadingAfterManualStarted = 0;
@@ -352,17 +381,17 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         {
             if (nextWindowOpenHandler != nullptr)
                 logInfoP("Start window open %s", nextWindowOpenHandler->name());
-            else 
+            else
                 logInfoP("Stop window open");
         }
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->stop(callContext, nextWindowOpenHandler, _positionController);
-         _currentWindowOpenHandler = nextWindowOpenHandler;
+        _currentWindowOpenHandler = nextWindowOpenHandler;
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->start(callContext, _currentWindowOpenHandler, _positionController);
     }
     callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
-  
+
     // State machine handling for mode activateion
     bool currentModeAllowed = false;
     ModeBase *nextMode = nullptr;
@@ -476,7 +505,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         logInfoP("Current active mode: %s", _currentMode->name());
 }
 
-bool ShutterControllerChannel::shadingControlActive()
+bool ShutterControllerChannel::shadingControlActive() const
 {
     return __shadingControlActive;
 }
@@ -499,7 +528,7 @@ void ShutterControllerChannel::shadingControlActive(bool active)
     }
 }
 
-bool ShutterControllerChannel::anyShadingModeActive()
+bool ShutterControllerChannel::anyShadingModeActive() const
 {
     return __anyShadingModeActive;
 }
@@ -517,25 +546,28 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
         logInfoP("Shading stopped");
         __anyShadingModeActive = false;
         KoSHC_CShadingActive.value(false, DPT_Switch);
-        // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
-        // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
-        // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
-        // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
-        switch (ParamSHC_CAfterShading)
+        if (_currentMode != _modeManual)
         {
-        case 1:
-            // Position vor Beschattungsstart
-            _positionController.restoreLastManualPosition();
-            break;
-        case 2:                                             
-            // Fährt auf
-            _positionController.setAutomaticPositionAndStoreForRestore(0); // Handled as manual operation because the value should be stored
-            _positionController.setAutomaticSlatAndStoreForRestore(0);     // Handled as manual operation because the value should be stored
-            break;
-        case 3:
-            // Lamelle Waagrecht
-            _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
-            break;
+            // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+            // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
+            // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
+            // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+            switch (ParamSHC_CAfterShading)
+            {
+            case 1:
+                // Position vor Beschattungsstart
+                _positionController.restoreLastManualPosition();
+                break;
+            case 2:
+                // Fährt auf
+                _positionController.setAutomaticPositionAndStoreForRestore(0); // Handled as manual operation because the value should be stored
+                _positionController.setAutomaticSlatAndStoreForRestore(0);     // Handled as manual operation because the value should be stored
+                break;
+            case 3:
+                // Lamelle Waagrecht
+                _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
+                break;
+            }
         }
     }
 }
