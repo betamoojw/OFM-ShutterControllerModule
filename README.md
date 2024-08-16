@@ -1,9 +1,16 @@
-# OFM-ShutterController
+# OFM-ShutterControllerModule
 
 Diese Module dient zur Jalousiensteuerung.
 
-## Features
+## Anwendungsbeschreibung
 
+Die Anwendungsbeschreibung ist unter [doc/Applikationsbeschreibung-ShutterController.md](doc/Applikationsbeschreibung-ShutterController.md) abgelegt.
+
+## Zugehörige Firmware
+
+Dies Jalousiensteuerung ist in folgenden Firmwares enthalten:
+
+- [OAM-ShutterController](https://github.com/OpenKNX/OAM-ShutterController)
 
 ## Hardware Unterstützung
 
@@ -14,6 +21,7 @@ Diese Module dient zur Jalousiensteuerung.
 
 Getestete Hardware:
 - Adafruit ESP32 Feather V2
+- OpenKNX Reg1-Base (TP)
 
 ## Einbindung in die Anwendung
 
@@ -29,7 +37,7 @@ In das Anwendungs XML muss das OFM-ShutterControlModule aufgenommen werden:
     <op:verify File="../lib/OFM-ShutterControllerModule/library.json" ModuleVersion="0" /> 
   </op:define>
 ```
-**Hinweis:** Das Module verwendet 7 Global KO's und weiters pro Kanal 35 KO's. Dies muss bei nachfolgenden Modulen bei KoOffset und KoSingleOffset entsprechend berücksichtigt werden. 
+**Hinweis:** Das Module verwendet 9 Global KO's und weiters pro Kanal 42 KO's. Dies muss bei nachfolgenden Modulen bei KoOffset und KoSingleOffset entsprechend berücksichtigt werden. 
 
 In main.cpp muss das ShutterControlModule ebenfalls hinzugefügt werden:
 
