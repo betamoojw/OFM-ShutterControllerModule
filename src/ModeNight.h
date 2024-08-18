@@ -10,6 +10,7 @@ class ModeNight : public ModeBase
     bool _startTime = false;
     bool _sunSet = false;
     bool _stopTime = false;
+    bool _deativatedForPeriod = false;
     double getElevationFromSunSetParameter();
     double getElevationFromSunRiseParameter();
 

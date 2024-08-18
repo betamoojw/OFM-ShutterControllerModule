@@ -347,7 +347,7 @@
 							<ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" ObjectSize="1 Byte" DatapointType="DPST-17-1" Name="C%C%ActiveMode" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 
-							<!-- Modus Handbetrieb Start/Stop Manual -->
+							<!-- Modus Handbetrieb Aus-/Einschalten -->
 							<ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" ObjectSize="1 Bit" DatapointType="DPST-1-10" Name="C%C%ManuelStopStart" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Handbetrieb Aktiv -->
 							<ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ManuelActiv" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
@@ -364,10 +364,10 @@
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
 							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
+							<!-- Modus Nacht Aus-/Einschalten -->
+							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-							<!-- Modus Nacht -->
-							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre -->
 							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
@@ -421,7 +421,7 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_O-%TT%%CC%011" Text="%C%: Aktiver Modus" FunctionText="{{0:-}} Aktiver Modus" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
-							<!-- Modus Handbetrieb Start/Stop Manual -->
+							<!-- Modus Handbetrieb Aus-/Einschalten -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="%C%: Handbetrieb Aus-/Einschalten" FunctionText="{{0:-}} Handbetrieb Aus-/Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="%C%: Handbetrieb Aktiv" FunctionText="{{0:-}} Handbetrieb Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
@@ -440,8 +440,8 @@
 
 							<!-- Modus Nacht Aktiv -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="%C%: Nachtmodus Aktiv" FunctionText="{{0:-}} Nachtmodus Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-							<!-- Modus Nacht -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Nachtmodus Einschalten" FunctionText="{{0:-}} Nachtmodus Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Modus Nacht Aus-/Einschalten -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="%C%: Nachtmodus Aus-/Einschalten" FunctionText="{{0:-}} Nachtmodus Einschalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="%C%: Nachtmodus Sperre" FunctionText="{{0:-}} Nachtmodus Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
@@ -526,8 +526,6 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
 														<!-- Aktiver Modus -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
-
-
 
 												
 														<!-- Kanal Deaktivieren -->
@@ -649,7 +647,7 @@
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
-														<!-- Modus Handbetrieb Stop/Start -->
+														<!-- Modus Handbetrieb Aus-/Einschalten -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
 														<!-- Modus Handbetrieb Aktiv -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
@@ -748,10 +746,10 @@
 														<when test="1">
 															<!-- Nacht Modus Aktiv -->
 
+															<!-- Modus Nacht Aus-/Einschalten -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
 															<!-- Modus Nacht Aktiv -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
-															<!-- Modus Nacht -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
 															<!-- Modus Nacht Sperre -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
 															<!-- Modus Nacht Sperre Rückmeldung -->

@@ -34,6 +34,13 @@ bool ModeNight::allowed(const CallContext &callContext)
         _startTime = false;
         _sunSet = false;
         _stopTime = false;
+        _deativatedForPeriod = false;
+    }
+    if (_deativatedForPeriod)
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Deactivated for period");
+        return false;
     }
     if (callContext.minuteChanged || callContext.diagnosticLog)
     {
@@ -235,6 +242,7 @@ void ModeNight::stop(const CallContext &callContext, const ModeBase *next, Posit
         positionController.setAutomaticPositionAndStoreForRestore(ParamSHC_CNightStopPosition); 
         positionController.setAutomaticSlatAndStoreForRestore(ParamSHC_CNightStopSlatPosition);
     }
+    _deativatedForPeriod = true;
 }
 
 void ModeNight::processInputKo(GroupObject &ko, PositionController& positionController)
@@ -243,6 +251,8 @@ void ModeNight::processInputKo(GroupObject &ko, PositionController& positionCont
     {
     case SHC_KoCNight:
         _allowed = ko.value(DPT_Switch);
+        if (_allowed)
+            _deativatedForPeriod = false;
         break;
     case SHC_KoCNightLock:
         KoSHC_CNightLockActive.value(ko.value(DPT_Switch), DPT_Switch);
