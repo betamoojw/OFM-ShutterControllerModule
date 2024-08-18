@@ -24,6 +24,8 @@ Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus 
 
 Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus Auswahl **Nachtmodus** aktiviert wurde.
 
+Achtung: Wenn kein Automatisches Ende konfiguriert ist, muss der Nachtmodus durch Handbetrieb oder durch AUS auf den Eingang `Nachtmodus Aus-/Einschalten` deaktiviert werden, damit eine Beschattung stattfindet kann.
+
 ### Handbetrieb (Priorität 5)
 
 In diese Betriebsart wird gewechselt, sobald eine Handbedienung über eine der Eingänge erkannt wird:
