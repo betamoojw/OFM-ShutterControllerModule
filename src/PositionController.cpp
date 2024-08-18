@@ -300,7 +300,7 @@ void PositionController::setMovingTimeout(unsigned long timeout)
 
 void PositionController::control(const CallContext &callContext)
 {
-    if (_lastSetPosition > 0 && callContext.currentMillis - _lastSetPosition > 100)
+    if (_lastSetPosition > 0 && callContext.currentMillis - _lastSetPosition > 1000)
     {
         _lastSetPosition = 0;
     }
@@ -340,7 +340,7 @@ void PositionController::control(const CallContext &callContext)
             _shutterSimulation->processInputKo(KoSHC_CShutterPercentOutput);
         _setPosition = 255;
     }
-    if (_setSlat != 255 && _lastSetPosition == 0) // Wait for setting slat, if position was set
+    else if (_setSlat != 255 && _lastSetPosition == 0) // Wait for setting slat, if position was set
     {
         logInfoP("Set slat position: %d", (int)_setSlat);
         _lastSetSlat = callContext.currentMillis;
