@@ -306,26 +306,27 @@
 			
 														<!-- Beschattungs Modus %Pn% Aktiv -->
 
-														<!-- Modus %Pn%  Aktiv -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
-														<!-- Modus %Pn%  Sperre -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
-														<!-- Modus %Pn%  Sperre Rückmeldung -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
-
-														<!-- Beschattungsunterbrechung -->
-														<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">
-															<!-- Nicht deaktiviert -->
-															<when test="&gt;0">
-																<!-- Modus %Pn%  Beschattungsunterbrechung Sperre -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
-																<!-- Modus %Pn%  Beschattungsunterbrechung Sperre Rückmeldung -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
-															</when>
-														</choose>
-
-														<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="SHC-ModeShading">
+														<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCShadingModeShading%Pn%" Text="Beschattungsmodus %Pn%" Icon="sun-angle-outline" HelpContext="SHC-ModeShading"  ShowInComObjectTree="true">
 													
+
+															<!-- Modus %Pn%  Aktiv -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
+															<!-- Modus %Pn%  Sperre -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
+															<!-- Modus %Pn%  Sperre Rückmeldung -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
+
+															<!-- Beschattungsunterbrechung -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+38%_R-%TT%%CC%%PPP+38%01">
+																<!-- Nicht deaktiviert -->
+																<when test="&gt;0">
+																	<!-- Modus %Pn%  Beschattungsunterbrechung Sperre -->
+																	<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
+																	<!-- Modus %Pn%  Beschattungsunterbrechung Sperre Rückmeldung -->
+																	<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
+																</when>
+															</choose>
+
 															<ParameterRefRef RefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
 															
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungsmodus %Pn%" UIHint="Headline" />

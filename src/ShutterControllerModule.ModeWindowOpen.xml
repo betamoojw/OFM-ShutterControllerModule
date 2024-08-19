@@ -85,17 +85,16 @@
 
 										<!-- Fenster offen Mode aktiv -->
 
+										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-ModeWindowOpen"  ShowInComObjectTree="true">
 
-										<!-- Fenster Offen Aktiv -->
-										<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
-										<!-- Fenster Offen -->
-										<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
-										<!-- Fenster Offen Sperre -->
-										<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
-										<!-- Fenster Offen Sperre Rückmeldung -->
-										<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
-
-										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-ModeWindowOpen">
+											<!-- Fenster Offen Aktiv -->
+											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
+											<!-- Fenster Offen -->
+											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
+											<!-- Fenster Offen Sperre -->
+											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
+											<!-- Fenster Offen Sperre Rückmeldung -->
+											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
 
 											<!-- Anzahl Fenster Offen Modus -->
 											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">

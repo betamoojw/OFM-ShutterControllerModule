@@ -56,8 +56,8 @@
 
 								<!-- Kanal Deaktivieren -->
 								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="C%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
-								<!-- Ersten Manuellen Fahrbefehl startet Beschattung wenn erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="C%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Fahrbefehl ignorieren wenn Beschattung aktiv" Value="0" />
+								<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
+								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="C%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Auf/Ab Befehl ignorieren wenn Beschattung aktiv" Value="0" />
 
 								<!-- Nacht Modus -->
 								<Parameter Id="%AID%_UP-%TT%%CC%004" Offset="1" BitOffset="2" Name="C%C%Night" ParameterType="%AID%_PT-OnOffYesNo" Text="Nachtmodus" Value="0" />
@@ -203,7 +203,7 @@
 							<ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
 
 
-							<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
+							<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_UP-%TT%%CC%003" />
 
 							<!-- Nacht Modus -->
@@ -365,7 +365,7 @@
 							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Modus Nacht Aus-/Einschalten -->
-							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Aktiv -->
 							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre -->
@@ -643,7 +643,7 @@
 													<!-- Gerätetype aktiviert -->
 
 													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-ModeManual">
+													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-ModeManual" ShowInComObjectTree="true">
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
@@ -651,10 +651,7 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
 														<!-- Modus Handbetrieb Aktiv -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
-														<!-- Modus Handbetrieb Sperre -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
-														<!-- Modus Handbetrieb Sperre Rückmeldung -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
+															
 														<!-- Handbetrieb Steuerung Auf/Ab -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
 														<!-- Handbetrieb Steuerung Stopp/Schritt -->
@@ -674,36 +671,41 @@
 															<when test="1">
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
 											
+																<!-- Modus Handbetrieb Sperre -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
+																<!-- Modus Handbetrieb Sperre Rückmeldung -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
+												
 																<!-- Mode Manual ignoriert Kanal Lock -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
 
 																<!-- Auf/Ab Ausgang -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
 
-																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-																	<when test="&gt;0">
-																		<!-- Mindestens ein Beschattungsmodus -->
-																	
-																		<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-																	</when>
-																</choose>
 															</when>
 															<when test="2">
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
 
+																<!-- Modus Handbetrieb Sperre -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
+																<!-- Modus Handbetrieb Sperre Rückmeldung -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
+								
 																<!-- Mode Manual ignoriert Kanal Lock -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
-
-																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-																	<when test="&gt;0">
-																		<!-- Mindestens ein Beschattungsmodus -->
-																			<!-- Ersten Manuellen Fahrbefehl wenn Beschattung aktiv ignorieren -->
-																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
-																	</when>
-																</choose>
+				
 															</when>
 														</choose>
+
+														<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+															<when test="&gt;0">
+																<!-- Mindestens ein Beschattungsmodus -->
+															
+																<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" />
+															</when>
+														</choose>
+									
 
 														<!-- Wartezeit nach Handbedienung-->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" />
@@ -746,16 +748,19 @@
 														<when test="1">
 															<!-- Nacht Modus Aktiv -->
 
-															<!-- Modus Nacht Aus-/Einschalten -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
-															<!-- Modus Nacht Aktiv -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
-															<!-- Modus Nacht Sperre -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
-															<!-- Modus Nacht Sperre Rückmeldung -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
+														
+															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-ModeNight"  ShowInComObjectTree="true">
+																
+																
+																<!-- Modus Nacht Aus-/Einschalten -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
+																<!-- Modus Nacht Aktiv -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
+																<!-- Modus Nacht Sperre -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
+																<!-- Modus Nacht Sperre Rückmeldung -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
 
-															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-ModeNight">
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
 																

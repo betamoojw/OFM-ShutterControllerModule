@@ -13,18 +13,19 @@ enum class PositionControllerState
 
 class PositionController
 {
+    static const uint8_t NOTUSED;
     ShutterSimulation* _shutterSimulation = nullptr;
     PositionControllerState _state = PositionControllerState::Idle;
     uint8_t _restorePosition = 0;
     uint8_t _restoreSlat = 0;
-    uint8_t _setPosition = 255;
+    uint8_t _setPosition = NOTUSED;
     unsigned long _lastSetPosition = 0;
-    uint8_t _calculatedTargetPosition = 255;
-    uint8_t _positionLimit = 255;
-    uint8_t _blockedPosition = 255;
-    uint8_t _slatLimit = 255;
-    uint8_t _blockedSlat = 255;
-    uint8_t _setSlat = 255;
+    uint8_t _calculatedTargetPosition = NOTUSED;
+    uint8_t _positionLimit = NOTUSED;
+    uint8_t _blockedPosition = NOTUSED;
+    uint8_t _slatLimit = NOTUSED;
+    uint8_t _blockedSlat = NOTUSED;
+    uint8_t _setSlat = NOTUSED;
     unsigned long _lastSetSlat = 0;
     uint8_t _channelIndex;
     bool _hasSlat = false;

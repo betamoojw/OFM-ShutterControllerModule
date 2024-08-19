@@ -6,6 +6,8 @@
 #define MOVING_TIMEOUT 120000               // 2 minutes
 #define MOVING_TIMEOUT_AFTER_FEEDBACK 30000 // 30 seconds
 
+const uint8_t PositionController::NOTUSED = 255;
+
 PositionController::PositionController(uint8_t channelIndex)
     : _channelIndex(channelIndex)
 {
@@ -25,7 +27,7 @@ bool PositionController::hasSlat() const
 
 void PositionController::setAutomaticPosition(uint8_t automaticPosition)
 {
-    if (_positionLimit != 100)
+    if (_positionLimit != NOTUSED)
         _blockedPosition = automaticPosition;
     if (_positionLimit < automaticPosition)
     {
@@ -39,7 +41,7 @@ void PositionController::setAutomaticSlat(uint8_t automaticSlat)
 {
     if (!_hasSlat)
         return;
-    if (_slatLimit != 255)
+    if (_slatLimit != NOTUSED)
         _blockedSlat = automaticSlat;
     if (_slatLimit < automaticSlat)
     {
@@ -89,6 +91,7 @@ void PositionController::setManualSlat(uint8_t manualSlat)
     _startWaitForManualSlatPositionFeedback = 0;
 
     _restoreSlat = manualSlat;
+    
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
     // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
@@ -98,10 +101,13 @@ void PositionController::setManualSlat(uint8_t manualSlat)
 
 void PositionController::setManualStep(bool step)
 {
-    if (_hasSlat && ParamSHC_CManualUpDownType != 0)
+    if (_hasSlat)
     {
         logInfoP("Set step: %d", (int)step);
-        KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
+        if (ParamSHC_CManualUpDownType != 0)
+        {
+            KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
+        }
         if (_shutterSimulation != nullptr)
             _shutterSimulation->processInputKo(KoSHC_CShutterStopStepOutput);
         _startWaitForManualPositionFeedback = millis();
@@ -157,16 +163,16 @@ void PositionController::setManualUpDown(bool up)
 
 void PositionController::restoreLastManualPosition()
 {
-    if (_restorePosition != 255)
+    if (_restorePosition != NOTUSED)
         _setPosition = _restorePosition;
-    if (_restoreSlat != 255)
+    if (_restoreSlat != NOTUSED)
         _setSlat = _restoreSlat;
 }
 
 bool PositionController::processInputKo(GroupObject &ko, CallContext *callContext)
 {
     if (callContext != nullptr)
-                    logDebugP("processInputKo %d %lu %d",(int)ko.asap(), callContext->currentMillis, (int) ko.commFlag());
+        logDebugP("processInputKo %d %lu %d", (int)ko.asap(), callContext->currentMillis, (int)ko.commFlag());
 
     if (_shutterSimulation != nullptr)
         _shutterSimulation->processInputKo(ko);
@@ -174,33 +180,34 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
     // Handle blocked input
     switch (koIndex)
     {
-        case SHC_KoCManualPercent:
+    case SHC_KoCManualPercent:
+    {
+        if (KoSHC_CShutterPercentOutput.commFlag() == WriteRequest)
         {
-            if (KoSHC_CShutterPercentOutput.commFlag() == WriteRequest)
-            {
-                logErrorP("Blocked SHC_KoCManualPercent: sent: %lu %d received: %lu %d", _lastSetPosition,(int) KoSHC_CShutterPercentOutput.commFlag(), callContext->currentMillis, (int) ko.commFlag());
-                return false;
-            }
-            break;
+            logErrorP("Blocked SHC_KoCManualPercent: sent: %lu %d received: %lu %d", _lastSetPosition, (int)KoSHC_CShutterPercentOutput.commFlag(), callContext->currentMillis, (int)ko.commFlag());
+            return false;
         }
-        case SHC_KoCManualSlatPercent:
+        break;
+    }
+    case SHC_KoCManualSlatPercent:
+    {
+        if (KoSHC_CShutterSlatOutput.commFlag() == WriteRequest)
         {
-            if (KoSHC_CShutterSlatOutput.commFlag() == WriteRequest)
-            {
-                logErrorP("Blocked SHC_KoCManualSlat: sent: %lu %d received: %lu %d", _lastSetSlat, (int) KoSHC_CShutterSlatOutput.commFlag(), callContext->currentMillis, (int) ko.commFlag());
-                return false;
-            }
-            break;
+            logErrorP("Blocked SHC_KoCManualSlat: sent: %lu %d received: %lu %d", _lastSetSlat, (int)KoSHC_CShutterSlatOutput.commFlag(), callContext->currentMillis, (int)ko.commFlag());
+            return false;
         }
-        case SHC_KoCManualStepStop:
+        break;
+    }
+    case SHC_KoCManualStepStop:
+    {
+        if (KoSHC_CShutterStopStepOutput.commFlag() == WriteRequest)
         {
-            if (KoSHC_CShutterStopStepOutput.commFlag() == WriteRequest)
-            {
-                logErrorP("Blocked SHC_KoCManualStepStop");;
-                return false;
-            }
-            break;
+            logErrorP("Blocked SHC_KoCManualStepStop");
+            ;
+            return false;
         }
+        break;
+    }
     }
     // Handle moving
     switch (koIndex)
@@ -307,7 +314,7 @@ void PositionController::control(const CallContext &callContext)
     if (_lastSetSlat > 0 && callContext.currentMillis - _lastSetSlat > 100)
     {
         _lastSetSlat = 0;
-    }   
+    }
     if (_shutterSimulation != nullptr)
         _shutterSimulation->update(callContext);
     auto now = callContext.currentMillis;
@@ -322,7 +329,7 @@ void PositionController::control(const CallContext &callContext)
     {
         _startWaitForManualSlatPositionFeedback = 0;
     }
-    if (_setPosition != 255)
+    if (_setPosition != NOTUSED)
     {
         logInfoP("Set position: %d", (int)_setPosition);
         auto currentPosition = position();
@@ -334,21 +341,21 @@ void PositionController::control(const CallContext &callContext)
         }
 
         _lastSetPosition = callContext.currentMillis;
-        logErrorP("Set position ko: %d %d %lu", (int) KoSHC_CShutterPercentOutput.asap(), (int)_setPosition, _lastSetPosition);
+        logErrorP("Set position ko: %d %d %lu", (int)KoSHC_CShutterPercentOutput.asap(), (int)_setPosition, _lastSetPosition);
         KoSHC_CShutterPercentOutput.value(_setPosition, DPT_Scaling);
         if (_shutterSimulation != nullptr)
             _shutterSimulation->processInputKo(KoSHC_CShutterPercentOutput);
-        _setPosition = 255;
+        _setPosition = NOTUSED;
     }
-    else if (_setSlat != 255 && _lastSetPosition == 0) // Wait for setting slat, if position was set
+    else if (_setSlat != NOTUSED && _lastSetPosition == 0) // Wait for setting slat, if position was set
     {
         logInfoP("Set slat position: %d", (int)_setSlat);
         _lastSetSlat = callContext.currentMillis;
-        logErrorP("Set slat ko: %d %d %lu", (int) KoSHC_CShutterSlatOutput.asap(), (int)_setSlat, _lastSetSlat);
+        logErrorP("Set slat ko: %d %d %lu", (int)KoSHC_CShutterSlatOutput.asap(), (int)_setSlat, _lastSetSlat);
         KoSHC_CShutterSlatOutput.value(_setSlat, DPT_Scaling);
         if (_shutterSimulation != nullptr)
             _shutterSimulation->processInputKo(KoSHC_CShutterSlatOutput);
-        _setSlat = 255;
+        _setSlat = NOTUSED;
     }
     if (callContext.diagnosticLog)
     {
@@ -357,15 +364,15 @@ void PositionController::control(const CallContext &callContext)
         logInfoP("Position: %d", (int)position());
         if (_positionLimit != 100)
             logInfoP("Position limit: %d", (int)_positionLimit);
-        if (_blockedPosition != 255)
+        if (_blockedPosition != NOTUSED)
             logInfoP("Blocked position: %d", (int)_blockedPosition);
         logInfoP("Target position: %d", (int)targetPosition());
         if (_hasSlat)
         {
-            logInfoP("Slat position: %d", (int) (uint8_t)KoSHC_CShutterSlatInput.value(DPT_Scaling));
-            if (_slatLimit != 255)
+            logInfoP("Slat position: %d", (int)(uint8_t)KoSHC_CShutterSlatInput.value(DPT_Scaling));
+            if (_slatLimit != NOTUSED)
                 logInfoP("Slat limit: %d", (int)_slatLimit);
-            if (_blockedSlat != 255)    
+            if (_blockedSlat != NOTUSED)
                 logInfoP("Blocked slat position: %d", (int)_blockedSlat);
             logInfoP("Target slat position: %d", (int)_setSlat);
         }
@@ -415,7 +422,7 @@ uint8_t PositionController::position() const
 
 int8_t PositionController::targetPosition() const
 {
-    if (_calculatedTargetPosition == 255)
+    if (_calculatedTargetPosition == NOTUSED)
         return position();
     return _calculatedTargetPosition;
 }
@@ -434,7 +441,7 @@ void PositionController::setState(PositionControllerState state, const char *rea
         {
         case PositionControllerState::Idle:
             _waitForMovingFinshed = 0;
-            _calculatedTargetPosition = 255;
+            _calculatedTargetPosition = NOTUSED;
             logDebugP("State: Idle at %d (%s)", (int)position(), reason);
             break;
         case PositionControllerState::MovingDown:
@@ -451,21 +458,24 @@ void PositionController::setState(PositionControllerState state, const char *rea
 
 void PositionController::resetPositionLowerLimit()
 {
-    setPositionLowerLimit(255, false);
+    setPositionLowerLimit(NOTUSED, false);
 }
 
 void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveToLimit)
 {
     if (positionLimit >= 100)
-        positionLimit = 255;
-    if (_positionLimit == 100)
+        positionLimit = NOTUSED;
+    if (positionLimit == NOTUSED)
     {
         logDebugP("Position limit disabled");
-        if (_blockedPosition != 255 && _setPosition == 255)
+        if (_blockedPosition != NOTUSED)
         {
-            logDebugP("Set previous blocked position: %d", (int)_blockedPosition);
-            _setPosition = _blockedPosition;
-            _blockedPosition = 255;
+            if (_setPosition == NOTUSED)
+            {
+                logDebugP("Set previous blocked position: %d", (int)_blockedPosition);
+                _setPosition = _blockedPosition;
+            }
+            _blockedPosition = NOTUSED;
         }
     }
     else if (targetPosition() > positionLimit || moveToLimit)
@@ -476,12 +486,11 @@ void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveT
         logDebugP("Position limit forces new position %d, store %d", (int)positionLimit, (int)_setPosition);
     }
     _positionLimit = positionLimit;
- 
 }
 
 void PositionController::resetSlatLowerLimit()
 {
-    setSlatLowerLimit(255, false);
+    setSlatLowerLimit(NOTUSED, false);
 }
 
 void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
@@ -489,17 +498,20 @@ void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
     if (!_hasSlat)
         return;
     if (slatLimit >= 100)
-        slatLimit = 255;
+        slatLimit = NOTUSED;
     if (slatLimit == _slatLimit)
         return;
-    if (slatLimit == 255)
+    if (slatLimit == NOTUSED)
     {
         logDebugP("Slat limit disabled");
-        if (_blockedSlat != 255 && _setSlat == 255)
+        if (_blockedSlat != NOTUSED)
         {
-            logDebugP("Set previous blocked slat position: %d", (int)_blockedSlat);
-            _setSlat = _blockedSlat;
-            _blockedSlat = 255;
+            if (_setSlat == NOTUSED)
+            {
+                logDebugP("Set previous blocked slat position: %d", (int)_blockedSlat);
+                _setSlat = _blockedSlat;
+            }
+            _blockedSlat = NOTUSED;
         }
     }
     else if (slat() > slatLimit || moveToLimit)
@@ -509,13 +521,12 @@ void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
         logDebugP("Slat limit forces new slat %d, store %d", (int)slatLimit, (int)_setSlat);
     }
     _slatLimit = slatLimit;
-  
 }
 
 void PositionController::resetBlockedPositionAndLimits()
 {
-    _blockedPosition = 255;
-    _blockedSlat = 255;
-    _positionLimit = 255;
-    _slatLimit = 255;
+    _blockedPosition = NOTUSED;
+    _blockedSlat = NOTUSED;
+    _positionLimit = NOTUSED;
+    _slatLimit = NOTUSED;
 }

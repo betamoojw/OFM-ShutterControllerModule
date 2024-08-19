@@ -13,7 +13,9 @@ uint8_t ModeManual::sceneNumber() const
 
 void ModeManual::initGroupObjects()
 {
-    KoSHC_CManualLockActive.value(false, DPT_Switch);
+    _manualControlWithActor = ParamSHC_CManualUpDownType == 0;
+    if (!_manualControlWithActor)
+        KoSHC_CManualLockActive.value(false, DPT_Switch);
 }
 bool ModeManual::windowOpenAllowed() const
 {
@@ -64,7 +66,7 @@ bool ModeManual::allowed(const CallContext &callContext)
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
-        if (KoSHC_CManualLockActive.value(DPT_Switch))
+        if (!_manualControlWithActor && KoSHC_CManualLockActive.value(DPT_Switch))
         {
             _allowed = false;
             _waitTimeStart = 0;
@@ -86,9 +88,9 @@ bool ModeManual::allowed(const CallContext &callContext)
         if (callContext.fastSimulationActive)
             timeout /= 10;
         if (callContext.diagnosticLog)
-            logInfoP("Wait time %lus acitve. Waiting since: %lus", (unsigned long) timeout / 1000, (unsigned long) ((callContext.currentMillis - _waitTimeStart) / 1000 ));
+            logInfoP("Wait time %lus acitve. Waiting since: %lus", (unsigned long)timeout / 1000, (unsigned long)((callContext.currentMillis - _waitTimeStart) / 1000));
 
-        if (callContext.currentMillis - _waitTimeStart <  timeout)
+        if (callContext.currentMillis - _waitTimeStart < timeout)
             return _allowed; // In wait time
         _waitTimeStart = 0;
     }
@@ -116,32 +118,31 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
         return;
 
     _waitTimeStart = callContext.currentMillis; // Start wait time
-    auto mode = ParamSHC_CManualUpDownType;
-    // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
-    if (mode != 0)
+    for (auto ko : _changedGroupObjects)
     {
-        for (auto ko : _changedGroupObjects)
-        {
-            switch (ko->asap())
-            {
-            case SHC_KoCManualPercent:
-                positionController.setManualPosition(ko->value(DPT_Scaling));
-                break;
-            case SHC_KoCManualStepStop:
-                positionController.setManualStep(ko->value(DPT_Step));
-                break;
-            case SHC_KoCManualUpDown:
-                positionController.setManualUpDown(ko->value(DPT_UpDown));
-                break;
-            case SHC_KoCManualSlatPercent:
-                positionController.setManualSlat(ko->value(DPT_Scaling));
-                break;
-            default:
-                break;
-            }
-        }
+        updatePositionControllerFromKo(*ko, positionController);
     }
     _changedGroupObjects.clear();
+}
+void ModeManual::updatePositionControllerFromKo(GroupObject &ko, PositionController &positionController)
+{
+    switch (ko.asap())
+    {
+    case SHC_KoCManualPercent:
+        positionController.setManualPosition(ko.value(DPT_Scaling));
+        break;
+    case SHC_KoCManualStepStop:
+        positionController.setManualStep(ko.value(DPT_Step));
+        break;
+    case SHC_KoCManualUpDown:
+        positionController.setManualUpDown(ko.value(DPT_UpDown));
+        break;
+    case SHC_KoCManualSlatPercent:
+        positionController.setManualSlat(ko.value(DPT_Scaling));
+        break;
+    default:
+        break;
+    }
 }
 void ModeManual::stop(const CallContext &callContext, const ModeBase *next, PositionController &positionController)
 {
@@ -159,11 +160,11 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
         switch (koIndex)
         {
         case SHC_KoCManualStepStop:
-            if ((bool) ko.value(DPT_Step) == false)
+            if ((bool)ko.value(DPT_Step) == false)
                 specialHandling = ParamSHC_CShortKeyPressUpIfOpen;
             break;
         case SHC_KoCManualUpDown:
-            if ((bool) ko.value(DPT_Step) == false)
+            if ((bool)ko.value(DPT_Step) == false)
                 specialHandling = ParamSHC_CLongKeyPressUpIfOpen;
             break;
         }
@@ -188,19 +189,10 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
         }
     }
 
-    if (koIndex == SHC_KoCManualLock)
+    if (koIndex == SHC_KoCManualLock && !_manualControlWithActor)
     {
         KoSHC_CManualLockActive.value(ko.value(DPT_Switch), DPT_Switch);
         _recalcAllowed = true;
-    }
-    if (KoSHC_CManualLockActive.value(DPT_Switch))
-        return; // lock active, ignore manual KO's
-
-    if (_firstManualCommandWhileShading)
-    {
-        _firstManualCommandWhileShading = false;
-        if (ParamSHC_CIgnoreFirstManualCommandIfShadingActiv)
-            return;
     }
     switch (koIndex)
     {
@@ -212,18 +204,24 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
             return;
         }
         logDebugP("Manual start");
-        _changedGroupObjects.push_back(&ko);
-        _requestStart = true;
         break;
     case SHC_KoCManualStepStop:
         logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "increase" : "decrease");
-        _changedGroupObjects.push_back(&ko);
-        _requestStart = true;
         break;
     case SHC_KoCManualUpDown:
+        if (_firstManualCommandWhileShading)
+        {
+            _firstManualCommandWhileShading = false;
+            if (ParamSHC_CIgnoreFirstManualCommandIfShadingActiv)
+            {
+                logInfoP("Ignore first manual uo/down while shading active");
+                // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
+                if (_manualControlWithActor)
+                    KoSHC_CShutterStopStepOutput.value(true, DPT_Switch);
+                return;
+            }
+        }
         logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "down" : "up");
-        _changedGroupObjects.push_back(&ko);
-        _requestStart = true;
         break;
     case SHC_KoCManualPercent:
         logDebugP("Manual position: %d%%", (uint8_t)ko.value(DPT_Scaling));
@@ -234,6 +232,13 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
     default:
         return;
     }
-    _changedGroupObjects.push_back(&ko);
-    _requestStart = true;
+    if (_manualControlWithActor)
+    {
+       updatePositionControllerFromKo(ko, positionController);
+    }
+    else
+    {
+        _changedGroupObjects.push_back(&ko);
+        _requestStart = true;
+    }
 }
