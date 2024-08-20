@@ -1,5 +1,6 @@
 #pragma once
 #include "ModeBase.h"
+class ShutterControllerChannel;
 
 class ModeManual : public ModeBase
 {
@@ -12,6 +13,8 @@ class ModeManual : public ModeBase
     bool _requestStart = false;
     unsigned long getWaitTimeAfterManualUsage() const;
     bool _manualControlWithActor = false;
+    ShutterControllerChannel& _channel;
+    bool _forceClose = false;
  protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;
@@ -26,4 +29,5 @@ class ModeManual : public ModeBase
     void updatePositionControllerFromKo(GroupObject &ko, PositionController& positionController);
 public:
     void stopWaitTime();
+    ModeManual(ShutterControllerChannel& channel);
 };

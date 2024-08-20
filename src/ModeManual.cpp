@@ -1,5 +1,10 @@
 #include "ModeManual.h"
 #include "PositionController.h"
+#include "ShutterControllerChannel.h"
+
+ModeManual::ModeManual(ShutterControllerChannel &channel) : _channel(channel)
+{
+}
 
 const char *ModeManual::name() const
 {
@@ -56,7 +61,7 @@ unsigned long ModeManual::getWaitTimeAfterManualUsage() const
 bool ModeManual::allowed(const CallContext &callContext)
 {
     if (callContext.diagnosticLog && _ignoreFirstUpDownWhileShadingPeriod)
-        logInfoP("First UP/DOWN will be ignored");    
+        logInfoP("First UP/DOWN will be ignored");
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
@@ -74,6 +79,7 @@ bool ModeManual::allowed(const CallContext &callContext)
         _requestStart = false;
         return _allowed;
     }
+    _forceClose = false;
     _requestStart = false;
     _changedGroupObjects.clear();
     if (_waitTimeStart != 0)
@@ -115,20 +121,25 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
         else
             _ignoreFirstUpDownWhileShadingPeriod = false;
     }
-
-    if (_changedGroupObjects.empty())
-        return;
-
-    for (auto ko : _changedGroupObjects)
+    if (_forceClose)
     {
-        updatePositionControllerFromKo(*ko, positionController);
+        positionController.setAutomaticPositionAndStoreForRestore(100);
+        positionController.setAutomaticSlatAndStoreForRestore(100);
+        _forceClose = false;
     }
-    _changedGroupObjects.clear();
+    if (!_changedGroupObjects.empty())
+    {
+        for (auto ko : _changedGroupObjects)
+        {
+            updatePositionControllerFromKo(*ko, positionController);
+        }
+        _changedGroupObjects.clear();
+    }
 }
 void ModeManual::updatePositionControllerFromKo(GroupObject &ko, PositionController &positionController)
 {
     _waitTimeStart = max(millis(), 1uL); // Start wait time
- 
+
     switch (ko.asap())
     {
     case SHC_KoCManualPercent:
@@ -178,16 +189,18 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
         {
         case 1:
         {
-            auto newValue = !KoSHC_CShadingActive.value(DPT_Switch);
+
+            auto newValue = !_channel.shadingControlActive();
             logInfoP("Special key handling: Toggle shading to %s", newValue ? "ON" : "OFF");
-            KoSHC_CShadingActive.value(newValue, DPT_Switch);
-            break;
+            _channel.activateShadingControl(newValue);
+            return;
         }
         case 2:
         {
             logInfoP("Special key handling: Close shading");
-            KoSHC_CManualUpDown.value(true, DPT_Switch);
-            break;
+            _forceClose = true;
+            _requestStart = true;
+            return;
         }
         }
     }
@@ -234,7 +247,7 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
     }
     if (_manualControlWithActor)
     {
-       updatePositionControllerFromKo(ko, positionController);
+        updatePositionControllerFromKo(ko, positionController);
     }
     else
     {

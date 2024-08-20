@@ -11,7 +11,7 @@ protected:
     uint8_t _channelIndex = 0;
     std::string _logPrefix = "";
 
-    const std::string& logPrefix();
+    const std::string& logPrefix() const;
 public:
     void setup(uint8_t _channelIndex);
     virtual bool windowOpenAllowed() const = 0;

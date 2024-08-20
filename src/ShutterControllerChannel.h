@@ -32,7 +32,6 @@ class ShutterControllerChannel : public OpenKNX::Channel
 
         bool __shadingControlActive = false;
         void shadingControlActive(bool active);
-        bool shadingControlActive() const;
        
         bool __anyShadingModeActive = false;
         void anyShadingModeActive(bool active);
@@ -40,6 +39,9 @@ class ShutterControllerChannel : public OpenKNX::Channel
         unsigned long getManualShadingWaitTimeInMs() const;
     public:
         ShutterControllerChannel(uint8_t channelIndex);
+        bool shadingControlActive() const;
+        void activateShadingControl(bool active);
+       
         const std::string name() override;
         void setup() override;
         bool needCall();  

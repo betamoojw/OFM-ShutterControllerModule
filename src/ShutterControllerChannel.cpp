@@ -51,7 +51,7 @@ void ShutterControllerChannel::setup()
     KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
 
     // add modes, highest priority first
-    _modeManual = new ModeManual();
+    _modeManual = new ModeManual(*this);
     logErrorP("Slat1: %d", ParamSHC_CWindowOpenSlatPositionControl1);
     logErrorP("Slat2: %d", ParamSHC_CWindowOpenSlatPositionControl2);
     for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
@@ -95,11 +95,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko, CallContext *call
         KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
         break;
     case SHC_KoCShadingControl:
-        shadingControlActive(ko.value(DPT_Switch));
-        if (shadingControlActive() && _currentMode == _modeManual)
-        {
-            _modeManual->stopWaitTime();
-        }
+        activateShadingControl(ko.value(DPT_Switch));
         break;
     }
     if (!_positionController.processInputKo(ko, callContext))
@@ -107,6 +103,15 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko, CallContext *call
     for (auto mode : _modes)
     {
         mode->processInputKo(ko, _positionController);
+    }
+}
+
+void ShutterControllerChannel::activateShadingControl(bool activate)
+{
+    shadingControlActive(activate);
+    if (shadingControlActive() && _currentMode == _modeManual)
+    {
+        _modeManual->stopWaitTime();
     }
 }
 
