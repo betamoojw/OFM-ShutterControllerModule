@@ -10,6 +10,7 @@ ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
     : _modes(), _windowOpenHandlers(), _positionController(channelIndex)
 {
     _name = "SC";
+    _channelIndex = channelIndex;
 }
 
 const std::string ShutterControllerChannel::name()
