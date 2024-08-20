@@ -57,7 +57,7 @@ void ShutterControllerModule::loop()
 {
     MeasurementWatchdog::resetMissingValue();
     ShutterControllerChannelOwnerModule::loop();
-    _callContext.currentMillis = millis();
+    _callContext.currentMillis = max(millis(), 1uL); // 0 can be used as special marker -> skip 0
 
     _measurementTemperature.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementTemperatureForecast.update(_callContext.currentMillis, _callContext.diagnosticLog);
@@ -66,8 +66,6 @@ void ShutterControllerModule::loop()
     _measurementRain.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
 
-    if (_callContext.currentMillis == 0)
-        _callContext.currentMillis = 1; // 0 can be used as special marker -> skip 0
     Timer &timer = Timer::instance();
     _callContext.timeAndSunValid = timer.isTimerValid();
     _callContext.minuteChanged = false;

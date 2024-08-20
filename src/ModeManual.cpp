@@ -117,7 +117,6 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
     if (_changedGroupObjects.empty())
         return;
 
-    _waitTimeStart = callContext.currentMillis; // Start wait time
     for (auto ko : _changedGroupObjects)
     {
         updatePositionControllerFromKo(*ko, positionController);
@@ -126,6 +125,8 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
 }
 void ModeManual::updatePositionControllerFromKo(GroupObject &ko, PositionController &positionController)
 {
+    _waitTimeStart = max(millis(), 1uL); // Start wait time
+ 
     switch (ko.asap())
     {
     case SHC_KoCManualPercent:
@@ -239,6 +240,6 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
     else
     {
         _changedGroupObjects.push_back(&ko);
-        _requestStart = true;
     }
+    _requestStart = true;
 }

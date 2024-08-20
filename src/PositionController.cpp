@@ -53,6 +53,7 @@ void PositionController::setAutomaticSlat(uint8_t automaticSlat)
 
 void PositionController::setAutomaticPositionAndStoreForRestore(uint8_t automaticPosition)
 {
+    logDebugP("Set manual position for restore: %d", (int)automaticPosition);
     _restorePosition = automaticPosition;
     setAutomaticPosition(automaticPosition);
 }
@@ -68,6 +69,7 @@ void PositionController::setManualPosition(uint8_t manualPosition)
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
 
+    logDebugP("Set manual position: %d", (int)manualPosition);
     _restorePosition = manualPosition;
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
@@ -90,6 +92,7 @@ void PositionController::setManualSlat(uint8_t manualSlat)
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
 
+    logDebugP("Set manual slat position: %d", (int)manualSlat);
     _restoreSlat = manualSlat;
     
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
@@ -128,11 +131,13 @@ void PositionController::setManualUpDown(bool up)
     _startWaitForManualSlatPositionFeedback = 0;
     if (up)
     {
+        logDebugP("Set Manual up - position and slat 0");
         _restorePosition = 0;
         _restoreSlat = 0;
     }
     else
     {
+        logDebugP("Set Manual down - position and slat 100");
         _restorePosition = 100;
         _restoreSlat = 100;
     }
@@ -282,15 +287,17 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
     switch (koIndex)
     {
     case SHC_KoCShutterPercentInput:
-        if (millis() - _startWaitForManualPositionFeedback < 3000)
+        if (_startWaitForManualPositionFeedback != 0 && millis() - _startWaitForManualPositionFeedback < 3000)
         {
             _restorePosition = (uint8_t)ko.value(DPT_Scaling);
+            logDebugP("Set manual position from Input: %d", (int)_restorePosition);
         }
         break;
     case SHC_KoCShutterSlatInput:
-        if (millis() - _startWaitForManualSlatPositionFeedback < 3000)
+        if (_startWaitForManualSlatPositionFeedback != 0 && millis() - _startWaitForManualSlatPositionFeedback < 3000)
         {
             _restoreSlat = (uint8_t)ko.value(DPT_Scaling);
+            logDebugP("Set manual slat position from Input: %d", (int)_restoreSlat);
         }
         break;
     }
@@ -362,7 +369,7 @@ void PositionController::control(const CallContext &callContext)
         logInfoP("State: %s", _state == PositionControllerState::Idle ? "Idle" : _state == PositionControllerState::MovingDown ? "Moving down"
                                                                                                                                : "Moving up");
         logInfoP("Position: %d", (int)position());
-        if (_positionLimit != 100)
+        if (_positionLimit != NOTUSED)
             logInfoP("Position limit: %d", (int)_positionLimit);
         if (_blockedPosition != NOTUSED)
             logInfoP("Blocked position: %d", (int)_blockedPosition);
@@ -374,7 +381,8 @@ void PositionController::control(const CallContext &callContext)
                 logInfoP("Slat limit: %d", (int)_slatLimit);
             if (_blockedSlat != NOTUSED)
                 logInfoP("Blocked slat position: %d", (int)_blockedSlat);
-            logInfoP("Target slat position: %d", (int)_setSlat);
+            if (_setSlat != NOTUSED)    
+                logInfoP("Target slat position: %d", (int)_setSlat);
         }
         logInfoP("Last manual position: %d", (int)_restorePosition);
         if (_hasSlat)
