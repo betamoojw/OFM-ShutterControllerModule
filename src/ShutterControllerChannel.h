@@ -27,6 +27,7 @@ class ShutterControllerChannel : public OpenKNX::Channel
         bool _anyAutoModeActive = false;
         unsigned long _waitTimeForReactivateShadingAfterManualStarted = 0;
         bool _waitForShadingPeriodEnd = false;
+        bool _shadingPeriodActive = false;
        
 
         bool __shadingControlActive = false;

@@ -17,6 +17,7 @@ class CallContext
         bool hasSlat = false;
         bool diagnosticLog = false;
         bool shadingControlActive = false;
+        bool shadingPeriodActive = false;
         bool channelLockActive = false;
         unsigned long currentMillis = 0;
         bool timeAndSunValid = false;

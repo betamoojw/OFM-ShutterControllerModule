@@ -57,7 +57,7 @@
 								<!-- Kanal Deaktivieren -->
 								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="C%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
 								<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="C%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erster manueller Auf/Ab Befehl ignorieren wenn Beschattung aktiv" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="C%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erstes manuelles Auf/Ab in Beschattungsperiode bei Beschattung ignorieren" Value="0" />
 
 								<!-- Nacht Modus -->
 								<Parameter Id="%AID%_UP-%TT%%CC%004" Offset="1" BitOffset="2" Name="C%C%Night" ParameterType="%AID%_PT-OnOffYesNo" Text="Nachtmodus" Value="0" />

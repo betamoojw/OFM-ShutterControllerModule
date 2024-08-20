@@ -294,6 +294,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _measurementHeading.update(callContext.currentMillis, callContext.diagnosticLog);
     _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
 
+    callContext.shadingPeriodActive = _shadingPeriodActive;
     callContext.positionController = &_positionController;
     callContext.fastSimulationActive = _positionController.simulationMode() == 2;
     callContext.hasSlat = _positionController.hasSlat();
@@ -339,6 +340,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         if (allShadingPeriodsEnd)
         {
+            _shadingPeriodActive = false;
+            callContext.shadingPeriodActive = _shadingPeriodActive;
             _waitForShadingPeriodEnd = false;
             shadingControlActive(KoSHC_CShadingControl.value(DPT_Switch));
         }
@@ -474,9 +477,12 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         auto previousMode = _currentMode;
         _currentMode = nextMode;
-        if (_currentMode->isModeShading() && !anyShadingModeActive())
+        if (_currentMode->isModeShading())
         {
-            anyShadingModeActive(true);
+            _shadingPeriodActive = true;
+            callContext.shadingPeriodActive = _shadingPeriodActive;
+            if (anyShadingModeActive())
+                anyShadingModeActive(true);
         }
         _currentMode->start(callContext, previousMode, _positionController);
         callContext.modeNewStarted = true;
