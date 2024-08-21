@@ -23,18 +23,21 @@ class CallContext
         bool timeAndSunValid = false;
         bool minuteChanged = false;
         bool summerTime = false;
+        bool reactivateShadingWaitTimeRunning = false;
+        bool reactivateShadingAfterPeriod = false;
+        bool shadingDailyActivation = false;
         uint16_t year = 0;
         uint8_t month = 0;
         uint8_t day = 0;
         uint8_t hour = 0;
         uint8_t minute = 0;
         uint16_t minuteOfDay = 0;
-        uint16_t UtcYear = 0;
-        uint8_t UtcMonth = 0;
-        uint8_t UtcDay = 0;
-        uint8_t UtcHour = 0;
-        uint8_t UtcMinute = 0;
-        uint16_t UtcMinuteOfDay = 0;
+        uint16_t utcYear = 0;
+        uint8_t utcMonth = 0;
+        uint8_t utcDay = 0;
+        uint8_t utcHour = 0;
+        uint8_t utcMinute = 0;
+        uint16_t utcMinuteOfDay = 0;
      
         double azimuth = 0;
         double elevation = 0;

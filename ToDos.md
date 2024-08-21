@@ -1,4 +1,6 @@
 To Do's
+- Kurzer Druck nach unten Sonderfunktionen
+- Eigener KO für Special Command
 - Debug logErrorP in PositionController entfernen
 - remove _lastSetSlat from PositionController
 - remove CallContext* from processInputKo

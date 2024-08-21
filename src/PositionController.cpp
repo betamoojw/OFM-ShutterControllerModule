@@ -64,6 +64,11 @@ void PositionController::setAutomaticSlatAndStoreForRestore(uint8_t automaticSla
     setAutomaticSlat(automaticSlat);
 }
 
+void PositionController::storeCurrentPositionForRestore()
+{
+    _restorePosition = position();
+}
+
 void PositionController::setManualPosition(uint8_t manualPosition)
 {
     _startWaitForManualPositionFeedback = 0;

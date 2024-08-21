@@ -110,22 +110,23 @@ void ShutterControllerModule::loop()
         tm utc;
         localtime_r(&timet, &utc);
 
-        _callContext.UtcYear = utc.tm_year + 1900;
-        _callContext.UtcMonth = utc.tm_mon + 1;
-        _callContext.UtcDay = utc.tm_mday;
-        _callContext.UtcHour = utc.tm_hour;
-        _callContext.UtcMinute = utc.tm_min;
-        _callContext.UtcMinuteOfDay = _callContext.UtcMinute + 60 * _callContext.UtcHour;
+        _callContext.utcYear = utc.tm_year + 1900;
+        _callContext.utcMonth = utc.tm_mon + 1;
+        _callContext.utcDay = utc.tm_mday;
+        _callContext.utcHour = utc.tm_hour;
+        _callContext.utcMinute = utc.tm_min;
+        _callContext.utcMinuteOfDay = _callContext.utcMinute + 60 * _callContext.utcHour;
+        _callContext.shadingDailyActivation = _shadingDailyActivation;
 
         double latitude = ParamBASE_Latitude;
         double longitude = ParamBASE_Longitude;
 
         cTime cTime = {0};
-        cTime.iYear = _callContext.UtcYear;
-        cTime.iMonth = _callContext.UtcMonth;
-        cTime.iDay = _callContext.UtcDay;
-        cTime.dHours = _callContext.UtcHour;
-        cTime.dMinutes = _callContext.UtcMinute;
+        cTime.iYear = _callContext.utcYear;
+        cTime.iMonth = _callContext.utcMonth;
+        cTime.iDay = _callContext.utcDay;
+        cTime.dHours = _callContext.utcHour;
+        cTime.dMinutes = _callContext.utcMinute;
         cTime.dSeconds = 0;
 
         cLocation cLocation = {0};
@@ -179,7 +180,7 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         else
         {
             logInfoP("Local Time: %04d-%02d-%02d %02d:%02d %s", (int)_callContext.year, (int)_callContext.month, (int)_callContext.day, (int)_callContext.hour, (int)_callContext.minute, _callContext.summerTime ? "Summertime" : "Wintertime");
-            logInfoP("UTC: %04d-%02d-%02d %02d:%02d", (int)_callContext.UtcYear, (int)_callContext.UtcMonth, (int)_callContext.UtcDay, (int)_callContext.UtcHour, (int)_callContext.UtcMinute);
+            logInfoP("UTC: %04d-%02d-%02d %02d:%02d", (int)_callContext.utcYear, (int)_callContext.utcMonth, (int)_callContext.utcDay, (int)_callContext.utcHour, (int)_callContext.utcMinute);
             logInfoP("Aizmut: %.2f°", (double)_callContext.azimuth);
             logInfoP("Elevation: %.2f°", (double)_callContext.elevation);
         }

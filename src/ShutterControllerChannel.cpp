@@ -310,6 +310,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.measurementHeading = &_measurementHeading;
     callContext.measurementRoomTemperature = &_measurementRoomTemperature;
     callContext.channelLockActive = _channelLockActive;
+    callContext.reactivateShadingWaitTimeRunning = _waitTimeForReactivateShadingAfterManualStarted != 0;
+    callContext.reactivateShadingAfterPeriod = _waitForShadingPeriodEnd;
 
     if (_currentMode == nullptr)
     {
@@ -564,7 +566,7 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
             // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
             // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
             // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
-            switch (ParamSHC_CAfterShading)
+            switch (_positionController.hasSlat() ? ParamSHC_CAfterShadingJalousie : ParamSHC_CAfterShading)
             {
             case 1:
                 // Position vor Beschattungsstart
@@ -577,6 +579,7 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
                 break;
             case 3:
                 // Lamelle Waagrecht
+                _positionController.storeCurrentPositionForRestore();
                 _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
                 break;
             }

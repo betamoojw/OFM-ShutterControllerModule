@@ -44,6 +44,7 @@ public:
     void setAutomaticSlat(uint8_t automaticSlat);
     void setAutomaticPositionAndStoreForRestore(uint8_t automaticPosition);
     void setAutomaticSlatAndStoreForRestore(uint8_t automaticSlat);
+    void storeCurrentPositionForRestore();
     void setPositionLowerLimit(uint8_t positionLimit, bool);
     void setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit);
     void resetPositionLowerLimit();

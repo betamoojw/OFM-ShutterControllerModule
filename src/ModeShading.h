@@ -6,25 +6,28 @@ enum ModeShadingNotAllowedReason : uint32_t
 {
     ModeShadingNotAllowedReasonNone = 0,
     ModeShadingNotAllowedReasonTimeNotValid = 1,
-    ModeShadingNotAllowedReasonSwitchedOff = 2,
-    ModeShadingNotAllowedReasonChannelLock = 4,
-    ModeShadingNotAllowedReasonLock = 8,
-    ModeShadingNotAllowedReasonSunAzimut = 16,
-    ModeShadingNotAllowedReasonSunElevation = 32,
-    ModeShadingNotAllowedReasonSunBreak = 64,
-    ModeShadingNotAllowedReasonShutterPosition = 128,
-    ModeShadingNotAllowedReasonStartWaitTime = 256,
-    ModeShadingNotAllowedReasonManualUsage = 512,  
-    ModeShadingNotAllowedReasonWindowOpen = 1024,
-    ModeShadingNotAllowedReasonRoomTemperature = 2048,
-    ModeShadingNotAllowedReasonHeating = 4096,
-    ModeShadingNotAllowedReasonHeatingInThePast = 8192,
-    ModeShadingNotAllowedReasonRain =  16384,
-    ModeShadingNotAllowedReasonBrightness = 32768,
-    ModeShadingNotAllowedReasonTemperature = 65536,
-    ModeShadingNotAllowedReasonTemperatureForecase = 131072,
-    ModeShadingNotAllowedReasonClouds = 262144,
-    ModeShadingNotAllowedReasonUVI = 524288,
+    ModeShadingNotAllowedReasonSwitchedOffNoReactivation = 2,
+    ModeShadingNotAllowedReasonSwitchedOff = 4,
+    ModeShadingNotAllowedReasonSwitchedOffUntilEndOfPeriod = 8,
+    ModeShadingNotAllowedReasonSwitchedOffWaitTime = 16,
+    ModeShadingNotAllowedReasonChannelLock = 32,
+    ModeShadingNotAllowedReasonLock = 64,
+    ModeShadingNotAllowedReasonSunAzimut = 128,
+    ModeShadingNotAllowedReasonSunElevation = 256,
+    ModeShadingNotAllowedReasonSunBreak = 512,
+    ModeShadingNotAllowedReasonShutterPosition = 1024,
+    ModeShadingNotAllowedReasonStartWaitTime = 2048,
+    ModeShadingNotAllowedReasonManualUsage = 4096,  
+    ModeShadingNotAllowedReasonWindowOpen = 8192,
+    ModeShadingNotAllowedReasonRoomTemperature = 16384,
+    ModeShadingNotAllowedReasonHeating = 32768,
+    ModeShadingNotAllowedReasonHeatingInThePast = 65536,
+    ModeShadingNotAllowedReasonRain = 131072,
+    ModeShadingNotAllowedReasonBrightness = 262144,
+    ModeShadingNotAllowedReasonTemperature =  524288,
+    ModeShadingNotAllowedReasonTemperatureForecase = 1048576,
+    ModeShadingNotAllowedReasonClouds = 2097152,
+    ModeShadingNotAllowedReasonUVI = 4194304,
   
 };
 
@@ -49,7 +52,7 @@ class ModeShading : public ModeBase
     GroupObject& getKo(uint8_t ko);
     bool allowedByMeasurmentValues(const CallContext& callContext);
     bool handleMeasurmentValue(bool& allowed, bool enabled, const MeasurementWatchdog *measurementWatchdog, const CallContext &callContext, bool (*predicate)(const MeasurementWatchdog *, uint8_t _channelIndex, uint8_t _index), ModeShadingNotAllowedReason reasonBit);
-
+    void updateDiagnosticKos();
 public:
     ModeShading(uint8_t index);
     bool allowedBySun(const CallContext& callContext);

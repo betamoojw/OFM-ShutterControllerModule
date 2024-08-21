@@ -26,9 +26,9 @@ bool ModeNight::windowTiltAllowed() const
 }
 bool ModeNight::allowed(const CallContext &callContext)
 {
-    if (callContext.UtcDay != _lastDayUTC)
+    if (callContext.utcDay != _lastDayUTC)
     {
-        _lastDayUTC = callContext.UtcDay;
+        _lastDayUTC = callContext.utcDay;
         // new day
         _sunRise = false;
         _startTime = false;
@@ -63,7 +63,7 @@ bool ModeNight::allowed(const CallContext &callContext)
                 logInfoP("Start Time: %s", _startTime ? "true" : "false");
             break;
         case 2:
-            if (!_sunSet && callContext.UtcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
+            if (!_sunSet && callContext.utcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
                 logInfoP("Sun set");
                 _sunSet;
@@ -79,7 +79,7 @@ bool ModeNight::allowed(const CallContext &callContext)
                 _startTime = true;
                 trigger = true;
             }
-            if (!_sunSet && callContext.UtcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
+            if (!_sunSet && callContext.utcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
                 logInfoP("Sun set");
                 _sunSet = true;
@@ -93,7 +93,7 @@ bool ModeNight::allowed(const CallContext &callContext)
                 _startTime = true;
                 trigger = _sunSet;
             }
-            if (!_sunSet && callContext.UtcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
+            if (!_sunSet && callContext.utcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
                 logInfoP("Sun set");
                 _sunSet = true;
@@ -128,8 +128,8 @@ bool ModeNight::allowed(const CallContext &callContext)
             break;
         case 2:
             if (callContext.diagnosticLog)
-                logInfoP("Sun rise %d %lf %lf", callContext.UtcHour, callContext.elevation, getElevationFromSunRiseParameter());
-            if (!_sunRise && callContext.UtcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
+                logInfoP("Sun rise %d %lf %lf", callContext.utcHour, callContext.elevation, getElevationFromSunRiseParameter());
+            if (!_sunRise && callContext.utcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
             {
                 logInfoP("Sun rise");
                 _sunRise = true;
@@ -145,7 +145,7 @@ bool ModeNight::allowed(const CallContext &callContext)
                 _stopTime = true;
                 trigger = true;
             }
-            if (!_sunRise && callContext.UtcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
+            if (!_sunRise && callContext.utcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
             {
                 logInfoP("Sun rise");
                 _sunRise = true;
@@ -161,7 +161,7 @@ bool ModeNight::allowed(const CallContext &callContext)
                 _stopTime = true;
                 trigger = _sunRise;
             }
-            if (!_sunRise && callContext.UtcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
+            if (!_sunRise && callContext.utcHour < 12 && callContext.elevation >= getElevationFromSunRiseParameter())
             {
                 logInfoP("Sun rise");
                 _sunRise = true;

@@ -31,10 +31,39 @@ void ModeShading::initGroupObjects()
 {
     getKo(SHC_KoCShading1LockActive).value(false, DPT_Switch);
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
-    getKo(SHC_KoCShading1DiagnoseNotAllowed).value((uint32_t)_notAllowedReason, DPT_CombinedInfoOnOff);
+    updateDiagnosticKos();
 
     _recalcMeasurmentValues = true;
 }
+
+void ModeShading::updateDiagnosticKos()
+{
+    if (ParamSHC_CShading1DiagnoseBits != 0)
+        getKo(SHC_KoCShading1DiagnoseNotAllowedBit).value((uint32_t)_notAllowedReason, DPT_CombinedInfoOnOff);
+    
+    if (ParamSHC_CShading1DiagnoseReason != 0)
+    {
+        auto& ko = getKo(SHC_KoCShading1DiagnoseNotAllowedReason);
+        if (_notAllowedReason == 0)
+        {
+            if (ko.valueNoSendCompare((uint8_t)0, DPT_DecimalFactor))   
+                ko.objectWritten();
+        }
+        else
+        {
+            for (uint8_t i = 31; i >= 0; i--)
+            {
+                if (_notAllowedReason & (1 << i))
+                {
+                    if (ko.valueNoSendCompare((uint8_t)(i + 1), DPT_DecimalFactor))   
+                        ko.objectWritten();
+                    break;
+                }
+            }
+        }
+    }
+}
+
 bool ModeShading::windowOpenAllowed() const
 {
     return ParamSHC_CShading1WindowOpenAllowed;
@@ -51,10 +80,22 @@ bool ModeShading::allowed(const CallContext &callContext)
     {
         if (callContext.diagnosticLog)
             logInfoP("Shading control KO not active");
-        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOff;
+        if (callContext.reactivateShadingWaitTimeRunning)
+            _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOffWaitTime;
+        else if (callContext.reactivateShadingAfterPeriod)
+            _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOffUntilEndOfPeriod;
+        else if (callContext.shadingPeriodActive)
+            _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOff;
+        else
+            _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOffNoReactivation;
     }
     else
+    {
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOffWaitTime;
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOffUntilEndOfPeriod;
         _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOff;
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSwitchedOffNoReactivation;
+    }
     if (callContext.channelLockActive)
     {
         if (callContext.diagnosticLog)
@@ -278,7 +319,7 @@ bool ModeShading::allowed(const CallContext &callContext)
     {
         logDebugP("Not allowed reason changed: %lu", (unsigned long)_notAllowedReason);
         _lastNotAllowedReason = _notAllowedReason;
-        getKo(SHC_KoCShading1DiagnoseNotAllowed).value((uint32_t)_notAllowedReason, DPT_CombinedInfoOnOff);
+        updateDiagnosticKos();
     }
     // Return result
     if (!_lastSunFrameAllowed)

@@ -14,9 +14,9 @@
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="29" />
+						<op:param name="%En%" value="34" increment="7" />
 						<!-- Min Temp-->
-						<op:param name="%MinTemp%" value="15" increment="5" />
+						<op:param name="%MinTemp%" value="15" increment="10" />
 					</op:partParams>
 
 					<Static>
@@ -126,12 +126,14 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+43%" Offset="31" BitOffset="0" Name="C%C%Shading%Pn%RoomTemperaturActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Raumtemperatur" Value="0" />
 								<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+47%" Offset="31" BitOffset="1" Name="C%C%Shading%Pn%WindowOpenAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster offen' Modus erlaubt" Value="1" />
-								<!-- Bestchattung Nicht erlaubt KO -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+48%" Offset="31" BitOffset="2" Name="C%C%Shading%Pn%DiagnoseKo" ParameterType="%AID%_PT-OnOffYesNo" Text="Diagnose Objekt für 'Nicht erlaubt'" Value="0" />
+								<!-- Beschattung Nicht erlaubt Bits -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+48%" Offset="31" BitOffset="2" Name="C%C%Shading%Pn%DiagnoseBits" ParameterType="%AID%_PT-OnOffYesNo" Text="'Nicht erlaubt' Bits (Nur für Experten)" Value="0" />
+								<!-- Beschattung Nicht erlaubt Grund -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+50%" Offset="31" BitOffset="3" Name="C%C%Shading%Pn%DiagnoseReason" ParameterType="%AID%_PT-OnOffYesNo" Text="'Nicht erlaubt' Grund" Value="0" />
 								<!-- Fenster Kippmodus Modus in Beschattungsmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+49%"  Offset="31" BitOffset="2" Name="C%C%Shading%Pn%WindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+49%"  Offset="31" BitOffset="4" Name="C%C%Shading%Pn%WindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
 		
-								<!-- 5 Bits free -->
+								<!-- 2 Bits free -->
 
 								<!-- Heizung Stellwert -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+45%" Offset="32" BitOffset="0" Name="C%C%Shading%Pn%MaxHeatingValue" ParameterType="%AID%_PT-MaxHeatingValue" Text="Maximaler Heizungsstellwert" SuffixText="%" Value="0" />
@@ -144,7 +146,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="37" BitOffset="0" Name="C%C%Shading%Pn%HeatingActive" ParameterType="%AID%_PT-HeatingActive" Text="Heizung" Value="0" />
 
 								<!-- Next Offset = 38 -->
-								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+50% -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+51% -->
 							</Union>
 
 						</Parameters>
@@ -245,11 +247,14 @@
 							<!-- Fenster offen Modus in Beschattungsmodus erlaubt -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+47%_R-%TT%%CC%%PPP+47%01" RefId="%AID%_UP-%TT%%CC%%PPP+47%" />
 
-							<!-- Diagnose Objekt für 'Nicht erlaubt' -->
+							<!-- Diagnose Objekt für 'Nicht erlaubt' Bits -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01" RefId="%AID%_UP-%TT%%CC%%PPP+48%" />
 
 							<!-- Fenster Kippmodus Modus in Beschattungsmodus erlaubt -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+49%_R-%TT%%CC%%PPP+49%01" RefId="%AID%_UP-%TT%%CC%%PPP+49%" />
+
+							<!-- Diagnose Objekt für 'Nicht erlaubt' Grund -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+50%_R-%TT%%CC%%PPP+50%01" RefId="%AID%_UP-%TT%%CC%%PPP+50%" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -265,9 +270,11 @@
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+3%" Number="%K%En+3%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%BreakLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+4%" Number="%K%En+4%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%BreakLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-							<!-- Modus 1 Diagnose "Nicht erlaubt"  -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+5%" Number="%K%En+5%%" ObjectSize="4 Bytes" DatapointType="DPST-27-1" Name="C%C%Shading%Pn%DiagnoseNotAllowed" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-		
+							<!-- Modus 1 Diagnose "Nicht erlaubt" Bits  -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+5%" Number="%K%En+5%%" ObjectSize="4 Bytes" DatapointType="DPST-27-1" Name="C%C%Shading%Pn%DiagnoseNotAllowedBit" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<!-- Modus 1 Diagnose "Nicht erlaubt" Grund -->
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+6%" Number="%K%En+6%%" ObjectSize="1 Byte" DatapointType="DPST-5-5" Name="C%C%Shading%Pn%DiagnoseNotAllowedReason" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+					
 						</ComObjectTable>
 						<ComObjectRefs>
 
@@ -281,8 +288,10 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_O-%TT%%CC%%PPP+3%" Text="%C%: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre" FunctionText="{{0:-}} Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" RefId="%AID%_O-%TT%%CC%%PPP+4%" Text="%C%: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-							<!-- Modus 1 Diagnose "Nicht erlaubt"  -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_O-%TT%%CC%%PPP+5%" Text="%C%: Beschattungsmodus %Pn% Diagnose 'Nicht erlaubt'" FunctionText="{{0:-}} Beschattungsmodus %Pn% Diagnose 'Nicht erlaubt'" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Modus 1 Diagnose "Nicht erlaubt" Bit  -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_O-%TT%%CC%%PPP+5%" Text="%C%: Beschattungsmodus %Pn% 'Nicht erlaubt' Bits" FunctionText="{{0:-}} Beschattungsmodus %Pn% 'Nicht erlaubt' Bits" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Modus 1 Diagnose "Nicht erlaubt" Grund -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" RefId="%AID%_O-%TT%%CC%%PPP+6%" Text="%C%: Beschattungsmodus %Pn% 'Nicht erlaubt' Grund" FunctionText="{{0:-}} Beschattungsmodus %Pn% 'Nicht erlaubt' Grund" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 						</ComObjectRefs>
 					</Static>
@@ -360,14 +369,7 @@
 																</when>
 															</choose>
 
-															<!-- Diagnose Objekt für 'Nicht erlaubt' -->
-															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01" />
-															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01">
-																<when test="1">
-																	<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" />
-																</when>
-															</choose>
-
+													
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonnenposition" UIHint="Headline" />
 
@@ -420,6 +422,41 @@
 																	<ParameterRefRef IndentLevel = "1" RefId="%AID%_UP-%TT%%CC%%PPP+41%_R-%TT%%CC%%PPP+41%01" />
 																	<!-- Beschattungsunterbrechung Maximaler Elevation -->
 																	<ParameterRefRef IndentLevel = "1" RefId="%AID%_UP-%TT%%CC%%PPP+42%_R-%TT%%CC%%PPP+42%01" />
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungssteuerung" UIHint="Headline" />
+
+															<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+31%_R-%TT%%CC%%PPP+31%01" />
+
+
+															<!-- Beschattungsposition -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+32%_R-%TT%%CC%%PPP+32%01" />
+
+															<!-- Gerätetype -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																<when test="1">
+																	<!-- Gerätetype Jalousie -->
+
+																	<!-- Lamellenstellung an Sonnenstand Höhenwinkel anpassen -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01">
+																		<when test="0">
+																			<!-- Lamellenposition -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" />
+																		</when>
+																		<when test="1">
+																			<!-- Mindeständerung Lamellennachführung -->
+																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+35%_R-%TT%%CC%%PPP+35%01" />
+
+																			<!-- Offset Lamellenposition -->
+																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" />
+																		</when>
+																	</choose>
 																</when>
 															</choose>
 
@@ -588,35 +625,22 @@
 
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
-															<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungssteuerung" UIHint="Headline" />
-
-															<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
-															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+31%_R-%TT%%CC%%PPP+31%01" />
-
-
-															<!-- Beschattungsposition -->
-															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+32%_R-%TT%%CC%%PPP+32%01" />
-
-															<!-- Gerätetype -->
-															<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+												
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Diagnose Objekte für Beschattungshinderunggrund" UIHint="Headline" />
+													
+															<!-- Diagnose Objekt für 'Nicht erlaubt' Grund -->
+															<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+50%_R-%TT%%CC%%PPP+50%01" HelpContext="SHC-DiagnosticReason"  />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+50%_R-%TT%%CC%%PPP+50%01">
 																<when test="1">
-																	<!-- Gerätetype Jalousie -->
+																	<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" />
+																</when>
+															</choose>
 
-																	<!-- Lamellenstellung an Sonnenstand Höhenwinkel anpassen -->
-																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01" />
-																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01">
-																		<when test="0">
-																			<!-- Lamellenposition -->
-																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" />
-																		</when>
-																		<when test="1">
-																			<!-- Mindeständerung Lamellennachführung -->
-																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+35%_R-%TT%%CC%%PPP+35%01" />
-
-																			<!-- Offset Lamellenposition -->
-																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" />
-																		</when>
-																	</choose>
+															<!-- Diagnose Objekt für 'Nicht erlaubt' Bits -->
+															<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01" HelpContext="SHC-DiagnosticBits"  />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+48%_R-%TT%%CC%%PPP+48%01">
+																<when test="1">
+																	<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" />
 																</when>
 															</choose>
 														</ParameterBlock>

@@ -23,7 +23,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="38" increment="38" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="34" increment="6" />
+						<op:param name="%En%" value="34" increment="7" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -119,7 +119,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%ManualShadingWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
 								<!-- Nach Beschattung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%039" Offset="16" BitOffset="0" Name="C%C%AfterShadingJalousie" ParameterType="%AID%_PT-AfterShadingJalousie" Text="Nach Beschattung" Value="2" />
 
 
 								<!-- Position bei Nacht Start anfahren -->
@@ -181,7 +182,7 @@
 
 
 								<!-- Next offset: 30-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%039 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%040 -->
 
 
 							</Union>
@@ -277,6 +278,7 @@
 
 							<!-- Nach Beschattung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_UP-%TT%%CC%018" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" RefId="%AID%_UP-%TT%%CC%039" />
 
 							<!-- Heizung Watchdog -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_UP-%TT%%CC%027" />
@@ -559,7 +561,18 @@
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" />
 
 																<!-- Nach Beschattung -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
+																<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																	<when test="1">
+																		<!-- Jalousie -->
+																		<!-- Nach Beschattung Zeit -->
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
+																	</when>
+																	<when test="2">
+																		<!-- Rollo -->
+																		<!-- Nach Beschattung Zeit -->
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901"/>
+																	</when>
+																</choose>
 
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
