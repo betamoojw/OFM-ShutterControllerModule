@@ -51,7 +51,7 @@ void ModeShading::updateDiagnosticKos()
         }
         else
         {
-            for (uint8_t i = 31; i >= 0; i--)
+            for (uint8_t i = 0; i < 32; i++)
             {
                 if (_notAllowedReason & (1 << i))
                 {
@@ -438,7 +438,7 @@ bool ModeShading::handleMeasurmentValue(bool &allowed, bool enabled, const Measu
             logInfoP("%s: wait for value", measurementWatchdog->logPrefix().c_str());
         _notAllowedReason |= reasonBit;
         allowed = false;
-        return false;
+        return true;
     }
     if (!predicate(measurementWatchdog, _channelIndex, _index))
     {

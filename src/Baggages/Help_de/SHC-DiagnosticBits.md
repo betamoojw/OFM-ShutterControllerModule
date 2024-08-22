@@ -10,8 +10,8 @@ Bit 3: Ausgeschalten bis zum Ende der Beschattungsperiode
 Bit 4: Temporär Ausgeschalten  
 Bit 5: KO "Sperre" ist EIN  
 Bit 6: KO "Beschattungsmodus X Sperre" ist EIN  
-Bit 7: Himmelsrichtung der Sonne (Azimut) nicht im Beschattungsbereich  
-Bit 8: Höhenwinkel der Sonne (Elevation) ist zu gering  
+Bit 7: Höhenwinkel der Sonne (Elevation) ist zu gering  
+Bit 8: Himmelsrichtung der Sonne (Azimut) nicht im Beschattungsbereich  
 Bit 9: Sonnen im Beschattungsunterbrechungsbereich  
 Bit 10: Aktuelle Jalousienposition lässt Beschattung nicht zu  
 Bit 11: Wartezeit für Beschattungsstart ist aktiv  
