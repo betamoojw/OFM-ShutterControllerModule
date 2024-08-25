@@ -489,7 +489,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         {
             _shadingPeriodActive = true;
             callContext.shadingPeriodActive = _shadingPeriodActive;
-            if (anyShadingModeActive())
+            if (!anyShadingModeActive())
                 anyShadingModeActive(true);
         }
         _currentMode->start(callContext, previousMode, _positionController);
@@ -516,7 +516,12 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _measurementRoomTemperature.resetChanged();
 
     if (callContext.diagnosticLog)
+    {
+        logInfoP("Shading control active: %d", shadingControlActive());
+        logInfoP("Shading active: %d", anyShadingModeActive());
+        logInfoP("Active shading period: %d", _shadingPeriodActive);
         logInfoP("Current active mode: %s", _currentMode->name());
+    }
 }
 
 bool ShutterControllerChannel::shadingControlActive() const

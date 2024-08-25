@@ -60,8 +60,16 @@ unsigned long ModeManual::getWaitTimeAfterManualUsage() const
 
 bool ModeManual::allowed(const CallContext &callContext)
 {
-    if (callContext.diagnosticLog && _ignoreFirstUpDownWhileShadingPeriod)
-        logInfoP("First UP/DOWN will be ignored");
+    if (_shadingActive != callContext.modeCurrentActive->isModeShading())
+    {
+        _shadingActive = callContext.modeCurrentActive->isModeShading();
+        if (_shadingActive)
+            _ignoreFirstUpWhileShading = ParamSHC_CIgnoreFirstManualCommandIfShadingActiv;
+        else
+            _ignoreFirstUpWhileShading = false;
+    }
+    if (callContext.diagnosticLog && _ignoreFirstUpWhileShading)
+        logInfoP("First UP might be ignored");
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
@@ -113,14 +121,6 @@ void ModeManual::start(const CallContext &callContext, const ModeBase *previous,
 }
 void ModeManual::control(const CallContext &callContext, PositionController &positionController)
 {
-    if (_shadingPeriodActive != callContext.shadingControlActive)
-    {
-        _shadingPeriodActive = callContext.shadingControlActive;
-        if (_shadingPeriodActive)
-            _ignoreFirstUpDownWhileShadingPeriod = ParamSHC_CIgnoreFirstManualCommandIfShadingActiv;
-        else
-            _ignoreFirstUpDownWhileShadingPeriod = false;
-    }
     if (_forceClose)
     {
         positionController.setAutomaticPositionAndStoreForRestore(100);
@@ -225,13 +225,19 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
         logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "increase" : "decrease");
         break;
     case SHC_KoCManualUpDown:
-        if (_ignoreFirstUpDownWhileShadingPeriod)
+        if (_ignoreFirstUpWhileShading)
         {
-            _ignoreFirstUpDownWhileShadingPeriod = false;
-            logInfoP("Ignore first manual uo/down while shading active");
-            // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
-            if (_manualControlWithActor)
-                KoSHC_CShutterStopStepOutput.value(true, DPT_Switch);
+            _ignoreFirstUpWhileShading = false;
+            bool up = !ko.value(DPT_Switch);
+            if (up && positionController.getRestorePosition() >= positionController.position())
+            {
+                logInfoP("Ignore first manual uo while shading active");
+                positionController.setRestorePosition(0);
+                positionController.setRestoreSlat(0);
+                // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
+                if (_manualControlWithActor)
+                    KoSHC_CShutterStopStepOutput.value(true, DPT_Switch);
+                }
             return;
         }
         logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "down" : "up");

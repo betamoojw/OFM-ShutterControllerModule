@@ -6,8 +6,8 @@ class ModeManual : public ModeBase
 {
     bool _recalcAllowed = true;
     bool _allowed = false;
-    bool _ignoreFirstUpDownWhileShadingPeriod = false;
-    bool _shadingPeriodActive = false;
+    bool _ignoreFirstUpWhileShading= false;
+    bool _shadingActive = false;
     unsigned long _waitTimeStart = 0;
     std::vector<GroupObject*> _changedGroupObjects = std::vector<GroupObject*>();
     bool _requestStart = false;
