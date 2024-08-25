@@ -88,9 +88,16 @@ void MeasurementWatchdog::update(unsigned long currentMillis, bool diagnosticLog
     {
     case MeasurementWatchdogState::MeasurementWatchdogStateInitialize:
         _waitTimeStartMillis = currentMillis;
-        setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue);
-        _groupObject->requestObjectRead();
-        _missingValue = true;
+        if (_groupObject->initialized())
+        {
+            processIputKo(*_groupObject);
+        }
+        else
+        {
+            setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue);
+            _groupObject->requestObjectRead();
+            _missingValue = true;
+        }
         break;
     case MeasurementWatchdogState::MeasurementWatchdogStateWaitForResponseValue:
         if (_timeoutMillis > 0 && currentMillis - _waitTimeStartMillis > _waitForValueTimeout)
