@@ -2,6 +2,7 @@
 #include "Arduino.h"
 #include "OpenKNX.h"
 #include "CallContext.h"
+#include <vector>
 
 class PositionController;
 

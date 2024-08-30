@@ -14,10 +14,11 @@ Dies Jalousiensteuerung ist in folgenden Firmwares enthalten:
 
 ## Hardware Unterstützung
 
-|Prozessor | Status | Anmerkung                  |
-|----------|--------|----------------------------|
-|RP2040    | Alpha  |                            |
-|ESP32     | Alpha  |                            |
+|Prozessor | Status               | Anmerkung                  |
+|----------|----------------------|----------------------------|
+|RP2040    | Beta                 |                            |
+|ESP32     | Beta                 |                            |
+|SAMD      | Compilable, Untested |                            |
 
 Getestete Hardware:
 - Adafruit ESP32 Feather V2

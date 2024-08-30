@@ -404,7 +404,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
 
     // State machine handling for mode activateion
-    bool currentModeAllowed = false;
     ModeBase *nextMode = nullptr;
     for (auto mode : _modes)
     {
@@ -414,8 +413,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         logIndentUp();
         if (mode->allowed(callContext))
         {
-            if (mode == _currentMode)
-                currentModeAllowed = true;
             if (_channelLockActive && (mode != _modeManual || !ParamSHC_CManualIgnoreChannelLock))
             {
                 if (callContext.diagnosticLog)

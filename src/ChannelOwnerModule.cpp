@@ -122,6 +122,7 @@ void ShutterControllerChannelOwnerModule::loop()
     OpenKNX::Module::loop();
     if (_pChannels != nullptr)
     {
+        // Note breaking the loop because of the freeLoop time is not allowed here, because the channels are using the time changed flags
         for (uint8_t _channelIndex = 0; _channelIndex < _numberOfChannels; _channelIndex++)
         {
             OpenKNX::Channel* channel = _pChannels[_channelIndex] ;

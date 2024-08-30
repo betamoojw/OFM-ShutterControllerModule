@@ -463,7 +463,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1TempActive,
         callContext.measurementTemperature,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return (float)m->getValue() >= ParamSHC_CShading1TempMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonTemperature);
 
@@ -472,7 +472,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1TempForecastActive,
         callContext.measurementTemperatureForecast,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return (float)m->getValue() >= ParamSHC_CShading1TempForecastMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonTemperatureForecase);
 
@@ -481,7 +481,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1BrightnessActive,
         callContext.measurementBrightness,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return (double)m->getValue() >= 1000 * ParamSHC_CShading1BrightnessMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonBrightness);
 
@@ -490,7 +490,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1UVIActive,
         callContext.measurementUVIndex,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return (float)m->getValue() >= ParamSHC_CShading1UVIMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonUVI);
 
@@ -499,7 +499,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1RainActive,
         callContext.measurementRain,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return !(bool)m->getValue(); },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonRain);
 
@@ -508,7 +508,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1Clouds != 101,
         callContext.measurementClouds,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return (uint8_t)m->getValue() <= ParamSHC_CShading1Clouds; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonClouds);
 
@@ -517,7 +517,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1RoomTemperaturActive,
         callContext.measurementRoomTemperature,
         callContext,
-        [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
         { return (float)m->getValue() >= ParamSHC_CRoomTemp; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonRoomTemperature);
 
@@ -532,7 +532,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
             ParamSHC_CShading1HeatingActive != 0, // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
             callContext.measurementHeading,
             callContext,
-            [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+            [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
             { return (uint8_t)m->getValue() <= ParamSHC_CShading1MaxHeatingValue; },
             ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeating);
     }
@@ -543,7 +543,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
             ParamSHC_CShading1HeatingActive != 0, // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
             callContext.measurementHeading,
             callContext,
-            [](const MeasurementWatchdog *m, auto _channelIndex, uint8_t _index)
+            [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index)
             { return !(bool)m->getValue(); },
             ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeating);
         if (callContext.measurementHeading->waitForValue())

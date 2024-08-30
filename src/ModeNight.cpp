@@ -66,7 +66,7 @@ bool ModeNight::allowed(const CallContext &callContext)
             if (!_sunSet && callContext.utcHour > 12 && callContext.elevation <= getElevationFromSunSetParameter())
             {
                 logInfoP("Sun set");
-                _sunSet;
+                _sunSet = true;
                 trigger = true;
             }
             if (callContext.diagnosticLog)
