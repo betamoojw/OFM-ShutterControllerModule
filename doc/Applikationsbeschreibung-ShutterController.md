@@ -84,13 +84,13 @@ Abhängig davon, ob die Handbedienung über den Aktor oder über die OpenKNX Jal
 
 ## Manuelle Bedienung über den Aktor
 
-![Über Aktor:](img/UeberAktor.drawio.png) In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
+![](img/UeberAktor.png) In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
 Diese Einstellung bietet eine erhöhte Betriebssicherheit, da bei einem Ausfall der Steuerung die Bedienung weiterhin gewährleistet ist.
 Jedoch steht die Möglichkeit der Sperre der Handbedienung in diesem Modus nicht zur Verfügung.
 
 ## Manuelle Bedienung über die OpenKNX Jalousiensteuerung
 
-![Manuelle Bedienung:](img/UeberOpenKNX.drawio.png) In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
+![](img/UeberOpenKNX.png) In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
 Der Vorteil dieser Einstellung ist, das die Bedienung über die Tasten durch die Steuerung unterbunden werden kann.
 
 # Applikationsprogram
