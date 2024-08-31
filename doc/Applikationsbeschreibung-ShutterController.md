@@ -41,7 +41,7 @@ zusätzlich kann der Handbetrieb über den Eingang
 
 manuell aktiviert bzw. deaktiviert werden.
 
-## Fenster gekippt (Priorität 6)
+### Fenster gekippt (Priorität 6)
 
 Dieser Modus ist nur verfügbar, wenn 2 Fensterkontakte zur Verfügung stehen.
 Der Modus kann in den meisten Betriebsartenkonfiguriationen gesperrt werden.
@@ -84,13 +84,13 @@ Abhängig davon, ob die Handbedienung über den Aktor oder über die OpenKNX Jal
 
 ## Manuelle Bedienung über den Aktor
 
-![](img/UeberAktor.drawio.png) In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
+![Über Aktor:](img/UeberAktor.drawio.png) In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
 Diese Einstellung bietet eine erhöhte Betriebssicherheit, da bei einem Ausfall der Steuerung die Bedienung weiterhin gewährleistet ist.
 Jedoch steht die Möglichkeit der Sperre der Handbedienung in diesem Modus nicht zur Verfügung.
 
 ## Manuelle Bedienung über die OpenKNX Jalousiensteuerung
 
-![](img/UeberOpenKNX.drawio.png) In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
+![Manuelle Bedienung:](img/UeberOpenKNX.drawio.png) In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
 Der Vorteil dieser Einstellung ist, das die Bedienung über die Tasten durch die Steuerung unterbunden werden kann.
 
 # Applikationsprogram
