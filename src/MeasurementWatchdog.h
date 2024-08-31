@@ -12,7 +12,7 @@ enum MeasurementWatchdogState : uint8_t
 };
 
 // <Enumeration Text="Wert Ignorieren" Value="0" Id="%ENID%" />
-// <Enumeration Text="Leseanforderung schicken, dann Ignorieren" Value="1" Id="%ENID%" />
+// <Enumeration Text="Leseanforderung schicken, dann ignorieren" Value="1" Id="%ENID%" />
 // <Enumeration Text="Fixen Wert vorgeben" Value="2" Id="%ENID%" />
 // <Enumeration Text="Leseanforderung schicken, dann fixen Wert vorgeben" Value="3" Id="%ENID%" />
 

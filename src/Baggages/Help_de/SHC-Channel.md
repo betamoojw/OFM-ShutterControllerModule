@@ -1,3 +1,0 @@
-### Kanal 
-
-Kanal Einstellungen

@@ -1,0 +1,1 @@
+OpenKNXproducer baggages -d doc/Applikationsbeschreibung-ShutterController.md -b src/Baggages/Help_de -p SHC

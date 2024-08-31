@@ -270,7 +270,7 @@
 							<ParameterType Id="%AID%_PT-MeasurementFallback" Name="MeasurementFallback">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Wert Ignorieren" Value="0" Id="%ENID%" />
-									<Enumeration Text="Leseanforderung schicken, dann Ignorieren" Value="1" Id="%ENID%" />
+									<Enumeration Text="Leseanforderung schicken, dann ignorieren" Value="1" Id="%ENID%" />
 									<Enumeration Text="Fixen Wert vorgeben" Value="2" Id="%ENID%" />
 									<Enumeration Text="Leseanforderung schicken, dann fixen Wert vorgeben" Value="3" Id="%ENID%" />
 								</TypeRestriction>
@@ -326,12 +326,12 @@
 								<Parameter Id="%AID%_UP-%TT%00005" Offset="1" BitOffset="4" Name="HasRainInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Regen" Value="0" />
 
 								<!-- Wolken Eingang-->
-								<Parameter Id="%AID%_UP-%TT%00006" Offset="1" BitOffset="5" Name="HasCloudsInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Wolken" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%00006" Offset="1" BitOffset="5" Name="HasCloudsInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Wolkenbedeckung" Value="0" />
 
 								<!-- 2 bits free-->
 
 								<!-- Beschattung täglich aktivieren -->
-								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche aktivierung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche Aktivierung" Value="3" />
 
 
 								<!-- Temperatur Watchdog -->
@@ -518,7 +518,7 @@
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
 
-							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-General">
+							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Allgemein">
 
 								<!-- Fehlender Messwert -->
 								<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
@@ -530,7 +530,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 
 								<!-- Verfügbare Kanäle -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="%DOC%" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden." />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen." />
@@ -539,7 +539,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Globale Beschattungseinstellung" UIHint="Headline" />
 
 								<!-- Beschattung täglich aktivieren -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" HelpContext="%DOC%" />
 								<choose ParamRefId="%AID%_UP-%TT%00007_R-%TT%0000701">
 									<when test="&gt;=2">
 										<!-- Verfügbare Kanäle -->
@@ -560,7 +560,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die freigeschaltene Eingänge müssen mit Gruppen Adressen verbunden werden." />
 
 								<!-- Temperatur Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000101" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00001_R-%TT%0000101" HelpContext="%DOC%" />
 								<!-- Temperatur Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00001_R-%TT%0000101">
 									<when test="&gt;0">
@@ -573,15 +573,15 @@
 										</choose>
 
 										<!-- Temperatur Watchdog -->
-										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00008_R-%TT%0000801" />
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="%DOC%" />
 										<choose ParamRefId="%AID%_UP-%TT%00008_R-%TT%0000801">
 											<when test="&gt;0">
 												<!-- Temperatur Watchdog Fallback -->
-												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00009_R-%TT%0000901" />
+												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00009_R-%TT%0000901" HelpContext="%DOC%" />
 												<choose ParamRefId="%AID%_UP-%TT%00009_R-%TT%0000901">
 													<when test="2 3">
 														<!-- Temperatur Fallback -->
-														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00010_R-%TT%0001001" />
+														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00010_R-%TT%0001001" HelpContext="%DOC%" />
 													</when>
 												</choose>
 											</when>
@@ -591,7 +591,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 								<!-- Temperatur Prognose Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000201" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00002_R-%TT%0000201" HelpContext="%DOC%" />
 								<!-- Temperatur Prognose Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00002_R-%TT%0000201">
 									<when test="1">
@@ -603,15 +603,15 @@
 											</when>
 										</choose>
 										<!-- Temperatur Prognose Watchdog -->
-										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00011_R-%TT%0001101" />
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00011_R-%TT%0001101" HelpContext="%DOC%" />
 										<choose ParamRefId="%AID%_UP-%TT%00011_R-%TT%0001101">
 											<when test="&gt;0">
 												<!-- Temperatur Prognose Watchdog Fallback -->
-												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00012_R-%TT%0001201" />
+												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00012_R-%TT%0001201" HelpContext="%DOC%" />
 												<choose ParamRefId="%AID%_UP-%TT%00012_R-%TT%0001201">
 													<when test="2 3">
 														<!-- Temperatur Prognose Fallback -->
-														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00013_R-%TT%0001301" />
+														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00013_R-%TT%0001301" HelpContext="%DOC%" />
 													</when>
 												</choose>
 											</when>
@@ -621,27 +621,27 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 								<!-- Helligkeit Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="%DOC%" />
 								<!-- Helligkeit Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
 									<when test="1">
 										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
+										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001" >
 											<when test="&gt;0">
 												<!-- Helligkeit Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
 											</when>
 										</choose>
 										<!-- Helligkeit Watchdog -->
-										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00014_R-%TT%0001401" />
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00014_R-%TT%0001401" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00014_R-%TT%0001401">
 											<when test="&gt;0">
 												<!-- Helligkeit Watchdog Fallback -->
-												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00015_R-%TT%0001501" />
+												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00015_R-%TT%0001501" HelpContext="%DOC%"/>
 												<choose ParamRefId="%AID%_UP-%TT%00015_R-%TT%0001501">
 													<when test="2 3">
 														<!-- Helligkeit Fallback -->
-														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00016_R-%TT%0001601" />
+														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00016_R-%TT%0001601" HelpContext="%DOC%"/>
 													</when>
 												</choose>
 											</when>
@@ -651,7 +651,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 								<!-- UVI Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00004_R-%TT%0000401" HelpContext="%DOC%"/>
 								<!-- UVI Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00004_R-%TT%0000401">
 									<when test="1">
@@ -663,15 +663,15 @@
 											</when>
 										</choose>
 										<!-- UVI Watchdog -->
-										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00017_R-%TT%0001701" />
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00017_R-%TT%0001701" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00017_R-%TT%0001701">
 											<when test="&gt;0">
 												<!-- UVI Watchdog Fallback -->
-												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00018_R-%TT%0001801"/>
+												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00018_R-%TT%0001801" HelpContext="%DOC%"/>
 												<choose ParamRefId="%AID%_UP-%TT%00018_R-%TT%0001801">
 													<when test="2 3">
 														<!-- UVI Fallback -->
-														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00019_R-%TT%0001901" />
+														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00019_R-%TT%0001901" HelpContext="%DOC%"/>
 													</when>
 												</choose>
 											</when>
@@ -681,7 +681,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 								<!-- Regen Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00005_R-%TT%0000501" HelpContext="%DOC%"/>
 								<!-- Regen Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00005_R-%TT%0000501">
 									<when test="1">
@@ -693,15 +693,15 @@
 											</when>
 										</choose>
 										<!-- Regen Watchdog -->
-										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00020_R-%TT%0002001" />
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00020_R-%TT%0002001" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
 											<when test="&gt;0">
 												<!-- Regen Watchdog Fallback -->
-												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00021_R-%TT%0002101" />
+												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00021_R-%TT%0002101" HelpContext="%DOC%"/>
 												<choose ParamRefId="%AID%_UP-%TT%00021_R-%TT%0002101">
 													<when test="2 3">
 														<!-- Regen Fallback -->
-														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00022_R-%TT%0002201" />
+														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00022_R-%TT%0002201" HelpContext="%DOC%"/>
 													</when>
 												</choose>
 											</when>
@@ -711,7 +711,7 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 								<!-- Wolken Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" />
+								<ParameterRefRef RefId="%AID%_UP-%TT%00006_R-%TT%0000601" HelpContext="%DOC%"/>
 								<!-- Wolken Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00006_R-%TT%0000601">
 									<when test="1">
@@ -723,15 +723,15 @@
 											</when>
 										</choose>
 										<!-- Wolken Watchdog -->
-										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00023_R-%TT%0002301" />
+										<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00023_R-%TT%0002301" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00023_R-%TT%0002301">
 											<when test="&gt;0">
 												<!-- Wolken Watchdog Fallback -->
-												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00024_R-%TT%0002401"/>
+												<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00024_R-%TT%0002401" HelpContext="%DOC%"/>
 												<choose ParamRefId="%AID%_UP-%TT%00024_R-%TT%0002401">
 													<when test="2 3">
 														<!-- Wolken Fallback -->
-														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00025_R-%TT%0002501" />
+														<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00025_R-%TT%0002501" HelpContext="%DOC%"/>
 													</when>
 												</choose>
 											</when>
@@ -750,7 +750,7 @@
 										<when test="&lt;%N%">
 											<ParameterBlock Id="%AID%_PB-nnn" Name="SHCAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">												<!-- HelpContext="Empty" -->
 												<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-												<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+												<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="%DOC%" />
 												<!-- HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="1" /-->
 											</ParameterBlock>
 										</when>

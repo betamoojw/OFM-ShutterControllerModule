@@ -142,7 +142,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%024" Offset="20" BitOffset="1" Name="C%C%NightStopSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
 
 								<!-- Anzahl Fenster Offen Mode-->
-								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="C%C%WindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster Offen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="C%C%WindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster offen" Value="0" />
 
 								<!-- Anzahl Beschattungs Mode-->
 								<Parameter Id="%AID%_UP-%TT%%CC%034" Offset="21" BitOffset="4" Name="C%C%ShadingCount" ParameterType="%AID%_PT-NumberOfShading" Text="Beschattungsmodus Anzahl" Value="1" />
@@ -406,7 +406,7 @@
 							<!-- Jalousie Prozent Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="%C%: Jalousie Prozent Eingang" FunctionText="{{0:-}} Jalousie Prozent Aktorrückmeldung" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="%C%: Jalousie Lamelle Eingang" FunctionText="{{0:-}} Jalousie Lamelle Aktorrückmeldung" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="%C%: Lamelle Prozent Eingang" FunctionText="{{0:-}} Lamelle Prozent Aktorrückmeldung" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Beschattung Einschalten -->
@@ -485,7 +485,7 @@
 						<ChannelIndependentBlock>
 							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 								<when test="&gt;=%C%">
-									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Channel">
+									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Kanal">
 										<Channel Id="%AID%_CH-SHC%CC%" Name="f%CC%SHC" Number="SHC%CC%" Text="Kanal %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
 											<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
 
@@ -493,10 +493,10 @@
 												<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 												<!-- Kanal Name -->
-												<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+												<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="%DOC%" />
 
 												<!-- Kanal Type -->
-												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="%DOC%" />
 												<!-- Kanal Type -->
 												<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
 													<when test="&gt;0">
@@ -531,20 +531,20 @@
 
 												
 														<!-- Kanal Deaktivieren -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="%DOC%" />
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
 
 														<!-- Nacht Modus -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="%DOC%"/>
 
 
 														<!-- Anzahl Fenster Offen Mode-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%"/>
 
 
 														<!-- Anzahl Beschattungs Mode-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" HelpContext="%DOC%"/>
 														<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
 															<when test="&gt;0">
 
@@ -578,14 +578,14 @@
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
 
 																<!-- Heizung Eingang -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" HelpContext="%DOC%" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
 																	<when test="1">
 																		<!-- Heizung Stellwert % Eingang -->
 																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
 
 																		<!-- Heizung Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%"  />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
 																			<when test="&gt;0">
 																				<!-- Heizung Watchdog Fallback-->
@@ -593,7 +593,7 @@
 																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
 																					<when test="2 3">
 																						<!-- Heizung Fallback % -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" />
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" HelpContext="%DOC%"  />
 																					</when>
 																				</choose>
 																			</when>
@@ -604,15 +604,15 @@
 																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
 
 																		<!-- Heizung Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%"  />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
 																			<when test="&gt;0">
 																				<!-- Heizung Watchdog Fallback-->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" HelpContext="%DOC%"  />
 																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
 																					<when test="2 3">
 																						<!-- Heizung Fallback Ein/Aus -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" />
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" HelpContext="%DOC%"  />
 																					</when>
 																				</choose>
 																			</when>
@@ -623,22 +623,22 @@
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
 																<!-- Raumtemperatur Eingang -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" />
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" HelpContext="%DOC%" />
 																<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
 																	<when test="1">
 																		<!-- Raumtemperatur Eingang -->
 																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
 
 																		<!-- Raumtemperatur Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" HelpContext="%DOC%" />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
 																			<when test="&gt;0">
 																				<!-- Raumtemperatur Watchdog Fallback-->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" HelpContext="%DOC%" />
 																				<choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
 																					<when test="2 3">
 																						<!-- Raumtemperatur Fallback Ein/Aus -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" HelpContext="%DOC%" />
 																					</when>
 																				</choose>
 																			</when>
