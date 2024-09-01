@@ -2,7 +2,7 @@
 
 Die Jalousiensteuerung bietet unterschiedliche Betriebsarten.
 Jede Betriebsart kann durch Ereignisse, Eingangs- oder Messwerte zulässig sein. 
-Sind meherer Betriebsarten zulässig, entscheidet die Priorität über die Auswahl.
+Sind mehrere Betriebsarten zulässig, entscheidet die Priorität über die Auswahl.
 
 ## Betriebsarten
 
@@ -10,25 +10,25 @@ Folgende Betriebsarten - gereiht nach der Priorät - stehen zur Verfügung:
 
 ### Bereitschaft (Priorität 7 - niedrigste)
 
-In dieser Betriebsart ist die Steuerung im Leerflauf und wartet auf Ereignisse die eine Wechsel der Betriebsart bewirken.
+In dieser Betriebsart ist die Steuerung im Leerlauf und wartet auf Ereignisse die eine Wechsel der Betriebsart bewirken.
 
 ### Beschattung 1 (Priorität 6)
 
-Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus Auswahl **Beschattungsmodus Anzahl** mindestens 1 eingestellt wurde.
+Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter "Modus Auswahl" **Beschattungsmodus Anzahl** mindestens 1 eingestellt wurde.
 
 ### Beschattung 2 (Priorität 5)
 
-Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus Auswahl **Beschattungsmodus Anzahl** 2 eingestellt wurde.
+Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter "Modus Auswahl" **Beschattungsmodus Anzahl** 2 eingestellt wurde.
 
 ### Nachtmodus (Priorität 4)
 
-Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus Auswahl **Nachtmodus** aktiviert wurde.
+Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter "Modus Auswahl" **Nachtmodus** aktiviert wurde.
 
-Achtung: Wenn kein Automatisches Ende konfiguriert ist, muss der Nachtmodus durch Handbetrieb oder durch AUS auf den Eingang `Nachtmodus Aus-/Einschalten` deaktiviert werden, damit eine Beschattung stattfindet kann.
+Achtung: Wenn kein automatisches Ende konfiguriert ist, muss der Nachtmodus durch Handbetrieb oder durch AUS am Eingang `Nachtmodus Aus-/Einschalten` deaktiviert werden, damit eine Beschattung stattfindet kann.
 
 ### Handbetrieb (Priorität 3)
 
-In diese Betriebsart wird gewechselt, sobald eine Handbedienung über eine der Eingänge erkannt wird:
+In diese Betriebsart wird gewechselt, sobald eine Handbedienung über einen der Eingänge erkannt wird:
 
 - `Handbetrieb Auf/Ab`
 - `Handbetrieb Stopp/Schritt`
