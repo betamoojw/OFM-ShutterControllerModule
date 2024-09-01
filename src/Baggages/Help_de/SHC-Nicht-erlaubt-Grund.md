@@ -1,4 +1,4 @@
-### Diagnose 'Nicht erlaubt' Grund
+﻿### 'Nicht erlaubt' Grund
 
 Diese Objekt gibt einen Zahlen Wert aus, der den wichstigen Grund beschreibt, warum eine Beschattung aktuell nicht zulässig ist.
 Gibt es mehr als einen Grund, wird der erste dieser Liste angezeigt.
@@ -27,4 +27,5 @@ Gibt es mehr als einen Grund, wird der erste dieser Liste angezeigt.
 21: Vorhergesagte Temperatur zu niedrig  
 22: Bewölkungsgrad zu hoch  
 23: UV-Index zu niedrig  
+
 

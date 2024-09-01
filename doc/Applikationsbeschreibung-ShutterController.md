@@ -321,6 +321,10 @@ Die Raumtemperatur kann verwendet werden um bei zu niedriger Raumtemperatur die 
 <!-- DOC -->
 ## Handbetrieb
 
+In diesem Abschnitt wird die Konfiguration für die manuelle Steuerung der Jalousie bzw. des Rolladen vorgenommen.
+
+Achtung: die manuelle Steuerung kann je nach Einstellung von 'Handbetriebseinstellung' im Nacht-, Fenster Offen-, Beschattungsmodus deaktivert werden.
+
 <!-- DOC -->
 #### Handbetriebseinstellung
 
@@ -418,7 +422,14 @@ Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem lan
 <!-- DOC -->
 #### Fenster offen Modus erlaubt
 
-Über diese Einstellung wird konfiguriert ob während des aktiven Nachtmodus die Fenster offen/gekippt Stellung verwendet wird.
+Nur verfügbar wenn mindestens ein Fensterkontake konfiguriert wurde.
+Über diese Einstellung wird konfiguriert ob während des aktiven Nachtmodus die Fenster offen Stellung verwendet wird.
+
+<!-- DOC -->
+#### Fenster gekippt Modus erlaubt
+
+Nur verfügbar wenn 2 Fensterkontake konfiguriert wurden.
+Über diese Einstellung wird konfiguriert ob während des aktiven Nachtmodus die Fenster gekippt Stellung verwendet wird.
 
 <!-- DOC -->
 ### Nacht Begin / Nacht Ende
@@ -483,3 +494,387 @@ Gibt die Jalousienpostion an, die angefahren werden soll.
 
 Nur verfügbar wenn "Position anfahren" auf "Ja" gesetzt wurde und der Gerätetype "Jalousie" gewählt wurde.
 Gibt die Lamellenposition an, die eingenommen werden soll.
+
+<!-- DOC HelpContext="Beschattungsmodus" -->
+## Beschattungungsmodus &lt;n&gt;
+
+Je nach Konfiguriation stehen verschieden viele Beschattungsmodus zur Verfügung. 
+Die Beschattung wird abhängig von den Einstellungen wie Messwerte und Sonnenstand aktiviert. 
+Erlauben die Messwerte die aktivierung von mehreren Beschattungsmodus, wird der Beschattungsmodus mit der höchsten Nummer aktiviert.
+
+D.H. Ein Beschattungsmodus mit einer höheren Nummer sollte strengere Regeln festlegen. 
+Ein typisches Beispiel wäre Beschattungsmodus 1 für einen normalen Tag zu verwenden, Beschattungsmodus 2 für einen Hitzetag. 
+Dafür sollte der Temperaturgrenzwert bei Beschattungsmodus 2 höher eingestellt werden als bei Beschattungsmodus 1.
+
+Da eine Beschattung sehr viele Regeln beinhaltet die für die aktvierung zuständig sind, werden zwei Diagnose KO zur Verfügung gestellt.
+
+<!-- DOC HelpContext="Fenster-offen-Modus-in-Beschattungsmodus-erlaubt" -->
+#### 'Fenster offen' Modus erlaubt
+
+Nur verfügbar wenn mindestens ein Fensterkontake konfiguriert wurde.
+Über diese Einstellung wird konfiguriert ob während der aktiven Beschattung die Fenster offen Stellung verwendet wird.
+
+<!-- DOC HelpContext="Fenster-gekippt-Modus-in-Beschattungsmodus-erlaubt" -->
+#### 'Fenster gekippt' Modus erlaubt
+
+Nur verfügbar wenn 2 Fensterkontake konfiguriert wurden.
+Über diese Einstellung wird konfiguriert ob während der aktiven Beschattung die Fenster gekippt Stellung verwendet wird.
+
+<!-- DOC -->
+### Sonnenposition
+
+In diesem Abschnitt wird festgelegt, in welchen Bereichen die Sonne sich bewegt während eine Beschattung notwendig ist.
+
+#### Himmelsrichtung (Azimut)
+
+Die Himmelsrichtung (Azimut) ist die am Kompass wo die Sonne sich befindet. 0/360° würden Norden entsprechen (Hier steht die Sonne jedoch nie), 180° sind Süden.
+
+Je nach Fensterausrichtung werden folgende Einstellungen empfohlen:
+
+- Osten von 30° bis 150°
+- Südosten von 75° bis 195°
+- Süden von 120° bis 140°
+- Südwesten von 165° bis 285°
+- Westen von 210° bis 330°
+
+Wird keine Auswertung benötigt, sollten von 20°-340° eingestellt werden.
+
+<!-- DOC HelpContext="Himmelsrichtung Azimut 'von'" -->
+<!-- DOCCONTENT 
+Die Himmelsrichtung (Azimut) ist die am Kompass wo die Sonne sich befindet. 0/360° würden Norden entsprechen (Hier steht die Sonne jedoch nie), 180° sind Süden.
+
+Himmelsrichtung (Azimut) ab der die Beschattung benötigt wird.
+Empfohlen Einstellung je Fensterausrichtung:
+
+- Osten 30°
+- Südosten 75°
+- Süden 120°
+- Südwesten 165°
+- Westen 210°
+
+Wird keine Auswertung benötigt, sollte 20° eingestellt werden.
+DOCCONTENT -->
+
+<!-- DOC HelpContext="Himmelsrichtung (Azimut) 'bis'" -->
+<!-- DOCCONTENT 
+Die Himmelsrichtung (Azimut) ist die am Kompass wo die Sonne sich befindet. 0/360° würden Norden entsprechen (Hier steht die Sonne jedoch nie), 180° sind Süden.
+
+Himmelsrichtung (Azimut) bis zu der die Beschattung benötigt wird.
+Empfohlen Einstellung je Fensterausrichtung:
+
+- Osten von 30° bis 150°
+- Südosten von 75° bis 195°
+- Süden von 120° bis 140°
+- Südwesten von 165° bis 285°
+- Westen von 210° bis 330°
+
+Wird keine Auswertung benötigt, sollte 340° eingestellt werden.
+DOCCONTENT -->
+
+#### Höhenwinkel (Elevation, Altitude)
+
+Der Höhenwinkel gibt ab wie hoch die Sonne am Himmel steht.
+0° entspricht dabei den Sonnenauf- bzw. Sonnenuntergang.
+Meist wird der wirkliches Sonnenaufgang bzw. Untergang durch Berge oder Gebäude verdeckt weshalb hier entsprechend ein andere Wert eingetragen werden muss.
+Am Sonnenhöchststand im Sommer am Äquator ist die Sonne bei 90°. 
+Gibt es bei höheren Sonnenständen eine Abschattung durch Vordächer oder ähnlichen, kann ein entsprechend kleiner Wert eingetragen werden.
+
+<!-- DOC HelpContext="Höhenwinkel (Elevation, Altitude) 'von'" -->
+<!-- DOCCONTENT 
+Der Höhenwinkel gibt ab wie hoch die Sonne am Himmel steht.
+0° entspricht dabei den Sonnenauf- bzw. Sonnenuntergang.
+Meist wird der wirkliches Sonnenaufgang bzw. Untergang durch Berge oder Gebäude verdeckt weshalb hier entsprechend ein andere Wert eingetragen werden muss.
+
+Soll der Höhenwinkel nicht ausgwertet werden, muss hier 0° eingetragen werden.
+
+DOCCONTENT -->
+<!-- DOC HelpContext="Höhenwinkel (Elevation, Altitude) 'bis'" -->
+<!-- DOCCONTENT 
+Der Höhenwinkel gibt ab wie hoch die Sonne am Himmel steht.
+
+Am Sonnenhöchststand im Sommer am Äquator ist die Sonne bei 90°. 
+Gibt es bei höheren Sonnenständen eine Abschattung durch Vordächer oder ähnlichen, kann ein entsprechend kleiner Wert eingetragen werden.
+
+Soll der Höhenwinkel nicht ausgwertet werden, muss hier 90° eingetragen werden.
+DOCCONTENT -->
+
+<!-- DOC -->
+### Beschattungsunterbrechung
+
+Die Beschattungsunterbrechung kann verwendet werden, wenn nicht während der ganzen Beschattungsperiode die unter "Sonnenstand" konfiguriert wurde, benötigt wurde.
+Dies ist zum Beispiel der Fall, wenn Häuser oder Bäume einen Schatten erzeugen.
+Für nicht statische Hinternisse wie Markisen kann das Kommunikationsobjekt "Beschattungsunterbrechung Sperre" die Beschattungsunterbrechung deaktivieren. In diesem Beispiel sollte also bei eingefahrener Markise das Sperrobjekt auf EIN gestellt werden.
+
+<!-- DOC HelpContext="Beschattungsunterbrechung Sonnenposition (Azimut) 'von'" -->
+<!-- DOCCONTENT 
+Die Beschattungsunterbrechung kann verwendet werden, wenn nicht während der ganzen Beschattungsperiode die unter "Sonnenstand" konfiguriert wurde, benötigt wurde.
+Dies ist zum Beispiel der Fall, wenn Häuser oder Bäume einen Schatten erzeugen.
+
+180° enstpricht Süden. 360° enstpricht Norden.
+DOCCONTENT -->
+<!-- DOC HelpContext="Beschattungsunterbrechung Sonnenposition (Azimut) 'bis'" -->
+<!-- DOCCONTENT 
+Die Beschattungsunterbrechung kann verwendet werden, wenn nicht während der ganzen Beschattungsperiode die unter "Sonnenstand" konfiguriert wurde, benötigt wurde.
+Dies ist zum Beispiel der Fall, wenn Häuser oder Bäume einen Schatten erzeugen.
+
+180° enstpricht Süden. 360° enstpricht Norden.
+DOCCONTENT -->
+
+<!-- DOC HelpContext="Beschattungsunterbrechung Höhenwinkel (Elevation, Altitude) 'von'" -->
+<!-- DOCCONTENT 
+Die Beschattungsunterbrechung kann verwendet werden, wenn nicht während der ganzen Beschattungsperiode die unter "Sonnenstand" konfiguriert wurde, benötigt wurde.
+Dies ist zum Beispiel der Fall, wenn Häuser oder Bäume einen Schatten erzeugen.
+
+0° entspricht dabei den Stand der Sonne am Horizont am Meeresspiegel.
+DOCCONTENT -->
+<!-- DOC HelpContext="Beschattungsunterbrechung Höhenwinkel (Elevation, Altitude) 'bis'" -->
+<!-- DOCCONTENT 
+Die Beschattungsunterbrechung kann verwendet werden, wenn nicht während der ganzen Beschattungsperiode die unter "Sonnenstand" konfiguriert wurde, benötigt wurde.
+Dies ist zum Beispiel der Fall, wenn Häuser oder Bäume einen Schatten erzeugen.
+
+90° entsprich den Sonnenhöchststand am Aquator.
+DOCCONTENT -->
+
+<!-- DOC -->
+### Beschattungssteuerung
+
+<!-- DOC -->
+#### Nur starten wenn aktuelle Position kleiner gleich
+
+Die Beschattung startet nur, wenn die aktuelle Position kleine gleich dem eingestellten Wert ist. 
+Beispielsweise kann damit verhindert werden, dass die Beschattung aktiv wird wenn zuvor die Jalousie schon zu 80% geschlossen wurde.
+Eine Einstellung von 100% startet eine Beschattung in jedem Fall. 
+Eine Einstellung von 0% startet die Beschattung nur, wenn die Jalousie zuvor vollständig geöffneet ist.
+
+<!-- DOC -->
+#### Beschattungsposition
+
+Position die bei Beschattungsstart angefahren wird.
+
+<!-- DOC -->
+#### Lamellenstellenung an Sonnenstand anpassen
+
+Diese Einstellung ist nur für den Gerätetype "Jalousie" vorhanden.
+Ist diese Einstellung auf "Ja" gesetzt, wird in der Konfiguration der Wert für die Jalousienposition vorgegeben.
+Bei einer Einstellung von "Nein" wird die Lamellenstellung dem Höhenwinkel der Sonne angepasst.
+
+<!-- DOC HelpContext="Beschattung Lamellenstellung" -->
+#### Lamellenstellung
+
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Nein" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+Der Wert gibt die Kippstellung der Lamelle in Prozent an. 50% entsprechen der waagrechten Stellung.
+
+<!-- DOC -->
+#### Mindestaenderung Lamellennachfuehrung
+
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Ja" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+Der Wert gibt an, wie oft die Lamellenstellung während des Sonnenverlaufs angepasst wird.
+
+<!-- DOC -->
+#### Offset Lamellenstellung
+
+Hat die Jalousie sehr breite oder sehr schmale Lamellenblätter oder ist das Fenster nicht senkrecht verbaut, kann es notwendig sein zum errechnete Wert der Jalousiennachführung einen zusätzlichen Kippwinkel-Offset anzugeben.
+Der Kippwinkel-Offset kann positiv oder negativ sein um mehr oder weniger zu kippen.
+
+<!-- DOC -->
+### Temperaturgrenzen
+
+In diesem Abschnitt wird definiert bei welchen Außen-, Innen- und Prognose-Temperaturen der Beschattungsmodus erlaubt ist.
+
+<!-- DOC -->
+#### Temperaturgrenze
+
+Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Temperatur" aktiviert wurde.
+Die Temperaturgrenze wird für die Außentemperatur verwendet. 
+
+<!-- DOC -->
+#### Mindesttemperatur
+
+Diese Einstellung ist nur Vorhanden wenn die Einstellung "Temperaturgrenze" auf "Ja" konfiguriert wurde.
+Es empfiehlt sich, die Mindesttemperatur für den ersten Beschattungsmodus niedriger zu wählen als für den Beschattungsmodus mit der höheren Nummer. 
+Durch diese Konfiguration wird erreicht, dass bei Hitzetage eine stärkere oder längere Beschattung eingestellt werden kann.
+Empfohlen wird einen Wert von 15° für den Beschattungsmodus 1 und 27° für den Beschattungsmodus 2.
+
+<!-- DOC -->
+#### Temperaturprognose
+
+Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Temperatur Prognose" aktiviert wurde.
+
+<!-- DOC -->
+#### Mindestens-prognostizierte-Tageshoechsttemperatur
+
+Diese Einstellung ist nur Vorhanden wenn die Einstellung "Temperaturprognose" auf "Ja" konfiguriert wurde.
+Hier wird eine mindestens notwendige prognostizierte Temperatur eingestellt die erreicht werden muss, damit die Beschattung aktiviert wird.
+Damit kann verhindert werden, dass bei relativen kühlen Tagen die Beschattung aktiviert wird weil die normale Außentemperatur überschritten wurde.
+
+<!-- DOC -->
+#### Helligkeitslimit
+
+Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Helligkeit" aktiviert wurde.
+
+<!-- DOC -->
+#### Minimale Helligkeit
+
+Diese Einstellung ist nur Vorhanden wenn die Einstellung "Helligkeitslimit" auf "Ja" konfiguriert wurde.
+Diese Einstellung bewirkt dass bei stark bewölkten Himmel die Beschattung nicht aktivert wird.
+Zu beachten ist, dass die Einstellung in 1000 Lux Schritten erfolgt.
+Empfohlen wird eine Einstellung von ca. 15.000 Lux, was einem Einstellwert von 15 entspricht.
+
+<!-- DOC HelpContext="Beschattung-UV-Index" -->
+#### UV-Index
+
+Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "UV-Index" aktiviert wurde.
+
+<!-- DOC -->
+#### Minimaler-UV-Index
+
+Diese Einstellung ist nur Vorhanden wenn die Einstellung "UV-Index" auf "Ja" konfiguriert wurde.
+Der Wert gibt vor welcher UV-Index mindestens vorhanden sein muss um die Beschattung zu aktivieren.
+
+<!-- DOC -->
+### Wetter
+
+In diesem Abschnitt werden die Grenzwerte für Wetterdaten die von einer Wetterstation oder einem Wetterdienst empfangen werden ausgewertet werden.
+
+<!-- DOC -->
+#### Bei Regen nicht beschatten
+
+Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" "Regen" aktiviert wurde.
+Wird dieser Wert auf "Ja" gesetzt, wird die Beschattung nicht aktiviert wenn das Kommunikationsobjekt für "Regen" auf EIN steht.
+
+<!-- DOC -->
+#### Maximale Bewölkung
+
+Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" "Wolken" aktiviert wurde.
+Der Wert gibt vor, wie groß die Bewölkung (die meist von einem Wetterdienst geliefert wird), sein darf während der noch Beschattet werden muss.
+
+<!-- DOC -->
+### Wohnraum
+
+In diesem Abschnitt werden die Grenzwerte für Messdaten des Wohnraums festgelegt.
+
+<!-- DOC HelpContext="Beschattung-Heizung" -->
+#### Heizung
+
+Die Einstellung ist nur Vorhanden wenn unter dem "Kanal" bei den "Raumbezogene Messwert Eingänge" die "Heizung" aktiviert wurde.
+
+Ist die Heizung aktiv, sollte im Normalfall nicht Beschattet werden um die Sonnenwärme zu nutzen.
+Wurde als Messwerteingang für die Heizung der Stellwert konfiguriert, kann der Grenzwert ab den die Heizung als aktiv gewertet wird, konfiguriert werden.
+
+
+<!-- DOC -->
+#### Maximaler Heizungsstellwert 
+
+Diese Einstellung ist nur Vorhanden wenn die Einstellung "Heizung" auf "Ja" konfiguriert wurde und als Messwerteingang die Heizungstellgröße verwendet wird.
+Gibt den Heizungstellwert vor, bei dem eine Beschattung noch notwendig ist.
+Ist die Heizung aktiv, sollte im Normalfall nicht Beschattet werden um die Sonnenwärme zu nutzen.
+
+<!-- DOC HelpContext="Beschattung-Raumtemperatur" -->
+#### Raumtemperatur
+
+Die Einstellung ist nur Vorhanden wenn unter dem "Kanal" bei den "Raumbezogene Messwert Eingänge" die "Raumtemperatur" aktiviert wurde.
+
+<!-- DOC -->
+#### Minimale Raumtemperatur
+
+Diese Einstellung ist nur Vorhanden wenn die Einstellung "Raumtemperatur" auf "Ja" konfiguriert wurde.
+Gibt die minimale Raumtemperatur an, ab der eine Beschattung aktivert werden soll.
+Bei niedriger Raumtemperatur sollte die Sonneneinstrahlung als zusätzliche Wäremquelle genutzt werden umd Heizenergie zu sparen.
+
+<!-- DOC -->
+### Wartezeiten
+
+Wartezeite werden verwendet wenn während der Beschattung Messwert (z.B. Temperatur, Helligkeit, ...) die konfigurierten Werte unterschreiten oder wieder überschreiten um ein zu schnelles aktivieren und deaktivieren der Beschattung zu verhindern. 
+
+<!-- DOC -->
+#### Beschattungsstart
+
+Gibt die Wartezeit für den Beschattungsstart in Minuten an die nach einer Unterschreitung der Messwerte vergehen muss, damit eine Überschreitung der Grenzwerte die Beschattung aktiviert.
+
+**Hinweis** Die Wartezeit wird nicht angewendet wenn die Messwerte erstmalig während der Beschattungsperiode die durch den Sonnenstand definiert wurde erreicht wurde. Ebenfalls wird die Wartezeit beim manuelle aktiveren der Beschattung über das Kommunikationsobjekt "Beschattung Einschalten" nicht angewandt. 
+
+<!-- DOC -->
+#### Beschattungsende
+
+Gibt die Wartezeit für das Beschattungende in Minuten an die nach einer Unterschreitung der Messwerte vergehen muss, damit die Beschattung deaktiviert wird.
+
+**Hinweis** Die Wartezeit wird nicht angewandt, wenn die Wartezeit durch manuelles deaktiveren der Beschattung über das Kommunikationsobjekt "Beschattung Einschalten" abgeschalten wurde oder der Sonnenstand die Beschattung nicht erlaubt. 
+
+<!-- DOC -->
+### Diagnoseobjekte für Beschaffungshinterungsgrund
+
+Aufgrund der vielen Parameter die eine Beschattung zulassen oder sperren kann es schwierig sein den Grund für das nicht aktiv werden der Beschaffung festzustellen. 
+Deshalb kann für Diagnosezwecke oder auch für die Anzeige in einer Visualisierung der Grund für das nicht aktiv werden auf Kommunikationsobjekten ausgegeben werden.
+
+<!-- DOC -->
+### 'Nicht erlaubt' Bits (Nur für Experten)
+
+Diese Einstellung ist nur für Experten empfohlen, die mit Bit-Werten umgehen können.  
+Diese Objekt gibt ein Bit-Codierten Wert aus, der angibt warum eine Beschattung aktuell nicht zulässig ist.
+
+Bit 0: Zeit ist nicht gültig  
+Bit 1: Ausgeschalten ohne Reativierung  
+Bit 2: Ausgeschalten für Heute  
+Bit 3: Ausgeschalten bis zum Ende der Beschattungsperiode  
+Bit 4: Temporär Ausgeschalten  
+Bit 5: KO "Sperre" ist EIN  
+Bit 6: KO "Beschattungsmodus X Sperre" ist EIN  
+Bit 7: Höhenwinkel der Sonne (Elevation) ist zu gering  
+Bit 8: Himmelsrichtung der Sonne (Azimut) nicht im Beschattungsbereich  
+Bit 9: Sonnen im Beschattungsunterbrechungsbereich  
+Bit 10: Aktuelle Jalousienposition lässt Beschattung nicht zu  
+Bit 11: Wartezeit für Beschattungsstart ist aktiv  
+Bit 12: Jalousie wurde manuell bewegt  
+Bit 13: Fenster Offen Modus aktiv  
+Bit 14: Raumtemperatur zu niedrig  
+Bit 15: Heizung aktiv  
+Bit 16: Heizung war vor zu kurzer Zeit aktiv  
+Bit 17: Regen  
+Bit 18: Zu finster  
+Bit 19: Temperatur zu niedrig  
+Bit 20: Vorhergesagte Temperatur zu niedrig  
+Bit 21: Bewölkungsgrad zu hoch  
+Bit 22: UV-Index zu niedrig  
+
+<!-- DOC -->
+### 'Nicht erlaubt' Grund
+
+Diese Objekt gibt einen Zahlen Wert aus, der den wichstigen Grund beschreibt, warum eine Beschattung aktuell nicht zulässig ist.
+Gibt es mehr als einen Grund, wird der erste dieser Liste angezeigt.
+
+0: Beschattung aktiv
+1: Zeit ist nicht gültig  
+2: Ausgeschalten ohne Reativierung  
+3: Ausgeschalten für Heute  
+4: Ausgeschalten bis zum Ende der Beschattungsperiode  
+5: Temporär Ausgeschalten  
+6: KO "Sperre" ist EIN  
+7: KO "Beschattungsmodus X Sperre" ist EIN  
+8: Höhenwinkel der Sonne (Elevation) ist zu gering  
+9: Himmelsrichtung der Sonne (Azimut) nicht im Beschattungsbereich  
+10: Sonnen im Beschattungsunterbrechungsbereich  
+11: Aktuelle Jalousienposition lässt Beschattung nicht zu  
+12: Wartezeit für Beschattungsstart ist aktiv  
+13: Jalousie wurde manuell bewegt  
+14: Fenster Offen Modus aktiv  
+15: Raumtemperatur zu niedrig  
+16: Heizung aktiv  
+17: Heizung war vor zu kurzer Zeit aktiv  
+18: Regen  
+19: Zu finster  
+20: Temperatur zu niedrig  
+21: Vorhergesagte Temperatur zu niedrig  
+22: Bewölkungsgrad zu hoch  
+23: UV-Index zu niedrig  
+
+
+<!-- DOC HelpContext="Fenster Offen/Gekippt" -->
+## Fenster Offen/Gekippt
+
+Bei einem Fensterkontakt gibt es nur den 'Fenster offen' Modus.
+Bei zwei Fensterkontakten gibt es den 'Fenster offen' und 'Fenster gekippt' Modus.
+In den jeweiligen Modus können Jalousien/Rolladen bzw. Lamellenpositionen vorgegeben werden.
+
+Z.B. kann bei gekippten Terrassentür die Lamelle in die Waagrechte Stellung (50%) gedreht werden, um den Luftdurchlass zu erhöhen, während bei geöffneter Terrassentür die Jalousie geöffnet wird.
+
+

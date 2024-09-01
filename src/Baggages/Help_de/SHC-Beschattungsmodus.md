@@ -1,4 +1,4 @@
-### Beschattungsmodus
+﻿### Beschattungungsmodus &lt;n&gt;
 
 Je nach Konfiguriation stehen verschieden viele Beschattungsmodus zur Verfügung. 
 Die Beschattung wird abhängig von den Einstellungen wie Messwerte und Sonnenstand aktiviert. 
@@ -9,8 +9,4 @@ Ein typisches Beispiel wäre Beschattungsmodus 1 für einen normalen Tag zu verw
 Dafür sollte der Temperaturgrenzwert bei Beschattungsmodus 2 höher eingestellt werden als bei Beschattungsmodus 1.
 
 Da eine Beschattung sehr viele Regeln beinhaltet die für die aktvierung zuständig sind, werden zwei Diagnose KO zur Verfügung gestellt.
-
-
-
-
 

@@ -1,4 +1,4 @@
-### Diagnose 'Nicht erlaubt' Bits
+﻿### 'Nicht erlaubt' Bits (Nur für Experten)
 
 Diese Einstellung ist nur für Experten empfohlen, die mit Bit-Werten umgehen können.  
 Diese Objekt gibt ein Bit-Codierten Wert aus, der angibt warum eine Beschattung aktuell nicht zulässig ist.

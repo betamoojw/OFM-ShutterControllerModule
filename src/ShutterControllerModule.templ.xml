@@ -656,7 +656,7 @@
 													<!-- Gerätetype aktiviert -->
 
 													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-ModeManual" ShowInComObjectTree="true">
+													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-Handbetrieb" ShowInComObjectTree="true">
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
@@ -784,7 +784,7 @@
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 																			<when test="2">
 																				<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
-																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" />
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" HelpContext="%DOC%" />
 																			</when>
 																		</choose>
 																		<!-- Fenster offen Modus in Nachtmodus erlaubt -->

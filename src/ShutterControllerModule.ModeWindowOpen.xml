@@ -85,7 +85,7 @@
 
 										<!-- Fenster offen Mode aktiv -->
 
-										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-ModeWindowOpen"  ShowInComObjectTree="true">
+										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-Fenster-OffenGekippt"  ShowInComObjectTree="true">
 
 											<!-- Fenster Offen Aktiv -->
 											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
