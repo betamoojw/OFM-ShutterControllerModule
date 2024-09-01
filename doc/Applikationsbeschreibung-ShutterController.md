@@ -8,15 +8,15 @@ Sind meherer Betriebsarten zulässig, entscheidet die Priorität über die Auswa
 
 Folgende Betriebsarten - gereiht nach der Priorät - stehen zur Verfügung:
 
-### Bereitschaft (Priorität 1 - niedrigste)
+### Bereitschaft (Priorität 7 - niedrigste)
 
 In dieser Betriebsart ist die Steuerung im Leerflauf und wartet auf Ereignisse die eine Wechsel der Betriebsart bewirken.
 
-### Beschattung 1 (Priorität 2)
+### Beschattung 1 (Priorität 6)
 
 Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus Auswahl **Beschattungsmodus Anzahl** mindestens 1 eingestellt wurde.
 
-### Beschattung 2 (Priorität 3)
+### Beschattung 2 (Priorität 5)
 
 Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus Auswahl **Beschattungsmodus Anzahl** 2 eingestellt wurde.
 
@@ -26,7 +26,7 @@ Dieser Modus steht nur zur Verfügung, wenn in der Kanaleinstellung unter Modus 
 
 Achtung: Wenn kein Automatisches Ende konfiguriert ist, muss der Nachtmodus durch Handbetrieb oder durch AUS auf den Eingang `Nachtmodus Aus-/Einschalten` deaktiviert werden, damit eine Beschattung stattfindet kann.
 
-### Handbetrieb (Priorität 5)
+### Handbetrieb (Priorität 3)
 
 In diese Betriebsart wird gewechselt, sobald eine Handbedienung über eine der Eingänge erkannt wird:
 
@@ -41,12 +41,12 @@ zusätzlich kann der Handbetrieb über den Eingang
 
 manuell aktiviert bzw. deaktiviert werden.
 
-### Fenster gekippt (Priorität 6)
+### Fenster gekippt (Priorität 2)
 
 Dieser Modus ist nur verfügbar, wenn 2 Fensterkontakte zur Verfügung stehen.
 Der Modus kann in den meisten Betriebsartenkonfiguriationen gesperrt werden.
 
-### Fenster offen (Priorität 7 - Höchste)
+### Fenster offen (Priorität 1 - Höchste)
 
 Dieser Modus ist nur verfügbar, wenn mindestens ein Fensterkontakte zur Verfügung stehen.
 Der Modus kann in den meisten Betriebsartenkonfiguriationen gesperrt werden.
@@ -331,13 +331,15 @@ Abhängig davon, ob die Handbedienung über den Aktor oder über die OpenKNX Jal
 
 #### Manuelle Bedienung über den Aktor
 
-![](img/UeberAktor.png) In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
+![](img/UeberAktor.png)  
+In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
 Diese Einstellung bietet eine erhöhte Betriebssicherheit, da bei einem Ausfall der Steuerung die Bedienung weiterhin gewährleistet ist.
 Jedoch steht die Möglichkeit der Sperre der Handbedienung in diesem Modus nicht zur Verfügung.
 
 #### Manuelle Bedienung über die OpenKNX Jalousiensteuerung ("Modul sendet AUF/AB zum Aktor" und "Modul sendet 0/100% zum Aktor")
 
-![](img/UeberOpenKNX.png) In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
+![](img/UeberOpenKNX.png)  
+In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
 Der Vorteil dieser Einstellung ist, das die Bedienung über die Tasten durch die Steuerung unterbunden werden kann.
 
 Für die Ansteuerung des Aktors stehen die beiden Einstellung "Modul sendet AUF/AB zum Aktor" und "Modul sendet 0/100% zum Aktor" zur Verfügung. 
