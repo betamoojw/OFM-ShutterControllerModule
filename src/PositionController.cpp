@@ -228,7 +228,6 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
         if (KoSHC_CShutterStopStepOutput.commFlag() == WriteRequest)
         {
             logErrorP("Blocked SHC_KoCManualStepStop");
-            ;
             return false;
         }
         break;
@@ -349,6 +348,11 @@ void PositionController::control(const CallContext &callContext)
     {
         logDebugP("Moving timeout %ds reached", (int)(_waitForMovingTimeout / 1000));
         _waitForMovingFinshed = 0;
+        if (callContext.modeCurrentActive == (const ModeBase*) callContext.modeManual)
+        {
+            _restorePosition = position();
+            _restoreSlat = slat();
+        }
         setState(PositionControllerState::Idle, "Control");
     }
 
@@ -404,9 +408,9 @@ void PositionController::control(const CallContext &callContext)
             if (_setSlat != NOTUSED)    
                 logInfoP("Target slat position: %d", (int)_setSlat);
         }
-        logInfoP("Last manual position: %d", (int)_restorePosition);
+        logInfoP("Restore position: %d", (int)_restorePosition);
         if (_hasSlat)
-            logInfoP("Last manual slat position: %d", (int)_restoreSlat);
+            logInfoP("Restore slat position: %d", (int)_restoreSlat);
     }
 }
 

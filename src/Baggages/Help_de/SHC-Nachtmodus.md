@@ -1,4 +1,4 @@
 ﻿### Nachtmodus
 
-Über den Nachtmodus kann die Jalousie oder der Rolladen am Abend automatisch geschlossen und in der Früh geöffnet werden.
+Über diesen Modus kann die Jalousien oder der Rolladen Sonnenstand- und/oder Zeitgesteuert geöffnet und/oder geschlossen werden.
 

@@ -237,8 +237,8 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
                 // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
                 if (_manualControlWithActor)
                     KoSHC_CShutterStopStepOutput.value(true, DPT_Switch);
-                }
-            return;
+               return;
+            }
         }
         logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "down" : "up");
         break;
