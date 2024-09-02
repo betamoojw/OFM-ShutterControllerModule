@@ -6,3 +6,6 @@ In den jeweiligen Modus können Jalousien/Rolladen bzw. Lamellenpositionen vorge
 
 Z.B. kann bei gekippten Terrassentür die Lamelle in die Waagrechte Stellung (50%) gedreht werden, um den Luftdurchlass zu erhöhen, während bei geöffneter Terrassentür die Jalousie geöffnet wird.
 
+Der "Offen" hat eine höhere Priorität als die "Gekippt".
+Das bedeutet wenn beide Kontakte geöffnet sind, werden die Einstellungen aus "Offen" angewandt.
+

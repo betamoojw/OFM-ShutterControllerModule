@@ -29,7 +29,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+1%" Offset="0" BitOffset="0" Name="C%C%WindowOpenPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
 
 								<!-- Lamellenstellung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+2%" Offset="0" BitOffset="4" Name="C%C%WindowOpenSlatPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+2%" Offset="0" BitOffset="4" Name="C%C%WindowOpenSlatPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="2" />
 
 								<!-- Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+3%" Offset="1" BitOffset="0" Name="C%C%WindowOpenPosition%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
@@ -111,12 +111,12 @@
 											<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 													
 											<!-- Position anfahren -->
-											<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
+											<ParameterRefRef HelpContext="SHC-FensterOffen-Position-Anfahren" RefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
 											<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01">
 												<when test="&gt;0">
 
 													<!-- Position -->
-													<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
+													<ParameterRefRef HelpContext="SHC-FensterOffen-Position" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
 												</when>
 											</choose>
 											<!-- Gerätetype -->
@@ -125,12 +125,12 @@
 													<!-- Gerätetype Jalousie -->
 
 													<!-- Lamellenstellung -->
-													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
+													<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellen-oeffnen" RefId="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
 													<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01">
 														<when test="&gt;0">
 
 															<!-- Lamellenposition -->
-															<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
+															<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellenstellung" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
 														</when>
 													</choose>
 												</when>

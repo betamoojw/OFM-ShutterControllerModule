@@ -877,4 +877,58 @@ In den jeweiligen Modus können Jalousien/Rolladen bzw. Lamellenpositionen vorge
 
 Z.B. kann bei gekippten Terrassentür die Lamelle in die Waagrechte Stellung (50%) gedreht werden, um den Luftdurchlass zu erhöhen, während bei geöffneter Terrassentür die Jalousie geöffnet wird.
 
+Der "Offen" hat eine höhere Priorität als die "Gekippt".
+Das bedeutet wenn beide Kontakte geöffnet sind, werden die Einstellungen aus "Offen" angewandt.
+
+<!-- DOC HelpContext="FensterOffen-Position-Anfahren" -->
+### Position Anfahren
+
+Folgende Optionen stehen zur Auswahl:
+
+- Nein  
+  Die Position der Jalousie wird nicht geändert.
+  Diese Option ist die empfohlene Einstellung für Fenster "Offen" bzw. "Gekippt" während bei Türen die Option nur für "Gekippt" verwendet werden soll.
+
+- Nur öffnen  
+  Die Position wird nur angefahren, wenn die Jalousie vor dem öffnen/kippen des Fensters weiter als die angegebene Position geschlossen war.
+  Diese Option ist die empfohlene Einstellung für "Offen" bei Türen um ein durchgehen zu ergmöglichen.
+
+- Öffnen und Schließen  
+  Die vorgegebene Position wird in jedem Fall angefahren. 
+  Diese Option kann dazu verwendet werden, um die Jalousie bei Fensteröffnung zu schließen.
+
+<!-- DOC HelpContext="FensterOffen-Position" -->
+#### Position
+
+Diese Einstellung ist nur vorhanden wenn unter "Position Anfahren" nicht "Nein" gewählt wurde.
+
+Prozent der Jalousienposition die angefahren werden soll.
+Dabei enstpricht 0% einer vollständig geöffneten Jalousie, 100% einer vollständig geschlossenen.
+
+<!-- DOC HelpContext="FensterOffen-Lamellen-oeffnen" -->
+### Lamelle öffnen
+
+Diese Einstellung ist nur vorhanden wenn der Gerätetype "Jalousie" ist.
+
+Folgende Optionen stehen zur Auswahl:
+
+- Nein  
+  Die Lamellenstellung wird nicht geändert.
+
+- Nur öffnen  
+  Die Lamellenstellung wird nur geändert, wenn die Lamellenstellung vor dem öffnen/kippen des Fensters weiter als die angegebene Lamellenstellung geschlossen war.
+
+- Öffnen und Schließen  
+  Die vorgegebene Lamellenstellung wird in jedem Fall angefahren. 
+  Diese Option ist die empfohlene Einstellung.
+
+<!-- DOC HelpContext="FensterOffen-Lamellenstellung" -->
+#### Lamellenstellung
+
+Diese Einstellung ist nur vorhanden wenn unter "Lamelle öffnen" nicht "Nein" gewählt wurde.
+
+Prozent der Lamellenstellung die eingenommen werden soll.
+Dabei 50% einer waagrechten Lamellen, 100% einer vollständig geschlossenen.
+Werte kleiner als 50% bedeuten eine verkehrte Lamellenstellung und werden üblicherweise nicht verwendet.
+
 

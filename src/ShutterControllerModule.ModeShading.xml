@@ -602,7 +602,7 @@
 																<when test="1">
 
 																	<!-- Raumtemperatur Aktiv -->
-																	<ParameterRefRef HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%%PPP+43%_R-%TT%%CC%%PPP+43%01" />
+																	<ParameterRefRef HelpContext="SHC-Beschattung-Raumtemperatur" RefId="%AID%_UP-%TT%%CC%%PPP+43%_R-%TT%%CC%%PPP+43%01" />
 																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+43%_R-%TT%%CC%%PPP+43%01">																		<!-- Nicht deaktiviert -->
 																		<when test="1">
 																			<!-- Raumtemperatur Minimum -->
