@@ -1,7 +1,5 @@
 ﻿### Lamelle öffnen
 
-Diese Einstellung ist nur vorhanden wenn der Gerätetype "Jalousie" ist.
-
 Folgende Optionen stehen zur Auswahl:
 
 - Nein  

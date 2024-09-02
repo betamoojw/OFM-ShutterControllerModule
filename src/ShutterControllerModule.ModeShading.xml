@@ -85,7 +85,7 @@
 								<!-- Minimale Helligkeit -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+25%" Offset="13" BitOffset="0" Name="C%C%Shading%Pn%BrightnessMin" ParameterType="%AID%_PT-BrightnessLimit" Text="Minimale Helligkeit" SuffixText="x1000 lux" Value="15" />
 								<!-- Helligkeit Hysterese-->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+26%" Offset="14" BitOffset="0" Name="C%C%Shading%Pn%Hysterese" ParameterType="%AID%_PT-BrightnessHysteresis" Text="Helligkeit Hysterese" Value="5" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+26%" Offset="14" BitOffset="0" Name="C%C%Shading%Pn%BrightnessHyst" ParameterType="%AID%_PT-BrightnessHysteresis" Text="Helligkeit Hysterese" SuffixText="x1000 lux" Value="5" />
 
 								<!-- Minimale UV-Index -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+28%" Offset="15" BitOffset="0" Name="C%C%Shading%Pn%UVIMin" ParameterType="%AID%_PT-UVIndex" Text="Minimaler UV-Index" Value="1" />
@@ -515,7 +515,8 @@
 																			<!-- Minimale Helligkeit -->
 																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+25%_R-%TT%%CC%%PPP+25%01" />
 																			<!-- Helligkeit Hysterese-->
-																			<!-- <ParameterRefRef HelpContext="%DOC%" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+26%_R-%TT%%CC%%PPP+26%01" /> -->
+																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+26%_R-%TT%%CC%%PPP+26%01" />
+
 																		</when>
 																	</choose>
 																</when>

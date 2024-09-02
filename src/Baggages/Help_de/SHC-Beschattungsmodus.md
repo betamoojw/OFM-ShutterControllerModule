@@ -1,4 +1,4 @@
-﻿### Beschattungungsmodus &lt;n&gt;
+﻿### Beschattungungsmodus N
 
 Je nach Konfiguriation stehen verschieden viele Beschattungsmodus zur Verfügung. 
 Die Beschattung wird abhängig von den Einstellungen wie Messwerte und Sonnenstand aktiviert. 

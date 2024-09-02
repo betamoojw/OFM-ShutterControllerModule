@@ -1,4 +1,4 @@
 ﻿### Helligkeitslimit
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Helligkeit" aktiviert wurde.
+Die Helligkeitseinstellung wird verwendet um an bewölkten Tagen die Beschattung zu deaktivieren.
 

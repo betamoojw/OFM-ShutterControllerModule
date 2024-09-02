@@ -150,7 +150,7 @@ Empängt die Steuerung innerhalb der Zeitspannen keinen Wert, wird in den Notfal
 Über diese Auswahl wird festgelegt, wie der Notfallbetrieb den fehlenden Messwert behandeln soll.
 Wird innerhalb des Notbetriebes der fehlende Wert empfangen, wird der Notbetrieb automatisch beendet.
 
-- **Wert ingnorieren** 
+- **Wert ignorieren**  
 Der Messwert wird bei der Bestimmung ob eine Beschattung zulässig ist nicht mehr berücksichtigt.
 
 - **Leseanforderung schicken, dann ignorieren**  
@@ -184,7 +184,12 @@ Für den Temperatureingang sollte ein Außentemperatur-Fühler verwendet werden.
 #### Temperatur Prognose
 
 Dieser Eingang eignet sich für die prognostizierte Temperatur eines Wetterdienstes. 
-Es kann hierfür z.B. die OpenKNX [OAM-InternetServices](https://github.com/OpenKNX/OAM-InternetServices) mit dem [OFM-InternetWeatherModule](https://github.com/OpenKNX/OFM-InternetWeatherModule) verwendet werden.
+
+<!-- DOC Skip="1" -->
+Es kann hierfür z.B. die OpenKNX-Firmware [OAM-InternetServices](https://github.com/OpenKNX/OAM-InternetServices) mit dem [OFM-InternetWeatherModule](https://github.com/OpenKNX/OFM-InternetWeatherModule) verwendet werden.
+<!-- DOCCONTENT
+Es kann hierfür z.B. die OpenKNX-Firmware OAM-InternetServices mit dem OFM-InternetWeatherModule verwendet werden.
+DOCCONTENT -->
 
 <!-- DOC -->
 #### Helligkeit
@@ -195,7 +200,12 @@ Vorgesehen für den Helligkeitswert einer KNX-Wetterstation.
 #### UV-Index
 
 Dieser Eingang eignet sich für den UV-Index eines Wetterdienstes.
-Es kann hierfür z.B. die OpenKNX [OAM-InternetServices](https://github.com/OpenKNX/OAM-InternetServices) mit dem [OFM-InternetWeatherModule](https://github.com/OpenKNX/OFM-InternetWeatherModule) verwendet werden.
+
+<!-- DOC Skip="1" -->
+Es kann hierfür z.B. die OpenKNX-Firmware [OAM-InternetServices](https://github.com/OpenKNX/OAM-InternetServices) mit dem [OFM-InternetWeatherModule](https://github.com/OpenKNX/OFM-InternetWeatherModule) verwendet werden.
+<!-- DOCCONTENT
+Es kann hierfür z.B. die OpenKNX-Firmware OAM-InternetServices mit dem OFM-InternetWeatherModule verwendet werden.
+DOCCONTENT -->
 
 <!-- DOC -->
 #### Regen
@@ -206,7 +216,12 @@ Vorgesehen für den Regen-Indikator einer KNX-Wetterstation.
 #### Wolkenbedeckung
 
 Der Bedeckungsgrad durch Wolken in Prozent von einem Wetterdienst.
-Es kann hierfür z.B. die OpenKNX [OAM-InternetServices](https://github.com/OpenKNX/OAM-InternetServices) mit dem [OFM-InternetWeatherModule](https://github.com/OpenKNX/OFM-InternetWeatherModule) verwendet werden.
+
+<!-- DOC Skip="1" -->
+Es kann hierfür z.B. die OpenKNX-Firmware [OAM-InternetServices](https://github.com/OpenKNX/OAM-InternetServices) mit dem [OFM-InternetWeatherModule](https://github.com/OpenKNX/OFM-InternetWeatherModule) verwendet werden.
+<!-- DOCCONTENT
+Es kann hierfür z.B. die OpenKNX-Firmware OAM-InternetServices mit dem OFM-InternetWeatherModule verwendet werden.
+DOCCONTENT -->
 
 <!-- DOC HelpContext="Kanal" -->
 ## Kanal 1-n
@@ -326,23 +341,27 @@ In diesem Abschnitt wird die Konfiguration für die manuelle Steuerung der Jalou
 Achtung: die manuelle Steuerung kann je nach Einstellung von 'Handbetriebseinstellung' im Nacht-, Fenster Offen-, Beschattungsmodus deaktivert werden.
 
 <!-- DOC -->
-#### Handbetriebseinstellung
+### Handbetriebseinstellung
+
+In diesem Abschnitt werden Optionen festgelegt, wie die Steuerung sich im Fall einer Handbedienung verhalten soll.
 
 #### Anschluss der Gruppenadressen
 
 Abhängig davon, ob die Handbedienung über den Aktor oder über die OpenKNX Jalousiensteuerung erfolgen soll, müssen die Gruppenadressen unterschiedlich verbunden werden.
-*** Wichtig *** Unabhängig vom Modus müssen alle Gruppenadressen die für die Handsteuerung verwendet werden an die entsprechenden Handbedienungseingänge der OpenKNX Jalousiensteuerung verbunden werden.
+**Wichtig** Unabhängig vom Modus müssen alle Gruppenadressen die für die Handsteuerung verwendet werden an die entsprechenden Handbedienungseingänge der OpenKNX Jalousiensteuerung verbunden werden.
 
 #### Manuelle Bedienung über den Aktor
 
-![](img/UeberAktor.png)  
+<!-- DOC Skip="1" -->
+![Über Aktor](img/UeberAktor.png)  
 In dieser Einstellung erfolgt die Bedienung im Handbetrieb weiterhin direkt über den Aktor.
 Diese Einstellung bietet eine erhöhte Betriebssicherheit, da bei einem Ausfall der Steuerung die Bedienung weiterhin gewährleistet ist.
 Jedoch steht die Möglichkeit der Sperre der Handbedienung in diesem Modus nicht zur Verfügung.
 
 #### Manuelle Bedienung über die OpenKNX Jalousiensteuerung ("Modul sendet AUF/AB zum Aktor" und "Modul sendet 0/100% zum Aktor")
 
-![](img/UeberOpenKNX.png)  
+<!-- DOC Skip="1" -->
+![Über OpenKNX](img/UeberOpenKNX.png)  
 In dieser Einstellung werden getrennte Gruppenadressen für die Verbindung zwischen Steuerung und Aktor benötigt. Die Jalousienaktor Ansteuerung erfolgt ausschließlich über die Steuerung, die bei Bedarf Befehle von den Tastsensoren weiterleitet.
 Der Vorteil dieser Einstellung ist, das die Bedienung über die Tasten durch die Steuerung unterbunden werden kann.
 
@@ -496,7 +515,7 @@ Nur verfügbar wenn "Position anfahren" auf "Ja" gesetzt wurde und der Gerätety
 Gibt die Lamellenposition an, die eingenommen werden soll.
 
 <!-- DOC HelpContext="Beschattungsmodus" -->
-## Beschattungungsmodus &lt;n&gt;
+## Beschattungungsmodus N
 
 Je nach Konfiguriation stehen verschieden viele Beschattungsmodus zur Verfügung. 
 Die Beschattung wird abhängig von den Einstellungen wie Messwerte und Sonnenstand aktiviert. 
@@ -661,13 +680,17 @@ Bei einer Einstellung von "Nein" wird die Lamellenstellung dem Höhenwinkel der 
 <!-- DOC HelpContext="Beschattung Lamellenstellung" -->
 #### Lamellenstellung
 
+<!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Nein" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+
 Der Wert gibt die Kippstellung der Lamelle in Prozent an. 50% entsprechen der waagrechten Stellung.
 
 <!-- DOC -->
 #### Mindestaenderung Lamellennachfuehrung
 
+<!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Ja" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+
 Der Wert gibt an, wie oft die Lamellenstellung während des Sonnenverlaufs angepasst wird.
 
 <!-- DOC -->
@@ -684,13 +707,17 @@ In diesem Abschnitt wird definiert bei welchen Außen-, Innen- und Prognose-Temp
 <!-- DOC -->
 #### Temperaturgrenze
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Temperatur" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Temperatur" aktiviert wurde.
+
 Die Temperaturgrenze wird für die Außentemperatur verwendet. 
 
 <!-- DOC -->
 #### Mindesttemperatur
 
-Diese Einstellung ist nur Vorhanden wenn die Einstellung "Temperaturgrenze" auf "Ja" konfiguriert wurde.
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "Temperaturgrenze" auf "Ja" konfiguriert wurde.
+
 Es empfiehlt sich, die Mindesttemperatur für den ersten Beschattungsmodus niedriger zu wählen als für den Beschattungsmodus mit der höheren Nummer. 
 Durch diese Konfiguration wird erreicht, dass bei Hitzetage eine stärkere oder längere Beschattung eingestellt werden kann.
 Empfohlen wird einen Wert von 15° für den Beschattungsmodus 1 und 27° für den Beschattungsmodus 2.
@@ -698,37 +725,68 @@ Empfohlen wird einen Wert von 15° für den Beschattungsmodus 1 und 27° für de
 <!-- DOC -->
 #### Temperaturprognose
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Temperatur Prognose" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Temperatur Prognose" aktiviert wurde.
+
+Die Temperaturprognose wird verwendet um zu verhindert, dass bei relativen kühlen Tagen die Beschattung aktiviert wird weil die normale Außentemperatur überschritten wurde.
 
 <!-- DOC -->
 #### Mindestens-prognostizierte-Tageshoechsttemperatur
 
-Diese Einstellung ist nur Vorhanden wenn die Einstellung "Temperaturprognose" auf "Ja" konfiguriert wurde.
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "Temperaturprognose" auf "Ja" konfiguriert wurde.
+
 Hier wird eine mindestens notwendige prognostizierte Temperatur eingestellt die erreicht werden muss, damit die Beschattung aktiviert wird.
 Damit kann verhindert werden, dass bei relativen kühlen Tagen die Beschattung aktiviert wird weil die normale Außentemperatur überschritten wurde.
 
 <!-- DOC -->
 #### Helligkeitslimit
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Helligkeit" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "Helligkeit" aktiviert wurde.
+
+Die Helligkeitseinstellung wird verwendet um an bewölkten Tagen die Beschattung zu deaktivieren.
 
 <!-- DOC -->
 #### Minimale Helligkeit
 
-Diese Einstellung ist nur Vorhanden wenn die Einstellung "Helligkeitslimit" auf "Ja" konfiguriert wurde.
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "Helligkeitslimit" auf "Ja" konfiguriert wurde.
+
 Diese Einstellung bewirkt dass bei stark bewölkten Himmel die Beschattung nicht aktivert wird.
 Zu beachten ist, dass die Einstellung in 1000 Lux Schritten erfolgt.
 Empfohlen wird eine Einstellung von ca. 15.000 Lux, was einem Einstellwert von 15 entspricht.
 
+<!-- DOC -->
+#### Helligkeit Hysterese
+
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "Helligkeitslimit" auf "Ja" konfiguriert wurde.
+
+Die Hystere wird verwendet um bei schnell leicht wechselnder Helligkeit (z.B. dünne Wolken) die Beschattung nicht unnötig schnell zu deaktivieren und aktivieren.
+
+Wurde die Schwelle der minimalen Helligkeit überschritten, wird der Hysterenwert vom Helligkeitslimit für den Vergleich abgezogen. 
+
+Beispiel: 
+"Minimale Helligkeit" = 15.000 lux
+"Helligkeit Hystere" = 5.000 lux
+
+Für die Aktivierung der Beschattung müssen mindestens 15.000 lux erreicht werden. Damit die Beschattung deaktivert wird, muss der Helligkeit kleiner als 15.000 lux - 5.000 lux, also kleiner als 10.000 lux werden.
+
+Der Hysteresnwert muss kleiner als der "Minimale Helligkeitswert" sein.
+
 <!-- DOC HelpContext="Beschattung-UV-Index" -->
 #### UV-Index
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "UV-Index" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" die "UV-Index" aktiviert wurde.
 
 <!-- DOC -->
 #### Minimaler-UV-Index
 
-Diese Einstellung ist nur Vorhanden wenn die Einstellung "UV-Index" auf "Ja" konfiguriert wurde.
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "UV-Index" auf "Ja" konfiguriert wurde.
+
 Der Wert gibt vor welcher UV-Index mindestens vorhanden sein muss um die Beschattung zu aktivieren.
 
 <!-- DOC -->
@@ -739,13 +797,17 @@ In diesem Abschnitt werden die Grenzwerte für Wetterdaten die von einer Wetters
 <!-- DOC -->
 #### Bei Regen nicht beschatten
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" "Regen" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" "Regen" aktiviert wurde.
+
 Wird dieser Wert auf "Ja" gesetzt, wird die Beschattung nicht aktiviert wenn das Kommunikationsobjekt für "Regen" auf EIN steht.
 
 <!-- DOC -->
 #### Maximale Bewölkung
 
-Die Einstellung ist nur Vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" "Wolken" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter "Allgemein" bei den "Verfügbare Messwert Eingänge" "Wolken" aktiviert wurde.
+
 Der Wert gibt vor, wie groß die Bewölkung (die meist von einem Wetterdienst geliefert wird), sein darf während der noch Beschattet werden muss.
 
 <!-- DOC -->
@@ -756,7 +818,8 @@ In diesem Abschnitt werden die Grenzwerte für Messdaten des Wohnraums festgeleg
 <!-- DOC HelpContext="Beschattung-Heizung" -->
 #### Heizung
 
-Die Einstellung ist nur Vorhanden wenn unter dem "Kanal" bei den "Raumbezogene Messwert Eingänge" die "Heizung" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter dem "Kanal" bei den "Raumbezogene Messwert Eingänge" die "Heizung" aktiviert wurde.
 
 Ist die Heizung aktiv, sollte im Normalfall nicht Beschattet werden um die Sonnenwärme zu nutzen.
 Wurde als Messwerteingang für die Heizung der Stellwert konfiguriert, kann der Grenzwert ab den die Heizung als aktiv gewertet wird, konfiguriert werden.
@@ -765,19 +828,26 @@ Wurde als Messwerteingang für die Heizung der Stellwert konfiguriert, kann der 
 <!-- DOC -->
 #### Maximaler Heizungsstellwert 
 
-Diese Einstellung ist nur Vorhanden wenn die Einstellung "Heizung" auf "Ja" konfiguriert wurde und als Messwerteingang die Heizungstellgröße verwendet wird.
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "Heizung" auf "Ja" konfiguriert wurde und als Messwerteingang die Heizungstellgröße verwendet wird.
+
 Gibt den Heizungstellwert vor, bei dem eine Beschattung noch notwendig ist.
 Ist die Heizung aktiv, sollte im Normalfall nicht Beschattet werden um die Sonnenwärme zu nutzen.
 
 <!-- DOC HelpContext="Beschattung-Raumtemperatur" -->
 #### Raumtemperatur
 
-Die Einstellung ist nur Vorhanden wenn unter dem "Kanal" bei den "Raumbezogene Messwert Eingänge" die "Raumtemperatur" aktiviert wurde.
+<!-- DOC Skip="2" -->
+Die Einstellung ist nur vorhanden wenn unter dem "Kanal" bei den "Raumbezogene Messwert Eingänge" die "Raumtemperatur" aktiviert wurde.
+
+Bei niedriger Raumtemperatur sollte die Sonneneinstrahlung als zusätzliche Wäremquelle genutzt werden umd Heizenergie zu sparen.
 
 <!-- DOC -->
 #### Minimale Raumtemperatur
 
-Diese Einstellung ist nur Vorhanden wenn die Einstellung "Raumtemperatur" auf "Ja" konfiguriert wurde.
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden wenn die Einstellung "Raumtemperatur" auf "Ja" konfiguriert wurde.
+
 Gibt die minimale Raumtemperatur an, ab der eine Beschattung aktivert werden soll.
 Bei niedriger Raumtemperatur sollte die Sonneneinstrahlung als zusätzliche Wäremquelle genutzt werden umd Heizenergie zu sparen.
 
@@ -900,6 +970,7 @@ Folgende Optionen stehen zur Auswahl:
 <!-- DOC HelpContext="FensterOffen-Position" -->
 #### Position
 
+<!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden wenn unter "Position Anfahren" nicht "Nein" gewählt wurde.
 
 Prozent der Jalousienposition die angefahren werden soll.
@@ -908,6 +979,7 @@ Dabei enstpricht 0% einer vollständig geöffneten Jalousie, 100% einer vollstä
 <!-- DOC HelpContext="FensterOffen-Lamellen-oeffnen" -->
 ### Lamelle öffnen
 
+<!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden wenn der Gerätetype "Jalousie" ist.
 
 Folgende Optionen stehen zur Auswahl:
@@ -925,6 +997,7 @@ Folgende Optionen stehen zur Auswahl:
 <!-- DOC HelpContext="FensterOffen-Lamellenstellung" -->
 #### Lamellenstellung
 
+<!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden wenn unter "Lamelle öffnen" nicht "Nein" gewählt wurde.
 
 Prozent der Lamellenstellung die eingenommen werden soll.

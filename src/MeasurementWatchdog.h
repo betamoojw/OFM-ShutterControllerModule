@@ -49,6 +49,7 @@ private:
     void update(unsigned long currentMillis, bool diagnosticLog);
     KNXValue getValue() const;
     bool ignoreValue() const;
+    bool useFallback() const;
     bool waitForValue() const;
     void processIputKo(GroupObject& go);
     bool isChanged() const;

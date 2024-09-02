@@ -2,7 +2,7 @@
 
 Wird innerhalb des Notbetriebes der fehlende Wert empfangen, wird der Notbetrieb automatisch beendet.
 
-- **Wert ingnorieren** 
+- **Wert ignorieren**  
 Der Messwert wird bei der Bestimmung ob eine Beschattung zulässig ist nicht mehr berücksichtigt.
 
 - **Leseanforderung schicken, dann ignorieren**  

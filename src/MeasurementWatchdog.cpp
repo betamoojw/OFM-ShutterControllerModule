@@ -203,6 +203,11 @@ bool MeasurementWatchdog::ignoreValue() const
     return _state == MeasurementWatchdogState::MeasurementWatchdogStateIgnoreValue;
 }
 
+bool MeasurementWatchdog::useFallback() const
+{
+    return _state == MeasurementWatchdogState::MeasurementWatchdogStateProvideFallbackValue;
+}
+
 bool MeasurementWatchdog::waitForValue() const
 {
     return _groupObject == nullptr || !_groupObject->initialized();
