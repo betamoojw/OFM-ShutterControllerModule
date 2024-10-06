@@ -678,10 +678,16 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
 														<!-- Handbetrieb Steuerung Prozent -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" />
-														<!-- Handbetrieb Steuerung Lamelle Prozent -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
 
-
+														<!-- Gerätetype -->
+														<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+															<when test="1">
+																<!-- Gerätetype Jalousie -->
+																<!-- Handbetrieb Steuerung Lamelle Prozent -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
+															</when>
+														</choose>
+											
 														<!-- Handbetrieb Auf/Ab Type-->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" HelpContext="%DOC%" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
