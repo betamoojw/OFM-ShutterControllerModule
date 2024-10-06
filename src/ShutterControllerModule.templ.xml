@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer"
+	xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
 	<ManufacturerData>
 		<Manufacturer>
 			<ApplicationPrograms>
@@ -171,11 +172,11 @@
 
 
 								<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
-							    <Parameter Id="%AID%_UP-%TT%%CC%035" Offset="28" BitOffset="0" Name="C%C%ShortKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Kurzer Druck 'Nach oben'" Value="0"  />
+								<Parameter Id="%AID%_UP-%TT%%CC%035" Offset="28" BitOffset="0" Name="C%C%ShortKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Kurzer Druck 'Nach oben'" Value="0" />
 
 								<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
-								<Parameter Id="%AID%_UP-%TT%%CC%036" Offset="28" BitOffset="4" Name="C%C%LongKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Langer Druck 'Nach oben'" Value="0"  />
-	
+								<Parameter Id="%AID%_UP-%TT%%CC%036" Offset="28" BitOffset="4" Name="C%C%LongKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctions" Text="Langer Druck 'Nach oben'" Value="0" />
+
 
 								<!-- Wartezeit nach Handbedienung-->
 								<Parameter Id="%AID%_UP-%TT%%CC%038" Offset="29" BitOffset="0" Name="C%C%ManualWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsage" Text="Sperrzeit für Automatiken nach Handbedienung" Value="5" />
@@ -518,9 +519,15 @@
 
 														<!-- Jalousie Prozent Eingang -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
-														<!-- Prozent Lamelle Eingang -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
 
+														<!-- Gerätetype -->
+														<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+															<when test="1">
+																<!-- Gerätetype Jalousie -->
+																<!-- Prozent Lamelle Eingang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
+															</when>
+														</choose>
 
 														<!-- Sperre Kanal -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
@@ -529,7 +536,7 @@
 														<!-- Aktiver Modus -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
 
-												
+
 														<!-- Kanal Deaktivieren -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="%DOC%" />
 
@@ -556,7 +563,7 @@
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
 																<!-- Beschattung Aktiv -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
-										
+
 																<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" HelpContext="%DOC%" />
 
@@ -585,7 +592,7 @@
 																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
 
 																		<!-- Heizung Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%"  />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
 																			<when test="&gt;0">
 																				<!-- Heizung Watchdog Fallback-->
@@ -593,7 +600,7 @@
 																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
 																					<when test="2 3">
 																						<!-- Heizung Fallback % -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" HelpContext="%DOC%"  />
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" HelpContext="%DOC%" />
 																					</when>
 																				</choose>
 																			</when>
@@ -604,15 +611,15 @@
 																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
 
 																		<!-- Heizung Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%"  />
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" />
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
 																			<when test="&gt;0">
 																				<!-- Heizung Watchdog Fallback-->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" HelpContext="%DOC%"  />
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" HelpContext="%DOC%" />
 																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
 																					<when test="2 3">
 																						<!-- Heizung Fallback Ein/Aus -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" HelpContext="%DOC%"  />
+																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" HelpContext="%DOC%" />
 																					</when>
 																				</choose>
 																			</when>
@@ -664,7 +671,7 @@
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
 														<!-- Modus Handbetrieb Aktiv -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
-															
+
 														<!-- Handbetrieb Steuerung Auf/Ab -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
 														<!-- Handbetrieb Steuerung Stopp/Schritt -->
@@ -674,7 +681,7 @@
 														<!-- Handbetrieb Steuerung Lamelle Prozent -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
 
-		
+
 														<!-- Handbetrieb Auf/Ab Type-->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" HelpContext="%DOC%" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
@@ -683,12 +690,12 @@
 															</when>
 															<when test="1">
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
-											
+
 																<!-- Modus Handbetrieb Sperre -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
 																<!-- Modus Handbetrieb Sperre Rückmeldung -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
-												
+
 																<!-- Mode Manual ignoriert Kanal Lock -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" HelpContext="%DOC%" />
 
@@ -703,32 +710,32 @@
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
 																<!-- Modus Handbetrieb Sperre Rückmeldung -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
-								
+
 																<!-- Mode Manual ignoriert Kanal Lock -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" HelpContext="%DOC%" />
-				
+
 															</when>
 														</choose>
 
 														<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
 															<when test="&gt;0">
 																<!-- Mindestens ein Beschattungsmodus -->
-															
+
 																<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="%DOC%" />
 															</when>
 														</choose>
-									
+
 
 														<!-- Wartezeit nach Handbedienung-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" HelpContext="%DOC%"  />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" HelpContext="%DOC%" />
 
 														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
-													
+
 														<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" HelpContext="%DOC%"  />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" HelpContext="%DOC%" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
-															<when test="1"> 
+															<when test="1">
 																<!-- Beschattungsautomatik EIN/AUS -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
 																	<when test="0">
@@ -739,9 +746,9 @@
 															</when>
 														</choose>
 														<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" HelpContext="%DOC%"  />
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" HelpContext="%DOC%" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
-															<when test="1"> 
+															<when test="1">
 																<!-- Beschattungsautomatik EIN/AUS -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
 																	<when test="0">
@@ -761,10 +768,10 @@
 														<when test="1">
 															<!-- Nacht Modus Aktiv -->
 
-														
-															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-Nachtmodus"  ShowInComObjectTree="true">
-																
-																
+
+															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-Nachtmodus" ShowInComObjectTree="true">
+
+
 																<!-- Modus Nacht Aus-/Einschalten -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
 																<!-- Modus Nacht Aktiv -->
@@ -776,7 +783,7 @@
 
 
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
-																
+
 																<!-- Fenster offen Mode -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 																	<when test="&gt;0">
@@ -845,7 +852,7 @@
 																	</when>
 																	<when test="2 3 4">
 																		<!-- vor / bei / nach -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101"  HelpContext="%DOC%"/>
+																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" HelpContext="%DOC%"/>
 																		<choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">
 																			<when test="0 2">
 																				<!-- Höhenwinkel Grad nach Sonnenaufgang -->
