@@ -497,6 +497,9 @@ void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveT
 {
     if (positionLimit >= 100)
         positionLimit = NOTUSED;
+    if (positionLimit == _positionLimit)
+        return;
+    _positionLimit = positionLimit;
     if (positionLimit == NOTUSED)
     {
         logDebugP("Position limit disabled");
@@ -513,11 +516,10 @@ void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveT
     else if (targetPosition() > positionLimit || moveToLimit)
     {
         _blockedPosition = targetPosition();
-        _calculatedTargetPosition = _positionLimit;
-        _setPosition = _positionLimit;
-        logDebugP("Position limit forces new position %d, store %d", (int)positionLimit, (int)_setPosition);
+        _calculatedTargetPosition = positionLimit;
+        _setPosition = positionLimit;
+        logDebugP("Position limit forces new position %d, store %d", (int)_setPosition, (int)_blockedPosition);
     }
-    _positionLimit = positionLimit;
 }
 
 void PositionController::resetSlatLowerLimit()
@@ -533,6 +535,7 @@ void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
         slatLimit = NOTUSED;
     if (slatLimit == _slatLimit)
         return;
+    _slatLimit = slatLimit;
     if (slatLimit == NOTUSED)
     {
         logDebugP("Slat limit disabled");
@@ -550,9 +553,8 @@ void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
     {
         _blockedSlat = slat();
         _setSlat = slatLimit;
-        logDebugP("Slat limit forces new slat %d, store %d", (int)slatLimit, (int)_setSlat);
+        logDebugP("Slat limit forces new slat %d, store %d", (int)_setSlat, (int)_blockedSlat);
     }
-    _slatLimit = slatLimit;
 }
 
 void PositionController::resetBlockedPositionAndLimits()

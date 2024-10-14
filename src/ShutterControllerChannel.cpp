@@ -324,7 +324,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     // Handle reacticvate of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
-        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > callContext.fastSimulationActive ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs())
+        auto waitTime = callContext.fastSimulationActive ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs();
+        if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > waitTime)
         {
             // reactivate
             _waitTimeForReactivateShadingAfterManualStarted = 0;
