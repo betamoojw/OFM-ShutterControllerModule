@@ -22,7 +22,7 @@
 							<!-- Mode Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%ModeName%Pn%" ParameterType="%AID%_PT-Text40Byte" Text="ModeName" Value="offen" />
 
-							<Union SizeInBit="24">
+							<Union SizeInBit="32">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
 
 								<!-- Position anfahren -->
@@ -36,6 +36,11 @@
 
 								<!-- Lamellenposition -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+4%" Offset="2" BitOffset="0" Name="C%C%WindowOpenSlatPosition%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
+				
+								<!-- Aussperrverhinderung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+5%" Offset="3" BitOffset="0" Name="C%C%WindowOpenLockOut%Pn%" ParameterType="%AID%_PT-SHCLockOutPrevention" Text="Aussperrverhinderung" Value="10" />
+
+								<!-- 4 bit free -->
 							</Union>
 
 						</Parameters>
@@ -56,6 +61,9 @@
 
 							<!-- Lamellenposition -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" RefId="%AID%_UP-%TT%%CC%%PPP+4%" />
+
+							<!-- Aussperrverhinderung -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_UP-%TT%%CC%%PPP+5%" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -135,6 +143,18 @@
 													</choose>
 												</when>
 											</choose>
+
+											<!-- Anzahl Fenster Offen Modus -->
+											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+												<when test="%Pn%">
+													<!-- offen -->
+
+													<!-- Aussperrverhinderung -->
+													<ParameterRefRef HelpContext="SHC-FensterOffen-Aussperrverhinderung" RefId="%AID%_UP-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" />
+												</when>
+												
+											</choose>
+
 										</ParameterBlock>
 
 									</when>

@@ -1,6 +1,6 @@
-﻿### Langer Druck 'Nach oben'
+﻿### Langer Druck 'Nach unten'
 
-Ist die Jalousie in der vollständig geöffneten Stellung (0%) und wird ein Eingangstelegram am Kommunikationsobjekt "Handbetrieb Auf/Ab" für AUF empfangen, kann dieses für folgende Funktionen benutzt werden:
+Ist die Jalousie in der vollständig geschlossener Stellung (100%) und wird ein Eingangstelegram am Kommunikationsobjekt "Handbetrieb Auf/Ab" für AB empfangen, kann dieses für folgende Funktionen benutzt werden:
 
 - Beschattungsautomatik EIN/AUS
 
@@ -20,8 +20,8 @@ Die Beschattungsautomatik wird ausgeschalten.
 Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck ausgeschalten werden. 
 Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
 
-- Jalousien schließen
+- Jalousien öffnen
 
-Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem langen Tastendruck nach oben die Jalousie geschlossen werden. Somit ist egal, ob der AUF oder AB Knopf lange betätigt wird, die Jalousie schließt sich in beiden Fällen.
+Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem langen Tastendruck nach oben die Jalousie geöffnet werden. Somit ist egal, ob der AUF oder AB Knopf lange betätigt wird, die Jalousie öffnet sich in beiden Fällen.
 
 

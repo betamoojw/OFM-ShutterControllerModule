@@ -15,6 +15,7 @@ class ModeManual : public ModeBase
     bool _manualControlWithActor = false;
     ShutterControllerChannel& _channel;
     bool _forceClose = false;
+    bool _forceOpen = false;
  protected:
     const char *name() const override;
     uint8_t sceneNumber() const override;

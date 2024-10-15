@@ -88,6 +88,7 @@ bool ModeManual::allowed(const CallContext &callContext)
         return _allowed;
     }
     _forceClose = false;
+    _forceOpen = false;
     _requestStart = false;
     _changedGroupObjects.clear();
     if (_waitTimeStart != 0)
@@ -123,9 +124,15 @@ void ModeManual::control(const CallContext &callContext, PositionController &pos
 {
     if (_forceClose)
     {
-        positionController.setAutomaticPositionAndStoreForRestore(100);
-        positionController.setAutomaticSlatAndStoreForRestore(100);
+        positionController.setManualPosition(100);
+        positionController.setManualSlat(100);
         _forceClose = false;
+    }
+    if (_forceOpen)
+    {
+        positionController.setManualPosition(0);
+        positionController.setManualSlat(0);
+        _forceOpen = false;
     }
     if (!_changedGroupObjects.empty())
     {
@@ -184,12 +191,13 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
         }
         // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
         // <Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Beschattungsautomatik EIN" Value="3" Id="%ENID%" />
+        // <Enumeration Text="Beschattungsautomatik AUS" Value="4" Id="%ENID%" />
         // <Enumeration Text="Jalousie schließen" Value="2" Id="%ENID%" />
         switch (specialHandling)
         {
         case 1:
         {
-
             auto newValue = !_channel.shadingControlActive();
             logInfoP("Special key handling: Toggle shading to %s", newValue ? "ON" : "OFF");
             _channel.activateShadingControl(newValue);
@@ -200,6 +208,72 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
             logInfoP("Special key handling: Close shading");
             _forceClose = true;
             _requestStart = true;
+            return;
+        }
+        case 3:
+        {
+            logInfoP("Special key handling: shading ON");
+            _channel.activateShadingControl(true);
+            return;
+        }
+        case 4:
+        {
+            logInfoP("Special key handling: shading OFF");
+            _channel.activateShadingControl(false);
+            return;
+        }
+        }
+    }
+    // special key handling if closed
+    int closedPosition = 100;
+    if (positionController.slat() != 100)
+        closedPosition = -3; // if slat is not closed, the postion will be less then 100
+
+    if (positionController.state() == PositionControllerState::Idle && positionController.position() >= closedPosition)
+    {
+        uint8_t specialHandling = 0;
+        switch (koIndex)
+        {
+        case SHC_KoCManualStepStop:
+            if ((bool)ko.value(DPT_Step) == true)
+                specialHandling = ParamSHC_CShortKeyPressUpIfClosed;
+            break;
+        case SHC_KoCManualUpDown:
+            if ((bool)ko.value(DPT_Step) == true)
+                specialHandling = ParamSHC_CLongKeyPressUpIfClosed;
+            break;
+        }
+        // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Beschattungsautomatik EIN" Value="3" Id="%ENID%" />
+        // <Enumeration Text="Beschattungsautomatik AUS" Value="4" Id="%ENID%" />
+        // <Enumeration Text="Jalousie öffnen" Value="2" Id="%ENID%" />
+        switch (specialHandling)
+        {
+        case 1:
+        {
+            auto newValue = !_channel.shadingControlActive();
+            logInfoP("Special key handling: Toggle shading to %s", newValue ? "ON" : "OFF");
+            _channel.activateShadingControl(newValue);
+            return;
+        }
+        case 2:
+        {
+            logInfoP("Special key handling: Open shading");
+            _forceOpen = true;
+            _requestStart = true;
+            return;
+        }
+        case 3:
+        {
+            logInfoP("Special key handling: shading ON");
+            _channel.activateShadingControl(true);
+            return;
+        }
+        case 4:
+        {
+            logInfoP("Special key handling: shading OFF");
+            _channel.activateShadingControl(false);
             return;
         }
         }

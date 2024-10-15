@@ -10,9 +10,9 @@
 #endif
 
 WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTilt)
-    : _channelIndex(_channelIndex), _index(index), _isTilt(isTilt)
+    : _channelIndex(_channelIndex), _index(index), _isTiltHandler(isTilt)
 {
-    if (_isTilt)
+    if (_isTiltHandler)
         _name = "WindowTilt";
     else
         _name = "WindowOpen";
@@ -40,7 +40,7 @@ const std::string &WindowOpenHandler::logPrefix() const
 
 uint8_t WindowOpenHandler::sceneNumber() const
 {
-    if (_isTilt)
+    if (_isTiltHandler)
         return 13;
     else
         return 14;
@@ -54,7 +54,7 @@ void WindowOpenHandler::initGroupObjects()
 
 bool WindowOpenHandler::allowed(const CallContext &callContext)
 {
-    if (_isTilt)
+    if (_isTiltHandler)
     {
         if (!callContext.modeCurrentActive->windowTiltAllowed())
         {
@@ -105,16 +105,33 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
 void WindowOpenHandler::start(const CallContext &callContext, const WindowOpenHandler *previous, PositionController &positionController)
 {
     getKo(SHC_KoCWindowOpenModeActive1).value(true, DPT_Switch);
-    auto positionControl = ParamSHC_CWindowOpenPositionControl1;
-    // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
-    //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
-    //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
-    if (positionControl > 0)
+
+    // Check lockout prevention
+    bool manualOrIdleMode = callContext.modeCurrentActive == (ModeBase *)callContext.modeManual || callContext.modeCurrentActive == (ModeBase *)callContext.modeIdle;
+    if (!_isTiltHandler && 
+        manualOrIdleMode && 
+        ParamSHC_CWindowOpenLockOut1 != 10 &&
+        positionController.targetPosition() <= ParamSHC_CWindowOpenLockOut1 * 10)
     {
-        auto position = ParamSHC_CWindowOpenPosition1;
+        auto position = ParamSHC_CWindowOpenLockOut1 * 10;
         if (callContext.diagnosticLog)
-            logInfoP("Set position limit to %d%%", (int)(position));
-        positionController.setPositionLowerLimit(position, positionControl == 2);
+            logInfoP("Set position limit to %d%% for lockout prevention", (int)(position));
+        positionController.setPositionLowerLimit(position, false);
+    }
+    else
+    {
+
+        auto positionControl = ParamSHC_CWindowOpenPositionControl1;
+        // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+        //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
+        //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
+        if (positionControl > 0)
+        {
+            auto position = ParamSHC_CWindowOpenPosition1;
+            if (callContext.diagnosticLog)
+                logInfoP("Set position limit to %d%%", (int)(position));
+            positionController.setPositionLowerLimit(position, positionControl == 2);
+        }
     }
     if (positionController.hasSlat())
     {

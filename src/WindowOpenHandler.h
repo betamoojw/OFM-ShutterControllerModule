@@ -8,14 +8,14 @@ class WindowOpenHandler
     uint8_t _channelIndex = 0;
     std::string _name;
     uint8_t _index;
-    bool _isTilt;
+    bool _isTiltHandler;
     bool _recalcAllowed = true;
     bool _allowed = false;
     int16_t koChannelOffset();
     bool _deactivatedWhileOpen = false;
     GroupObject& getKo(uint8_t ko);
 public:
-    WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTilt);
+    WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTiltHandler);
 protected:
     const std::string& logPrefix() const;
 public:

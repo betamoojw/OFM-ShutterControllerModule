@@ -292,11 +292,39 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-KeySpecialFunctions" Name="KeySpecialFunctions">
+							<ParameterType Id="%AID%_PT-KeySpecialFunctionsOpened" Name="KeySpecialFunctions">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
+									<Enumeration Text="Beschattungsautomatik EIN" Value="3" Id="%ENID%" />
+									<Enumeration Text="Beschattungsautomatik AUS" Value="4" Id="%ENID%" />
 									<Enumeration Text="Jalousie schließen" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-KeySpecialFunctionsClosed" Name="KeySpecialFunctions">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
+									<Enumeration Text="Beschattungsautomatik EIN" Value="3" Id="%ENID%" />
+									<Enumeration Text="Beschattungsautomatik AUS" Value="4" Id="%ENID%" />
+									<Enumeration Text="Jalousie öffnen" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-SHCLockOutPrevention" Name="LockOutPrevention">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Deaktiviert" Value="10" Id="%ENID%" />
+									<Enumeration Text="bei 0%" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei 10%" Value="1" Id="%ENID%" />
+									<Enumeration Text="bei 20%" Value="2" Id="%ENID%" />
+									<Enumeration Text="bei 30%" Value="3" Id="%ENID%" />
+									<Enumeration Text="bei 40%" Value="4" Id="%ENID%" />
+									<Enumeration Text="bei 50%" Value="5" Id="%ENID%" />
+									<Enumeration Text="bei 60%" Value="6" Id="%ENID%" />
+									<Enumeration Text="bei 70%" Value="7" Id="%ENID%" />
+									<Enumeration Text="bei 80%" Value="8" Id="%ENID%" />
+									<Enumeration Text="bei 90%" Value="9" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 

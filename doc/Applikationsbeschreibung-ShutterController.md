@@ -414,9 +414,21 @@ Die Beschattungsautomatik wird je nach vorherigem Zustand Aus, bzw. Eingeschalte
 Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem kurzen Druck gesteuert werden. 
 Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
 
+- Beschattungsautomatik EIN
+
+Die Beschattungsautomatik wird eingeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem kurzen Druck eingeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Beschattungsautomatik AUS
+
+Die Beschattungsautomatik wird ausgeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem kurzen Druck ausgeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
 - Jalousien schließen
 
-Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem kurzer Tastendruck die Jalousie geschlossen werden. Dazu muss lediglich der "Auf" Knopf bei vollständig geöffneter Jalousie kurz betätigt werden.
+Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem kurzen Tastendruck die Jalousie geschlossen werden. Dazu muss lediglich der "Auf" Knopf bei vollständig geöffneter Jalousie kurz betätigt werden.
 
 <!-- DOC -->
 ### Langer Druck 'Nach oben'
@@ -429,9 +441,77 @@ Die Beschattungsautomatik wird je nach vorherigem Zustand Aus, bzw. Eingeschalte
 Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck gesteuert werden. 
 Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
 
+- Beschattungsautomatik EIN
+
+Die Beschattungsautomatik wird eingeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck eingeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Beschattungsautomatik AUS
+
+Die Beschattungsautomatik wird ausgeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck ausgeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
 - Jalousien schließen
 
-Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem langem Tastendruck nach oben die Jalousie geschlossen werden. Somit ist egal, ob der AUF oder AB Knopf lange betätigt wird, die Jalousie schließt sich in beiden Fällen.
+Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem langen Tastendruck nach oben die Jalousie geschlossen werden. Somit ist egal, ob der AUF oder AB Knopf lange betätigt wird, die Jalousie schließt sich in beiden Fällen.
+
+
+<!-- DOC -->
+### Kurzer Druck 'Nach unten'
+
+Ist die Jalousie in der vollständig geschlossener Stellung (100%) und wird ein Eingangstelegram am Kommunikationsobjekt "Handbetrieb Stopp/Schritt" für AB empfangen, kann dieses für folgende Funktionen benutzt werden:
+
+- Beschattungsautomatik EIN/AUS
+
+Die Beschattungsautomatik wird je nach vorherigem Zustand Aus, bzw. Eingeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem kurzen Druck gesteuert werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Beschattungsautomatik EIN
+
+Die Beschattungsautomatik wird eingeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem kurzen Druck eingeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Beschattungsautomatik AUS
+
+Die Beschattungsautomatik wird ausgeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem kurzen Druck ausgeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Jalousien öffnen
+
+Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem kurzen Tastendruck die Jalousie geöffnet werden. Dazu muss lediglich der "Auf" Knopf bei vollständig geöffneter Jalousie kurz betätigt werden.
+
+<!-- DOC -->
+### Langer Druck 'Nach unten'
+
+Ist die Jalousie in der vollständig geschlossener Stellung (100%) und wird ein Eingangstelegram am Kommunikationsobjekt "Handbetrieb Auf/Ab" für AB empfangen, kann dieses für folgende Funktionen benutzt werden:
+
+- Beschattungsautomatik EIN/AUS
+
+Die Beschattungsautomatik wird je nach vorherigem Zustand Aus, bzw. Eingeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck gesteuert werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Beschattungsautomatik EIN
+
+Die Beschattungsautomatik wird eingeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck eingeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Beschattungsautomatik AUS
+
+Die Beschattungsautomatik wird ausgeschalten. 
+Damit kann mit den normalen Jalousientaster die Beschattungsautomatik mit einem langen Druck ausgeschalten werden. 
+Die Einstellung ist nur sinnvoll Nutzbar wenn die Jalousiensteuerung über 2 Tasten erfolgt.
+
+- Jalousien öffnen
+
+Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem langen Tastendruck nach oben die Jalousie geöffnet werden. Somit ist egal, ob der AUF oder AB Knopf lange betätigt wird, die Jalousie öffnet sich in beiden Fällen.
+
 
 <!-- DOC -->
 ## Nachtmodus
@@ -1004,4 +1084,16 @@ Prozent der Lamellenstellung die eingenommen werden soll.
 Dabei 50% einer waagrechten Lamellen, 100% einer vollständig geschlossenen.
 Werte kleiner als 50% bedeuten eine verkehrte Lamellenstellung und werden üblicherweise nicht verwendet.
 
+<!-- DOC HelpContext="FensterOffen-Aussperrverhinderung" -->
+#### Aussperrverhinderung
+
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden für "Fenster Offen".
+
+Gibt an, welcher Prozentwert bei einem geöffneten Fenster im Automatikbetrieb überschritten werden darf.
+
+Beispielanwendung:
+Dieser Wert wird verwendet um ein Aussperren auf einer Terrasse durch beginnende Beschattung zu verhindern. 
+Werden hier Beispielsweise 20% eingestellt und die Terrassentüre ist vor dem Beginn der automatischen Beschattung geöffnet, wird die Jalousie zu maximal 20% geschlossen um ein Durchgehen noch zu ermöglichen.
+Erst nach dem Schließen der Terrassentüre wird die normale Beschattungsposition angefahren.
 
