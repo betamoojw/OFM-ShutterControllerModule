@@ -54,11 +54,6 @@ void WindowOpenHandler::initGroupObjects()
 
 bool WindowOpenHandler::allowed(const CallContext &callContext)
 {
-    if (lastCurrentMode != callContext.modeCurrentActive)
-    {
-        _recalcAllowed = true;
-        lastCurrentMode = callContext.modeCurrentActive;
-    }
     if (_isTiltHandler)
     {
         if (!callContext.modeCurrentActive->windowTiltAllowed())
@@ -86,15 +81,7 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
             if (callContext.diagnosticLog)
                 logInfoP("whether shutter nor slat position configured");
         }
-        if (getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
-        {
-            if (callContext.modeCurrentActive == (ModeBase *)callContext.modeManual)
-            {
-                _deactivatedWhileOpen = true;
-            }
-     
-        }
-        else
+        if (!getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
@@ -105,12 +92,6 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
             _allowed = false;
             if (callContext.diagnosticLog)
                 logInfoP("Lock KO active");
-        }
-        if (_deactivatedWhileOpen)
-        {
-            _allowed = false;
-            if (callContext.diagnosticLog)
-                logInfoP("Deactivated while window open because of manual mode");
         }
     }
     return _allowed;
@@ -177,10 +158,8 @@ void WindowOpenHandler::processInputKo(GroupObject &ko, PositionController &posi
         if (ko.value(DPT_OpenClose))
             logInfoP("opened");
         else
-        {
             logInfoP("closed");
-            _deactivatedWhileOpen = false;
-        }
+         
         _recalcAllowed = true;
         break;
     case SHC_KoCWindowOpenLock1:
