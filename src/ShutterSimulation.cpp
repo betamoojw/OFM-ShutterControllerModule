@@ -2,7 +2,7 @@
 #include "PositionController.h"
 
 ShutterSimulation::ShutterSimulation(uint8_t channelIndex, PositionController &positionController)
-    : _channelIndex(channelIndex), _positionController(positionController)
+    : _positionController(positionController), _channelIndex(channelIndex)
 {
     _logPrefix = "Simulation";
     _logPrefix += channelIndex + 1;

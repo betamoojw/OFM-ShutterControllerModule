@@ -5,7 +5,7 @@ class ModeNight : public ModeBase
 {
     bool _allowed = false;
     bool _recalcAllowed = true;
-    uint8_t _lastDayUTC = 0;
+    uint8_t _lastDayInStandardTime = 0;
     bool _sunRise = false;
     bool _startTime = false;
     bool _sunSet = false;

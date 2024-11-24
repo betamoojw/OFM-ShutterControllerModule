@@ -54,6 +54,11 @@ void WindowOpenHandler::initGroupObjects()
 
 bool WindowOpenHandler::allowed(const CallContext &callContext)
 {
+    if (lastCurrentMode != callContext.modeCurrentActive)
+    {
+        _recalcAllowed = true;
+        lastCurrentMode = callContext.modeCurrentActive;
+    }
     if (_isTiltHandler)
     {
         if (!callContext.modeCurrentActive->windowTiltAllowed())
@@ -81,7 +86,15 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
             if (callContext.diagnosticLog)
                 logInfoP("whether shutter nor slat position configured");
         }
-        if (!getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
+        if (getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
+        {
+            if (callContext.modeCurrentActive == (ModeBase *)callContext.modeManual)
+            {
+                _deactivatedWhileOpen = true;
+            }
+     
+        }
+        else
         {
             _allowed = false;
             if (callContext.diagnosticLog)

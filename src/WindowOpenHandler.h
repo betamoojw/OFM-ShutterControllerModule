@@ -13,6 +13,7 @@ class WindowOpenHandler
     bool _allowed = false;
     int16_t koChannelOffset();
     bool _deactivatedWhileOpen = false;
+    const ModeBase* lastCurrentMode = nullptr;
     GroupObject& getKo(uint8_t ko);
 public:
     WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTiltHandler);

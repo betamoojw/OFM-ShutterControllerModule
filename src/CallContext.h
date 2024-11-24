@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Arduino.h"
+#include "OpenKNX.h"
 
 class ModeIdle;
 class ModeManual;
@@ -22,25 +23,18 @@ class CallContext
         unsigned long currentMillis = 0;
         bool timeAndSunValid = false;
         bool minuteChanged = false;
-        bool summerTime = false;
         bool reactivateShadingWaitTimeRunning = false;
         bool reactivateShadingAfterPeriod = false;
         bool shadingDailyActivation = false;
-        uint16_t year = 0;
-        uint8_t month = 0;
-        uint8_t day = 0;
-        uint8_t hour = 0;
-        uint8_t minute = 0;
+        float azimuth = 0;
+        float elevation = 0;
+      
+        OpenKNX::TimeOnly localTime = {0};
         uint16_t minuteOfDay = 0;
-        uint16_t utcYear = 0;
-        uint8_t utcMonth = 0;
-        uint8_t utcDay = 0;
-        uint8_t utcHour = 0;
-        uint8_t utcMinute = 0;
-        uint16_t utcMinuteOfDay = 0;
+       
+        OpenKNX::TimeOnly localTimeInStandardTime = {0};
+        uint16_t localTimeInStandardTimeDay = 0;
      
-        double azimuth = 0;
-        double elevation = 0;
         const ModeIdle* modeIdle = nullptr;
         const ModeManual* modeManual = nullptr;
         const ModeBase* modeCurrentActive = nullptr;

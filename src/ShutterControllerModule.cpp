@@ -1,9 +1,6 @@
 #include "ShutterControllerModule.h"
 #include "ShutterControllerChannel.h"
-#include "SunPos.h"
-#include "Timer.h"
 
-void sunpos2(cTime udtTime, cLocation udtLocation, cSunCoordinates *udtSunCoordinates);
 
 ShutterControllerModule::ShutterControllerModule()
     : ShutterControllerChannelOwnerModule()
@@ -39,7 +36,6 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc u<value>", "Set UV index. i.e. sb u1.5");
     openknx.console.printHelpLine("sc r<0|1>", "Set rain. i.e. sb r1");
     openknx.console.printHelpLine("sc c<value>", "Set clouds. i.e. sb c20");
-    openknx.console.printHelpLine("sc d<YYMMDDhhmm>", "Set date/time . i.e. d d2304151733");
     openknx.console.printHelpLine("sc<CC>", "Show information of channel CC. i.e. sc01");
     openknx.console.printHelpLine("sc<CC> s<0|1>", "Disabled or enable shadow of channel CC. i.e. sc01 s1");
     openknx.console.printHelpLine("sc<CC> w<0|1>", "Close or open window of channel CC. i.e. sc01 w1");
@@ -66,77 +62,38 @@ void ShutterControllerModule::loop()
     _measurementRain.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
 
-    Timer &timer = Timer::instance();
-    _callContext.timeAndSunValid = timer.isTimerValid();
+    _callContext.timeAndSunValid = openknx.time.isValid() && openknx.sun.isSunCalculatioValid();
+    auto utcTime = openknx.time.getUtcTime();
     _callContext.minuteChanged = false;
     if (_callContext.timeAndSunValid &&
-        (_lastMinute != timer.getMinute() ||
-         _lastHour != timer.getHour() ||
-         _lastDay != timer.getDay() ||
-         _lastMonth != timer.getMonth() ||
-         _lastYear != timer.getYear()))
+        (_lastMinute != utcTime.minute ||
+         _lastHour != utcTime.hour ||
+         _lastDay != utcTime.day ||
+         _lastMonth != utcTime.month ||
+         _lastYear != utcTime.year))
     {
-        _lastMinute = timer.getMinute();
-        _lastHour = timer.getHour();
-        _lastDay = timer.getDay();
-        _lastMonth = timer.getMonth();
-        _lastYear = timer.getYear();
+        _lastMinute = utcTime.minute;
+        _lastHour = utcTime.hour;
+        _lastDay = utcTime.day;
+        _lastMonth = utcTime.month;
+        _lastYear = utcTime.year;
 
+        auto localTime = utcTime.toLocalTime();
         _callContext.minuteChanged = true;
-        _callContext.hour = timer.getHour();
-        _callContext.minute = _lastMinute;
-        _callContext.minuteOfDay = _callContext.minute + 60 * _callContext.hour;
-        _callContext.year = timer.getYear();
-        _callContext.month = timer.getMonth();
-        _callContext.day = timer.getDay();
-        _callContext.summerTime = timer.IsSummertime();
+        _callContext.localTime = localTime;
+        _callContext.minuteOfDay = localTime.minute + 60 * localTime.hour;
+        
+        auto localTimeInStandardTime = localTime;
+        if (localTime.isDst)
+             localTimeInStandardTime.addSeconds(openknx.time.daylightSavingTimeOffset() * -1);
+        localTimeInStandardTime.isDst = false;
 
-        tm localTime = {0};
-        localTime.tm_isdst = -1;
-        localTime.tm_year = timer.getYear() - 1900;
-        localTime.tm_mon = timer.getMonth() - 1;
-        localTime.tm_mday = timer.getDay();
-        localTime.tm_hour = timer.getHour();
-        localTime.tm_min = timer.getMinute();
-        localTime.tm_sec = timer.getSecond();
+         _callContext.localTimeInStandardTimeDay = utcTime.day;
+         _callContext.localTimeInStandardTime = localTimeInStandardTime;
 
-        std::time_t timet = std::mktime(&localTime);
-        timet -= ParamBASE_Timezone * 60 * 60;
-        if (timer.IsSummertime())
-        {
-            timet -= 60 * 60;
-        }
-
-        tm utc;
-        localtime_r(&timet, &utc);
-
-        _callContext.utcYear = utc.tm_year + 1900;
-        _callContext.utcMonth = utc.tm_mon + 1;
-        _callContext.utcDay = utc.tm_mday;
-        _callContext.utcHour = utc.tm_hour;
-        _callContext.utcMinute = utc.tm_min;
-        _callContext.utcMinuteOfDay = _callContext.utcMinute + 60 * _callContext.utcHour;
         _callContext.shadingDailyActivation = _shadingDailyActivation;
-
-        double latitude = ParamBASE_Latitude;
-        double longitude = ParamBASE_Longitude;
-
-        cTime cTime = {0};
-        cTime.iYear = _callContext.utcYear;
-        cTime.iMonth = _callContext.utcMonth;
-        cTime.iDay = _callContext.utcDay;
-        cTime.dHours = _callContext.utcHour;
-        cTime.dMinutes = _callContext.utcMinute;
-        cTime.dSeconds = 0;
-
-        cLocation cLocation = {0};
-        cLocation.dLatitude = latitude;
-        cLocation.dLongitude = longitude;
-
-        cSunCoordinates cSunCoordinates;
-        sunpos(cTime, cLocation, &cSunCoordinates);
-        _callContext.azimuth = cSunCoordinates.dAzimuth;
-        _callContext.elevation = 90 - cSunCoordinates.dZenithAngle;
+        _callContext.azimuth = openknx.sun.azimut();
+        _callContext.elevation = openknx.sun.elevation();
     }
     _callContext.diagnosticLog = false;
     auto numberOfChannels = getNumberOfChannels();
@@ -147,8 +104,8 @@ void ShutterControllerModule::loop()
         {
             if (_shadingDailyActivation &&
                 _callContext.minuteChanged &&
-                _callContext.minute == 0 &&
-                _callContext.hour == 0)
+                _callContext.localTime.minute == 0 &&
+                _callContext.localTime.hour == 0)
                 channel->activateShading();
 
             channel->execute(_callContext);
@@ -172,18 +129,6 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
 {
     if (cmd == "sc")
     {
-        // module info
-        logInfoP("Used cordinates: %f %f", (double)ParamBASE_Latitude, (double)ParamBASE_Longitude);
-
-        if (!_callContext.timeAndSunValid)
-            logInfoP("No valid time");
-        else
-        {
-            logInfoP("Local Time: %04d-%02d-%02d %02d:%02d %s", (int)_callContext.year, (int)_callContext.month, (int)_callContext.day, (int)_callContext.hour, (int)_callContext.minute, _callContext.summerTime ? "Summertime" : "Wintertime");
-            logInfoP("UTC: %04d-%02d-%02d %02d:%02d", (int)_callContext.utcYear, (int)_callContext.utcMonth, (int)_callContext.utcDay, (int)_callContext.utcHour, (int)_callContext.utcMinute);
-            logInfoP("Aizmut: %.2f°", (double)_callContext.azimuth);
-            logInfoP("Elevation: %.2f°", (double)_callContext.elevation);
-        }
         _callContext.diagnosticLog = true;
         loop();
         return true;
@@ -262,49 +207,6 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
             logInfoP("Set clouds");
             KoSHC_CloudsInput.valueNoSend((uint8_t)std::stoi(moduleCommand.substr(1)), DPT_Scaling);
             processInputKo(KoSHC_CloudsInput);
-            return true;
-        }
-        else if (moduleCommand.rfind("d") == 0)
-        {
-            Timer &timer = Timer::instance();
-            if (moduleCommand.length() == 1 && timer.isTimerValid())
-            {
-                logInfoP("%04d-%02d-%02d %02d:%02d", (int)timer.getYear(), (int)timer.getMonth(), (int)timer.getDay(), (int)timer.getHour(), (int)timer.getMinute());
-                return true;
-            }
-            logInfoP("Set date/time");
-            tm tm = {0};
-            if (moduleCommand.length() == 1)
-            {
-                tm.tm_year = 2024;
-                tm.tm_mon = 7;
-                tm.tm_mday = 1;
-                tm.tm_hour = 15;
-                tm.tm_min = 0;
-            }
-            else if (moduleCommand.length() == 5)
-            {
-                tm.tm_year = Timer::instance().isTimerValid() ? Timer::instance().getYear() : 2024;
-                tm.tm_mon = Timer::instance().isTimerValid() ? Timer::instance().getMonth() : 1;
-                tm.tm_mday = Timer::instance().isTimerValid() ? Timer::instance().getDay() : 7;
-                tm.tm_hour = stoi(moduleCommand.substr(1, 2));
-                tm.tm_min = stoi(moduleCommand.substr(3, 2));
-            }
-            else if (moduleCommand.length() == 11)
-            {
-                tm.tm_year = stoi(moduleCommand.substr(1, 2)) + 2000;
-                tm.tm_mon = stoi(moduleCommand.substr(3, 2));
-                tm.tm_mday = stoi(moduleCommand.substr(5, 2));
-                tm.tm_hour = stoi(moduleCommand.substr(7, 2));
-                tm.tm_min = stoi(moduleCommand.substr(9, 2));
-            }
-            else
-            {
-                logInfoP("Invalid time format");
-                return true;
-            }
-            logInfoP("%04d-%02d-%02d %02d:%02d", (int)tm.tm_year, (int)tm.tm_mon, (int)tm.tm_mday, (int)tm.tm_hour, (int)tm.tm_min);
-            Timer::instance().setDateTimeFromBus(&tm);
             return true;
         }
         else
