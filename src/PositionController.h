@@ -53,7 +53,7 @@ public:
     void setManualPosition(uint8_t manualPosition);
     void setManualSlat(uint8_t manualSlat);
     void setManualStep(bool step);
-    void setManualUpDown(bool up);
+    void setManualUpDown(bool down);
     void setRestorePosition(uint8_t restorePosition);
     void setRestoreSlat(uint8_t restoreSlat);
     uint8_t getRestorePosition();

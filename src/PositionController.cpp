@@ -145,21 +145,21 @@ void PositionController::setManualStep(bool step)
     }
 }
 
-void PositionController::setManualUpDown(bool up)
+void PositionController::setManualUpDown(bool down)
 {
     _startWaitForManualPositionFeedback = 0;
     _startWaitForManualSlatPositionFeedback = 0;
-    if (up)
-    {
-        logDebugP("Set Manual up - position and slat 0");
-        _restorePosition = 0;
-        _restoreSlat = 0;
-    }
-    else
+    if (down)
     {
         logDebugP("Set Manual down - position and slat 100");
         _restorePosition = 100;
         _restoreSlat = 100;
+    }
+    else
+    {
+        logDebugP("Set Manual up - position and slat 0");
+        _restorePosition = 0;
+        _restoreSlat = 0;
     }
     auto currentPosition = position();
     if (currentPosition == 0 && _restorePosition)
