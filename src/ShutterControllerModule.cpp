@@ -43,6 +43,7 @@ void ShutterControllerModule::showHelp()
     openknx.console.printHelpLine("sc<CC> r<value>", "Room temperature. i.e. sc01 t50");
     openknx.console.printHelpLine("sc<CC> h<value>", "Room heating %. i.e. sc01 h50");
     openknx.console.printHelpLine("sc<CC> m<^|v>", "Manual up down. i.e. sc01 mv");
+    openknx.console.printHelpLine("sc<CC> m<^-|v->", "Manual up down without special functions i.e. sc01 mv-");
     openknx.console.printHelpLine("sc<CC> m<-|+>", "Manual step i.e. sc01 m+");
     openknx.console.printHelpLine("sc<CC> m<value>", "Manual position %. i.e. sc01 m50");
     openknx.console.printHelpLine("sc<CC> ms<value>", "Manual slat %. i.e. sc01 m50");

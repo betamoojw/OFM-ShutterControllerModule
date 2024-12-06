@@ -10,7 +10,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="31" increment="4" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="26" increment="4" />
+						<op:param name="%En%" value="27" increment="4" />
 						<!-- ModeWindowOpen number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Visibilty select -->
@@ -23,7 +23,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="39" increment="38" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="34" increment="7" />
+						<op:param name="%En%" value="35" increment="7" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -47,7 +47,9 @@
 
 							<!-- Kanal Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%000" Name="C%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
-
+							<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
+							<Parameter Id="%AID%_P-%TT%%CC%042" Name="C%C%KoWithoutSpecialFunction" ParameterType="%AID%_PT-OnOffYesNo" Text="Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung" Value="0" />
+							
 							<Union SizeInBit="248">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
@@ -189,7 +191,7 @@
 
 
 								<!-- Next offset: 31-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%042 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%043 -->
 
 
 							</Union>
@@ -204,7 +206,10 @@
 						<ParameterRefs>
 							<!-- Kanal Name -->
 							<ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_P-%TT%%CC%000" />
-
+							
+							<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
+							<ParameterRef Id="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201" RefId="%AID%_P-%TT%%CC%042"  />
+					
 							<!-- Kanal Art -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
 							<!-- Kanal Deaktivieren -->
@@ -372,35 +377,39 @@
 							<ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ManualLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
 							<ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="C%C%ManualUpDown" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktionen) -->
+							<ComObject Id="%AID%_O-%TT%%CC%026" Number="%K17%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="C%C%ManualUpDownWithoutSpecialFunction" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Stopp/Schritt -->
-							<ComObject Id="%AID%_O-%TT%%CC%017" Number="%K17%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="C%C%ManualStepStop" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%017" Number="%K18%" ObjectSize="1 Bit" DatapointType="DPST-1-7" Name="C%C%ManualStepStop" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Prozent -->
-							<ComObject Id="%AID%_O-%TT%%CC%018" Number="%K18%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%018" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
-							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K19%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%019" Number="%K20%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%ManualSlatPercent" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Modus Nacht Aus-/Einschalten -->
-							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K20%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre -->
-							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K23%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K23%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K24%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Heizung -->
-							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K24%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K25%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Raumtemperatur -->
-							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K25%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="C%C%RoomTemp" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K26%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="C%C%RoomTemp" Text="Raumtemperatur" FunctionText="Raumtemperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+
+							<!-- Next Id: %AID%_O-%TT%%CC%027 -->
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Id starting with 900 -->
-							<!-- KO Number starting with 26 -->
+							<!-- KO Number starting with 27 -->
 							<op:usePart name="ModeWindowOpen" xpath="//ComObjectTable/*" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Id starting with 100 -->
-							<!-- KO Number starting with 34 -->
+							<!-- KO Number starting with 35 -->
 							<op:usePart name="ModeShading" xpath="//ComObjectTable/*" />
 
 						</ComObjectTable>
@@ -446,6 +455,8 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_O-%TT%%CC%015" Text="%C%: Handbetrieb Sperre Aktiv" FunctionText="{{0:-}} Handbetrieb Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_O-%TT%%CC%016" Text="%C%: Handbetrieb Auf/Ab" FunctionText="{{0:-}} Handbetrieb Auf/Ab" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktion) -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_O-%TT%%CC%026" Text="%C%: Handbetrieb Auf/Ab (ohne Sonderfunktion)" FunctionText="{{0:-}} Handbetrieb Auf/Ab (ohne Sonderfunktion)" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Stopp/Schritt -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_O-%TT%%CC%017" Text="%C%: Handbetrieb Stopp/Schritt" FunctionText="{{0:-}} Handbetrieb Stopp/Schritt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Prozent -->
@@ -686,6 +697,15 @@
 
 														<!-- Handbetrieb Steuerung Auf/Ab -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
+														
+														<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
+														<choose ParamRefId="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201">
+															<when test="1">
+																<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktion) -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" />
+															</when>
+														</choose>
+											
 														<!-- Handbetrieb Steuerung Stopp/Schritt -->
 														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
 														<!-- Handbetrieb Steuerung Prozent -->
@@ -704,7 +724,7 @@
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" HelpContext="%DOC%" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
 															<when test="0">
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt lediglich die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
+																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt aber die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
 															</when>
 															<when test="1">
 																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
@@ -748,7 +768,13 @@
 														<!-- Wartezeit nach Handbedienung-->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" HelpContext="%DOC%" />
 
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen" UIHint="Headline" />
+
+														<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
+														<ParameterRefRef RefId="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201" HelpContext="%DOC%" />
+												
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
 
 														<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" HelpContext="%DOC%" />
@@ -763,6 +789,7 @@
 																</choose>
 															</when>
 														</choose>
+
 														<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" HelpContext="%DOC%" />
 														<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
@@ -777,7 +804,7 @@
 															</when>
 														</choose>
 														
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen Tasterbediendung bei geschlossener Jalousien" UIHint="Headline" />
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Tasterbediendung bei geschlossener Jalousien" UIHint="Headline" />
 
 														<!-- Kurzer Druck "Nach unten" bei geschlossener Jalousie  -->
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" HelpContext="%DOC%" />

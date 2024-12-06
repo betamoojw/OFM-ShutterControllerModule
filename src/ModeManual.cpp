@@ -156,6 +156,7 @@ void ModeManual::updatePositionControllerFromKo(GroupObject &ko, PositionControl
         positionController.setManualStep(ko.value(DPT_Step));
         break;
     case SHC_KoCManualUpDown:
+    case SHC_KoCManualUpDownWithoutSpecialFunction:
         positionController.setManualUpDown(ko.value(DPT_UpDown));
         break;
     case SHC_KoCManualSlatPercent:
@@ -299,6 +300,7 @@ void ModeManual::processInputKo(GroupObject &ko, PositionController &positionCon
         logDebugP("Manual change: %s", (bool)ko.value(DPT_Switch) ? "increase" : "decrease");
         break;
     case SHC_KoCManualUpDown:
+    case SHC_KoCManualUpDownWithoutSpecialFunction:
         if (_ignoreFirstUpWhileShading)
         {
             _ignoreFirstUpWhileShading = false;

@@ -399,9 +399,17 @@ Mit diese Einstellung wird festgelegt, ob eine Handsteuerung bei aktiver Sperre 
 Innerhalb der eingestellten Zeit wird ein Beschattungsstart oder der Nachtmodus verhindert.
 
 <!-- DOC -->
-### Sonderfunktionen Tasterbediendung bei geöffneter Jalousien
+### Sonderfunktionen Tasterbediendung
 
 Die OpenKNX Jalousiensteuerung kann Fahrbefehle die normalerweise keine Auswirkung auf die Jalousie haben für Steuerbefehle benutzen.
+
+<!-- DOC -->
+### Zusätzliches Kommunikationsobjekt-ohne-Sonderfunktion-Auswertung
+
+Über diese Option kann ein weiteres Kommunikationsobjekt für 'Handbetrieb Steuerung Auf/Ab' eingeblendet werden, an dem jedoch keine Auswertung der Sonderfunktionen erfolgt. 
+
+Beispiel Anwendung:
+Es gibt einen Taster der nur die betreffende Jalousie steuert und einen anderen Taster der mehrere Jalousien gleichzeitig bedient. Wenn nun die Sonderfunktion nur am ersten Taster der nur die betreffende Jalousie steuern soll verfügbar sein soll, muss für den zweiten Taster mit der Gruppensteuerung eine eigene Gruppenadresse angelegt werden und mit dem Kommunkiationsobject 'Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktion)' verbunden werden.
 
 <!-- DOC -->
 ### Kurzer Druck 'Nach oben'

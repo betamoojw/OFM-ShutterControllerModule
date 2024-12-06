@@ -174,14 +174,14 @@ void PositionController::setManualUpDown(bool down)
     switch (ParamSHC_CManualUpDownType)
     {
     case 1:
-        logInfoP("Set up: %d", (int)up);
-        KoSHC_CShutterUpDownOutput.value(up, DPT_UpDown);
+        logInfoP("Set down: %d", (int)down);
+        KoSHC_CShutterUpDownOutput.value(down, DPT_UpDown);
         if (_shutterSimulation != nullptr)
             _shutterSimulation->processInputKo(KoSHC_CShutterUpDownOutput);
 
         break;
     case 2:
-        _setPosition = up ? 0 : 100;
+        _setPosition = down ? 100 : 0;
         break;
     }
 }
@@ -274,6 +274,7 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
     case SHC_KoCManualStepStop:
     case SHC_KoCShutterUpDownOutput:
     case SHC_KoCManualUpDown:
+    case SHC_KoCManualUpDownWithoutSpecialFunction:
     {
         if (state() == PositionControllerState::MovingDown || state() == PositionControllerState::MovingUp)
             setState(PositionControllerState::Idle, "Any Manual KO");
