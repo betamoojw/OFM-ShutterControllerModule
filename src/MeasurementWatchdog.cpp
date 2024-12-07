@@ -217,7 +217,6 @@ void MeasurementWatchdog::processIputKo(GroupObject &go)
 {
     if (_groupObject != nullptr && go.asap() == _groupObject->asap())
     {
-        logDebugP("Reveived KO, reset watchdog");
         setState(MeasurementWatchdogState::MeasurementWatchdogStateWaitForTimeout);
         _changed = true;
         if (_timeoutMillis > 0)

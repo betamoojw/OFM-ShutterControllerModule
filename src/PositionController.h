@@ -26,7 +26,6 @@ class PositionController
     uint8_t _slatLimit = NOTUSED;
     uint8_t _blockedSlat = NOTUSED;
     uint8_t _setSlat = NOTUSED;
-    unsigned long _lastSetSlat = 0;
     uint8_t _channelIndex;
     bool _hasSlat = false;
     unsigned long _startWaitForManualPositionFeedback = 0;
@@ -58,7 +57,7 @@ public:
     void setRestoreSlat(uint8_t restoreSlat);
     uint8_t getRestorePosition();
     void restoreLastManualPosition(); 
-    bool processInputKo(GroupObject &ko, CallContext* callContext);
+    bool processInputKo(GroupObject &ko);
     void control(const CallContext& callContext);
     bool startSimulation(bool fastSimulation);
     bool stopSimulation();

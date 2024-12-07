@@ -52,8 +52,6 @@ void ShutterControllerChannel::setup()
 
     // add modes, highest priority first
     _modeManual = new ModeManual(*this);
-    logErrorP("Slat1: %d", ParamSHC_CWindowOpenSlatPositionControl1);
-    logErrorP("Slat2: %d", ParamSHC_CWindowOpenSlatPositionControl2);
     for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
     {
         _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount != i));
@@ -81,7 +79,7 @@ void ShutterControllerChannel::setup()
 #endif
 }
 
-void ShutterControllerChannel::processInputKo(GroupObject &ko, CallContext *callContext)
+void ShutterControllerChannel::processInputKo(GroupObject &ko)
 {
     _measurementHeading.processIputKo(ko);
     _measurementRoomTemperature.processIputKo(ko);
@@ -98,7 +96,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko, CallContext *call
         activateShadingControl(ko.value(DPT_Switch));
         break;
     }
-    if (!_positionController.processInputKo(ko, callContext))
+    if (!_positionController.processInputKo(ko))
         return;
     for (auto mode : _modes)
     {

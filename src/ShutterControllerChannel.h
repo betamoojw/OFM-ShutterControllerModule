@@ -49,7 +49,7 @@ class ShutterControllerChannel : public OpenKNX::Channel
         bool needCall();  
         const char* getPhoneNumber();
         uint8_t getCancelCallTime();
-        void processInputKo(GroupObject &ko, CallContext* callContext = nullptr);
+        void processInputKo(GroupObject &ko);
         bool processCommand(const std::string cmd, bool diagnoseKo, bool& diagnosticLogLoopRequest);
         void execute(CallContext& callContext);
         void activateShading();

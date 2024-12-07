@@ -93,7 +93,7 @@ void ShutterControllerModule::loop()
          _callContext.localTimeInStandardTime = localTimeInStandardTime;
 
         _callContext.shadingDailyActivation = _shadingDailyActivation;
-        _callContext.azimuth = openknx.sun.azimut();
+        _callContext.azimuth = openknx.sun.azimuth();
         _callContext.elevation = openknx.sun.elevation();
     }
     _callContext.diagnosticLog = false;
@@ -306,7 +306,7 @@ void ShutterControllerModule::processInputKo(GroupObject &ko)
     {
         auto channel = (ShutterControllerChannel *)getChannel(i);
         if (channel != nullptr)
-            channel->processInputKo(ko, &_callContext);
+            channel->processInputKo(ko);
     }
 }
 

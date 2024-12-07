@@ -194,11 +194,8 @@ void PositionController::restoreLastManualPosition()
         _setSlat = _restoreSlat;
 }
 
-bool PositionController::processInputKo(GroupObject &ko, CallContext *callContext)
+bool PositionController::processInputKo(GroupObject &ko)
 {
-    if (callContext != nullptr)
-        logDebugP("processInputKo %d %lu %d", (int)ko.asap(), callContext->currentMillis, (int)ko.commFlag());
-
     if (_shutterSimulation != nullptr)
         _shutterSimulation->processInputKo(ko);
     auto koIndex = SHC_KoCalcIndex(ko.asap());
@@ -209,7 +206,7 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
     {
         if (KoSHC_CShutterPercentOutput.commFlag() == WriteRequest)
         {
-            logErrorP("Blocked SHC_KoCManualPercent: sent: %lu %d received: %lu %d", _lastSetPosition, (int)KoSHC_CShutterPercentOutput.commFlag(), callContext->currentMillis, (int)ko.commFlag());
+            logDebugP("Blocked SHC_KoCManualPercent");
             return false;
         }
         break;
@@ -218,7 +215,7 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
     {
         if (KoSHC_CShutterSlatOutput.commFlag() == WriteRequest)
         {
-            logErrorP("Blocked SHC_KoCManualSlat: sent: %lu %d received: %lu %d", _lastSetSlat, (int)KoSHC_CShutterSlatOutput.commFlag(), callContext->currentMillis, (int)ko.commFlag());
+            logDebugP("Blocked SHC_KoCManualSlat");
             return false;
         }
         break;
@@ -227,7 +224,7 @@ bool PositionController::processInputKo(GroupObject &ko, CallContext *callContex
     {
         if (KoSHC_CShutterStopStepOutput.commFlag() == WriteRequest)
         {
-            logErrorP("Blocked SHC_KoCManualStepStop");
+            logDebugP("Blocked SHC_KoCManualStepStop");
             return false;
         }
         break;
@@ -338,10 +335,6 @@ void PositionController::control(const CallContext &callContext)
     {
         _lastSetPosition = 0;
     }
-    if (_lastSetSlat > 0 && callContext.currentMillis - _lastSetSlat > 100)
-    {
-        _lastSetSlat = 0;
-    }
     if (_shutterSimulation != nullptr)
         _shutterSimulation->update(callContext);
     auto now = callContext.currentMillis;
@@ -373,7 +366,6 @@ void PositionController::control(const CallContext &callContext)
         }
 
         _lastSetPosition = callContext.currentMillis;
-        logErrorP("Set position ko: %d %d %lu", (int)KoSHC_CShutterPercentOutput.asap(), (int)_setPosition, _lastSetPosition);
         KoSHC_CShutterPercentOutput.value(_setPosition, DPT_Scaling);
         if (_shutterSimulation != nullptr)
             _shutterSimulation->processInputKo(KoSHC_CShutterPercentOutput);
@@ -382,8 +374,6 @@ void PositionController::control(const CallContext &callContext)
     else if (_setSlat != NOTUSED && _lastSetPosition == 0) // Wait for setting slat, if position was set
     {
         logInfoP("Set slat position: %d", (int)_setSlat);
-        _lastSetSlat = callContext.currentMillis;
-        logErrorP("Set slat ko: %d %d %lu", (int)KoSHC_CShutterSlatOutput.asap(), (int)_setSlat, _lastSetSlat);
         KoSHC_CShutterSlatOutput.value(_setSlat, DPT_Scaling);
         if (_shutterSimulation != nullptr)
             _shutterSimulation->processInputKo(KoSHC_CShutterSlatOutput);
