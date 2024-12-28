@@ -247,7 +247,7 @@ void ModeNight::stop(const CallContext &callContext, const ModeBase *next, Posit
 
 void ModeNight::processInputKo(GroupObject &ko, PositionController& positionController)
 {
-    switch (ko.asap())
+    switch (SHC_KoCalcIndex(ko.asap()))
     {
     case SHC_KoCNight:
         _allowed = ko.value(DPT_Switch);

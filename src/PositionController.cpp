@@ -162,7 +162,7 @@ void PositionController::setManualUpDown(bool down)
         _restoreSlat = 0;
     }
     auto currentPosition = position();
-    if (currentPosition == 0 && _restorePosition)
+    if (currentPosition != _restorePosition)
     {
         setState(_restorePosition < position() ? PositionControllerState::MovingUp : PositionControllerState::MovingDown, "Manual up down");
         _calculatedTargetPosition = _restorePosition;

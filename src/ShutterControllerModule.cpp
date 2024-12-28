@@ -24,7 +24,11 @@ const std::string ShutterControllerModule::version()
 
 void ShutterControllerModule::showInformations()
 {
+#ifdef MODULE_ShutterControllerModule_Version
+    openknx.logger.logWithPrefixAndValues(logPrefix(), "Shutter Controller %s", MODULE_ShutterControllerModule_Version);
+#else
     openknx.logger.logWithPrefix(logPrefix(), "Shutter Controller");
+#endif
 }
 
 void ShutterControllerModule::showHelp()

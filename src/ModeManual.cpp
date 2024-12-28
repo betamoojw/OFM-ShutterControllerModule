@@ -147,7 +147,7 @@ void ModeManual::updatePositionControllerFromKo(GroupObject &ko, PositionControl
 {
     _waitTimeStart = max(millis(), 1uL); // Start wait time
 
-    switch (ko.asap())
+    switch (SHC_KoCalcIndex(ko.asap()))
     {
     case SHC_KoCManualPercent:
         positionController.setManualPosition(ko.value(DPT_Scaling));
