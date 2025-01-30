@@ -330,7 +330,7 @@
 							<ParameterType Id="%AID%_PT-SHCNightAction" Name="Action">
 								<TypeRestriction Base="Value" SizeInBit="1">
 									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
-									<Enumeration Text="Postion anfahren" Value="1" Id="%ENID%" />
+									<Enumeration Text="Position anfahren" Value="1" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<op:include href="ShutterControllerModule.templ.xml" xpath="//Static/ParameterTypes/*" type="template" prefix="SHC" IsInner="true" />
