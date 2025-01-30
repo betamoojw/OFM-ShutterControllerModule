@@ -584,7 +584,7 @@ Direkt bei Sonnenuntergang bzw. -aufgang oder unter Angabe eines zusätzlichen H
 Um nach bzw. vor Sonnenauf bzw. Untergang den Nachtmodus zu aktiveren, wird der Höhenwinkel der Sonne über oder unter dem Horizont angegeben.
 
 <!-- DOC -->
-#### Position anfahren
+#### Aktion
 
 Gibt an, ob bei Begin oder Ende des Nachtmodus die Jalousie automatisch bewegt werden soll. 
 Wird im Anschnitt "Nacht Begin" "Nein" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem eine möglich Beschattung durch den Nachtmodus beginn unterbrochen.

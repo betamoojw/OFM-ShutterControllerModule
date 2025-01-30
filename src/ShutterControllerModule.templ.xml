@@ -126,7 +126,7 @@
 
 
 								<!-- Position bei Nacht Start anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%019" Offset="17" BitOffset="0" Name="C%C%NightStartPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%019" Offset="17" BitOffset="0" Name="C%C%NightStartPositionEnabled" ParameterType="%AID%_PT-SHCNightAction" Text="Aktion" Value="1" />
 
 								<!-- Night Mode Start Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%020" Offset="17" BitOffset="1" Name="C%C%NightStartPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="100" SuffixText="%" />
@@ -135,7 +135,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%021" Offset="18" BitOffset="1" Name="C%C%NightStartSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="100" SuffixText="%" />
 
 								<!-- Position bei Nacht Ende anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%022" Offset="19" BitOffset="0" Name="C%C%NightStopPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%022" Offset="19" BitOffset="0" Name="C%C%NightStopPositionEnabled" ParameterType="%AID%_PT-SHCNightAction" Text="Aktion" Value="1" />
 
 								<!-- Night Mode Stop Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%023" Offset="19" BitOffset="1" Name="C%C%NightStopPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="0" SuffixText="%" />
