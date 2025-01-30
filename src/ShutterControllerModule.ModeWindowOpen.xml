@@ -69,13 +69,13 @@
 						<ComObjectTable>
 
 							<!-- Fenster Offen Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+0%" Number="%K%En+0%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%WindowOpenModeActive%Pn%" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+0%" Number="%K%En+0%%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%WindowOpenModeActive%Pn%" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Fenster Offen -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+1%" Number="%K%En+1%%" ObjectSize="1 Bit" DatapointType="DPST-1-3" Name="C%C%WindowOpenOpened%Pn%" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+1%" Number="%K%En+1%%" ObjectSize="1 Bit" DatapointType="DPST-1-19" Name="C%C%WindowOpenOpened%Pn%" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Fenster Offen Sperre -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+2%" Number="%K%En+2%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%WindowOpenLock%Pn%" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Fenster Offen Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+3%" Number="%K%En+3%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%WindowOpenLockActive%Pn%" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+3%" Number="%K%En+3%%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%WindowOpenLockActive%Pn%" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 						</ComObjectTable>
 						<ComObjectRefs>

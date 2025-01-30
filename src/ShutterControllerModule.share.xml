@@ -506,7 +506,7 @@
 							<!-- Beschattung täglich aktivieren -->
 							<ComObject Number="0" Id="%AID%_O-%TT%00000" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="ShadingControlDailyActivation" Text="Beschattung täglich aktivieren" FunctionText="Beschattung täglich aktivieren" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Beschattung täglich aktivieren Status-->
-							<ComObject Number="1" Id="%AID%_O-%TT%00001" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="ShadingControlDailyActivationStatus" Text="Beschattung täglich aktivieren Status" FunctionText="Beschattung täglich aktivieren Status" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Number="1" Id="%AID%_O-%TT%00001" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="ShadingControlDailyActivationStatus" Text="Beschattung täglich aktivieren Status" FunctionText="Beschattung täglich aktivieren Status" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Temperatur Eingang -->
 							<ComObject Number="2" Id="%AID%_O-%TT%00002" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="TempInput" Text="Temperatur Eingang" FunctionText="Temperatur Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Temperatur Prognose Eingang -->
@@ -520,7 +520,7 @@
 							<!-- Wolken Eingang -->
 							<ComObject Number="7" Id="%AID%_O-%TT%00007" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="CloudsInput" Text="Wolken Eingang" FunctionText="Wolken Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Messwertfehler -->
-							<ComObject Number="8" Id="%AID%_O-%TT%00008" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="MeasurementError" Text="Fehlender Messwert" FunctionText="Fehlender Messwert" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />						
+							<ComObject Number="8" Id="%AID%_O-%TT%00008" ObjectSize="1 Bit" DatapointType="DPST-1-5" Name="MeasurementError" Text="Fehlender Messwert" FunctionText="Fehlender Messwert" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />						
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->

@@ -261,15 +261,15 @@
 
 
 							<!-- Modus 1 Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+0%" Number="%K%En+0%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%Active" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+0%" Number="%K%En+0%%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%Shading%Pn%Active" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Sperre -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+1%" Number="%K%En+1%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%Lock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+2%" Number="%K%En+2%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+2%" Number="%K%En+2%%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%Shading%Pn%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+3%" Number="%K%En+3%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%BreakLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+4%" Number="%K%En+4%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%BreakLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%%PPP+4%" Number="%K%En+4%%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%Shading%Pn%BreakLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Diagnose "Nicht erlaubt" Bits  -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+5%" Number="%K%En+5%%" ObjectSize="4 Bytes" DatapointType="DPST-27-1" Name="C%C%Shading%Pn%DiagnoseNotAllowedBit" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Diagnose "Nicht erlaubt" Grund -->
