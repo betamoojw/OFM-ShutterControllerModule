@@ -356,13 +356,13 @@
 							<!-- Beschattung Einschalten -->
 							<ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingControl" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Beschattung Einschalten Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingControlActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%ShadingControlActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Beschattung Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%ShadingActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Sperre Kanal -->
 							<ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Lock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Sperre Kanal Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%LockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Aktiver Modus -->
 							<ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" ObjectSize="1 Byte" DatapointType="DPST-17-1" Name="C%C%ActiveMode" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
@@ -370,11 +370,11 @@
 							<!-- Modus Handbetrieb Aus-/Einschalten -->
 							<ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" ObjectSize="1 Bit" DatapointType="DPST-1-10" Name="C%C%ManuelStopStart" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Handbetrieb Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ManuelActiv" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%ManuelActiv" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Handbetrieb Sperre -->
 							<ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ManualLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Handbetrieb Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ManualLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%ManualLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
 							<ComObject Id="%AID%_O-%TT%%CC%016" Number="%K16%" ObjectSize="1 Bit" DatapointType="DPST-1-8" Name="C%C%ManualUpDown" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktionen) -->
@@ -389,11 +389,11 @@
 							<!-- Modus Nacht Aus-/Einschalten -->
 							<ComObject Id="%AID%_O-%TT%%CC%021" Number="%K21%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Night" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Aktiv -->
-							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%020" Number="%K22%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%NightActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre -->
 							<ComObject Id="%AID%_O-%TT%%CC%022" Number="%K23%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLock" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K24%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%NightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<ComObject Id="%AID%_O-%TT%%CC%023" Number="%K24%" ObjectSize="1 Bit" DatapointType="DPST-1-11" Name="C%C%NightLockActive" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
 							<!-- Heizung -->
 							<ComObject Id="%AID%_O-%TT%%CC%024" Number="%K25%" ObjectSize="1 Byte" DatapointType="DPST-5-1" Name="C%C%Heading" Text="Aktueller Heizungsstellwert" FunctionText="Aktueller Heizungsstellwert Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
