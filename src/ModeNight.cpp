@@ -34,13 +34,11 @@ bool ModeNight::allowed(const CallContext &callContext)
         _startTime = false;
         _sunSet = false;
         _stopTime = false;
-        _deativatedForPeriod = false;
     }
-    if (_deativatedForPeriod)
+    if (_startPositionDeativatedForPeriod)
     {
         if (callContext.diagnosticLog)
-            logInfoP("Deactivated for period");
-        return false;
+            logInfoP("Start position deactivated for period");
     }
     if (callContext.minuteChanged || callContext.diagnosticLog)
     {
@@ -175,6 +173,7 @@ bool ModeNight::allowed(const CallContext &callContext)
         {
             logInfoP("Night stop triggered");
             _allowed = false;
+            _startPositionDeativatedForPeriod = false;
         }
     }
     if (KoSHC_CNightLockActive.value(DPT_Switch))
@@ -223,9 +222,16 @@ void ModeNight::start(const CallContext &callContext, const ModeBase *previous, 
     KoSHC_CNightActive.value(true, DPT_Switch);
     if (ParamSHC_CNightStartPositionEnabled)
     {
-        logDebugP("Set night start position %d slat %d", (int) ParamSHC_CNightStartPosition, (int) ParamSHC_CNightStartSlatPosition);
-        positionController.setAutomaticPositionAndStoreForRestore(ParamSHC_CNightStartPosition);
-        positionController.setAutomaticSlatAndStoreForRestore(ParamSHC_CNightStartSlatPosition);
+        if (_startPositionDeativatedForPeriod)
+        {
+            logDebugP("Start position deactivated for period");  
+        }
+        else
+        {
+            logDebugP("Set night start position %d slat %d", (int) ParamSHC_CNightStartPosition, (int) ParamSHC_CNightStartSlatPosition);
+            positionController.setAutomaticPositionAndStoreForRestore(ParamSHC_CNightStartPosition);
+            positionController.setAutomaticSlatAndStoreForRestore(ParamSHC_CNightStartSlatPosition);
+        }
     }
 }
 
@@ -242,7 +248,11 @@ void ModeNight::stop(const CallContext &callContext, const ModeBase *next, Posit
         positionController.setAutomaticPositionAndStoreForRestore(ParamSHC_CNightStopPosition); 
         positionController.setAutomaticSlatAndStoreForRestore(ParamSHC_CNightStopSlatPosition);
     }
-    _deativatedForPeriod = true;
+    if (_allowed)
+    {
+        // starting again should not trigger the position
+        _startPositionDeativatedForPeriod = true;
+    }
 }
 
 void ModeNight::processInputKo(GroupObject &ko, PositionController& positionController)
@@ -252,7 +262,7 @@ void ModeNight::processInputKo(GroupObject &ko, PositionController& positionCont
     case SHC_KoCNight:
         _allowed = ko.value(DPT_Switch);
         if (_allowed)
-            _deativatedForPeriod = false;
+            _startPositionDeativatedForPeriod = false;
         break;
     case SHC_KoCNightLock:
         KoSHC_CNightLockActive.value(ko.value(DPT_Switch), DPT_Switch);
