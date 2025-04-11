@@ -151,12 +151,14 @@ bool ModeShading::allowed(const CallContext &callContext)
     bool allowedByHeatingOff = true;
     if (_waitTimeAfterHeatingValueChange != 0)
     {
-        // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
         // <Enumeration Text="ausgeschaltete Heizung" Value="1" Id="%ENID%" />
         // <Enumeration Text="mindestens 1 Stunde ausgeschalten" Value="2" Id="%ENID%" />
         // <Enumeration Text="mindestens 2 Stunde ausgeschalten" Value="3" Id="%ENID%" />
         // <Enumeration Text="mindestens 3 Stunde ausgeschalten" Value="4" Id="%ENID%" />
+        // <Enumeration Text="mindestens 4 Stunde ausgeschalten" Value="11" Id="%ENID%" />
+        // <Enumeration Text="mindestens 5 Stunde ausgeschalten" Value="12" Id="%ENID%" />
         // <Enumeration Text="mindestens 6 Stunde ausgeschalten" Value="5" Id="%ENID%" />
+        // <Enumeration Text="mindestens 7 Stunde ausgeschalten" Value="13" Id="%ENID%" />
         // <Enumeration Text="mindestens 8 Stunde ausgeschalten" Value="6" Id="%ENID%" />
         // <Enumeration Text="mindestens 10 Stunde ausgeschalten" Value="7" Id="%ENID%" />
         // <Enumeration Text="mindestens 12 Stunde ausgeschalten" Value="8" Id="%ENID%" />
@@ -197,6 +199,15 @@ bool ModeShading::allowed(const CallContext &callContext)
             break;
         case 10:
             waitTimeInMillis = 48 * 60 * 60 * 1000;
+            break;
+        case 11:
+            waitTimeInMillis = 4 * 60 * 60 * 1000;
+            break;
+        case 12:
+            waitTimeInMillis = 5 * 60 * 60 * 1000;
+            break;
+        case 13:
+            waitTimeInMillis = 7 * 60 * 60 * 1000;
             break;
         }
         if (callContext.fastSimulationActive)

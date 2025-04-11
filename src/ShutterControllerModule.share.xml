@@ -283,7 +283,10 @@
 									<Enumeration Text="mindestens 1 Stunde ausgeschalten" Value="2" Id="%ENID%" />
 									<Enumeration Text="mindestens 2 Stunde ausgeschalten" Value="3" Id="%ENID%" />
 									<Enumeration Text="mindestens 3 Stunde ausgeschalten" Value="4" Id="%ENID%" />
+									<Enumeration Text="mindestens 4 Stunde ausgeschalten" Value="11" Id="%ENID%" />
+									<Enumeration Text="mindestens 5 Stunde ausgeschalten" Value="12" Id="%ENID%" />
 									<Enumeration Text="mindestens 6 Stunde ausgeschalten" Value="5" Id="%ENID%" />
+									<Enumeration Text="mindestens 7 Stunde ausgeschalten" Value="13" Id="%ENID%" />
 									<Enumeration Text="mindestens 8 Stunde ausgeschalten" Value="6" Id="%ENID%" />
 									<Enumeration Text="mindestens 10 Stunde ausgeschalten" Value="7" Id="%ENID%" />
 									<Enumeration Text="mindestens 12 Stunde ausgeschalten" Value="8" Id="%ENID%" />
