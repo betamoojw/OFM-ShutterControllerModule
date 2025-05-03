@@ -124,7 +124,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-ShadingBreak" Name="MaxCloudLimit">
+							<ParameterType Id="%AID%_PT-ShadingBreak" Name="ShadingBreak">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Himmelsrichtung" Value="1" Id="%ENID%" />

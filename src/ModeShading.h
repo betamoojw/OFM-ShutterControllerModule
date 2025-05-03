@@ -41,6 +41,7 @@ class ModeShading : public ModeBase
     bool _allowedByMeasurementValues = false;
     bool _allowedByMeasurementValuesAndHeatingOffWaitTime = false;
     bool _lockActive = false;
+    bool _breakLockActive = false;
     bool _active = false;
     unsigned long _waitTimeAfterMeasurmentValueChange = 0;
     unsigned long _waitTimeAfterHeatingValueChange = 0;

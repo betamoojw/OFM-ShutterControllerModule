@@ -31,6 +31,10 @@ void ModeShading::initGroupObjects()
 {
     getKo(SHC_KoCShading1LockActive).value(false, DPT_Switch);
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
+    if (ParamSHC_CShading1Break != 0)
+    {
+        getKo(SHC_KoCShading2BreakLockActive).value(false, DPT_Switch);
+    }
     updateDiagnosticKos();
 
     _recalcMeasurmentValues = true;
@@ -371,55 +375,61 @@ bool ModeShading::allowedBySun(const CallContext &callContext)
         _notAllowedReason &= ~ModeShadingNotAllowedReasonSunElevation;
     }
 
-    auto shadingBreak = ParamSHC_CShading1Break;
-
-    // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Azimut" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Höhenwinkel" Value="2" Id="%ENID%" />
-    // <Enumeration Text="Azimut UND Höhenwinkel" Value="3" Id="%ENID%" />
-    // <Enumeration Text="Azimut ODER Höhenwinkel" Value="4" Id="%ENID%" />
     bool shadingBreakActive = false;
-    switch (shadingBreak)
+    if (_breakLockActive)
     {
-    case 1:
-        if (callContext.azimuth >= ParamSHC_CShading1BreakAzimutMin && callContext.azimuth <= ParamSHC_CShading1BreakAzimutMax)
+        if (callContext.diagnosticLog)
+            logInfoP("Shading break locked");
+    }
+    else
+    {
+        auto shadingBreak = ParamSHC_CShading1Break;
+        // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Azimut" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Höhenwinkel" Value="2" Id="%ENID%" />
+        // <Enumeration Text="Azimut UND Höhenwinkel" Value="3" Id="%ENID%" />
+        // <Enumeration Text="Azimut ODER Höhenwinkel" Value="4" Id="%ENID%" />
+        switch (shadingBreak)
         {
-            allowed = false;
-            if (diagnosticLog)
-                logInfoP("Shading break azimut in range");
-            shadingBreakActive = true;
+        case 1:
+            if (callContext.azimuth >= ParamSHC_CShading1BreakAzimutMin && callContext.azimuth <= ParamSHC_CShading1BreakAzimutMax)
+            {
+                allowed = false;
+                if (diagnosticLog)
+                    logInfoP("Shading break azimut in range");
+                shadingBreakActive = true;
+            }
+            break;
+        case 2:
+            if (callContext.elevation >= ParamSHC_CShading1BreakElevationMin && callContext.elevation <= ParamSHC_CShading1BreakElevationMax)
+            {
+                allowed = false;
+                if (diagnosticLog)
+                    logInfoP("Shading break elevation in range");
+                shadingBreakActive = true;
+            }
+            break;
+        case 3:
+            if ((callContext.azimuth >= ParamSHC_CShading1BreakAzimutMin && callContext.azimuth <= ParamSHC_CShading1BreakAzimutMax) &&
+                (callContext.elevation >= ParamSHC_CShading1BreakElevationMin && callContext.elevation <= ParamSHC_CShading1BreakElevationMax))
+            {
+                allowed = false;
+                if (diagnosticLog)
+                    logInfoP("Shading break azimut and elevation in range");
+                shadingBreakActive = true;
+            }
+            break;
+        case 4:
+            if ((callContext.azimuth >= ParamSHC_CShading1BreakAzimutMin && callContext.azimuth <= ParamSHC_CShading1BreakAzimutMax) ||
+                (callContext.elevation >= ParamSHC_CShading1BreakElevationMin && callContext.elevation <= ParamSHC_CShading1BreakElevationMax))
+            {
+                allowed = false;
+                if (diagnosticLog)
+                    logInfoP("Shading break azimut or elevation in range");
+                shadingBreakActive = true;
+            }
+            break;
         }
-        break;
-    case 2:
-        if (callContext.elevation >= ParamSHC_CShading1BreakElevationMin && callContext.elevation <= ParamSHC_CShading1BreakElevationMax)
-        {
-            allowed = false;
-            if (diagnosticLog)
-                logInfoP("Shading break elevation in range");
-            shadingBreakActive = true;
-        }
-        break;
-    case 3:
-        if ((callContext.azimuth >= ParamSHC_CShading1BreakAzimutMin && callContext.azimuth <= ParamSHC_CShading1BreakAzimutMax) &&
-            (callContext.elevation >= ParamSHC_CShading1BreakElevationMin && callContext.elevation <= ParamSHC_CShading1BreakElevationMax))
-        {
-            allowed = false;
-            if (diagnosticLog)
-                logInfoP("Shading break azimut and elevation in range");
-            shadingBreakActive = true;
-        }
-        break;
-    case 4:
-        if ((callContext.azimuth >= ParamSHC_CShading1BreakAzimutMin && callContext.azimuth <= ParamSHC_CShading1BreakAzimutMax) ||
-            (callContext.elevation >= ParamSHC_CShading1BreakElevationMin && callContext.elevation <= ParamSHC_CShading1BreakElevationMax))
-            return false;
-        {
-            allowed = false;
-            if (diagnosticLog)
-                logInfoP("Shading break azimut or elevation in range");
-            shadingBreakActive = true;
-        }
-        break;
     }
     if (shadingBreakActive)
         _notAllowedReason |= ModeShadingNotAllowedReasonSunBreak;
@@ -678,6 +688,10 @@ void ModeShading::processInputKo(GroupObject &ko, PositionController &positionCo
             _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonLock;
         else
             _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonLock;
+        return;
+    case SHC_KoCShading1BreakLock:
+        _breakLockActive = ko.value(DPT_Switch);
+        getKo(SHC_KoCShading2BreakLockActive).value(_breakLockActive, DPT_Switch); 
         return;
     }
     // global ko
