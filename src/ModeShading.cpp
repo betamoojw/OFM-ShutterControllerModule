@@ -33,7 +33,7 @@ void ModeShading::initGroupObjects()
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
     if (ParamSHC_CShading1Break != 0)
     {
-        getKo(SHC_KoCShading2BreakLockActive).value(false, DPT_Switch);
+        getKo(SHC_KoCShading1BreakLockActive).value(false, DPT_Switch);
     }
     updateDiagnosticKos();
 
@@ -383,6 +383,7 @@ bool ModeShading::allowedBySun(const CallContext &callContext)
     }
     else
     {
+     
         auto shadingBreak = ParamSHC_CShading1Break;
         // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
         // <Enumeration Text="Azimut" Value="1" Id="%ENID%" />
@@ -691,7 +692,7 @@ void ModeShading::processInputKo(GroupObject &ko, PositionController &positionCo
         return;
     case SHC_KoCShading1BreakLock:
         _breakLockActive = ko.value(DPT_Switch);
-        getKo(SHC_KoCShading2BreakLockActive).value(_breakLockActive, DPT_Switch); 
+        getKo(SHC_KoCShading1BreakLockActive).value(_breakLockActive, DPT_Switch); 
         return;
     }
     // global ko

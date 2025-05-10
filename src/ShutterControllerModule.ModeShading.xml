@@ -54,10 +54,8 @@
 								<!-- Lamellenstellung Höhenwinkelabhängig -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
 
-								<!-- Beschattungsunterbrechung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="0" BitOffset="6" Name="C%C%Shading%Pn%Break" ParameterType="%AID%_PT-ShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
-
-								<!-- 1 Bit free -->
+							
+								<!-- 2 Bit free -->
 
 								<!-- Wartezeit Beschattungsstart -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+14%" Offset="1" BitOffset="0" Name="C%C%Shading%Pn%WaitTimeStart" ParameterType="%AID%_PT-WaitTimeShadingControl" Text="Beschattungsstart" SuffixText="Minuten" Value="5" />
@@ -144,6 +142,9 @@
 
 								<!-- Heizung Aktiv -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="37" BitOffset="0" Name="C%C%Shading%Pn%HeatingActive" ParameterType="%AID%_PT-HeatingActive" Text="Heizung" Value="0" />
+
+								<!-- Beschattungsunterbrechung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="37" BitOffset="4" Name="C%C%Shading%Pn%Break" ParameterType="%AID%_PT-ShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
 
 								<!-- Next Offset = 38 -->
 								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+52% -->

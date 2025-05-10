@@ -125,7 +125,7 @@
 							</ParameterType>
 
 							<ParameterType Id="%AID%_PT-ShadingBreak" Name="ShadingBreak">
-								<TypeRestriction Base="Value" SizeInBit="8">
+								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Himmelsrichtung" Value="1" Id="%ENID%" />
 									<Enumeration Text="Höhenwinkel" Value="2" Id="%ENID%" />
@@ -277,7 +277,7 @@
 							</ParameterType>
 
 							<ParameterType Id="%AID%_PT-HeatingActive" Name="HeatingActive">
-								<TypeRestriction Base="Value" SizeInBit="8">
+								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="ausgeschaltete Heizung" Value="1" Id="%ENID%" />
 									<Enumeration Text="mindestens 1 Stunde ausgeschalten" Value="2" Id="%ENID%" />
