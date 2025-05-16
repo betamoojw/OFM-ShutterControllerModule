@@ -33,7 +33,12 @@ void ModeShading::initGroupObjects()
     getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
     if (ParamSHC_CShading1Break != 0)
     {
-        getKo(SHC_KoCShading1BreakLockActive).value(false, DPT_Switch);
+        auto& shadingBreakLock = getKo(SHC_KoCShading1BreakLock);
+        if (shadingBreakLock.initialized())
+            _breakLockActive = shadingBreakLock.value(DPT_Switch);
+        else
+            shadingBreakLock.requestObjectRead();
+        getKo(SHC_KoCShading1BreakLockActive).value(_breakLockActive, DPT_Switch);
     }
     updateDiagnosticKos();
 

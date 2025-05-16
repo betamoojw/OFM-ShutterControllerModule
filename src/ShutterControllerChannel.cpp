@@ -47,7 +47,14 @@ void ShutterControllerChannel::setup()
     KoSHC_CShadingControlActive.value(shadingControlActive(), DPT_Switch);
     KoSHC_CShadingActive.value(false, DPT_Switch);
 
-    KoSHC_CLock.value(_channelLockActive, DPT_Switch);
+    if (KoSHC_CLock.initialized())
+    {
+        _channelLockActive = KoSHC_CLock.value(DPT_Switch);
+    }
+    else
+    {
+        KoSHC_CLock.requestObjectRead();
+    }
     KoSHC_CLockActive.value(_channelLockActive, DPT_Switch);
 
     // add modes, highest priority first
