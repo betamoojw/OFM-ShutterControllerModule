@@ -11,8 +11,6 @@ class WindowOpenHandler
     bool _isTiltHandler;
     bool _recalcAllowed = true;
     bool _allowed = false;
-    int16_t koChannelOffset();
-    GroupObject& getKo(uint8_t ko);
 public:
     WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTiltHandler);
 protected:

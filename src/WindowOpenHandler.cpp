@@ -7,6 +7,14 @@
 // redefine SHC_ParamCalcIndex to add offset for Window Mode 2
 #undef SHC_ParamCalcIndex
 #define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CWindowOpenPosition2 - SHC_CWindowOpenPosition1) * (_index - 1))
+
+// redefine SHC_KoCalcNumber to add offset for Window Mode 2
+#undef SHC_KoCalcNumber
+#define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1))
+
+// redefine SHC_KoCalcIndex to add offset for Window Mode 2
+#define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1)) % SHC_KoBlockSize : -1)
+
 #endif
 
 WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTilt)
@@ -18,15 +26,6 @@ WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool 
         _name = "WindowOpen";
 }
 
-int16_t WindowOpenHandler::koChannelOffset()
-{
-    return (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1);
-}
-
-GroupObject &WindowOpenHandler::getKo(uint8_t ko)
-{
-    return knx.getGroupObject(SHC_KoCalcNumber(ko) + koChannelOffset());
-}
 
 const char *WindowOpenHandler::name() const
 {
@@ -48,8 +47,8 @@ uint8_t WindowOpenHandler::sceneNumber() const
 
 void WindowOpenHandler::initGroupObjects()
 {
-    getKo(SHC_KoCWindowOpenModeActive1).value(false, DPT_Switch);
-    getKo(SHC_KoCWindowOpenLockActive1).value(false, DPT_Switch);
+    KoSHC_CWindowOpenModeActive1.value(false, DPT_Switch);
+    KoSHC_CWindowOpenLockActive1.value(false, DPT_Switch);
 }
 
 bool WindowOpenHandler::allowed(const CallContext &callContext)
@@ -81,13 +80,13 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
             if (callContext.diagnosticLog)
                 logInfoP("whether shutter nor slat position configured");
         }
-        if (!getKo(SHC_KoCWindowOpenOpened1).value(DPT_OpenClose))
+        if (!KoSHC_CWindowOpenOpened1.value(DPT_OpenClose))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
                 logInfoP("Window closed");
         }
-        if (getKo(SHC_KoCWindowOpenLockActive1).value(DPT_Switch))
+        if (KoSHC_CWindowOpenLockActive1.value(DPT_Switch))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
@@ -98,7 +97,7 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
 }
 void WindowOpenHandler::start(const CallContext &callContext, const WindowOpenHandler *previous, PositionController &positionController)
 {
-    getKo(SHC_KoCWindowOpenModeActive1).value(true, DPT_Switch);
+    KoSHC_CWindowOpenModeActive1.value(true, DPT_Switch);
 
     // Check lockout prevention
     bool manualOrIdleMode = callContext.modeCurrentActive == (ModeBase *)callContext.modeManual || callContext.modeCurrentActive == (ModeBase *)callContext.modeIdle;
@@ -148,11 +147,11 @@ void WindowOpenHandler::stop(const CallContext &callContext, const WindowOpenHan
     positionController.resetPositionLowerLimit();
     if (positionController.hasSlat())
         positionController.resetSlatLowerLimit();
-    getKo(SHC_KoCWindowOpenModeActive1).value(false, DPT_Switch);
+    KoSHC_CWindowOpenModeActive1.value(false, DPT_Switch);
 }
 void WindowOpenHandler::processInputKo(GroupObject &ko, PositionController &positionController)
 {
-    switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())
+    switch (SHC_KoCalcIndex(ko.asap()))
     {
     case SHC_KoCWindowOpenOpened1:
         if (ko.value(DPT_OpenClose))

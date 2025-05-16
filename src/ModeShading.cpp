@@ -7,7 +7,16 @@
 // redefine SHC_ParamCalcIndex to add offset for Shading Mode 2
 #undef SHC_ParamCalcIndex
 #define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CShading2TempActive - SHC_CShading1TempActive) * (_index - 1))
+
+// redefine SHC_KoCalcNumber to add offset for Shading Mode 2
+#undef SHC_KoCalcNumber
+#define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_index - 1) * (SHC_KoCShading2Active - SHC_KoCShading1Active))
+
+// redefine SHC_KoCalcIndex to add offset for Shading Mode 2
+#define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_index - 1) * (SHC_KoCShading2Active - SHC_KoCShading1Active)) % SHC_KoBlockSize : -1)
+
 #endif
+
 
 ModeShading::ModeShading(uint8_t index)
     : _index(index)
@@ -15,6 +24,8 @@ ModeShading::ModeShading(uint8_t index)
     _name = "Shading";
     _name += std::to_string(index);
     logInfoP("ModeShading %s created", _name.c_str());
+
+  
 }
 
 const char *ModeShading::name() const
@@ -29,16 +40,16 @@ uint8_t ModeShading::sceneNumber() const
 
 void ModeShading::initGroupObjects()
 {
-    getKo(SHC_KoCShading1LockActive).value(false, DPT_Switch);
-    getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
+    KoSHC_CShading1LockActive.value(false, DPT_Switch);
+    KoSHC_CShading1Active.value(false, DPT_Switch);
     if (ParamSHC_CShading1Break != 0)
     {
-        auto& shadingBreakLock = getKo(SHC_KoCShading1BreakLock);
+        auto& shadingBreakLock = KoSHC_CShading1BreakLock;
         if (shadingBreakLock.initialized())
             _breakLockActive = shadingBreakLock.value(DPT_Switch);
         else
             shadingBreakLock.requestObjectRead();
-        getKo(SHC_KoCShading1BreakLockActive).value(_breakLockActive, DPT_Switch);
+        KoSHC_CShading1BreakLockActive.value(_breakLockActive, DPT_Switch);
     }
     updateDiagnosticKos();
 
@@ -48,11 +59,11 @@ void ModeShading::initGroupObjects()
 void ModeShading::updateDiagnosticKos()
 {
     if (ParamSHC_CShading1DiagnoseBits != 0)
-        getKo(SHC_KoCShading1DiagnoseNotAllowedBit).value((uint32_t)_notAllowedReason, DPT_CombinedInfoOnOff);
+        KoSHC_CShading1DiagnoseNotAllowedBit.value((uint32_t)_notAllowedReason, DPT_CombinedInfoOnOff);
     
     if (ParamSHC_CShading1DiagnoseReason != 0)
     {
-        auto& ko = getKo(SHC_KoCShading1DiagnoseNotAllowedReason);
+        auto& ko = KoSHC_CShading1DiagnoseNotAllowedReason;
         if (_notAllowedReason == 0)
         {
             if (ko.valueNoSendCompare((uint8_t)0, DPT_DecimalFactor))   
@@ -607,20 +618,10 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
 #define SHC_KoCShading2Active SHC_KoCShading1Active
 #endif
 
-int16_t ModeShading::koChannelOffset()
-{
-    return (_index - 1) * (SHC_KoCShading2Active - SHC_KoCShading1Active);
-}
-
-GroupObject &ModeShading::getKo(uint8_t ko)
-{
-    return knx.getGroupObject(SHC_KoCalcNumber(ko) + koChannelOffset());
-}
-
 void ModeShading::start(const CallContext &callContext, const ModeBase *previous, PositionController &positionController)
 {
     _active = true;
-    getKo(SHC_KoCShading1Active).value(true, DPT_Switch);
+    KoSHC_CShading1Active.value(true, DPT_Switch);
     positionController.setAutomaticPosition(ParamSHC_CShading1ShadingPosition);
 
     // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
@@ -678,16 +679,15 @@ void ModeShading::stop(const CallContext &callContext, const ModeBase *next, Pos
     }
     else
         _waitTimeAfterMeasurmentValueChange = 0;
-    getKo(SHC_KoCShading1Active).value(false, DPT_Switch);
+    KoSHC_CShading1Active.value(false, DPT_Switch);
 }
 void ModeShading::processInputKo(GroupObject &ko, PositionController &positionController)
 {
-    // channel ko
-    switch (ko.asap() - SHC_KoBlockOffset - koChannelOffset())
+    switch (SHC_KoCalcIndex(ko.asap()))
     {
     case SHC_KoCShading1Lock:
         _lockActive = ko.value(DPT_Switch);
-        getKo(SHC_KoCShading1LockActive).value(_lockActive, DPT_Switch);
+        KoSHC_CShading1LockActive.value(_lockActive, DPT_Switch);
         _waitTimeAfterMeasurmentValueChange = 0; // lock does not use wait time
         _recalcMeasurmentValues = true;
         if (_lockActive)
@@ -697,7 +697,7 @@ void ModeShading::processInputKo(GroupObject &ko, PositionController &positionCo
         return;
     case SHC_KoCShading1BreakLock:
         _breakLockActive = ko.value(DPT_Switch);
-        getKo(SHC_KoCShading1BreakLockActive).value(_breakLockActive, DPT_Switch); 
+        KoSHC_CShading1BreakLockActive.value(_breakLockActive, DPT_Switch); 
         return;
     }
     // global ko
