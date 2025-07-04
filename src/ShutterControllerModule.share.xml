@@ -522,7 +522,7 @@
 							<!-- Helligkeit Eingang -->
 							<ComObject Number="4" Id="%AID%_O-%TT%00004" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput" Text="Helligkeit Eingang" FunctionText="Helligkeit Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- UVI Eingang -->
-							<ComObject Number="5" Id="%AID%_O-%TT%00005" ObjectSize="1 Byte" DatapointType="DPST-5-5" Name="UVIInput" Text="UVI Eingang" FunctionText="UVI Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Number="5" Id="%AID%_O-%TT%00005" ObjectSize="2 Bytes" DatapointType="DPST-9-31" Name="UVIInput" Text="UVI Eingang" FunctionText="UVI Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Regen Eingang -->
 							<ComObject Number="6" Id="%AID%_O-%TT%00006" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="RainInput" Text="Regen Eingang" FunctionText="Regen Eingang" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Wolken Eingang -->

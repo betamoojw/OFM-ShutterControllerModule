@@ -343,7 +343,7 @@ void ShutterControllerModule::setup()
         ParamSHC_HasUVIInput ? &KoSHC_UVIInput : nullptr,
         ParamSHC_UVIWatchdog,
         KNXValue(ParamSHC_UVIFallback),
-        DPT_DecimalFactor,
+        DPT_Value_Temp, // Workaround: no type for DPT 9.031 "coefficent", using temperature instead
         (MeasurementWatchdogFallbackBehavior)ParamSHC_UVIFallbackMode);
     _callContext.measurementUVIndex = &_measurementUVIndex;
 
