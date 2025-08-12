@@ -509,168 +509,164 @@
 						<ChannelIndependentBlock>
 							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 								<when test="&gt;=%C%">
-									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Kanal">
-										<Channel Id="%AID%_CH-SHC%CC%" Name="f%CC%SHC" Number="SHC%CC%" Text="Kanal %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
-											<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
+									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Kanal" ShowInComObjectTree="true">
 
-												<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanal %C%" UIHint="Headline" />
-												<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanal %C%" UIHint="Headline" />
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
-												<!-- Kanal Name -->
-												<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="%DOC%" />
+										<!-- Kanal Name -->
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="%DOC%" />
 
-												<!-- Kanal Type -->
-												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="%DOC%" />
-												<!-- Kanal Type -->
+										<!-- Kanal Type -->
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="%DOC%" />
+										<!-- Kanal Type -->
+										<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+											<when test="&gt;0">
+												<!-- Nicht deaktiviert -->
+
+												<!-- Jalousie Prozent Ausgang -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
+
+												<!-- Gerätetype -->
 												<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+													<when test="1">
+														<!-- Gerätetype Jalousie -->
+														<!-- Prozent Lamelle Ausgang -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
+													</when>
+												</choose>
+												<!-- Schritt/Stopp Ausgang -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" />
+
+												<!-- Jalousie Prozent Eingang -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
+
+												<!-- Gerätetype -->
+												<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+													<when test="1">
+														<!-- Gerätetype Jalousie -->
+														<!-- Prozent Lamelle Eingang -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
+													</when>
+												</choose>
+
+												<!-- Sperre Kanal -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
+												<!-- Sperre Kanal Aktiv -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
+												<!-- Aktiver Modus -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
+
+
+												<!-- Kanal Deaktivieren -->
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="%DOC%" />
+
+												<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
+
+												<!-- Nacht Modus -->
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="%DOC%"/>
+
+
+												<!-- Anzahl Fenster Offen Mode-->
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%"/>
+
+
+												<!-- Anzahl Beschattungs Mode-->
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" HelpContext="%DOC%"/>
+												<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
 													<when test="&gt;0">
-														<!-- Nicht deaktiviert -->
 
-														<!-- Jalousie Prozent Ausgang -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungseinstellung" UIHint="Headline" />
 
-														<!-- Gerätetype -->
+														<!-- Beschattung Einschalten -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
+														<!-- Beschattung Einschalten Rückmeldung -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
+														<!-- Beschattung Aktiv -->
+														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
+
+														<!-- Beschattungsunterbrechnung nach Handbetrieb -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" HelpContext="%DOC%" />
+
+														<!-- Nach Beschattung -->
 														<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
 															<when test="1">
-																<!-- Gerätetype Jalousie -->
-																<!-- Prozent Lamelle Ausgang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />
+																<!-- Jalousie -->
+																<!-- Nach Beschattung Zeit -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
+															</when>
+															<when test="2">
+																<!-- Rollo -->
+																<!-- Nach Beschattung Zeit -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901"/>
 															</when>
 														</choose>
-														<!-- Schritt/Stopp Ausgang -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" />
 
-														<!-- Jalousie Prozent Eingang -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" />
 
-														<!-- Gerätetype -->
-														<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
+
+														<!-- Heizung Eingang -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" HelpContext="%DOC%" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
 															<when test="1">
-																<!-- Gerätetype Jalousie -->
-																<!-- Prozent Lamelle Eingang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" />
-															</when>
-														</choose>
+																<!-- Heizung Stellwert % Eingang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
 
-														<!-- Sperre Kanal -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" />
-														<!-- Sperre Kanal Aktiv -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" />
-														<!-- Aktiver Modus -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" />
-
-
-														<!-- Kanal Deaktivieren -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="%DOC%" />
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
-
-														<!-- Nacht Modus -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="%DOC%"/>
-
-
-														<!-- Anzahl Fenster Offen Mode-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%"/>
-
-
-														<!-- Anzahl Beschattungs Mode-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" HelpContext="%DOC%"/>
-														<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-															<when test="&gt;0">
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattungseinstellung" UIHint="Headline" />
-
-																<!-- Beschattung Einschalten -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" />
-																<!-- Beschattung Einschalten Rückmeldung -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
-																<!-- Beschattung Aktiv -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
-
-																<!-- Beschattungsunterbrechnung nach Handbetrieb -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" HelpContext="%DOC%" />
-
-																<!-- Nach Beschattung -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-																	<when test="1">
-																		<!-- Jalousie -->
-																		<!-- Nach Beschattung Zeit -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801"/>
-																	</when>
-																	<when test="2">
-																		<!-- Rollo -->
-																		<!-- Nach Beschattung Zeit -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901"/>
-																	</when>
-																</choose>
-
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Raumbezogene Messwert Eingänge" UIHint="Headline" />
-
-																<!-- Heizung Eingang -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" HelpContext="%DOC%" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301">
-																	<when test="1">
-																		<!-- Heizung Stellwert % Eingang -->
-																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" />
-
-																		<!-- Heizung Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
-																			<when test="&gt;0">
-																				<!-- Heizung Watchdog Fallback-->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
-																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
-																					<when test="2 3">
-																						<!-- Heizung Fallback % -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" HelpContext="%DOC%" />
-																					</when>
-																				</choose>
-																			</when>
-																		</choose>
-																	</when>
-																	<when test="2">
-																		<!-- Heizungsanforderung Eingang -->
-																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
-
-																		<!-- Heizung Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
-																			<when test="&gt;0">
-																				<!-- Heizung Watchdog Fallback-->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" HelpContext="%DOC%" />
-																				<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
-																					<when test="2 3">
-																						<!-- Heizung Fallback Ein/Aus -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" HelpContext="%DOC%" />
-																					</when>
-																				</choose>
+																<!-- Heizung Watchdog -->
+																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
+																	<when test="&gt;0">
+																		<!-- Heizung Watchdog Fallback-->
+																		<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
+																			<when test="2 3">
+																				<!-- Heizung Fallback % -->
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%029_R-%TT%%CC%02901" HelpContext="%DOC%" />
 																			</when>
 																		</choose>
 																	</when>
 																</choose>
+															</when>
+															<when test="2">
+																<!-- Heizungsanforderung Eingang -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" />
 
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+																<!-- Heizung Watchdog -->
+																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701" HelpContext="%DOC%" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%027_R-%TT%%CC%02701">
+																	<when test="&gt;0">
+																		<!-- Heizung Watchdog Fallback-->
+																		<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801" HelpContext="%DOC%" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%028_R-%TT%%CC%02801">
+																			<when test="2 3">
+																				<!-- Heizung Fallback Ein/Aus -->
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03002" HelpContext="%DOC%" />
+																			</when>
+																		</choose>
+																	</when>
+																</choose>
+															</when>
+														</choose>
 
+														<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+														<!-- Raumtemperatur Eingang -->
+														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" HelpContext="%DOC%" />
+														<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
+															<when test="1">
 																<!-- Raumtemperatur Eingang -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401" HelpContext="%DOC%" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%014_R-%TT%%CC%01401">
-																	<when test="1">
-																		<!-- Raumtemperatur Eingang -->
-																		<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" />
 
-																		<!-- Raumtemperatur Watchdog -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" HelpContext="%DOC%" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
-																			<when test="&gt;0">
-																				<!-- Raumtemperatur Watchdog Fallback-->
-																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" HelpContext="%DOC%" />
-																				<choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
-																					<when test="2 3">
-																						<!-- Raumtemperatur Fallback Ein/Aus -->
-																						<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" HelpContext="%DOC%" />
-																					</when>
-																				</choose>
+																<!-- Raumtemperatur Watchdog -->
+																<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" HelpContext="%DOC%" />
+																<choose ParamRefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101">
+																	<when test="&gt;0">
+																		<!-- Raumtemperatur Watchdog Fallback-->
+																		<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" HelpContext="%DOC%" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201">
+																			<when test="2 3">
+																				<!-- Raumtemperatur Fallback Ein/Aus -->
+																				<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" HelpContext="%DOC%" />
 																			</when>
 																		</choose>
 																	</when>
@@ -679,293 +675,293 @@
 														</choose>
 													</when>
 												</choose>
-											</ParameterBlock>
-											<!-- Gerätetype -->
-											<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-												<when test="&gt;0">
-													<!-- Gerätetype aktiviert -->
+											</when>
+										</choose>
+										<!-- Gerätetype -->
+										<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+											<when test="&gt;0">
+												<!-- Gerätetype aktiviert -->
 
-													<!-- Handbetrieb -->
-													<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-Handbetrieb" ShowInComObjectTree="true">
+												<!-- Handbetrieb -->
+												<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-Handbetrieb" ShowInComObjectTree="true">
 
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="Handbetrieb" UIHint="Headline" />
 
-														<!-- Modus Handbetrieb Aus-/Einschalten -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
-														<!-- Modus Handbetrieb Aktiv -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
+													<!-- Modus Handbetrieb Aus-/Einschalten -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" />
+													<!-- Modus Handbetrieb Aktiv -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" />
 
-														<!-- Handbetrieb Steuerung Auf/Ab -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
-														
-														<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
-														<choose ParamRefId="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201">
-															<when test="1">
-																<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktion) -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" />
-															</when>
-														</choose>
-											
-														<!-- Handbetrieb Steuerung Stopp/Schritt -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
-														<!-- Handbetrieb Steuerung Prozent -->
-														<ComObjectRefRef RefId="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" />
-
-														<!-- Gerätetype -->
-														<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-															<when test="1">
-																<!-- Gerätetype Jalousie -->
-																<!-- Handbetrieb Steuerung Lamelle Prozent -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
-															</when>
-														</choose>
-
-														<!-- Handbetrieb Auf/Ab Type-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" HelpContext="%DOC%" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
-															<when test="0">
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt aber die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
-															</when>
-															<when test="1">
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
-
-																<!-- Modus Handbetrieb Sperre -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
-																<!-- Modus Handbetrieb Sperre Rückmeldung -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
-
-																<!-- Mode Manual ignoriert Kanal Lock -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" HelpContext="%DOC%" />
-
-																<!-- Auf/Ab Ausgang -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
-
-															</when>
-															<when test="2">
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
-
-																<!-- Modus Handbetrieb Sperre -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
-																<!-- Modus Handbetrieb Sperre Rückmeldung -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
-
-																<!-- Mode Manual ignoriert Kanal Lock -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" HelpContext="%DOC%" />
-
-															</when>
-														</choose>
-
-														<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-															<when test="&gt;0">
-																<!-- Mindestens ein Beschattungsmodus -->
-
-																<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="%DOC%" />
-															</when>
-														</choose>
-
-
-														<!-- Wartezeit nach Handbedienung-->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" HelpContext="%DOC%" />
-
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen" UIHint="Headline" />
-
-														<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
-														<ParameterRefRef RefId="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201" HelpContext="%DOC%" />
-												
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
-
-														<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" HelpContext="%DOC%" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
-															<when test="1 3 4">
-																<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-																	<when test="0">
-																		<!-- Keine Beschattungsmodus -->
-																		<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
-																	</when>
-																</choose>
-															</when>
-														</choose>
-
-														<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" HelpContext="%DOC%" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
-															<when test="1 3 4">
-																<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-																	<when test="0">
-																		<!-- Keine Beschattungsmodus -->
-																		<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
-																	</when>
-																</choose>
-															</when>
-														</choose>
-														
-														<ParameterSeparator Id="%AID%_PS-nnn" Text="Tasterbediendung bei geschlossener Jalousien" UIHint="Headline" />
-
-														<!-- Kurzer Druck "Nach unten" bei geschlossener Jalousie  -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" HelpContext="%DOC%" />
-														<choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
-															<when test="1 3 4">
-																<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-																	<when test="0">
-																		<!-- Keine Beschattungsmodus -->
-																		<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
-																	</when>
-																</choose>
-															</when>
-														</choose>
+													<!-- Handbetrieb Steuerung Auf/Ab -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" />
 													
-														<!-- Langer Druck "Nach unten" bei geschlossener Jalousie  -->
-														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" HelpContext="%DOC%" />			
-														<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
-															<when test="1 3 4">
-																<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
-																	<when test="0">
-																		<!-- Keine Beschattungsmodus -->
-																		<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
-																	</when>
-																</choose>
-															</when>
-														</choose>
-													</ParameterBlock>
-
-
-
-													<!-- Nacht Modus -->
-													<choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
+													<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
+													<choose ParamRefId="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201">
 														<when test="1">
-															<!-- Nacht Modus Aktiv -->
+															<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktion) -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" />
+														</when>
+													</choose>
+										
+													<!-- Handbetrieb Steuerung Stopp/Schritt -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" />
+													<!-- Handbetrieb Steuerung Prozent -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" />
 
-
-															<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-Nachtmodus" ShowInComObjectTree="true">
-
-
-																<!-- Modus Nacht Aus-/Einschalten -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
-																<!-- Modus Nacht Aktiv -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
-																<!-- Modus Nacht Sperre -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
-																<!-- Modus Nacht Sperre Rückmeldung -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
-
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
-
-																<!-- Fenster offen Mode -->
-																<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
-																	<when test="&gt;0">
-																		<!-- Anzahl der Fensterkontakte -->
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
-																			<when test="2">
-																				<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
-																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" HelpContext="%DOC%" />
-																			</when>
-																		</choose>
-																		<!-- Fenster offen Modus in Nachtmodus erlaubt -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" HelpContext="%DOC%" />
-																	</when>
-																</choose>
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Begin" UIHint="Headline" />
-
-																<!-- Nachtmodus von -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" HelpContext="%DOC%"/>
-																<choose ParamRefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501">
-																	<when test="1 3 4">
-																		<!-- Von Uhrzeit -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" HelpContext="%DOC%" />
-																	</when>
-																	<when test="2 3 4">
-																		<!-- vor / bei / nach -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" HelpContext="%DOC%" />
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701">
-																			<when test="0 2">
-																				<!-- Höhenwinkel Grad nachSonnenuntergang -->
-																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" HelpContext="%DOC%" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-
-																<!-- Position bei Nacht Start anfahren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901" HelpContext="%DOC%" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901">
-																	<when test="1">
-
-																		<!-- Night Mode Start Position -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" HelpContext="%DOC%" />
-
-																		<!-- Gerätetype -->
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-																			<when test="1">
-
-																				<!-- Night Mode Start Lamellen Position -->
-																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" HelpContext="%DOC%" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-																<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Ende" UIHint="Headline" />
-
-																<!-- Nachtmodus bis -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" HelpContext="%DOC%" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901">
-																	<when test="1 3 4">
-																		<!-- Bis Uhrzeit -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" HelpContext="%DOC%" />
-																	</when>
-																	<when test="2 3 4">
-																		<!-- vor / bei / nach -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" HelpContext="%DOC%"/>
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">
-																			<when test="0 2">
-																				<!-- Höhenwinkel Grad nach Sonnenaufgang -->
-																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" HelpContext="%DOC%" />
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-
-																<!-- Position bei Nacht Ende anfahren -->
-																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" HelpContext="%DOC%" />
-																<choose ParamRefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201">
-																	<when test="1">
-																		<!-- Night Mode Stop Position -->
-																		<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" HelpContext="%DOC%" />
-
-																		<!-- Gerätetype -->
-																		<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-																			<when test="1">
-																				<!-- Night Mode Stop Lamellen Position -->
-																				<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" HelpContext="%DOC%"/>
-																			</when>
-																		</choose>
-																	</when>
-																</choose>
-															</ParameterBlock>
+													<!-- Gerätetype -->
+													<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+														<when test="1">
+															<!-- Gerätetype Jalousie -->
+															<!-- Handbetrieb Steuerung Lamelle Prozent -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" />
 														</when>
 													</choose>
 
-													<!-- ShutterControllerModule.ModeShading.xml will be included here -->
-													<op:usePart name="ModeShading" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='ShadingParameters']/*" />
+													<!-- Handbetrieb Auf/Ab Type-->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501" HelpContext="%DOC%" />
+													<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+														<when test="0">
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen am Aktor und an diesem Moduel angeschlossen werden. Der Aktor übernimmt die Steuerung, das Modul benötigt aber die Information, dass eine Steuerung erfolgt ist." UIHint="Information" />
+														</when>
+														<when test="1">
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters müssen Gruppenadressen zwischen diesem Modul und dem Aktor für Auf/Ab und Schritt/Stopp verwendet werden." UIHint="Information" />
 
-													<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
-													<op:usePart name="ModeWindowOpen" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='WindowOpenParameters']/*" />
+															<!-- Modus Handbetrieb Sperre -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
+															<!-- Modus Handbetrieb Sperre Rückmeldung -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
+
+															<!-- Mode Manual ignoriert Kanal Lock -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" HelpContext="%DOC%" />
+
+															<!-- Auf/Ab Ausgang -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" />
+
+														</when>
+														<when test="2">
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Gruppenadressen zur manuellen Bedienung müssen an dieses Modul angeschlossen werden. Weiters muss eine Gruppenadressen zwischen diesem Modul und dem Aktor für Schritt/Stopp verwendet werden." UIHint="Information" />
+
+															<!-- Modus Handbetrieb Sperre -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" />
+															<!-- Modus Handbetrieb Sperre Rückmeldung -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" />
+
+															<!-- Mode Manual ignoriert Kanal Lock -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" HelpContext="%DOC%" />
+
+														</when>
+													</choose>
+
+													<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+														<when test="&gt;0">
+															<!-- Mindestens ein Beschattungsmodus -->
+
+															<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%003_R-%TT%%CC%00301" HelpContext="%DOC%" />
+														</when>
+													</choose>
 
 
-												</when>
-											</choose>
-										</Channel>
+													<!-- Wartezeit nach Handbedienung-->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%038_R-%TT%%CC%03801" HelpContext="%DOC%" />
+
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="Sonderfunktionen" UIHint="Headline" />
+
+													<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
+													<ParameterRefRef RefId="%AID%_P-%TT%%CC%042_R-%TT%%CC%04201" HelpContext="%DOC%" />
+											
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="Tasterbediendung bei geöffneter Jalousien" UIHint="Headline" />
+
+													<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501" HelpContext="%DOC%" />
+													<choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
+														<when test="1 3 4">
+															<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																<when test="0">
+																	<!-- Keine Beschattungsmodus -->
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
+																</when>
+															</choose>
+														</when>
+													</choose>
+
+													<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601" HelpContext="%DOC%" />
+													<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
+														<when test="1 3 4">
+															<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																<when test="0">
+																	<!-- Keine Beschattungsmodus -->
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
+																</when>
+															</choose>
+														</when>
+													</choose>
+													
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="Tasterbediendung bei geschlossener Jalousien" UIHint="Headline" />
+
+													<!-- Kurzer Druck "Nach unten" bei geschlossener Jalousie  -->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" HelpContext="%DOC%" />
+													<choose ParamRefId="%AID%_UP-%TT%%CC%035_R-%TT%%CC%03501">
+														<when test="1 3 4">
+															<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																<when test="0">
+																	<!-- Keine Beschattungsmodus -->
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
+																</when>
+															</choose>
+														</when>
+													</choose>
+												
+													<!-- Langer Druck "Nach unten" bei geschlossener Jalousie  -->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" HelpContext="%DOC%" />			
+													<choose ParamRefId="%AID%_UP-%TT%%CC%036_R-%TT%%CC%03601">
+														<when test="1 3 4">
+															<!-- Beschattungsautomatik EIN/AUS, EIN, AUS -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
+																<when test="0">
+																	<!-- Keine Beschattungsmodus -->
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Beschattung für diesen Kanal nicht konfiguriert." UIHint="Error" />
+																</when>
+															</choose>
+														</when>
+													</choose>
+												</ParameterBlock>
+
+
+
+												<!-- Nacht Modus -->
+												<choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
+													<when test="1">
+														<!-- Nacht Modus Aktiv -->
+
+
+														<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCNight" Text="Nachtmodus" Icon="weather-night" HelpContext="SHC-Nachtmodus" ShowInComObjectTree="true">
+
+
+															<!-- Modus Nacht Aus-/Einschalten -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" />
+															<!-- Modus Nacht Aktiv -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" />
+															<!-- Modus Nacht Sperre -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
+															<!-- Modus Nacht Sperre Rückmeldung -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
+
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
+
+															<!-- Fenster offen Mode -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+																<when test="&gt;0">
+																	<!-- Anzahl der Fensterkontakte -->
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+																		<when test="2">
+																			<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
+																			<ParameterRefRef RefId="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" HelpContext="%DOC%" />
+																		</when>
+																	</choose>
+																	<!-- Fenster offen Modus in Nachtmodus erlaubt -->
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%017_R-%TT%%CC%01701" HelpContext="%DOC%" />
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Begin" UIHint="Headline" />
+
+															<!-- Nachtmodus von -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" HelpContext="%DOC%"/>
+															<choose ParamRefId="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501">
+																<when test="1 3 4">
+																	<!-- Von Uhrzeit -->
+																	<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" HelpContext="%DOC%" />
+																</when>
+																<when test="2 3 4">
+																	<!-- vor / bei / nach -->
+																	<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701" HelpContext="%DOC%" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%007_R-%TT%%CC%00701">
+																		<when test="0 2">
+																			<!-- Höhenwinkel Grad nachSonnenuntergang -->
+																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%008_R-%TT%%CC%00801" HelpContext="%DOC%" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+
+															<!-- Position bei Nacht Start anfahren -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901" HelpContext="%DOC%" />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%019_R-%TT%%CC%01901">
+																<when test="1">
+
+																	<!-- Night Mode Start Position -->
+																	<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" HelpContext="%DOC%" />
+
+																	<!-- Gerätetype -->
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																		<when test="1">
+
+																			<!-- Night Mode Start Lamellen Position -->
+																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" HelpContext="%DOC%" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Nacht Ende" UIHint="Headline" />
+
+															<!-- Nachtmodus bis -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901" HelpContext="%DOC%" />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%009_R-%TT%%CC%00901">
+																<when test="1 3 4">
+																	<!-- Bis Uhrzeit -->
+																	<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" HelpContext="%DOC%" />
+																</when>
+																<when test="2 3 4">
+																	<!-- vor / bei / nach -->
+																	<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" HelpContext="%DOC%"/>
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101">
+																		<when test="0 2">
+																			<!-- Höhenwinkel Grad nach Sonnenaufgang -->
+																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" HelpContext="%DOC%" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+
+															<!-- Position bei Nacht Ende anfahren -->
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" HelpContext="%DOC%" />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201">
+																<when test="1">
+																	<!-- Night Mode Stop Position -->
+																	<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" HelpContext="%DOC%" />
+
+																	<!-- Gerätetype -->
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																		<when test="1">
+																			<!-- Night Mode Stop Lamellen Position -->
+																			<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" HelpContext="%DOC%"/>
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+														</ParameterBlock>
+													</when>
+												</choose>
+
+												<!-- ShutterControllerModule.ModeShading.xml will be included here -->
+												<op:usePart name="ModeShading" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='ShadingParameters']/*" />
+
+												<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
+												<op:usePart name="ModeWindowOpen" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='WindowOpenParameters']/*" />
+
+
+											</when>
+										</choose>
 									</ParameterBlock>
 								</when>
 							</choose>
