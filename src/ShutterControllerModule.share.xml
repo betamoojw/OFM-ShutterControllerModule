@@ -552,7 +552,7 @@
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
-						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
+            			<Channel Id="%AID%_CH-%PREFIX%" Number="%PREFIX%" Name="ShutterControl" Text="Jalousiensteuerung" Icon="blinds-horizontal">
 
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Allgemein" ShowInComObjectTree="true">
 
