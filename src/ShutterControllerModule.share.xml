@@ -6,9 +6,29 @@
 		<Manufacturer>
 			<ApplicationPrograms>
 				<ApplicationProgram>
+					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
+						<!-- Parameter Offset -->
+						<op:param name="%ParamOffset%" value="39" increment="38" />
+						<!-- KO Offset-->
+						<op:param name="%En%" value="35" increment="7" />
+						<!-- ModeShading number -->
+						<op:param name="%Pn%" value="1" />
+						<!-- Parameter ID's -->
+						<op:param name="%PPP%" value="100" increment="100" />
+						<!-- Min Temp-->
+						<op:param name="%MinTemp%" value="15" increment="5" />
+					</op:part>
+
 					<Static>
 						<ParameterTypes>
 							<!-- Number of channels (module specific) -->
+							<ParameterType Id="%AID%_PT-NumberOfShading" Name="NumberOfShading">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
+									<!-- ShutterControllerModule.ModeShading.xml will be included here -->
+									<op:usePart name="ModeShading" xpath="//ParameterTypes/ParameterType[@Name='NumberOfShadingEnumValue']/TypeRestriction/*" />
+								</TypeRestriction>
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHCNumChannels" Name="SHCNumChannels">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
 							</ParameterType>
