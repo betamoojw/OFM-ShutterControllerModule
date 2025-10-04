@@ -6,15 +6,15 @@
 #ifdef SHC_CWindowOpenPosition2
 // redefine SHC_ParamCalcIndex to add offset for Window Mode 2
 #undef SHC_ParamCalcIndex
-#define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CWindowOpenPosition2 - SHC_CWindowOpenPosition1) * (_index - 1))
+#define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CWindowOpenPosition2 - SHC_CWindowOpenPosition1) * (1 - _isTiltHandler))
 
 // redefine SHC_KoCalcNumber to add offset for Window Mode 2
 #undef SHC_KoCalcNumber
-#define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1))
+#define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_isTiltHandler) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1))
 
 // redefine SHC_KoCalcIndex to add offset for Window Mode 2
 #undef SHC_KoCalcIndex
-#define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1)) % SHC_KoBlockSize : -1)
+#define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_isTiltHandler) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1)) % SHC_KoBlockSize : -1)
 
 #endif
 

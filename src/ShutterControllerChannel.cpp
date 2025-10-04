@@ -61,7 +61,7 @@ void ShutterControllerChannel::setup()
     _modeManual = new ModeManual(*this);
     for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
     {
-        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount != i));
+        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, i == 2)); // ParamSHC_CWindowOpenCount != i));
     }
 
     _modes.push_back(_modeManual);
@@ -411,10 +411,12 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             if (nextWindowOpenHandler != nullptr)
                 logInfoP("Start window open %s", nextWindowOpenHandler->name());
             else
+            {
                 logInfoP("Stop window open");
+                if (_currentWindowOpenHandler != nullptr)
+                    _currentWindowOpenHandler->stop(callContext, nextWindowOpenHandler, _positionController);
+            }
         }
-        if (_currentWindowOpenHandler != nullptr)
-            _currentWindowOpenHandler->stop(callContext, nextWindowOpenHandler, _positionController);
         _currentWindowOpenHandler = nextWindowOpenHandler;
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->start(callContext, _currentWindowOpenHandler, _positionController);
@@ -466,7 +468,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         logIndentDown();
     }
-    if (_currentMode != nextMode)
+    if (_currentMode != nextMode && nextMode != nullptr)
     {
         sceneChanged = true;
         if (nextMode == _modeManual)
