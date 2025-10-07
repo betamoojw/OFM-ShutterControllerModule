@@ -40,7 +40,10 @@
 								<!-- Aussperrverhinderung -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+5%" Offset="3" BitOffset="0" Name="C%C%WindowOpenLockOut%Pn%" ParameterType="%AID%_PT-SHCLockOutPrevention" Text="Aussperrverhinderung" Value="10" />
 
-								<!-- 4 bit free -->
+								<!-- Kontakt invertiert -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+6%" Offset="3" BitOffset="4" Name="C%C%WindowOpenContactInvert%Pn%" ParameterType="%AID%_PT-WindowOpenContact" Text="Objekt Kontakt" Value="0" />
+
+								<!-- 3 bit free -->
 							</Union>
 
 						</Parameters>
@@ -64,6 +67,9 @@
 
 							<!-- Aussperrverhinderung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_UP-%TT%%CC%%PPP+5%" />
+
+							<!-- Kontakt invertiert -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" RefId="%AID%_UP-%TT%%CC%%PPP+6%" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -95,29 +101,70 @@
 
 										<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCWindowOpenMode" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Icon="window-open-variant" HelpContext="SHC-Fenster-OffenGekippt"  ShowInComObjectTree="true">
 
-											<!-- Fenster Offen Aktiv -->
-											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
-											<!-- Fenster Offen -->
-											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
-											<!-- Fenster Offen Sperre -->
-											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
-											<!-- Fenster Offen Sperre Rückmeldung -->
-											<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
-
+										
 											<!-- Anzahl Fenster Offen Modus -->
 											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 												<when test="&gt;%Pn%">
 													<Assign TargetParamRefRef="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Value="gekippt" />
+													<!-- Fenster gekippt Aktiv -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" />
+													<!-- Kontakt invertiert -->
+													<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01">
+														<when test="0">
+															<!-- Fenster gekippt -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" />
+														</when>
+														<when test="1">
+															<!-- Fenster gekippt (invertiert) -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%911_R-%TT%%CC%91111" />
+														</when>
+													</choose>
+													<!-- Fenster gekippt Sperre -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" />
+													<!-- Fenster gekippt Sperre Rückmeldung -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%913_R-%TT%%CC%91301" />
+
 												</when>
 												<when test="%Pn%">
 													<Assign TargetParamRefRef="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Value="offen" />
+													<!-- Fenster Offen Aktiv -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" />
+													<!-- Kontakt invertiert -->
+													<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01">
+														<when test="0">
+															<!-- Fenster Offen -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" />
+														</when>
+														<when test="1">
+															<!-- Fenster Offen (invertiert) -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%901_R-%TT%%CC%90111" />
+														</when>
+													</choose>
+													<!-- Fenster Offen Sperre -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" />
+													<!-- Fenster Offen Sperre Rückmeldung -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%903_R-%TT%%CC%90301" />
+
 												</when>
 												
 											</choose>
 
 											<ParameterSeparator Id="%AID%_PS-nnn" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" UIHint="Headline" />
 											<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-													
+												
+											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+												<when test="&gt;%Pn%">
+													<!-- Fenster gekippt handling -->
+													<ParameterRefRef HelpContext="SHC-FensterGekippt-KontaktHandling" RefId="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" />
+													<!-- Fenster gekippt Wartezeit -->
+													<ParameterRefRef HelpContext="SHC-FensterGekippt-KontaktWartezeit" RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
+						
+												</when>
+											</choose>
+
+											<!-- Kontakt invertiert -->
+											<ParameterRefRef HelpContext="SHC-FensterOffen-KontaktInvertiert" RefId="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" />
+
 											<!-- Position anfahren -->
 											<ParameterRefRef HelpContext="SHC-FensterOffen-Position-Anfahren" RefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
 											<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01">

@@ -431,7 +431,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         logIndentUp();
         if (mode->allowed(callContext))
         {
-            if (_channelLockActive && (mode != _modeManual || !ParamSHC_CManualIgnoreChannelLock))
+            if (_channelLockActive && (mode != _modeManual || !ParamSHC_CManualIgnoreChannelLock) && mode != _modeIdle)
             {
                 if (callContext.diagnosticLog)
                     logInfoP("-> global channel lock active, not allowed");

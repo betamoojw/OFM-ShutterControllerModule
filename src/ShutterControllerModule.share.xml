@@ -242,6 +242,37 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<ParameterType Id="%AID%_PT-WindowOpenTiltHandling" Name="WindowOpenTiltHandling">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="Gekippt Aktiv und Offen Inaktiv" Value="0" Id="%ENID%" />
+									<Enumeration Text="Gekippt Aktiv und Offen Aktiv" Value="1" Id="%ENID%" />
+									<Enumeration Text="Gekippt Aktiv" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-WindowOpenTiltWaitTime" Name="WindowOpenTiltWaitTime">
+								<TypeRestriction Base="Value" SizeInBit="6">
+									<Enumeration Text="1 Sekunde" Value="0" Id="%ENID%" />
+									<Enumeration Text="2 Sekunden" Value="1" Id="%ENID%" />
+									<Enumeration Text="3 Sekunden" Value="3" Id="%ENID%" />
+									<Enumeration Text="5 Sekunden" Value="5" Id="%ENID%" />
+									<Enumeration Text="7 Sekunden" Value="7" Id="%ENID%" />
+									<Enumeration Text="10 Sekunden" Value="10" Id="%ENID%" />
+									<Enumeration Text="13 Sekunden" Value="13" Id="%ENID%" />
+									<Enumeration Text="16 Sekunden" Value="16" Id="%ENID%" />
+									<Enumeration Text="20 Sekunden" Value="20" Id="%ENID%" />
+									<Enumeration Text="25 Sekunden" Value="25" Id="%ENID%" />
+									<Enumeration Text="30 Sekunden" Value="30" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
+							<ParameterType Id="%AID%_PT-WindowOpenContact" Name="WindowOpenContact">
+								<TypeRestriction Base="Value" SizeInBit="1">
+									<Enumeration Text="Normal (Aktiv = 1)" Value="0" Id="%ENID%" />
+									<Enumeration Text="Invertiert (Aktiv = 0)" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-ShadingActivation" Name="ShadingActivation">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Aus" Value="0" Id="%ENID%" />
@@ -552,7 +583,7 @@
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
-						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%TT%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
+						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
 
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Allgemein">
 

@@ -1036,7 +1036,31 @@ In den jeweiligen Modus können Jalousien/Rolladen bzw. Lamellenpositionen vorge
 Z.B. kann bei gekippten Terrassentür die Lamelle in die Waagrechte Stellung (50%) gedreht werden, um den Luftdurchlass zu erhöhen, während bei geöffneter Terrassentür die Jalousie geöffnet wird.
 
 Der "Offen" hat eine höhere Priorität als die "Gekippt".
-Das bedeutet wenn beide Kontakte geöffnet sind, werden die Einstellungen aus "Offen" angewandt.
+
+<!-- DOC HelpContext="FensterGekippt-KontaktHandling" -->
+## Kontakt für Kippstellung
+
+Hier wird das Verhalten der Kontakte festgelegt.
+
+- Gekippt Aktiv und Offen Inaktiv
+- Gekippt Aktiv und Offen Aktiv
+- Gekippt Aktiv
+
+Standardmäßig bedeutet Aktiv, dass am Bus ein 1 gesendet wird. Der Eingang kann jedoch über die Konfiguration "Objekt Kontakt" auch invertiert werden, so dass Aktiv über eine 0 ausgelöst wird. 
+
+<!-- DOC HelpContext="FensterGekippt-KontaktWartezeit" -->
+## Wartezeit
+
+Bei 2 Kontakten besteht das Problem, das der Endgültig Zustand nicht sofort fest steht, da die Signale hintereinander eintreffen.
+Aus diesem Grund kann hier eine Wartezeit konfiguriert werden die bei aktivierung eines Kontakes verstreichen muss, bis eine Auswertung erfolgt
+
+<!-- DOC HelpContext="FensterOffen-KontaktInvertiert" -->
+## Objekt Kontakt
+
+- Normal (Aktiv = 1)
+  Diese Einstellung verwendet den Gruppenobjekt-Type Fenster/Tür bei dem eine 1 geöffnet und 0 geschlossen bedeutet
+- Invertiert (Aktiv = 0)
+  Diese Einstellung verwendet den Gruppenobjekt-Type Freigabe bei dem eine 1 als geschlossen und 0 als geöffnet intepretiert wird
 
 <!-- DOC HelpContext="FensterOffen-Position-Anfahren" -->
 ### Position Anfahren

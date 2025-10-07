@@ -74,10 +74,18 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%025" Offset="1" BitOffset="5" Name="C%C%ManualIgnoreChannelLock" ParameterType="%AID%_PT-OnOffYesNo" Text="Handbedienung bei globaler Kanal-Sperre erlauben" Value="1"/>
 
 								<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
-								<Parameter Id="%AID%_UP-%TT%%CC%037" Offset="1" BitOffset="4" Name="C%C%NightWindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%037" Offset="1" BitOffset="6" Name="C%C%NightWindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
 
-								<!-- 2 Bit free -->
+								<!-- 1 Bit free -->
 
+								<!-- Fenster gekippt Wartezeit -->
+								<Parameter Id="%AID%_UP-%TT%%CC%043" Offset="2" BitOffset="0" Name="C%C%WindowTiltWaitTime" ParameterType="%AID%_PT-WindowOpenTiltWaitTime" Text="Wartezeit" Value="5" />
+								<!-- ^^^ Need 6 bit ^^^-->
+
+								<!-- Fenster gekippt handling -->
+								<Parameter Id="%AID%_UP-%TT%%CC%044" Offset="2" BitOffset="6" Name="C%C%WindowTiltHandling" ParameterType="%AID%_PT-WindowOpenTiltHandling" Text="Kontakt" Value="0" />
+								<!-- ^^^ Need 2 bit ^^^-->
+								
 								<!-- Nacht Modus von -->
 								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
 
@@ -191,7 +199,7 @@
 
 
 								<!-- Next offset: 31-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%043 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%045 -->
 
 
 							</Union>
@@ -325,7 +333,13 @@
 
 							<!-- Langer Druck "Nach oben" bei geschlossener Jalousie  -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" RefId="%AID%_UP-%TT%%CC%041" />
+	
+							<!-- Fenster gekippt Wartezeit -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" RefId="%AID%_UP-%TT%%CC%043"/>	
 
+							<!-- Fenster gekippt handling -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" RefId="%AID%_UP-%TT%%CC%044"/>
+						
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
 							<op:usePart name="ModeWindowOpen" xpath="//ParameterRefs/*" />
@@ -487,6 +501,8 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" RefId="%AID%_O-%TT%%CC%900" Text="%C%: Fenster offen Aktiv" FunctionText="{{0:-}} Fenster offen Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_O-%TT%%CC%901" Text="%C%: Fenster offen Kontakt" FunctionText="{{0:-}} Fenster offen Kontakt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Fenster Offen (invertiert) -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90111" RefId="%AID%_O-%TT%%CC%901" Text="%C%: Fenster offen Kontakt (invertiert)" DatapointType="DPST-1-3" FunctionText="{{0:-}} Fenster offen Kontakt (invertiert)" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_O-%TT%%CC%902" Text="%C%: Fenster offen Sperre" FunctionText="{{0:-}} Fenster offen Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre Rückmeldung -->
@@ -497,6 +513,8 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" RefId="%AID%_O-%TT%%CC%910" Text="%C%: Fenster gekippt Aktiv" FunctionText="{{0:-}} Fenster gekippt Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Kippstellung -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" RefId="%AID%_O-%TT%%CC%911" Text="%C%: Fenster gekippt Kontakt" FunctionText="{{0:-}} Fenster gekippt Kontakt" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<!-- Fenster Kippstellung (invertiert) -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91111" RefId="%AID%_O-%TT%%CC%911" Text="%C%: Fenster gekippt Kontakt (invertiert)" DatapointType="DPST-1-3" FunctionText="{{0:-}} Fenster gekippt Kontakt (invertiert)" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" RefId="%AID%_O-%TT%%CC%912" Text="%C%: Fenster gekippt Sperre" FunctionText="{{0:-}} Fenster gekippt Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre Rückmeldung -->
@@ -510,7 +528,7 @@
 							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
 								<when test="&gt;=%C%">
 									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Kanal">
-										<Channel Id="%AID%_CH-SHC%CC%" Name="f%CC%SHC" Number="SHC%CC%" Text="Kanal %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
+										<Channel Id="%AID%_CH-SHC%CC%" Name="f%CC%SHC" Number="%PREFIX%" Text="Kanal %CC%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001">
 											<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
 
 												<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanal %C%" UIHint="Headline" />
