@@ -13,6 +13,7 @@
 #define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_index - 1) * (SHC_KoCShading2Active - SHC_KoCShading1Active))
 
 // redefine SHC_KoCalcIndex to add offset for Shading Mode 2
+#undef SHC_KoCalcIndex
 #define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_index - 1) * (SHC_KoCShading2Active - SHC_KoCShading1Active)) % SHC_KoBlockSize : -1)
 
 #endif
