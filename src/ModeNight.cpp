@@ -271,3 +271,8 @@ void ModeNight::processInputKo(GroupObject &ko, PositionController& positionCont
         break;
     }
 }
+
+bool ModeNight::isNight() const
+{
+    return _allowed;
+}

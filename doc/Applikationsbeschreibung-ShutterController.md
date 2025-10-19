@@ -1037,8 +1037,8 @@ Z.B. kann bei gekippten Terrassentür die Lamelle in die Waagrechte Stellung (50
 
 Der "Offen" hat eine höhere Priorität als die "Gekippt".
 
-<!-- DOC HelpContext="FensterGekippt-KontaktHandling" -->
-## Kontakt für Kippstellung
+<!-- DOC -->
+## Gekippt wenn
 
 Hier wird das Verhalten der Kontakte festgelegt.
 
@@ -1048,8 +1048,8 @@ Hier wird das Verhalten der Kontakte festgelegt.
 
 Standardmäßig bedeutet Aktiv, dass am Bus ein 1 gesendet wird. Der Eingang kann jedoch über die Konfiguration "Objekt Kontakt" auch invertiert werden, so dass Aktiv über eine 0 ausgelöst wird. 
 
-<!-- DOC HelpContext="FensterGekippt-KontaktWartezeit" -->
-## Wartezeit
+<!-- DOC -->
+## Kontaktänderung auswerten nach
 
 Bei 2 Kontakten besteht das Problem, das der Endgültig Zustand nicht sofort fest steht, da die Signale hintereinander eintreffen.
 Aus diesem Grund kann hier eine Wartezeit konfiguriert werden die bei aktivierung eines Kontakes verstreichen muss, bis eine Auswertung erfolgt
@@ -1115,6 +1115,11 @@ Diese Einstellung ist nur vorhanden wenn unter "Lamelle öffnen" nicht "Nein" ge
 Prozent der Lamellenstellung die eingenommen werden soll.
 Dabei 50% einer waagrechten Lamellen, 100% einer vollständig geschlossenen.
 Werte kleiner als 50% bedeuten eine verkehrte Lamellenstellung und werden üblicherweise nicht verwendet.
+
+<!-- DOC HelpContext="FensterOffen-InDerNachtAnders" -->
+#### In der Nacht anders
+
+Ist diese Einstellung aktiv, können für die Nacht andere Einstellungen für Position und Lamellen festgelegt werden.
 
 <!-- DOC HelpContext="FensterOffen-Aussperrverhinderung" -->
 #### Aussperrverhinderung

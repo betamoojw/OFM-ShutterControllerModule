@@ -1,4 +1,4 @@
-﻿### Kontakt für Kippstellung
+﻿### Gekippt wenn
 
 Hier wird das Verhalten der Kontakte festgelegt.
 

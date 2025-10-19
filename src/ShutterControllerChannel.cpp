@@ -59,15 +59,18 @@ void ShutterControllerChannel::setup()
 
     // add modes, highest priority first
     _modeManual = new ModeManual(*this);
-    for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
-    {
-        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount != i));
-    }
-
     _modes.push_back(_modeManual);
 
     if (ParamSHC_CNight)
-        _modes.push_back(new ModeNight());
+    {
+        _modeNight = new ModeNight();
+        _modes.push_back(_modeNight);
+    }
+
+    for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
+    {
+        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount != i, _modeNight));
+    }
 
     auto numberOfShadings = ParamSHC_CShadingCount;
     for (size_t i = numberOfShadings; i > 0; i--)
@@ -91,6 +94,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     _measurementHeading.processIputKo(ko);
     _measurementRoomTemperature.processIputKo(ko);
 
+
     // channel ko
     auto index = SHC_KoCalcIndex(ko.asap());
     switch (index)
@@ -102,9 +106,26 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     case SHC_KoCShadingControl:
         activateShadingControl(ko.value(DPT_Switch));
         break;
+    case SHC_KoCWindowOpenOpened1:
+    case SHC_KoCWindowOpenOpened2:
+        if (_windowOpenHandlers.size() == 2)
+        {
+            _waitForWindowOpenEvalulation = max(1UL, millis());
+        }
+        else
+        {
+            _windowOpenState = ((bool) ko.value(DPT_Switch)) == ParamSHC_CWindowOpenContactInvert1 ? WindowOpenStateOpen : WindowOpenStateClosed;
+            logInfoP("Window open state changed to %s", _windowOpenState == WindowOpenStateOpen ? "Open" : "Closed");   
+        }
+        break;
     }
     if (!_positionController.processInputKo(ko))
         return;
+
+    for (auto handler : _windowOpenHandlers)
+    {
+        handler->processInputKo(ko, _positionController);
+    }
     for (auto mode : _modes)
     {
         mode->processInputKo(ko, _positionController);
@@ -377,12 +398,87 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     // Handle window open
     bool sceneChanged = false;
     WindowOpenHandler *nextWindowOpenHandler = nullptr;
+    if (_waitForWindowOpenEvalulation != 0)
+    {
+        // <Enumeration Text="100 Millisekunden" Value="1" Id="%ENID%" />
+        // <Enumeration Text="200 Millisekunden" Value="2" Id="%ENID%" />
+        // <Enumeration Text="500 Millisekunden" Value="3" Id="%ENID%" />
+        // <Enumeration Text="1 Sekunde" Value="4" Id="%ENID%" />
+        // <Enumeration Text="2 Sekunden" Value="5" Id="%ENID%" />
+        // <Enumeration Text="3 Sekunden" Value="6" Id="%ENID%" />
+        // <Enumeration Text="4 Sekunden" Value="7" Id="%ENID%" />
+        // <Enumeration Text="5 Sekunden" Value="8" Id="%ENID%" />
+        unsigned long waitTime = 0;
+        if (_windowOpenHandlers.size() == 2)
+        {
+            switch (ParamSHC_CWindowTiltWaitTime)
+            {
+            case 1:
+                waitTime = 100;
+                break;
+            case 2:
+                waitTime = 200;
+                break;
+            case 3:
+                waitTime = 500;
+                break;
+            case 4:
+                waitTime = 1000;
+                break;
+            case 5:
+                waitTime = 2000;
+                break;
+            case 6:
+                waitTime = 3000;
+                break;
+            case 7:
+                waitTime = 4000;
+                break;
+            case 8:
+                waitTime = 5000;
+                break;
+            }
+        }
+        if (callContext.fastSimulationActive)
+            waitTime /= 10;
+        if (callContext.currentMillis - _waitForWindowOpenEvalulation >= waitTime)
+        {
+            _waitForWindowOpenEvalulation = 0;
+            _windowOpenState = ((bool) KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1 ? WindowOpenState::WindowOpenStateOpen : WindowOpenState::WindowOpenStateClosed;
+            // <Enumeration Text="Gekippt Aktiv und Offen Inaktiv" Value="0" Id="%ENID%" />
+            // <Enumeration Text="Gekippt Aktiv und Offen Aktiv" Value="1" Id="%ENID%" />
+            // <Enumeration Text="Gekippt Aktiv" Value="2" Id="%ENID%" />
+            switch (SHC_CWindowTiltHandling)
+            {
+                case 0:
+                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1 && 
+                        ((bool)KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) != SHC_CWindowOpenContactInvert2)
+                        _windowOpenState = WindowOpenState::WindowOpenStateTilted;
+                    break;
+                case 1:
+                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1 && 
+                        ((bool)KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert2)
+                        _windowOpenState = WindowOpenState::WindowOpenStateTilted;
+                    break;
+                case 2:
+                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1)
+                        _windowOpenState = WindowOpenState::WindowOpenStateTilted;
+                    break;
+            }
+            logInfoP("Window open state calculated %s", _windowOpenState == WindowOpenStateOpen ? "Open" : (_windowOpenState == WindowOpenStateTilted ? "Tilted" : "Closed"));
+ 
+        }
+    }
+    if (callContext.diagnosticLog)
+        logInfoP("Window open state %s", _windowOpenState == WindowOpenStateOpen ? "Open" : (_windowOpenState == WindowOpenStateTilted ? "Tilted" : "Closed"));
+ 
+
     for (auto windowOpenHandler : _windowOpenHandlers)
     {
         if (callContext.diagnosticLog)
             logInfoP("Window Handler: %s", windowOpenHandler->name());
         logIndentUp();
-        if (windowOpenHandler->allowed(callContext))
+        if (windowOpenHandler->allowed(callContext, _windowOpenState))
         {
             if (nextWindowOpenHandler == nullptr)
             {

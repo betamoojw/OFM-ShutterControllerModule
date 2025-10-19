@@ -9,6 +9,8 @@
 
 class ModeWindowOpen;
 class ModeShading;
+class ModeNight;
+
 
 class ShutterControllerChannel : public OpenKNX::Channel
 {
@@ -22,12 +24,16 @@ class ShutterControllerChannel : public OpenKNX::Channel
         bool _channelLockActive = false;
         std::string _name = std::string();
         WindowOpenHandler* _currentWindowOpenHandler = nullptr;
+        WindowOpenState _windowOpenState = WindowOpenStateClosed;  
+
         ModeManual* _modeManual = nullptr;
         ModeIdle* _modeIdle = nullptr;
+        ModeNight* _modeNight = nullptr;
         ModeBase* _currentMode = nullptr;
         PositionController _positionController;
         bool _anyAutoModeActive = false;
         unsigned long _waitTimeForReactivateShadingAfterManualStarted = 0;
+        unsigned long _waitForWindowOpenEvalulation = 0;
         bool _waitForShadingPeriodEnd = false;
         bool _shadingPeriodActive = false;
        

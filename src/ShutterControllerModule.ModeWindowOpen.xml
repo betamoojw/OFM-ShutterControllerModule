@@ -22,7 +22,7 @@
 							<!-- Mode Name -->
 							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%ModeName%Pn%" ParameterType="%AID%_PT-Text40Byte" Text="ModeName" Value="offen" />
 
-							<Union SizeInBit="32">
+							<Union SizeInBit="56">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
 
 								<!-- Position anfahren -->
@@ -43,7 +43,23 @@
 								<!-- Kontakt invertiert -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+6%" Offset="3" BitOffset="4" Name="C%C%WindowOpenContactInvert%Pn%" ParameterType="%AID%_PT-WindowOpenContact" Text="Objekt Kontakt" Value="0" />
 
-								<!-- 3 bit free -->
+								<!-- In der Nacht anders -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+7%" Offset="3" BitOffset="5" Name="C%C%WindowOpenNight%Pn%" ParameterType="%AID%_PT-OnOffYesNo" Text="In der Nacht anders" Value="0" />
+
+								<!-- 2 bit free -->
+
+								<!-- Position anfahren Nacht -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="4" BitOffset="0" Name="C%C%WindowOpenPositionControlN%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
+
+								<!-- Lamellenstellung Nacht-->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+52%" Offset="4" BitOffset="4" Name="C%C%WindowOpenSlatPositionControlN%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="2" />
+
+								<!-- Position Nacht -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+53%" Offset="5" BitOffset="0" Name="C%C%WindowOpenPositionN%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
+
+								<!-- Lamellenposition Nacht -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+54%" Offset="6" BitOffset="0" Name="C%C%WindowOpenSlatPositionN%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" SuffixText="%" Value="50" />
+				
 							</Union>
 
 						</Parameters>
@@ -70,6 +86,22 @@
 
 							<!-- Kontakt invertiert -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" RefId="%AID%_UP-%TT%%CC%%PPP+6%" />
+
+							<!-- In der Nacht anders -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+7%_R-%TT%%CC%%PPP+7%01" RefId="%AID%_UP-%TT%%CC%%PPP+7%" />
+
+
+							<!-- Position anfahren Nacht -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01" RefId="%AID%_UP-%TT%%CC%%PPP+51%" />
+
+							<!-- Lamellenstellung Nacht-->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01" RefId="%AID%_UP-%TT%%CC%%PPP+52%" />
+
+							<!-- Position Nacht -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+53%_R-%TT%%CC%%PPP+53%01" RefId="%AID%_UP-%TT%%CC%%PPP+53%" />
+
+							<!-- Lamellenposition Nacht -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+54%_R-%TT%%CC%%PPP+54%01" RefId="%AID%_UP-%TT%%CC%%PPP+54%" />
 
 						</ParameterRefs>
 						<ComObjectTable>
@@ -152,26 +184,19 @@
 											<ParameterSeparator Id="%AID%_PS-nnn" Text="Fenster {{0:-}}" TextParameterRefId="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" UIHint="Headline" />
 											<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 												
-											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
-												<when test="&gt;%Pn%">
-													<!-- Fenster gekippt handling -->
-													<ParameterRefRef HelpContext="SHC-FensterGekippt-KontaktHandling" RefId="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" />
-													<!-- Fenster gekippt Wartezeit -->
-													<ParameterRefRef HelpContext="SHC-FensterGekippt-KontaktWartezeit" RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
-						
-												</when>
-											</choose>
-
 											<!-- Kontakt invertiert -->
-											<ParameterRefRef HelpContext="SHC-FensterOffen-KontaktInvertiert" RefId="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" />
+											<ParameterRefRef HelpContext="SHC-FensterOffen-KontaktInvertiert" RefId="%AID%_UP-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" IndentLevel="1" />
 
+											<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+												
+											
 											<!-- Position anfahren -->
-											<ParameterRefRef HelpContext="SHC-FensterOffen-Position-Anfahren" RefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
+											<ParameterRefRef HelpContext="SHC-FensterOffen-Position-Anfahren" RefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" IndentLevel="1" />
 											<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01">
 												<when test="&gt;0">
 
 													<!-- Position -->
-													<ParameterRefRef HelpContext="SHC-FensterOffen-Position" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
+													<ParameterRefRef HelpContext="SHC-FensterOffen-Position" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" />
 												</when>
 											</choose>
 											<!-- Gerätetype -->
@@ -180,24 +205,68 @@
 													<!-- Gerätetype Jalousie -->
 
 													<!-- Lamellenstellung -->
-													<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellen-oeffnen" RefId="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
+													<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellen-oeffnen" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" />
 													<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01">
 														<when test="&gt;0">
 
 															<!-- Lamellenposition -->
-															<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellenstellung" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
+															<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellenstellung" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" />
 														</when>
 													</choose>
 												</when>
 											</choose>
+
+												
+											<!-- Nacht Modus -->
+											<choose ParamRefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401">
+												<when test="1">
+													
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+													<!-- In der Nacht anders -->
+													<ParameterRefRef HelpContext="SHC-FensterOffen-InDerNachtAnders" RefId="%AID%_UP-%TT%%CC%%PPP+7%_R-%TT%%CC%%PPP+7%01" IndentLevel="1" />
+													<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+7%_R-%TT%%CC%%PPP+7%01">
+														<when test="1">
+
+															<!-- Position anfahren -->
+															<ParameterRefRef HelpContext="SHC-FensterOffen-Position-Anfahren" RefId="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01" IndentLevel="2" />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01">
+																<when test="&gt;0">
+
+																	<!-- Position -->
+																	<ParameterRefRef HelpContext="SHC-FensterOffen-Position" IndentLevel="3" RefId="%AID%_UP-%TT%%CC%%PPP+53%_R-%TT%%CC%%PPP+53%01" />
+																</when>
+															</choose>
+															<!-- Gerätetype -->
+															<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+																<when test="1">
+																	<!-- Gerätetype Jalousie -->
+
+																	<!-- Lamellenstellung -->
+																	<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellen-oeffnen" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01" />
+																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01">
+																		<when test="&gt;0">
+
+																			<!-- Lamellenposition -->
+																			<ParameterRefRef HelpContext="SHC-FensterOffen-Lamellenstellung" IndentLevel="3" RefId="%AID%_UP-%TT%%CC%%PPP+54%_R-%TT%%CC%%PPP+54%01" />
+																		</when>
+																	</choose>
+																</when>
+															</choose>
+														</when>
+													</choose>
+												</when>
+											</choose>
+
 
 											<!-- Anzahl Fenster Offen Modus -->
 											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
 												<when test="%Pn%">
 													<!-- offen -->
 
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />	
+											
 													<!-- Aussperrverhinderung -->
-													<ParameterRefRef HelpContext="SHC-FensterOffen-Aussperrverhinderung" RefId="%AID%_UP-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" />
+													<ParameterRefRef HelpContext="SHC-FensterOffen-Aussperrverhinderung" IndentLevel="1" RefId="%AID%_UP-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" />
 												</when>
 												
 											</choose>

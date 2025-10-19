@@ -2,6 +2,7 @@
 #include "CallContext.h"
 #include "WindowOpenHandler.h"
 #include "PositionController.h"
+#include "ModeNight.h"
 
 #ifdef SHC_CWindowOpenPosition2
 // redefine SHC_ParamCalcIndex to add offset for Window Mode 2
@@ -17,13 +18,16 @@
 
 #endif
 
-WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTilt)
-    : _channelIndex(_channelIndex), _index(index), _isTiltHandler(isTilt)
+WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool isTilt, ModeNight* nightMode)
+    : _channelIndex(_channelIndex), _index(index), _isTiltHandler(isTilt), _nightMode(nightMode)
 {
     if (_isTiltHandler)
         _name = "WindowTilt";
     else
         _name = "WindowOpen";
+
+    logDebugP("Use KO: %d", (int) KoSHC_CWindowOpenOpened1.asap());
+    logDebugP("Use Invertered: %d (Index: %d)", (int) ParamSHC_CWindowOpenContactInvert1, SHC_ParamCalcIndex(SHC_CWindowOpenContactInvert1));
 }
 
 
@@ -51,8 +55,45 @@ void WindowOpenHandler::initGroupObjects()
     KoSHC_CWindowOpenLockActive1.value(false, DPT_Switch);
 }
 
-bool WindowOpenHandler::allowed(const CallContext &callContext)
+uint8_t WindowOpenHandler::getParamterOpenPositionControl()
 {
+    if (_nightMode != nullptr && ParamSHC_CWindowOpenNight1 && _nightMode->isNight())
+        return ParamSHC_CWindowOpenPositionControlN1;
+    else
+        return ParamSHC_CWindowOpenPositionControl1;
+}
+
+uint8_t WindowOpenHandler::getParamterOpenSlatPositionControl()
+{
+    if (_nightMode != nullptr && ParamSHC_CWindowOpenNight1 && _nightMode->isNight())
+        return ParamSHC_CWindowOpenSlatPositionControlN1;
+    else
+        return ParamSHC_CWindowOpenSlatPositionControl1;
+}
+
+uint8_t WindowOpenHandler::getParamterOpenPosition()
+{
+    if (_nightMode != nullptr && ParamSHC_CWindowOpenNight1 && _nightMode->isNight())
+        return ParamSHC_CWindowOpenPositionN1;
+    else
+        return ParamSHC_CWindowOpenPosition1;
+}
+
+uint8_t WindowOpenHandler::getParamterOpenSlatPosition()
+{
+    if (_nightMode != nullptr && ParamSHC_CWindowOpenNight1 && _nightMode->isNight())
+        return ParamSHC_CWindowOpenSlatPositionN1;
+    else
+        return ParamSHC_CWindowOpenSlatPosition1;
+}
+
+bool WindowOpenHandler::allowed(const CallContext &callContext, WindowOpenState windowOpenState)
+{
+    if (_lastWindowOpenState != windowOpenState)
+    {
+        _recalcAllowed = true;
+        _lastWindowOpenState = windowOpenState;
+    }
     if (_isTiltHandler)
     {
         if (!callContext.modeCurrentActive->windowTiltAllowed())
@@ -74,13 +115,13 @@ bool WindowOpenHandler::allowed(const CallContext &callContext)
     if (_recalcAllowed || callContext.diagnosticLog)
     {
         _allowed = true;
-        if (ParamSHC_CWindowOpenPositionControl1 == 0 && (callContext.hasSlat != 1 || ParamSHC_CWindowOpenSlatPositionControl1 == 0))
+        if (getParamterOpenPositionControl() == 0 && (callContext.hasSlat != 1 || getParamterOpenSlatPositionControl() == 0))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
                 logInfoP("whether shutter nor slat position configured");
         }
-        if (!KoSHC_CWindowOpenOpened1.value(DPT_OpenClose))
+        if (_lastWindowOpenState != (_isTiltHandler ? WindowOpenStateTilted : WindowOpenStateOpen))
         {
             _allowed = false;
             if (callContext.diagnosticLog)
@@ -114,13 +155,13 @@ void WindowOpenHandler::start(const CallContext &callContext, const WindowOpenHa
     else
     {
 
-        auto positionControl = ParamSHC_CWindowOpenPositionControl1;
+        auto positionControl = getParamterOpenPositionControl();
         // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
         //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
         //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
         if (positionControl > 0)
         {
-            auto position = ParamSHC_CWindowOpenPosition1;
+            auto position = getParamterOpenPosition();
             if (callContext.diagnosticLog)
                 logInfoP("Set position limit to %d%%", (int)(position));
             positionController.setPositionLowerLimit(position, positionControl == 2);
@@ -128,13 +169,13 @@ void WindowOpenHandler::start(const CallContext &callContext, const WindowOpenHa
     }
     if (positionController.hasSlat())
     {
-        auto slatPositionControl = ParamSHC_CWindowOpenSlatPositionControl1;
+        auto slatPositionControl = getParamterOpenSlatPositionControl();
         // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
         //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
         //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
         if (slatPositionControl > 0)
         {
-            auto slatPosition = ParamSHC_CWindowOpenSlatPosition1;
+            auto slatPosition = getParamterOpenSlatPosition();
             if (callContext.diagnosticLog)
                 logInfoP("Set slat limit to %d%%", (int)(slatPosition));
             positionController.setSlatLowerLimit(slatPosition, slatPositionControl == 2);
@@ -149,6 +190,7 @@ void WindowOpenHandler::stop(const CallContext &callContext, const WindowOpenHan
         positionController.resetSlatLowerLimit();
     KoSHC_CWindowOpenModeActive1.value(false, DPT_Switch);
 }
+
 void WindowOpenHandler::processInputKo(GroupObject &ko, PositionController &positionController)
 {
     switch (SHC_KoCalcIndex(ko.asap()))
