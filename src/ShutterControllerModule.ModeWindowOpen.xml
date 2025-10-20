@@ -136,7 +136,7 @@
 										
 											<!-- Anzahl Fenster Offen Modus -->
 											<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
-												<when test="&gt;%Pn%">
+												<when test="!=%Pn%">
 													<Assign TargetParamRefRef="%AID%_P-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" Value="gekippt" />
 													<!-- Fenster gekippt Aktiv -->
 													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" />

@@ -67,9 +67,9 @@ void ShutterControllerChannel::setup()
         _modes.push_back(_modeNight);
     }
 
-    for (uint8_t i = 1; i <= ParamSHC_CWindowOpenCount; i++)
+    for (uint8_t i = 0; i < ParamSHC_CWindowOpenCount; i++)
     {
-        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount != i, _modeNight));
+        _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount - 1 != i, _modeNight));
     }
 
     auto numberOfShadings = ParamSHC_CShadingCount;
@@ -114,8 +114,11 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
         }
         else
         {
-            _windowOpenState = ((bool) ko.value(DPT_Switch)) == ParamSHC_CWindowOpenContactInvert1 ? WindowOpenStateOpen : WindowOpenStateClosed;
-            logInfoP("Window open state changed to %s", _windowOpenState == WindowOpenStateOpen ? "Open" : "Closed");   
+            if (index == SHC_KoCWindowOpenOpened1)
+            {
+                _windowOpenState = (((bool) ko.value(DPT_Switch)) == !ParamSHC_CWindowOpenContactInvert1) ? WindowOpenStateOpen : WindowOpenStateClosed;
+                logInfoP("Window open state changed to %s", _windowOpenState == WindowOpenStateOpen ? "Open" : "Closed");   
+            }
         }
         break;
     }
@@ -444,28 +447,28 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         if (callContext.currentMillis - _waitForWindowOpenEvalulation >= waitTime)
         {
             _waitForWindowOpenEvalulation = 0;
-            _windowOpenState = ((bool) KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1 ? WindowOpenState::WindowOpenStateOpen : WindowOpenState::WindowOpenStateClosed;
+            _windowOpenState = (((bool) KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert1) ? WindowOpenState::WindowOpenStateOpen : WindowOpenState::WindowOpenStateClosed;
             // <Enumeration Text="Gekippt Aktiv und Offen Inaktiv" Value="0" Id="%ENID%" />
             // <Enumeration Text="Gekippt Aktiv und Offen Aktiv" Value="1" Id="%ENID%" />
             // <Enumeration Text="Gekippt Aktiv" Value="2" Id="%ENID%" />
-            switch (SHC_CWindowTiltHandling)
+            switch (ParamSHC_CWindowTiltHandling)
             {
                 case 0:
-                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1 && 
-                        ((bool)KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) != SHC_CWindowOpenContactInvert2)
+                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert1 && 
+                        ((bool)KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) != !ParamSHC_CWindowOpenContactInvert2)
                         _windowOpenState = WindowOpenState::WindowOpenStateTilted;
                     break;
                 case 1:
-                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1 && 
-                        ((bool)KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert2)
+                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert1 && 
+                        ((bool)KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert2)
                         _windowOpenState = WindowOpenState::WindowOpenStateTilted;
                     break;
                 case 2:
-                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == SHC_CWindowOpenContactInvert1)
+                    if (((bool) KoSHC_CWindowOpenOpened2.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert1)
                         _windowOpenState = WindowOpenState::WindowOpenStateTilted;
                     break;
             }
-            logInfoP("Window open state calculated %s", _windowOpenState == WindowOpenStateOpen ? "Open" : (_windowOpenState == WindowOpenStateTilted ? "Tilted" : "Closed"));
+            logInfoP("Window open state calculated %s for mode %d", _windowOpenState == WindowOpenStateOpen ? "Open" : (_windowOpenState == WindowOpenStateTilted ? "Tilted" : "Closed"), (int) ParamSHC_CWindowTiltHandling);
  
         }
     }

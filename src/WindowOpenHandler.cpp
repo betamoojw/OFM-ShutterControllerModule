@@ -7,15 +7,15 @@
 #ifdef SHC_CWindowOpenPosition2
 // redefine SHC_ParamCalcIndex to add offset for Window Mode 2
 #undef SHC_ParamCalcIndex
-#define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CWindowOpenPosition2 - SHC_CWindowOpenPosition1) * (_index - 1))
+#define SHC_ParamCalcIndex(index) (index + SHC_ParamBlockOffset + _channelIndex * SHC_ParamBlockSize + (SHC_CWindowOpenPosition2 - SHC_CWindowOpenPosition1) * (_index))
 
 // redefine SHC_KoCalcNumber to add offset for Window Mode 2
 #undef SHC_KoCalcNumber
-#define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1))
+#define SHC_KoCalcNumber(index) (index + SHC_KoBlockOffset + _channelIndex * SHC_KoBlockSize + (_isTiltHandler ? 1 : 0) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1))
 
 // redefine SHC_KoCalcIndex to add offset for Window Mode 2
 #undef SHC_KoCalcIndex
-#define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_index - 1) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1)) % SHC_KoBlockSize : -1)
+#define SHC_KoCalcIndex(number) ((number >= SHC_KoCalcNumber(0) && number < SHC_KoCalcNumber(SHC_KoBlockSize)) ? (number - SHC_KoBlockOffset - (_isTiltHandler ? 1 : 0) * (SHC_KoCWindowOpenModeActive2 - SHC_KoCWindowOpenModeActive1)) % SHC_KoBlockSize : -1)
 
 #endif
 
@@ -27,8 +27,6 @@ WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool 
     else
         _name = "WindowOpen";
 
-    logDebugP("Use KO: %d", (int) KoSHC_CWindowOpenOpened1.asap());
-    logDebugP("Use Invertered: %d (Index: %d)", (int) ParamSHC_CWindowOpenContactInvert1, SHC_ParamCalcIndex(SHC_CWindowOpenContactInvert1));
 }
 
 
@@ -197,7 +195,7 @@ void WindowOpenHandler::processInputKo(GroupObject &ko, PositionController &posi
     switch (SHC_KoCalcIndex(ko.asap()))
     {
     case SHC_KoCWindowOpenOpened1:
-        if (ko.value(DPT_OpenClose))
+        if (((bool)ko.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert1)
             logInfoP("opened");
         else
             logInfoP("closed");
