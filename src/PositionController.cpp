@@ -499,6 +499,7 @@ void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveT
             if (_setPosition == NOTUSED)
             {
                 logDebugP("Set previous blocked position: %d", (int)_blockedPosition);
+                _calculatedTargetPosition = _blockedPosition;
                 _setPosition = _blockedPosition;
             }
             _blockedPosition = NOTUSED;
@@ -506,7 +507,8 @@ void PositionController::setPositionLowerLimit(uint8_t positionLimit, bool moveT
     }
     else if (targetPosition() > positionLimit || moveToLimit)
     {
-        if (_blockedPosition != NOTUSED)
+        logDebugP("Current target position: %d, Current blocked: %d", (int)targetPosition(), (int)_blockedPosition);
+        if (_blockedPosition == NOTUSED)
             _blockedPosition = targetPosition();
         _calculatedTargetPosition = positionLimit;
         _setPosition = positionLimit;
