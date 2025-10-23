@@ -26,7 +26,12 @@ WindowOpenHandler::WindowOpenHandler(uint8_t _channelIndex, uint8_t index, bool 
         _name = "WindowTilt";
     else
         _name = "WindowOpen";
+    
+}
 
+void WindowOpenHandler::setup()
+{
+    initGroupObjects();
 }
 
 
@@ -50,6 +55,17 @@ uint8_t WindowOpenHandler::sceneNumber() const
 
 void WindowOpenHandler::initGroupObjects()
 {
+    if (!KoSHC_CWindowOpenOpened1.initialized())
+    {
+        KoSHC_CWindowOpenOpened1.valueNoSend(ParamSHC_CWindowOpenContactInvert1 ? true : false, DPT_OpenClose);  
+        KoSHC_CWindowOpenOpened1.requestObjectRead();
+    }
+    if (!KoSHC_CWindowOpenLock1.initialized())
+    {
+        KoSHC_CWindowOpenLock1.valueNoSend(false, DPT_Switch);
+        KoSHC_CWindowOpenLock1.requestObjectRead();
+    }
+
     KoSHC_CWindowOpenModeActive1.value(false, DPT_Switch);
     KoSHC_CWindowOpenLockActive1.value(false, DPT_Switch);
 }
@@ -196,10 +212,10 @@ void WindowOpenHandler::processInputKo(GroupObject &ko, PositionController &posi
     {
     case SHC_KoCWindowOpenOpened1:
         if (((bool)ko.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert1)
-            logInfoP("opened");
+            logInfoP("Kontakt KO report aktiv");
         else
-            logInfoP("closed");
-         
+            logInfoP("Kontakt KO report inaktiv");
+
         _recalcAllowed = true;
         break;
     case SHC_KoCWindowOpenLock1:

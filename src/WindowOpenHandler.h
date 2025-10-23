@@ -32,6 +32,7 @@ public:
     uint8_t getParamterOpenSlatPosition();
     const char *name() const;
     uint8_t sceneNumber() const;
+    void setup();
     void initGroupObjects();
     bool allowed(const CallContext& callContext, WindowOpenState windowOpenState);
     void start(const CallContext& callContext, const WindowOpenHandler* previous, PositionController& positionController);
