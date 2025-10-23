@@ -584,9 +584,7 @@
 
 							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings%TT%" Text="Allgemein" Icon="cog-outline" HelpContext="SHC-Allgemein" ShowInComObjectTree="true">
 
-								<!-- Fehlender Messwert -->
-								<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
-					
+							
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Jalousiensteuerung" UIHint="Headline"/>
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
@@ -595,6 +593,12 @@
 
 								<!-- Verfügbare Kanäle -->
 								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="%DOC%" IndentLevel="1" />
+								<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
+									<when test="&gt;0">
+										<!-- Fehlender Messwert -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
+									</when>
+								</choose>
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden." />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen." />
