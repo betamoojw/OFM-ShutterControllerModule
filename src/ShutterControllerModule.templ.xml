@@ -592,11 +592,23 @@
 														<ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" HelpContext="%DOC%" IndentLevel="1" />
 
 														<choose ParamRefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601">
+															<when test="1">
+																<!-- Fenster offen Kontakt invert -->
+																<ParameterRefRef IndentLevel="2" HelpContext="SHC-FensterOffen-KontaktInvertiert" RefId="%AID%_UP-%TT%%CC%906_R-%TT%%CC%90601" />
+															</when>
 															<when test="2">
-																<!-- Fenster gekippt handling -->
-																<ParameterRefRef IndentLevel="2" HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" />
 																<!-- Fenster gekippt Wartezeit -->
 																<ParameterRefRef IndentLevel="2" HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
+
+																<!-- Fenster gekippt handling -->
+																<ParameterRefRef IndentLevel="2" HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" />
+												
+																<!-- Fenster gekippt Kontakt invert -->
+																<ParameterRefRef IndentLevel="2" HelpContext="SHC-FensterOffen-KontaktInvertiert" RefId="%AID%_UP-%TT%%CC%906_R-%TT%%CC%90601" />
+															
+																<!-- Fenster offen Kontakt invert -->
+																<ParameterRefRef IndentLevel="2" HelpContext="SHC-FensterOffen-KontaktInvertiert" RefId="%AID%_UP-%TT%%CC%916_R-%TT%%CC%91601" />
+													
 
 															</when>
 														</choose>

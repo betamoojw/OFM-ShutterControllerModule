@@ -1,4 +1,4 @@
-﻿### Objekt Kontakt
+﻿### Objekt 'Fenster gekippt/offen Kontakt'
 
 - Normal (Aktiv = 1)
   Diese Einstellung verwendet den Gruppenobjekt-Type Fenster/Tür bei dem eine 1 geöffnet und 0 geschlossen bedeutet

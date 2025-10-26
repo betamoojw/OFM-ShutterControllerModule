@@ -1055,7 +1055,7 @@ Bei 2 Kontakten besteht das Problem, das der Endgültig Zustand nicht sofort fes
 Aus diesem Grund kann hier eine Wartezeit konfiguriert werden die bei aktivierung eines Kontakes verstreichen muss, bis eine Auswertung erfolgt
 
 <!-- DOC HelpContext="FensterOffen-KontaktInvertiert" -->
-## Objekt Kontakt
+## Objekt 'Fenster gekippt/offen Kontakt'
 
 - Normal (Aktiv = 1)
   Diese Einstellung verwendet den Gruppenobjekt-Type Fenster/Tür bei dem eine 1 geöffnet und 0 geschlossen bedeutet
