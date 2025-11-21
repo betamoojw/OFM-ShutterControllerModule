@@ -280,19 +280,19 @@
 						<ComObjectRefs>
 
 							<!-- Modus 1 Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" RefId="%AID%_O-%TT%%CC%%PPP+0%" Text="%C%: Beschattungsmodus %Pn% Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn% Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" RefId="%AID%_O-%TT%%CC%%PPP+0%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" RefId="%AID%_O-%TT%%CC%%PPP+1%" Text="%C%: Beschattungsmodus %Pn% Sperre" FunctionText="{{0:-}} Beschattungsmodus %Pn% Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" RefId="%AID%_O-%TT%%CC%%PPP+1%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" RefId="%AID%_O-%TT%%CC%%PPP+2%" Text="%C%: Beschattungsmodus %Pn% Sperre Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn% Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" RefId="%AID%_O-%TT%%CC%%PPP+2%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Modus 1 Beschattungsunterbrechung Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_O-%TT%%CC%%PPP+3%" Text="%C%: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre" FunctionText="{{0:-}} Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_O-%TT%%CC%%PPP+3%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" RefId="%AID%_O-%TT%%CC%%PPP+4%" Text="%C%: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre Aktiv" FunctionText="{{0:-}} Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre Aktiv" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+4%_R-%TT%%CC%%PPP+4%01" RefId="%AID%_O-%TT%%CC%%PPP+4%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Diagnose "Nicht erlaubt" Bit  -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_O-%TT%%CC%%PPP+5%" Text="%C%: Beschattungsmodus %Pn% 'Nicht erlaubt' Bits" FunctionText="{{0:-}} Beschattungsmodus %Pn% 'Nicht erlaubt' Bits" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_O-%TT%%CC%%PPP+5%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% 'Nicht erlaubt'" FunctionText="Jalousiensteuerung %C%: Ausgang, Bitcodiert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Diagnose "Nicht erlaubt" Grund -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" RefId="%AID%_O-%TT%%CC%%PPP+6%" Text="%C%: Beschattungsmodus %Pn% 'Nicht erlaubt' Grund" FunctionText="{{0:-}} Beschattungsmodus %Pn% 'Nicht erlaubt' Grund" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" RefId="%AID%_O-%TT%%CC%%PPP+6%" Text="{{0:Jalousiensteuerung %C%}}: Beschattungsmodus %Pn% 'Nicht erlaubt' Grund" FunctionText="Jalousiensteuerung %C%: Ausgang, Zahl" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 						</ComObjectRefs>
 					</Static>
