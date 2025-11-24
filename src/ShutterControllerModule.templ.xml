@@ -430,93 +430,93 @@
 						<ComObjectRefs>
 
 							<!-- Jalousie Prozent Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" Text="{{0:Jalousiensteuerung %C%}}: Position setzten" FunctionText="Jalousiensteuerung %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" RefId="%AID%_O-%TT%%CC%000" Text="{{0:Jalousie %C%}}: Position setzten" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_O-%TT%%CC%001" Text="{{0:Jalousiensteuerung %C%}}: Lamellenstellung setzen" FunctionText="Jalousiensteuerung %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_O-%TT%%CC%001" Text="{{0:Jalousie %C%}}: Lamellenstellung setzen" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Steuerung Auf/Ab Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Jalousiensteuerung %C%}}: Auf/Ab setzen" FunctionText="Jalousiensteuerung %C%: Ausgang, Auf=0, Ab=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_O-%TT%%CC%002" Text="{{0:Jalousie %C%}}: Auf/Ab setzen" FunctionText="Jalousie %C%: Ausgang, Auf=0, Ab=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Steuerung Stopp/Schritt Ausgang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_O-%TT%%CC%003" Text="{{0:Jalousiensteuerung %C%}}: Stopp/Schritt setzen" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301" RefId="%AID%_O-%TT%%CC%003" Text="{{0:Jalousie %C%}}: Stopp/Schritt setzen" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Jalousie Prozent Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="{{0:Jalousiensteuerung %C%}}: Aktorrückmeldung Höhe Absolut" FunctionText="Jalousiensteuerung %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Höhe Absolut" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="{{0:Jalousiensteuerung %C%}}: Aktorrückmeldung Lamellenstellung" FunctionText="Jalousiensteuerung %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Lamellenstellung" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Beschattung Einschalten -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_O-%TT%%CC%006" Text="{{0:Jalousiensteuerung %C%}}: Beschattung Einschalten" FunctionText="Jalousiensteuerung %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_O-%TT%%CC%006" Text="{{0:Jalousie %C%}}: Beschattung Einschalten" FunctionText="Jalousie %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Beschattung Einschalten Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_O-%TT%%CC%007" Text="{{0:Jalousiensteuerung %C%}}: Beschattung Eingeschaltet" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" RefId="%AID%_O-%TT%%CC%007" Text="{{0:Jalousie %C%}}: Beschattung Eingeschaltet" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Beschattung Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_O-%TT%%CC%008" Text="{{0:Jalousiensteuerung %C%}}: Beschattung Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" RefId="%AID%_O-%TT%%CC%008" Text="{{0:Jalousie %C%}}: Beschattung Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Sperre Kanal -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_O-%TT%%CC%009" Text="{{0:Jalousiensteuerung %C%}}: Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901" RefId="%AID%_O-%TT%%CC%009" Text="{{0:Jalousie %C%}}: Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Sperre Kanal Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_O-%TT%%CC%010" Text="{{0:Jalousiensteuerung %C%}}: Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_O-%TT%%CC%010" Text="{{0:Jalousie %C%}}: Sperre Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Aktiver Modus -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_O-%TT%%CC%011" Text="{{0:Jalousiensteuerung %C%}}: Aktiver Modus" FunctionText="Jalousiensteuerung %C%: Ausgang, Zahl" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_O-%TT%%CC%011" Text="{{0:Jalousie %C%}}: Aktiver Modus" FunctionText="Jalousie %C%: Ausgang, Zahl" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Modus Handbetrieb Aus-/Einschalten -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Aus-/Einschalten" FunctionText="Jalousiensteuerung %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_O-%TT%%CC%012" Text="{{0:Jalousie %C%}}: Handbetrieb Aus-/Einschalten" FunctionText="Jalousie %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="{{0:Jalousie %C%}}: Handbetrieb Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_O-%TT%%CC%014" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_O-%TT%%CC%014" Text="{{0:Jalousie %C%}}: Handbetrieb Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Handbetrieb Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_O-%TT%%CC%015" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_O-%TT%%CC%015" Text="{{0:Jalousie %C%}}: Handbetrieb Sperre Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Auf/Ab -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_O-%TT%%CC%016" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Auf/Ab" FunctionText="Jalousiensteuerung %C%: Eingang, Ab=1, Auf=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_O-%TT%%CC%016" Text="{{0:Jalousie %C%}}: Handbetrieb Auf/Ab" FunctionText="Jalousie %C%: Eingang, Ab=1, Auf=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Auf/Ab (ohne Sonderfunktion) -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_O-%TT%%CC%026" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Auf/Ab (ohne Sonderfunktion)" FunctionText="Jalousiensteuerung %C%: Eingang, Ab=1, Auf=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_O-%TT%%CC%026" Text="{{0:Jalousie %C%}}: Handbetrieb Auf/Ab (ohne Sonderfunktion)" FunctionText="Jalousie %C%: Eingang, Ab=1, Auf=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Stopp/Schritt -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_O-%TT%%CC%017" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Stopp/Schritt" FunctionText="Jalousiensteuerung %C%: Eingang, Verringern=0, Erhöhen=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%017_R-%TT%%CC%01701" RefId="%AID%_O-%TT%%CC%017" Text="{{0:Jalousie %C%}}: Handbetrieb Stopp/Schritt" FunctionText="Jalousie %C%: Eingang, Verringern=0, Erhöhen=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Prozent -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_O-%TT%%CC%018" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Position setzten" FunctionText="Jalousiensteuerung %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%018_R-%TT%%CC%01801" RefId="%AID%_O-%TT%%CC%018" Text="{{0:Jalousie %C%}}: Handbetrieb Position setzten" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Handbetrieb Steuerung Lamelle Prozent -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_O-%TT%%CC%019" Text="{{0:Jalousiensteuerung %C%}}: Handbetrieb Lamellestellung setzten" FunctionText="Jalousiensteuerung %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%019_R-%TT%%CC%01901" RefId="%AID%_O-%TT%%CC%019" Text="{{0:Jalousie %C%}}: Handbetrieb Lamellestellung setzten" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Modus Nacht Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="{{0:Jalousiensteuerung %C%}}: Nachtmodus Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="{{0:Jalousie %C%}}: Nachtmodus Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Aus-/Einschalten -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="{{0:Jalousiensteuerung %C%}}: Nachtmodus Aus-/Einschalten" FunctionText="Jalousiensteuerung %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="{{0:Jalousie %C%}}: Nachtmodus Aus-/Einschalten" FunctionText="Jalousie %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="{{0:Jalousiensteuerung %C%}}: Nachtmodus Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="{{0:Jalousie %C%}}: Nachtmodus Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" Text="{{0:Jalousiensteuerung %C%}}: Nachtmodus Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_O-%TT%%CC%023" Text="{{0:Jalousie %C%}}: Nachtmodus Sperre Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Heizung Stellwert % Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="{{0:Jalousiensteuerung %C%}}: Heizung Stellwert" FunctionText="Jalousiensteuerung %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Byte" DatapointType="DPST-5-1" Text="{{0:Jalousie %C%}}: Heizung Stellwert" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Heizungsanforderung Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="{{0:Jalousiensteuerung %C%}}: Heinzung Aktiv" FunctionText="Jalousiensteuerung %C%: Eingang, Aktiv=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%024_R-%TT%%CC%02402" RefId="%AID%_O-%TT%%CC%024" ObjectSize="1 Bit" DatapointType="DPST-1-1" Text="{{0:Jalousie %C%}}: Heinzung Aktiv" FunctionText="Jalousie %C%: Eingang, Aktiv=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 							<!-- Raumtemperatur Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="{{0:Jalousiensteuerung %C%}}: Raumtemperatur" FunctionText="Jalousiensteuerung %C%: Eingang, °C" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="{{0:Jalousie %C%}}: Raumtemperatur" FunctionText="Jalousie %C%: Eingang, °C" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 
 							<!-- Fenster Offen Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" RefId="%AID%_O-%TT%%CC%900" Text="{{0:Jalousiensteuerung %C%}}: Fenster offen Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%900_R-%TT%%CC%90001" RefId="%AID%_O-%TT%%CC%900" Text="{{0:Jalousie %C%}}: Fenster offen Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Offen -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_O-%TT%%CC%901" Text="{{0:Jalousiensteuerung %C%}}: Fenster offen Kontakt" FunctionText="Jalousiensteuerung %C%: Eingang, Fenster offen=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90101" RefId="%AID%_O-%TT%%CC%901" Text="{{0:Jalousie %C%}}: Fenster offen Kontakt" FunctionText="Jalousie %C%: Eingang, Fenster offen=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen (invertiert) -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90111" RefId="%AID%_O-%TT%%CC%901" Text="{{0:Jalousiensteuerung %C%}}: Fenster offen Kontakt" DatapointType="DPST-1-3" FunctionText="Jalousiensteuerung %C%: Eingang, Fenster offen=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%901_R-%TT%%CC%90111" RefId="%AID%_O-%TT%%CC%901" Text="{{0:Jalousie %C%}}: Fenster offen Kontakt" DatapointType="DPST-1-3" FunctionText="Jalousie %C%: Eingang, Fenster offen=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_O-%TT%%CC%902" Text="{{0:Jalousiensteuerung %C%}}: Fenster offen Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%902_R-%TT%%CC%90201" RefId="%AID%_O-%TT%%CC%902" Text="{{0:Jalousie %C%}}: Fenster offen Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Offen Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%903_R-%TT%%CC%90301" RefId="%AID%_O-%TT%%CC%903" Text="{{0:Jalousiensteuerung %C%}}: Fenster offen Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%903_R-%TT%%CC%90301" RefId="%AID%_O-%TT%%CC%903" Text="{{0:Jalousie %C%}}: Fenster offen Sperre Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 
 							<!-- Fenster Kippstellung Aktiv -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" RefId="%AID%_O-%TT%%CC%910" Text="{{0:Jalousiensteuerung %C%}}: Fenster gekippt Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%910_R-%TT%%CC%91001" RefId="%AID%_O-%TT%%CC%910" Text="{{0:Jalousie %C%}}: Fenster gekippt Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Fenster Kippstellung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" RefId="%AID%_O-%TT%%CC%911" Text="{{0:Jalousiensteuerung %C%}}: Fenster gekippt Kontakt" FunctionText="Jalousiensteuerung %C%: Eingang, Fenster gekippt=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91101" RefId="%AID%_O-%TT%%CC%911" Text="{{0:Jalousie %C%}}: Fenster gekippt Kontakt" FunctionText="Jalousie %C%: Eingang, Fenster gekippt=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung (invertiert) -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91111" RefId="%AID%_O-%TT%%CC%911" Text="{{0:Jalousiensteuerung %C%}}: Fenster gekippt Kontakt (invertiert)" DatapointType="DPST-1-3" FunctionText="Jalousiensteuerung %C%: Eingang, Fenster gekippt=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%911_R-%TT%%CC%91111" RefId="%AID%_O-%TT%%CC%911" Text="{{0:Jalousie %C%}}: Fenster gekippt Kontakt (invertiert)" DatapointType="DPST-1-3" FunctionText="Jalousie %C%: Eingang, Fenster gekippt=0" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" RefId="%AID%_O-%TT%%CC%912" Text="{{0:Jalousiensteuerung %C%}}: Fenster gekippt Sperre" FunctionText="Jalousiensteuerung %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%912_R-%TT%%CC%91201" RefId="%AID%_O-%TT%%CC%912" Text="{{0:Jalousie %C%}}: Fenster gekippt Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Fenster Kippstellung Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%913_R-%TT%%CC%91301" RefId="%AID%_O-%TT%%CC%913" Text="{{0:Jalousiensteuerung %C%}}: Fenster gekippt Sperre Aktiv" FunctionText="Jalousiensteuerung %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%913_R-%TT%%CC%91301" RefId="%AID%_O-%TT%%CC%913" Text="{{0:Jalousie %C%}}: Fenster gekippt Sperre Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 
 							<op:usePart name="ModeShading" xpath="//ComObjectRefs/*" />
 						</ComObjectRefs>
