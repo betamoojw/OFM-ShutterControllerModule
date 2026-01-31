@@ -640,7 +640,7 @@ Je nach Fensterausrichtung werden folgende Einstellungen empfohlen:
 
 - Osten von 30° bis 150°
 - Südosten von 75° bis 195°
-- Süden von 120° bis 140°
+- Süden von 120° bis 240°
 - Südwesten von 165° bis 285°
 - Westen von 210° bis 330°
 
