@@ -40,6 +40,109 @@
 							<ParameterType Id="%AID%_PT-BrightnessHysteresis" Name="BrightnessHysteresis">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="20" />
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-BrightnessAggregation" Name="BrightnessAggregation">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Mittelwert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Maximum" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-BrightnessInputCount" Name="BrightnessInputCount">
+								<TypeRestriction Base="Value" SizeInBit="8">
+									<Enumeration Text="Keine weiteren" Value="0" Id="%ENID%" />
+									<Enumeration Text="1" Value="1" Id="%ENID%" />
+									<Enumeration Text="2" Value="2" Id="%ENID%" />
+									<Enumeration Text="3" Value="3" Id="%ENID%" />
+									<Enumeration Text="4" Value="4" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-BrightnessAzimuth" Name="BrightnessAzimuth">
+								<TypeRestriction Base="Value" SizeInBit="16">
+									<Enumeration Text="Keine Zuordnung" Value="65535" Id="%ENID%" />
+									<Enumeration Text="0° (Nord)" Value="0" Id="%ENID%" />
+									<Enumeration Text="5°" Value="5" Id="%ENID%" />
+									<Enumeration Text="10°" Value="10" Id="%ENID%" />
+									<Enumeration Text="15°" Value="15" Id="%ENID%" />
+									<Enumeration Text="20°" Value="20" Id="%ENID%" />
+									<Enumeration Text="25°" Value="25" Id="%ENID%" />
+									<Enumeration Text="30°" Value="30" Id="%ENID%" />
+									<Enumeration Text="35°" Value="35" Id="%ENID%" />
+									<Enumeration Text="40°" Value="40" Id="%ENID%" />
+									<Enumeration Text="45° (Nordost)" Value="45" Id="%ENID%" />
+									<Enumeration Text="50°" Value="50" Id="%ENID%" />
+									<Enumeration Text="55°" Value="55" Id="%ENID%" />
+									<Enumeration Text="60°" Value="60" Id="%ENID%" />
+									<Enumeration Text="65°" Value="65" Id="%ENID%" />
+									<Enumeration Text="70°" Value="70" Id="%ENID%" />
+									<Enumeration Text="75°" Value="75" Id="%ENID%" />
+									<Enumeration Text="80°" Value="80" Id="%ENID%" />
+									<Enumeration Text="85°" Value="85" Id="%ENID%" />
+									<Enumeration Text="90° (Ost)" Value="90" Id="%ENID%" />
+									<Enumeration Text="95°" Value="95" Id="%ENID%" />
+									<Enumeration Text="100°" Value="100" Id="%ENID%" />
+									<Enumeration Text="105°" Value="105" Id="%ENID%" />
+									<Enumeration Text="110°" Value="110" Id="%ENID%" />
+									<Enumeration Text="115°" Value="115" Id="%ENID%" />
+									<Enumeration Text="120°" Value="120" Id="%ENID%" />
+									<Enumeration Text="125°" Value="125" Id="%ENID%" />
+									<Enumeration Text="130°" Value="130" Id="%ENID%" />
+									<Enumeration Text="135° (Südost)" Value="135" Id="%ENID%" />
+									<Enumeration Text="140°" Value="140" Id="%ENID%" />
+									<Enumeration Text="145°" Value="145" Id="%ENID%" />
+									<Enumeration Text="150°" Value="150" Id="%ENID%" />
+									<Enumeration Text="155°" Value="155" Id="%ENID%" />
+									<Enumeration Text="160°" Value="160" Id="%ENID%" />
+									<Enumeration Text="165°" Value="165" Id="%ENID%" />
+									<Enumeration Text="170°" Value="170" Id="%ENID%" />
+									<Enumeration Text="175°" Value="175" Id="%ENID%" />
+									<Enumeration Text="180° (Süd)" Value="180" Id="%ENID%" />
+									<Enumeration Text="185°" Value="185" Id="%ENID%" />
+									<Enumeration Text="190°" Value="190" Id="%ENID%" />
+									<Enumeration Text="195°" Value="195" Id="%ENID%" />
+									<Enumeration Text="200°" Value="200" Id="%ENID%" />
+									<Enumeration Text="205°" Value="205" Id="%ENID%" />
+									<Enumeration Text="210°" Value="210" Id="%ENID%" />
+									<Enumeration Text="215°" Value="215" Id="%ENID%" />
+									<Enumeration Text="220°" Value="220" Id="%ENID%" />
+									<Enumeration Text="225° (Südwest)" Value="225" Id="%ENID%" />
+									<Enumeration Text="230°" Value="230" Id="%ENID%" />
+									<Enumeration Text="235°" Value="235" Id="%ENID%" />
+									<Enumeration Text="240°" Value="240" Id="%ENID%" />
+									<Enumeration Text="245°" Value="245" Id="%ENID%" />
+									<Enumeration Text="250°" Value="250" Id="%ENID%" />
+									<Enumeration Text="255°" Value="255" Id="%ENID%" />
+									<Enumeration Text="260°" Value="260" Id="%ENID%" />
+									<Enumeration Text="265°" Value="265" Id="%ENID%" />
+									<Enumeration Text="270° (West)" Value="270" Id="%ENID%" />
+									<Enumeration Text="275°" Value="275" Id="%ENID%" />
+									<Enumeration Text="280°" Value="280" Id="%ENID%" />
+									<Enumeration Text="285°" Value="285" Id="%ENID%" />
+									<Enumeration Text="290°" Value="290" Id="%ENID%" />
+									<Enumeration Text="295°" Value="295" Id="%ENID%" />
+									<Enumeration Text="300°" Value="300" Id="%ENID%" />
+									<Enumeration Text="305°" Value="305" Id="%ENID%" />
+									<Enumeration Text="310°" Value="310" Id="%ENID%" />
+									<Enumeration Text="315° (Nordwest)" Value="315" Id="%ENID%" />
+									<Enumeration Text="320°" Value="320" Id="%ENID%" />
+									<Enumeration Text="325°" Value="325" Id="%ENID%" />
+									<Enumeration Text="330°" Value="330" Id="%ENID%" />
+									<Enumeration Text="335°" Value="335" Id="%ENID%" />
+									<Enumeration Text="340°" Value="340" Id="%ENID%" />
+									<Enumeration Text="345°" Value="345" Id="%ENID%" />
+									<Enumeration Text="350°" Value="350" Id="%ENID%" />
+									<Enumeration Text="355°" Value="355" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-WindowOrientation" Name="WindowOrientation">
+								<TypeRestriction Base="Value" SizeInBit="3">
+									<Enumeration Text="Ost (90°)" Value="0" Id="%ENID%" />
+									<Enumeration Text="Südost (135°)" Value="1" Id="%ENID%" />
+									<Enumeration Text="Süd (180°)" Value="2" Id="%ENID%" />
+									<Enumeration Text="Südwest (225°)" Value="3" Id="%ENID%" />
+									<Enumeration Text="West (270°)" Value="4" Id="%ENID%" />
+									<Enumeration Text="Dachfläche" Value="5" Id="%ENID%" />
+									<Enumeration Text="Keine Himmelsrichtung" Value="6" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-UVIndex" Name="UVI">
 								<TypeFloat Encoding="IEEE-754 Single" minInclusive="0.1" maxInclusive="11" />
 							</ParameterType>
@@ -369,7 +472,7 @@
 						</ParameterTypes>
 
 						<Parameters>
-							<Union SizeInBit="152">
+							<Union SizeInBit="248">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Anzahl der Kanäle -->
 								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="%SHC_NumChannelsDefault%" SuffixText=" von %N%" />
@@ -457,6 +560,23 @@
 								<!-- Wolken Fallback -->
 								<Parameter Id="%AID%_UP-%TT%00025" Offset="18" BitOffset="0" Name="CloudsFallback" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
 
+								<!-- Zusätzliche Helligkeitssensoren -->
+								<Parameter Id="%AID%_UP-%TT%00026" Offset="19" BitOffset="0" Name="BrightnessInputCount" ParameterType="%AID%_PT-BrightnessInputCount" Text="Weitere Helligkeitssensoren" Value="0" />
+
+								<!-- Helligkeit Aggregation -->
+								<Parameter Id="%AID%_UP-%TT%00027" Offset="20" BitOffset="0" Name="BrightnessAggregation" ParameterType="%AID%_PT-BrightnessAggregation" Text="Helligkeit Aggregation" Value="0" />
+
+								<!-- Helligkeit Sensor 1 -->
+								<Parameter Id="%AID%_UP-%TT%00028" Offset="21" BitOffset="0" Name="BrightnessAzimuth1" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 1" Value="65535" />
+								<!-- Helligkeit Sensor 2 -->
+								<Parameter Id="%AID%_UP-%TT%00029" Offset="23" BitOffset="0" Name="BrightnessAzimuth2" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 2" Value="65535" />
+								<!-- Helligkeit Sensor 3 -->
+								<Parameter Id="%AID%_UP-%TT%00030" Offset="25" BitOffset="0" Name="BrightnessAzimuth3" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 3" Value="65535" />
+								<!-- Helligkeit Sensor 4 -->
+								<Parameter Id="%AID%_UP-%TT%00031" Offset="27" BitOffset="0" Name="BrightnessAzimuth4" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 4" Value="65535" />
+								<!-- Helligkeit Sensor 5 -->
+								<Parameter Id="%AID%_UP-%TT%00032" Offset="29" BitOffset="0" Name="BrightnessAzimuth5" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 5" Value="65535" />
+
 							</Union>
 						</Parameters>
 						<ParameterRefs>
@@ -537,6 +657,20 @@
 
 							<!-- Wolken Fallback -->
 							<ParameterRef Id="%AID%_UP-%TT%00025_R-%TT%0002501" RefId="%AID%_UP-%TT%00025" />
+							<!-- Zusätzliche Helligkeitssensoren -->
+							<ParameterRef Id="%AID%_UP-%TT%00026_R-%TT%0002601" RefId="%AID%_UP-%TT%00026" />
+							<!-- Helligkeit Aggregation -->
+							<ParameterRef Id="%AID%_UP-%TT%00027_R-%TT%0002701" RefId="%AID%_UP-%TT%00027" />
+							<!-- Helligkeit Sensor 1 -->
+							<ParameterRef Id="%AID%_UP-%TT%00028_R-%TT%0002801" RefId="%AID%_UP-%TT%00028" />
+							<!-- Helligkeit Sensor 2 -->
+							<ParameterRef Id="%AID%_UP-%TT%00029_R-%TT%0002901" RefId="%AID%_UP-%TT%00029" />
+							<!-- Helligkeit Sensor 3 -->
+							<ParameterRef Id="%AID%_UP-%TT%00030_R-%TT%0003001" RefId="%AID%_UP-%TT%00030" />
+							<!-- Helligkeit Sensor 4 -->
+							<ParameterRef Id="%AID%_UP-%TT%00031_R-%TT%0003101" RefId="%AID%_UP-%TT%00031" />
+							<!-- Azimut Sensor 5 -->
+							<ParameterRef Id="%AID%_UP-%TT%00032_R-%TT%0003201" RefId="%AID%_UP-%TT%00032" />
 						</ParameterRefs>
 						<ComObjectTable>
 							<!-- Beschattung täglich aktivieren -->
@@ -557,6 +691,14 @@
 							<ComObject Number="7" Id="%AID%_O-%TT%00007" ObjectSize="1 Byte"  DatapointType="DPST-5-1" Name="CloudsInput"                           Text="Jalousiensteuerung: Bewölkung"                             FunctionText="Jalousiensteuerung: Eingang, Prozent" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Messwertfehler -->
 							<ComObject Number="8" Id="%AID%_O-%TT%00008" ObjectSize="1 Bit"   DatapointType="DPST-1-5" Name="MeasurementError"                      Text="Jalousiensteuerung: Fehlender Messwert"                    FunctionText="Jalousiensteuerung: Ausgang, Alarm" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" Priority="Low" />						
+							<!-- Helligkeit Eingang 2 -->
+							<ComObject Number="9" Id="%AID%_O-%TT%00009" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput2"                      Text="Jalousiensteuerung: Helligkeit 2"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Helligkeit Eingang 3 -->
+							<ComObject Number="10" Id="%AID%_O-%TT%00010" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput3"                      Text="Jalousiensteuerung: Helligkeit 3"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Helligkeit Eingang 4 -->
+							<ComObject Number="11" Id="%AID%_O-%TT%00011" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput4"                      Text="Jalousiensteuerung: Helligkeit 4"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<!-- Helligkeit Eingang 5 -->
+							<ComObject Number="12" Id="%AID%_O-%TT%00012" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput5"                      Text="Jalousiensteuerung: Helligkeit 5"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->
@@ -577,6 +719,14 @@
 							<ComObjectRef Id="%AID%_O-%TT%00007_R-%TT%0000701" RefId="%AID%_O-%TT%00007" />
 							<!-- Fehlender Messwert -->
 							<ComObjectRef Id="%AID%_O-%TT%00008_R-%TT%0000801" RefId="%AID%_O-%TT%00008" />
+							<!-- Helligkeit Eingang 2 -->
+							<ComObjectRef Id="%AID%_O-%TT%00009_R-%TT%0000901" RefId="%AID%_O-%TT%00009" />
+							<!-- Helligkeit Eingang 3 -->
+							<ComObjectRef Id="%AID%_O-%TT%00010_R-%TT%0001001" RefId="%AID%_O-%TT%00010" />
+							<!-- Helligkeit Eingang 4 -->
+							<ComObjectRef Id="%AID%_O-%TT%00011_R-%TT%0001101" RefId="%AID%_O-%TT%00011" />
+							<!-- Helligkeit Eingang 5 -->
+							<ComObjectRef Id="%AID%_O-%TT%00012_R-%TT%0001201" RefId="%AID%_O-%TT%00012" />
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
@@ -698,6 +848,45 @@
 											<when test="&gt;0">
 												<!-- Helligkeit Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
+											</when>
+										</choose>
+										<!-- Weitere Helligkeitssensoren -->
+										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00026_R-%TT%0002601" HelpContext="%DOC%"/>
+										<!-- Helligkeit Aggregation -->
+										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00027_R-%TT%0002701" HelpContext="%DOC%"/>
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Die Aggregation wird verwendet, wenn die Azimut-Auswertung deaktiviert ist (z.B. Fenster-/Behangausrichtung 'Keine Himmelsrichtung (Azimut-Auswertung aus)') oder kein gültiger Sonnen-Azimut bzw. keine Sensor-Azimute vorliegen." UIHint="Information" />
+										<!-- Helligkeit Sensor 1 -->
+										<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00028_R-%TT%0002801" HelpContext="%DOC%"/>
+										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
+											<when test=">=1">
+												<!-- Helligkeit Eingang 2 -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" />
+												<!-- Helligkeit Sensor 2 -->
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00029_R-%TT%0002901" HelpContext="%DOC%"/>
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
+											<when test=">=2">
+												<!-- Helligkeit Eingang 3 -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%00010_R-%TT%0001001" />
+												<!-- Helligkeit Sensor 3 -->
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00030_R-%TT%0003001" HelpContext="%DOC%"/>
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
+											<when test=">=3">
+												<!-- Helligkeit Eingang 4 -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%00011_R-%TT%0001101" />
+												<!-- Helligkeit Sensor 4 -->
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00031_R-%TT%0003101" HelpContext="%DOC%"/>
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
+											<when test=">=4">
+												<!-- Helligkeit Eingang 5 -->
+												<ComObjectRefRef RefId="%AID%_O-%TT%00012_R-%TT%0001201" />
+												<!-- Azimut Sensor 5 -->
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00032_R-%TT%0003201" HelpContext="%DOC%"/>
 											</when>
 										</choose>
 										<!-- Helligkeit Watchdog -->

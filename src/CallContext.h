@@ -6,7 +6,7 @@
 class ModeIdle;
 class ModeManual;
 class ModeBase;
-class MeasurementWatchdog;
+class MeasurementSource;
 class PositionController;
 
 class CallContext
@@ -38,13 +38,13 @@ class CallContext
         const ModeIdle* modeIdle = nullptr;
         const ModeManual* modeManual = nullptr;
         const ModeBase* modeCurrentActive = nullptr;
-        MeasurementWatchdog* measurementTemperature = nullptr;
-        MeasurementWatchdog* measurementTemperatureForecast = nullptr;
-        MeasurementWatchdog* measurementBrightness = nullptr;
-        MeasurementWatchdog* measurementUVIndex = nullptr;
-        MeasurementWatchdog* measurementRain = nullptr;
-        MeasurementWatchdog* measurementClouds = nullptr;
-        MeasurementWatchdog* measurementRoomTemperature = nullptr;
-        MeasurementWatchdog* measurementHeading = nullptr;
+        MeasurementSource* measurementTemperature = nullptr;
+        MeasurementSource* measurementTemperatureForecast = nullptr;
+        MeasurementSource* measurementBrightness = nullptr;
+        MeasurementSource* measurementUVIndex = nullptr;
+        MeasurementSource* measurementRain = nullptr;
+        MeasurementSource* measurementClouds = nullptr;
+        MeasurementSource* measurementRoomTemperature = nullptr;
+        MeasurementSource* measurementHeading = nullptr;
         const PositionController* positionController = nullptr;
 };

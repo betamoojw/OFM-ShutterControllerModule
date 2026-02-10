@@ -3,8 +3,42 @@
 #include "WindowOpenHandler.h"
 #include "ModeNight.h"
 #include "ModeShading.h"
+#include "BrightnessMeasurement.h"
 #include "ModeIdle.h"
 #include "ShutterSimulation.h"
+
+namespace
+{
+    struct WindowOrientationInfo
+    {
+        const char* name;
+        uint16_t azimuth;
+        bool hasAzimuth;
+    };
+
+    WindowOrientationInfo getWindowOrientationInfo(uint8_t value)
+    {
+        switch (value)
+        {
+        case 0:
+            return {"Ost", 90, true};
+        case 1:
+            return {"Suedost", 135, true};
+        case 2:
+            return {"Sued", 180, true};
+        case 3:
+            return {"Suedwest", 225, true};
+        case 4:
+            return {"West", 270, true};
+        case 5:
+            return {"Dachflaeche", 0, false};
+        case 6:
+            return {"Keine Himmelsrichtung (Azimut-Auswertung aus)", 0, false};
+        default:
+            return {"Unbekannt", 0, false};
+        }
+    }
+}
 
 ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
     : _modes(), _windowOpenHandlers(), _positionController(channelIndex)
@@ -28,9 +62,9 @@ void ShutterControllerChannel::setup()
         DPT_Value_Temp,
         (MeasurementWatchdogFallbackBehavior)ParamSHC_CRoomTempWatchdogBehavior);
 
-    // <Enumeration Text="Nein" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Heizungsanforderung (EIN/AUS)" Value="2" Id="%ENID%" />
+    // <Enumeration Text="No" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Setpoint %" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Heating request (ON/OFF)" Value="2" Id="%ENID%" />
     _measurementHeading.init(
         "Heading",
         ParamSHC_CHeatingInput > 0 ? &KoSHC_CHeading : nullptr,
@@ -99,7 +133,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     _measurementRoomTemperature.processIputKo(ko);
 
 
-    // channel ko
+    // channel KO
     auto index = SHC_KoCalcIndex(ko.asap());
     switch (index)
     {
@@ -316,25 +350,25 @@ void ShutterControllerChannel::activateShading()
 
 unsigned long ShutterControllerChannel::getManualShadingWaitTimeInMs() const
 {
-    // <Enumeration Text="für diese Periode deaktivieren" Value="0" Id="%ENID%" />
-    // <Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
-    // <Enumeration Text="2 Minuten" Value="2" Id="%ENID%" />
-    // <Enumeration Text="5 Minuten" Value="5" Id="%ENID%" />
-    // <Enumeration Text="10 Minuten" Value="10" Id="%ENID%" />
-    // <Enumeration Text="15 Minuten" Value="15" Id="%ENID%" />
-    // <Enumeration Text="30 Minuten" Value="30" Id="%ENID%" />
-    // <Enumeration Text="1 Stunde" Value="101" Id="%ENID%" />
-    // <Enumeration Text="2 Stunden" Value="102" Id="%ENID%" />
-    // <Enumeration Text="3 Stunden" Value="103" Id="%ENID%" />
-    // <Enumeration Text="4 Stunden" Value="104" Id="%ENID%" />
-    // <Enumeration Text="5 Stunden" Value="105" Id="%ENID%" />
-    // <Enumeration Text="6 Stunden" Value="106" Id="%ENID%" />
-    // <Enumeration Text="7 Stunden" Value="107" Id="%ENID%" />
-    // <Enumeration Text="8 Stunden" Value="108" Id="%ENID%" />
-    // <Enumeration Text="9 Stunden" Value="109" Id="%ENID%" />
-    // <Enumeration Text="10 Stunden" Value="110" Id="%ENID%" />
-    // <Enumeration Text="11 Stunden" Value="111" Id="%ENID%" />
-    // <Enumeration Text="12 Stunden" Value="112" Id="%ENID%" />
+    // <Enumeration Text="Disable for this period" Value="0" Id="%ENID%" />
+    // <Enumeration Text="1 minute" Value="1" Id="%ENID%" />
+    // <Enumeration Text="2 minutes" Value="2" Id="%ENID%" />
+    // <Enumeration Text="5 minutes" Value="5" Id="%ENID%" />
+    // <Enumeration Text="10 minutes" Value="10" Id="%ENID%" />
+    // <Enumeration Text="15 minutes" Value="15" Id="%ENID%" />
+    // <Enumeration Text="30 minutes" Value="30" Id="%ENID%" />
+    // <Enumeration Text="1 hour" Value="101" Id="%ENID%" />
+    // <Enumeration Text="2 hours" Value="102" Id="%ENID%" />
+    // <Enumeration Text="3 hours" Value="103" Id="%ENID%" />
+    // <Enumeration Text="4 hours" Value="104" Id="%ENID%" />
+    // <Enumeration Text="5 hours" Value="105" Id="%ENID%" />
+    // <Enumeration Text="6 hours" Value="106" Id="%ENID%" />
+    // <Enumeration Text="7 hours" Value="107" Id="%ENID%" />
+    // <Enumeration Text="8 hours" Value="108" Id="%ENID%" />
+    // <Enumeration Text="9 hours" Value="109" Id="%ENID%" />
+    // <Enumeration Text="10 hours" Value="110" Id="%ENID%" />
+    // <Enumeration Text="11 hours" Value="111" Id="%ENID%" />
+    // <Enumeration Text="12 hours" Value="112" Id="%ENID%" />
     auto value = ParamSHC_CManualShadingWaitTime;
     if (value < 100)
         return value * 60 * 1000;
@@ -343,6 +377,41 @@ unsigned long ShutterControllerChannel::getManualShadingWaitTimeInMs() const
 
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
+    if (callContext.measurementBrightness != nullptr)
+    {
+        auto brightnessMeasurement = static_cast<BrightnessMeasurement*>(callContext.measurementBrightness);
+        const auto orientationInfo = getWindowOrientationInfo(ParamSHC_CWindowOrientation);
+        const bool useAzimuth = ParamSHC_CBrightnessAzimuthEnabled != 0 && orientationInfo.hasAzimuth;
+        const bool preferUnassigned = ParamSHC_CWindowOrientation == 5;
+        const bool forceAggregateMax = ParamSHC_CWindowOrientation == 5;
+        brightnessMeasurement->setUseAzimuth(useAzimuth);
+        brightnessMeasurement->setAggregateUseMaxOverride(forceAggregateMax);
+        brightnessMeasurement->setAggregatePreferUnassigned(preferUnassigned);
+        if (callContext.diagnosticLog)
+        {
+            if (orientationInfo.hasAzimuth)
+                logInfoP("Brightness CH%u: window orientation=%s (%u)",
+                         (unsigned int)(_channelIndex + 1),
+                         orientationInfo.name,
+                         (unsigned int)orientationInfo.azimuth);
+            else
+                logInfoP("Brightness CH%u: window orientation=%s",
+                         (unsigned int)(_channelIndex + 1),
+                         orientationInfo.name);
+
+            if (useAzimuth)
+                logInfoP("Brightness CH%u: target azimuth(sun)=%.2f (%s)",
+                         (unsigned int)(_channelIndex + 1),
+                         callContext.azimuth,
+                         callContext.timeAndSunValid ? "valid" : "invalid");
+            else
+                logInfoP("Brightness CH%u: target=aggregate (no azimuth)",
+                         (unsigned int)(_channelIndex + 1));
+
+            brightnessMeasurement->logSensorMapping(_channelIndex, useAzimuth);
+        }
+    }
+
     _measurementHeading.update(callContext.currentMillis, callContext.diagnosticLog);
     _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
 
@@ -367,7 +436,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     }
     callContext.modeCurrentActive = _currentMode;
 
-    // Handle reacticvate of shading after manual usage
+    // Handle reactivation of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
         auto waitTime = callContext.fastSimulationActive ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs();
@@ -408,14 +477,14 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     WindowOpenHandler *nextWindowOpenHandler = nullptr;
     if (_waitForWindowOpenEvalulation != 0)
     {
-        // <Enumeration Text="100 Millisekunden" Value="1" Id="%ENID%" />
-        // <Enumeration Text="200 Millisekunden" Value="2" Id="%ENID%" />
-        // <Enumeration Text="500 Millisekunden" Value="3" Id="%ENID%" />
-        // <Enumeration Text="1 Sekunde" Value="4" Id="%ENID%" />
-        // <Enumeration Text="2 Sekunden" Value="5" Id="%ENID%" />
-        // <Enumeration Text="3 Sekunden" Value="6" Id="%ENID%" />
-        // <Enumeration Text="4 Sekunden" Value="7" Id="%ENID%" />
-        // <Enumeration Text="5 Sekunden" Value="8" Id="%ENID%" />
+        // <Enumeration Text="100 milliseconds" Value="1" Id="%ENID%" />
+        // <Enumeration Text="200 milliseconds" Value="2" Id="%ENID%" />
+        // <Enumeration Text="500 milliseconds" Value="3" Id="%ENID%" />
+        // <Enumeration Text="1 second" Value="4" Id="%ENID%" />
+        // <Enumeration Text="2 seconds" Value="5" Id="%ENID%" />
+        // <Enumeration Text="3 seconds" Value="6" Id="%ENID%" />
+        // <Enumeration Text="4 seconds" Value="7" Id="%ENID%" />
+        // <Enumeration Text="5 seconds" Value="8" Id="%ENID%" />
         unsigned long waitTime = 0;
         if (_windowOpenHandlers.size() == 2)
         {
@@ -453,9 +522,9 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         {
             _waitForWindowOpenEvalulation = 0;
             _windowOpenState = (((bool) KoSHC_CWindowOpenOpened1.value(DPT_OpenClose)) == !ParamSHC_CWindowOpenContactInvert2) ? WindowOpenState::WindowOpenStateOpen : WindowOpenState::WindowOpenStateClosed;
-            // <Enumeration Text="Gekippt Aktiv und Offen Inaktiv" Value="0" Id="%ENID%" />
-            // <Enumeration Text="Gekippt Aktiv und Offen Aktiv" Value="1" Id="%ENID%" />
-            // <Enumeration Text="Gekippt Aktiv" Value="2" Id="%ENID%" />
+            // <Enumeration Text="Tilt active and open inactive" Value="0" Id="%ENID%" />
+            // <Enumeration Text="Tilt active and open active" Value="1" Id="%ENID%" />
+            // <Enumeration Text="Tilt active" Value="2" Id="%ENID%" />
             switch (ParamSHC_CWindowTiltHandling)
             {
                 case 0:
@@ -510,6 +579,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     if (_currentWindowOpenHandler != nextWindowOpenHandler)
     {
         sceneChanged = true;
+        bool startingWindowOpen = _currentWindowOpenHandler == nullptr && nextWindowOpenHandler != nullptr;
+        bool endingWindowOpen = _currentWindowOpenHandler != nullptr && nextWindowOpenHandler == nullptr;
         if (_currentWindowOpenHandler != nullptr && nextWindowOpenHandler != nullptr)
             logInfoP("Changing window open from %s to %s", _currentWindowOpenHandler->name(), nextWindowOpenHandler->name());
         else
@@ -519,15 +590,37 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             else
                 logInfoP("Stop window open");
         }
+        if (startingWindowOpen)
+        {
+            _windowOpenRestoreActive = true;
+            _windowOpenRestorePosition = _positionController.position();
+            _windowOpenRestoreSlat = _positionController.hasSlat() ? _positionController.slat() : 255;
+            if (callContext.diagnosticLog)
+                logInfoP("Window open restore: stored pos=%u slat=%u",
+                         (unsigned int)_windowOpenRestorePosition,
+                         (unsigned int)_windowOpenRestoreSlat);
+        }
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->stop(callContext, nextWindowOpenHandler, _positionController);
         _currentWindowOpenHandler = nextWindowOpenHandler;
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->start(callContext, _currentWindowOpenHandler, _positionController);
+        if (endingWindowOpen && _windowOpenRestoreActive)
+        {
+            if (callContext.diagnosticLog)
+                logInfoP("Window open restore: apply pos=%u slat=%u",
+                         (unsigned int)_windowOpenRestorePosition,
+                         (unsigned int)_windowOpenRestoreSlat);
+            if (_windowOpenRestorePosition != 255)
+                _positionController.setAutomaticPosition(_windowOpenRestorePosition);
+            if (_positionController.hasSlat() && _windowOpenRestoreSlat != 255)
+                _positionController.setAutomaticSlat(_windowOpenRestoreSlat);
+            _windowOpenRestoreActive = false;
+        }
     }
     callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
 
-    // State machine handling for mode activateion
+    // State machine handling for mode activation
     ModeBase *nextMode = nullptr;
     for (auto mode : _modes)
     {
@@ -551,12 +644,12 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                     if (!shadingControlActive() && mode->isModeShading())
                     {
                         if (callContext.diagnosticLog)
-                            logInfoP("-> but ignored, because global shadow not alloewd");
+                            logInfoP("-> but ignored, because global shading not allowed");
                     }
                     else
                         nextMode = mode;
                     // Do not break because allowed should be called for all modes
-                    // because it is a replacment for the loop function
+                    // because it is a replacement for the loop function
                 }
                 else
                 {
@@ -630,6 +723,30 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     _currentMode->control(callContext, _positionController);
     _positionController.control(callContext);
 
+#ifdef KoSHC_CShadingReadyUser
+    bool shadingModeLockActive = false;
+    if (ParamSHC_CShadingCount >= 1)
+    {
+        shadingModeLockActive = KoSHC_CShading1LockActive.value(DPT_Switch) ||
+            KoSHC_CShading1BreakLockActive.value(DPT_Switch);
+    }
+#ifdef KoSHC_CShading2LockActive
+    if (ParamSHC_CShadingCount >= 2)
+    {
+        shadingModeLockActive = shadingModeLockActive ||
+            KoSHC_CShading2LockActive.value(DPT_Switch) ||
+            KoSHC_CShading2BreakLockActive.value(DPT_Switch);
+    }
+#endif
+    bool readinessUser = shadingControlActive() &&
+        !_channelLockActive &&
+        _currentWindowOpenHandler == nullptr &&
+        _currentMode != _modeManual &&
+        !shadingModeLockActive;
+    if (KoSHC_CShadingReadyUser.valueNoSendCompare(readinessUser, DPT_Switch))
+        KoSHC_CShadingReadyUser.objectWritten();
+#endif
+
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
     callContext.modeCurrentActive = nullptr;
@@ -688,23 +805,23 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
         KoSHC_CShadingActive.value(false, DPT_Switch);
         if (_currentMode != _modeManual)
         {
-            // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
-            // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
-            // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
-            // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+            // <Enumeration Text="No change" Value="0" Id="%ENID%" />
+            // <Enumeration Text="Position before shading start" Value="1" Id="%ENID%" />
+            // <Enumeration Text="Move up" Value="2" Id="%ENID%" />
+            // <Enumeration Text="Slat horizontal" Value="3" Id="%ENID%" />
             switch (_positionController.hasSlat() ? ParamSHC_CAfterShadingJalousie : ParamSHC_CAfterShading)
             {
             case 1:
-                // Position vor Beschattungsstart
+                // Position before shading start
                 _positionController.restoreLastManualPosition();
                 break;
             case 2:
-                // Fährt auf
+                // Move up
                 _positionController.setAutomaticPositionAndStoreForRestore(0); // Handled as manual operation because the value should be stored
                 _positionController.setAutomaticSlatAndStoreForRestore(0);     // Handled as manual operation because the value should be stored
                 break;
             case 3:
-                // Lamelle Waagrecht
+                // Slat horizontal
                 _positionController.storeCurrentPositionForRestore();
                 _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
                 break;

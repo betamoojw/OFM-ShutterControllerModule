@@ -10,7 +10,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="21" increment="4" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="26" increment="4" />
+						<op:param name="%En%" value="28" increment="4" />
 						<!-- ModeWindowOpen number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->

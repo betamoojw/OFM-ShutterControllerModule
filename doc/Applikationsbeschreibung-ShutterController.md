@@ -197,6 +197,67 @@ DOCCONTENT -->
 Vorgesehen für den Helligkeitswert einer KNX-Wetterstation.
 
 <!-- DOC -->
+##### Weitere Helligkeitssensoren
+
+Legt fest, wie viele zusaetzliche Helligkeitssensoren (2 bis 5) verwendet werden.
+Die Anzahl bestimmt, welche weiteren Kommunikationsobjekte sichtbar und zu verknuepfen sind.
+
+<!-- DOC -->
+##### Helligkeit Aggregation
+
+Bestimmt, wie mehrere gueltige Helligkeitssensoren zusammengefasst werden, wenn keine Azimut-Auswertung verwendet wird.
+"Mittelwert" mittelt alle gueltigen Sensoren, "Maximum" nimmt den hoechsten Wert.
+
+<!-- DOC -->
+##### Fenster-/Behangausrichtung und Azimut-Auswertung
+
+Die Fenster-/Behangausrichtung im Kanal steuert, wie die Helligkeitssensoren ausgewertet werden:
+
+- **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
+- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
+- **Keine Himmelsrichtung (Azimut-Auswertung aus)**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
+
+Beispiele (vereinfachte Sicht):
+
+| Sensor-Setup | Fenster-/Behangausrichtung | Ergebnis fuer Helligkeit |
+| --- | --- | --- |
+| 3x Sensor mit Azimut (O/S/W) | Dachflaeche | Max(alle 3 Sensoren) |
+| 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Dachflaeche | Max(alle Sensoren ohne Azimut) |
+| 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Sued | Azimut-Interpolation nur mit den 4 Azimut-Sensoren |
+| 2x Sensor ohne Azimut | Keine Himmelsrichtung (Auswertung aus) | Aggregation ueber alle Sensoren ohne Azimut |
+| 1x Sensor mit Azimut | Keine Himmelsrichtung (Azimut-Auswertung aus) | Aggregation ueber alle gueltigen Sensoren |
+
+<!-- DOC -->
+##### Helligkeit Sensor 1
+
+Azimut-Zuordnung fuer Sensor 1 in 5-Grad-Schritten.
+"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
+
+<!-- DOC -->
+##### Helligkeit Sensor 2
+
+Azimut-Zuordnung fuer Sensor 2 in 5-Grad-Schritten.
+"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
+
+<!-- DOC -->
+##### Helligkeit Sensor 3
+
+Azimut-Zuordnung fuer Sensor 3 in 5-Grad-Schritten.
+"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
+
+<!-- DOC -->
+##### Helligkeit Sensor 4
+
+Azimut-Zuordnung fuer Sensor 4 in 5-Grad-Schritten.
+"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
+
+<!-- DOC -->
+##### Helligkeit Sensor 5
+
+Azimut-Zuordnung fuer Sensor 5 in 5-Grad-Schritten.
+"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
+
+<!-- DOC -->
 #### UV-Index
 
 Dieser Eingang eignet sich für den UV-Index eines Wetterdienstes.
@@ -744,6 +805,23 @@ DOCCONTENT -->
 
 <!-- DOC -->
 ### Beschattungssteuerung
+
+<!-- DOC -->
+#### Azimut auswerten
+
+Wenn aktiviert, wird die aktuelle Sonnenrichtung fuer die Helligkeit verwendet.
+Bei deaktivierter Azimut-Auswertung wird der Helligkeitswert aus der Aggregation der Sensoren gebildet.
+Dies entspricht der Fenster-/Behangausrichtung "Keine Himmelsrichtung (Auswertung aus)".
+
+<!-- DOC HelpContext="Fenster-Behangausrichtung" -->
+#### Fenster-/Behangausrichtung
+
+Legt die Ausrichtung des Fensters bzw. Behangs fuer diesen Kanal fest.
+Diese Angabe wird verwendet, um den passenden Helligkeitssensor fuer die Beschattungsauswertung auszuwählen.
+
+- **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
+- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
+- **Keine Himmelsrichtung (Azimut-Auswertung aus)**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
 
 <!-- DOC -->
 #### Nur starten wenn aktuelle Position kleiner gleich

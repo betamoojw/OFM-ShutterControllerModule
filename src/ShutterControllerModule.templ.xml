@@ -10,7 +10,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="31" increment="7" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="27" increment="4" />
+						<op:param name="%En%" value="28" increment="4" />
 						<!-- ModeWindowOpen number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Visibilty select -->
@@ -23,7 +23,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="45" increment="38" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="35" increment="7" />
+						<op:param name="%En%" value="36" increment="8" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -76,7 +76,8 @@
 								<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
 								<Parameter Id="%AID%_UP-%TT%%CC%037" Offset="1" BitOffset="6" Name="C%C%NightWindowTiltAllowed" ParameterType="%AID%_PT-OnOffYesNo" Text="'Fenster gekippt' Modus erlaubt" Value="1" />
 
-								<!-- 1 Bit free -->
+								<!-- Azimut Auswertung für Helligkeit -->
+								<Parameter Id="%AID%_UP-%TT%%CC%045" Offset="1" BitOffset="7" Name="C%C%BrightnessAzimuthEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Azimut auswerten" Value="1" />
 
 								<!-- Fenster gekippt Wartezeit -->
 								<Parameter Id="%AID%_UP-%TT%%CC%043" Offset="2" BitOffset="0" Name="C%C%WindowTiltWaitTime" ParameterType="%AID%_PT-WindowOpenTiltWaitTime" Text="Kontaktänderung auswerten nach" Value="4" />
@@ -89,7 +90,10 @@
 								<!-- Nacht Modus von -->
 								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
 
-								<!-- 4 Bit free -->
+								<!-- Fensterausrichtung -->
+								<Parameter Id="%AID%_UP-%TT%%CC%046" Offset="3" BitOffset="4" Name="C%C%WindowOrientation" ParameterType="%AID%_PT-WindowOrientation" Text="Fenster-/Behangausrichtung" Value="2" />
+
+								<!-- 1 Bit free -->
 
 								<!-- Von Uhrzeit -->
 								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="4" BitOffset="0" Name="C%C%NightFromTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="1320" />
@@ -199,7 +203,7 @@
 
 
 								<!-- Next offset: 31-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%045 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%047 -->
 
 
 							</Union>
@@ -233,6 +237,9 @@
 
 							<!-- Nachtmodus von -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_UP-%TT%%CC%005" />
+
+							<!-- Fensterausrichtung -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" RefId="%AID%_UP-%TT%%CC%046" />
 							<!-- Von Uhrzeit -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_UP-%TT%%CC%006" />
 
@@ -294,6 +301,8 @@
 
 							<!-- Fenster gekippt Modus in Nachtmodus erlaubt -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%037_R-%TT%%CC%03701" RefId="%AID%_UP-%TT%%CC%037" />
+							<!-- Azimut Auswertung für Helligkeit -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%045_R-%TT%%CC%04501" RefId="%AID%_UP-%TT%%CC%045" />
 
 
 							<!-- Nach Beschattung -->
@@ -414,16 +423,19 @@
 							<!-- Raumtemperatur -->
 							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K26%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="C%C%RoomTemp" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 
-							<!-- Next Id: %AID%_O-%TT%%CC%027 -->
+							<!-- Status Beschattung Bereit (nur Nutzer-Einfluss) -->
+							<ComObject Id="%AID%_O-%TT%%CC%027" Number="%K27%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingReadyUser" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
+							<!-- Next Id: %AID%_O-%TT%%CC%028 -->
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Id starting with 900 -->
-							<!-- KO Number starting with 27 -->
+							<!-- KO Number starting with 28 -->
 							<op:usePart name="ModeWindowOpen" xpath="//ComObjectTable/*" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Id starting with 100 -->
-							<!-- KO Number starting with 35 -->
+							<!-- KO Number starting with 36 -->
 							<op:usePart name="ModeShading" xpath="//ComObjectTable/*" />
 
 						</ComObjectTable>
@@ -493,6 +505,8 @@
 
 							<!-- Raumtemperatur Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="{{0:Jalousie %C%}}: Raumtemperatur" FunctionText="Jalousie %C%: Eingang, °C" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- Status Beschattung Bereit (nur Nutzer-Einfluss) -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_O-%TT%%CC%027" Text="{{0:Jalousie %C%}}: Status Beschattung Bereit" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 
@@ -616,6 +630,18 @@
 														</when>
 													</choose>
 
+													<!-- Fensterausrichtung (abhängig von Helligkeitseingang und Azimut-Auswertung) -->
+													<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
+														<when test="1">
+															<choose ParamRefId="%AID%_UP-%TT%%CC%045_R-%TT%%CC%04501">
+																<when test="1">
+																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" HelpContext="SHC-Fenster-Behangausrichtung" IndentLevel="1" />
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Fensterausrichtung wird verwendet, um den passenden Helligkeitssensor für diesen Kanal auszuwählen. Zuordnung: Ost=90°, Südost=135°, Süd=180°, Südwest=225°, West=270°. Bei Zwischenrichtungen (z.B. Südwest) werden benachbarte Sensoren berücksichtigt. 'Dachfläche' bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet; die Beschattung folgt weiterhin Azimut- und Höhenwinkelgrenzen. 'Keine Himmelsrichtung (Azimut-Auswertung aus)' verwendet die eingestellte Aggregation." UIHint="Information" />
+																</when>
+															</choose>
+														</when>
+													</choose>
+
 													<!-- Anzahl Beschattungs Mode-->
 													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401" HelpContext="%DOC%" IndentLevel="1" />
 													<choose ParamRefId="%AID%_UP-%TT%%CC%034_R-%TT%%CC%03401">
@@ -630,9 +656,13 @@
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" />
 																<!-- Beschattung Aktiv -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
+																<!-- Status Beschattung Bereit -->
+																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" />
 
 																<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" HelpContext="%DOC%" IndentLevel="1" />
+																<!-- Azimut Auswertung für Helligkeit -->
+																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%045_R-%TT%%CC%04501" HelpContext="%DOC%" IndentLevel="1" />
 
 																<!-- Nach Beschattung -->
 																<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
