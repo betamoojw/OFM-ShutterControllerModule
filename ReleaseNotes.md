@@ -1,3 +1,5 @@
+v 0.4.1
+- Feature: Bessere Bennenung der Gruppenobjekte
 v 0.4.0
 - Feature: Invertieren der Fensterkontakt KO
 - Feature: Auswahl verhalten der Fensterkontakte
