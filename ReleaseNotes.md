@@ -1,3 +1,5 @@
+v 0.4.2
+- Fix: Stopp von Rolladen bei manueller Bedienung durch Jalousiensteuerung
 v 0.4.1
 - Feature: Bessere Bennenung der Gruppenobjekte
 v 0.4.0
