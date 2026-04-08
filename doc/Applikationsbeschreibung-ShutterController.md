@@ -215,7 +215,7 @@ Die Fenster-/Behangausrichtung im Kanal steuert, wie die Helligkeitssensoren aus
 
 - **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
 - **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
-- **Keine Himmelsrichtung (Azimut-Auswertung aus)**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
+- **Keine Himmelsrichtungsauswertung**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
 
 Beispiele (vereinfachte Sicht):
 
@@ -224,37 +224,13 @@ Beispiele (vereinfachte Sicht):
 | 3x Sensor mit Azimut (O/S/W) | Dachflaeche | Max(alle 3 Sensoren) |
 | 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Dachflaeche | Max(alle Sensoren ohne Azimut) |
 | 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Sued | Azimut-Interpolation nur mit den 4 Azimut-Sensoren |
-| 2x Sensor ohne Azimut | Keine Himmelsrichtung (Auswertung aus) | Aggregation ueber alle Sensoren ohne Azimut |
-| 1x Sensor mit Azimut | Keine Himmelsrichtung (Azimut-Auswertung aus) | Aggregation ueber alle gueltigen Sensoren |
+| 2x Sensor ohne Azimut | Keine Himmelsrichtungsauswertung | Aggregation ueber alle Sensoren ohne Azimut |
+| 1x Sensor mit Azimut | Keine Himmelsrichtungsauswertung | Aggregation ueber alle gueltigen Sensoren |
 
-<!-- DOC -->
-##### Helligkeit Sensor 1
+<!-- DOC HelpContext="Helligkeit-Sensor-1-5" -->
+##### Helligkeit Sensor 1..5
 
-Azimut-Zuordnung fuer Sensor 1 in 5-Grad-Schritten.
-"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
-
-<!-- DOC -->
-##### Helligkeit Sensor 2
-
-Azimut-Zuordnung fuer Sensor 2 in 5-Grad-Schritten.
-"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
-
-<!-- DOC -->
-##### Helligkeit Sensor 3
-
-Azimut-Zuordnung fuer Sensor 3 in 5-Grad-Schritten.
-"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
-
-<!-- DOC -->
-##### Helligkeit Sensor 4
-
-Azimut-Zuordnung fuer Sensor 4 in 5-Grad-Schritten.
-"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
-
-<!-- DOC -->
-##### Helligkeit Sensor 5
-
-Azimut-Zuordnung fuer Sensor 5 in 5-Grad-Schritten.
+Azimut-Zuordnung fuer den jeweiligen Sensor in 5-Grad-Schritten.
 "Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
 
 <!-- DOC -->
@@ -811,7 +787,7 @@ DOCCONTENT -->
 
 Wenn aktiviert, wird die aktuelle Sonnenrichtung fuer die Helligkeit verwendet.
 Bei deaktivierter Azimut-Auswertung wird der Helligkeitswert aus der Aggregation der Sensoren gebildet.
-Dies entspricht der Fenster-/Behangausrichtung "Keine Himmelsrichtung (Auswertung aus)".
+Dies entspricht der Fenster-/Behangausrichtung "Keine Himmelsrichtungsauswertung".
 
 <!-- DOC HelpContext="Fenster-Behangausrichtung" -->
 #### Fenster-/Behangausrichtung
@@ -821,7 +797,7 @@ Diese Angabe wird verwendet, um den passenden Helligkeitssensor fuer die Beschat
 
 - **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
 - **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
-- **Keine Himmelsrichtung (Azimut-Auswertung aus)**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
+- **Keine Himmelsrichtungsauswertung**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
 
 <!-- DOC -->
 #### Nur starten wenn aktuelle Position kleiner gleich
@@ -840,8 +816,10 @@ Position die bei Beschattungsstart angefahren wird.
 #### Lamellenstellenung an Sonnenstand anpassen
 
 Diese Einstellung ist nur für den Gerätetype "Jalousie" vorhanden.
-Ist diese Einstellung auf "Ja" gesetzt, wird in der Konfiguration der Wert für die Jalousienposition vorgegeben.
-Bei einer Einstellung von "Nein" wird die Lamellenstellung dem Höhenwinkel der Sonne angepasst.
+
+- **Nein**: Die Lamellenstellung wird nicht an den Sonnenstand angepasst. Stattdessen wird die unter "Lamellenstellung" konfigurierte feste Position verwendet.
+- **Standard**: Die Lamellenstellung wird anhand des Höhenwinkels der Sonne automatisch berechnet (bewährte Formel).
+- **Benutzerdefiniert**: Die Lamellenstellung wird linear zwischen dem Wert bei tiefem Sonnenstand und dem Wert bei hohem Sonnenstand interpoliert.
 
 <!-- DOC HelpContext="Beschattung Lamellenstellung" -->
 #### Lamellenstellung
@@ -855,9 +833,27 @@ Der Wert gibt die Kippstellung der Lamelle in Prozent an. 50% entsprechen der wa
 #### Mindestaenderung Lamellennachfuehrung
 
 <!-- DOC Skip="2" -->
-Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Ja" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Standard" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
 
 Der Wert gibt an, wie oft die Lamellenstellung während des Sonnenverlaufs angepasst wird.
+
+<!-- DOC -->
+#### Lamellenstellung (Sonne tief)
+
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Benutzerdefiniert" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+
+Lamellenposition in Prozent beim minimalen Höhenwinkel der Sonne. Typischerweise nahezu geschlossen (z.B. 80%), da der flache Sonnenstand mehr Blendschutz erfordert.
+
+<!-- DOC -->
+#### Lamellenstellung (Sonne hoch)
+
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Benutzerdefiniert" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+
+Lamellenposition in Prozent beim maximalen Höhenwinkel der Sonne. Typischerweise offener (z.B. 50% = waagrecht), da der steile Sonnenstand weniger Kippwinkel benötigt.
+
+Zwischen diesen beiden Werten wird die Lamellenstellung linear interpoliert.
 
 <!-- DOC -->
 #### Offset Lamellenstellung

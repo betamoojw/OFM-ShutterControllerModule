@@ -140,7 +140,7 @@
 									<Enumeration Text="Südwest (225°)" Value="3" Id="%ENID%" />
 									<Enumeration Text="West (270°)" Value="4" Id="%ENID%" />
 									<Enumeration Text="Dachfläche" Value="5" Id="%ENID%" />
-									<Enumeration Text="Keine Himmelsrichtung" Value="6" Id="%ENID%" />
+									<Enumeration Text="Keine Himmelsrichtungsauswertung" Value="6" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-UVIndex" Name="UVI">
@@ -192,10 +192,11 @@
 							<ParameterType Id="%AID%_PT-SHCPercent" Name="Percent">
 								<TypeNumber SizeInBit="7" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-SlatShadingPositionMode" Name="SlatShadingPositionMode">
-								<TypeRestriction Base="Value" SizeInBit="1">
-									<Enumeration Text="Fixe Prozentangabe" Value="0" Id="%ENID%" />
-									<Enumeration Text="Sonnenstandabhängig" Value="1" Id="%ENID%" />
+							<ParameterType Id="%AID%_PT-SlatTrackingMode" Name="SlatTrackingMode">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Standard" Value="1" Id="%ENID%" />
+									<Enumeration Text="Benutzerdefiniert" Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-OffsetSlatPosition" Name="OffsetSlatPosition">
@@ -854,15 +855,15 @@
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00026_R-%TT%0002601" HelpContext="%DOC%"/>
 										<!-- Helligkeit Aggregation -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00027_R-%TT%0002701" HelpContext="%DOC%"/>
-										<ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Die Aggregation wird verwendet, wenn die Azimut-Auswertung deaktiviert ist (z.B. Fenster-/Behangausrichtung 'Keine Himmelsrichtung (Azimut-Auswertung aus)') oder kein gültiger Sonnen-Azimut bzw. keine Sensor-Azimute vorliegen." UIHint="Information" />
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Die Aggregation wird verwendet, wenn die Azimut-Auswertung deaktiviert ist (Fenster-/Behangausrichtung 'Keine Himmelsrichtungsauswertung') oder kein gültiger Sonnen-Azimut bzw. keine Sensor-Azimute vorliegen." UIHint="Information" />
 										<!-- Helligkeit Sensor 1 -->
-										<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00028_R-%TT%0002801" HelpContext="%DOC%"/>
+										<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00028_R-%TT%0002801" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
 											<when test=">=1">
 												<!-- Helligkeit Eingang 2 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" />
 												<!-- Helligkeit Sensor 2 -->
-												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00029_R-%TT%0002901" HelpContext="%DOC%"/>
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00029_R-%TT%0002901" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
@@ -870,7 +871,7 @@
 												<!-- Helligkeit Eingang 3 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00010_R-%TT%0001001" />
 												<!-- Helligkeit Sensor 3 -->
-												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00030_R-%TT%0003001" HelpContext="%DOC%"/>
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00030_R-%TT%0003001" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
@@ -878,7 +879,7 @@
 												<!-- Helligkeit Eingang 4 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00011_R-%TT%0001101" />
 												<!-- Helligkeit Sensor 4 -->
-												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00031_R-%TT%0003101" HelpContext="%DOC%"/>
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00031_R-%TT%0003101" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
@@ -886,7 +887,7 @@
 												<!-- Helligkeit Eingang 5 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00012_R-%TT%0001201" />
 												<!-- Azimut Sensor 5 -->
-												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00032_R-%TT%0003201" HelpContext="%DOC%"/>
+												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00032_R-%TT%0003201" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<!-- Helligkeit Watchdog -->
