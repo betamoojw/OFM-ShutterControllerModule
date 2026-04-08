@@ -91,9 +91,9 @@ void PositionController::setManualPosition(uint8_t manualPosition)
 
     logDebugP("Set manual position: %d", (int)manualPosition);
     _restorePosition = manualPosition;
-    // <Enumeration Text="Manual control via actuator" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Module sends up/down to actuator" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Module sends 0/100% to actuator" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
     if (ParamSHC_CManualUpDownType != 0)
     {
         setAutomaticPosition(manualPosition);
@@ -115,9 +115,9 @@ void PositionController::setManualSlat(uint8_t manualSlat)
     logDebugP("Set manual slat position: %d", (int)manualSlat);
     _restoreSlat = manualSlat;
     
-    // <Enumeration Text="Manual control via actuator" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Module sends up/down to actuator" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Module sends 0/100% to actuator" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
     if (_hasSlat && (ParamSHC_CManualUpDownType != 0))
         setAutomaticSlat(manualSlat);
 }
@@ -165,9 +165,9 @@ void PositionController::setManualUpDown(bool down)
         _calculatedTargetPosition = _restorePosition;
         setMovingTimeout(MOVING_TIMEOUT);
     }
-    // <Enumeration Text="Manual control via actuator" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Module sends up/down to actuator" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Module sends 0/100% to actuator" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
     switch (ParamSHC_CManualUpDownType)
     {
     case 1:
