@@ -33,7 +33,7 @@ namespace
         case 5:
             return {"Dachflaeche", 0, false};
         case 6:
-            return {"Keine Himmelsrichtung (Azimut-Auswertung aus)", 0, false};
+            return {"Keine Himmelsrichtungsauswertung", 0, false};
         default:
             return {"Unbekannt", 0, false};
         }
@@ -350,7 +350,7 @@ void ShutterControllerChannel::activateShading()
 
 unsigned long ShutterControllerChannel::getManualShadingWaitTimeInMs() const
 {
-    // <Enumeration Text="f├╝r diese Periode deaktivieren" Value="0" Id="%ENID%" />
+    // <Enumeration Text="für diese Periode deaktivieren" Value="0" Id="%ENID%" />
     // <Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
     // <Enumeration Text="2 Minuten" Value="2" Id="%ENID%" />
     // <Enumeration Text="5 Minuten" Value="5" Id="%ENID%" />
@@ -579,8 +579,6 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     if (_currentWindowOpenHandler != nextWindowOpenHandler)
     {
         sceneChanged = true;
-        bool startingWindowOpen = _currentWindowOpenHandler == nullptr && nextWindowOpenHandler != nullptr;
-        bool endingWindowOpen = _currentWindowOpenHandler != nullptr && nextWindowOpenHandler == nullptr;
         if (_currentWindowOpenHandler != nullptr && nextWindowOpenHandler != nullptr)
             logInfoP("Changing window open from %s to %s", _currentWindowOpenHandler->name(), nextWindowOpenHandler->name());
         else
@@ -590,33 +588,11 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             else
                 logInfoP("Stop window open");
         }
-        if (startingWindowOpen)
-        {
-            _windowOpenRestoreActive = true;
-            _windowOpenRestorePosition = _positionController.position();
-            _windowOpenRestoreSlat = _positionController.hasSlat() ? _positionController.slat() : 255;
-            if (callContext.diagnosticLog)
-                logInfoP("Window open restore: stored pos=%u slat=%u",
-                         (unsigned int)_windowOpenRestorePosition,
-                         (unsigned int)_windowOpenRestoreSlat);
-        }
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->stop(callContext, nextWindowOpenHandler, _positionController);
         _currentWindowOpenHandler = nextWindowOpenHandler;
         if (_currentWindowOpenHandler != nullptr)
             _currentWindowOpenHandler->start(callContext, _currentWindowOpenHandler, _positionController);
-        if (endingWindowOpen && _windowOpenRestoreActive)
-        {
-            if (callContext.diagnosticLog)
-                logInfoP("Window open restore: apply pos=%u slat=%u",
-                         (unsigned int)_windowOpenRestorePosition,
-                         (unsigned int)_windowOpenRestoreSlat);
-            if (_windowOpenRestorePosition != 255)
-                _positionController.setAutomaticPosition(_windowOpenRestorePosition);
-            if (_positionController.hasSlat() && _windowOpenRestoreSlat != 255)
-                _positionController.setAutomaticSlat(_windowOpenRestoreSlat);
-            _windowOpenRestoreActive = false;
-        }
     }
     callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
 
@@ -665,7 +641,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         logIndentDown();
     }
-    if (_currentMode != nextMode)
+    if (_currentMode != nextMode && nextMode != nullptr)
     {
         sceneChanged = true;
         if (nextMode == _modeManual)
@@ -801,9 +777,9 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
         KoSHC_CShadingActive.value(false, DPT_Switch);
         if (_currentMode != _modeManual)
         {
-            // <Enumeration Text="Keine ├änderung" Value="0" Id="%ENID%" />
+            // <Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
             // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
-            // <Enumeration Text="F├ñhrt Auf" Value="2" Id="%ENID%" />
+            // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
             // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
             switch (_positionController.hasSlat() ? ParamSHC_CAfterShadingJalousie : ParamSHC_CAfterShading)
             {

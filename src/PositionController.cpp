@@ -542,7 +542,7 @@ void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
     }
     else if (slat() > slatLimit || moveToLimit)
     {
-        if (_blockedSlat != NOTUSED)
+        if (_blockedSlat == NOTUSED)
             _blockedSlat = slat();
         _setSlat = slatLimit;
         logDebugP("Slat limit forces new slat %d, store %d", (int)_setSlat, (int)_blockedSlat);

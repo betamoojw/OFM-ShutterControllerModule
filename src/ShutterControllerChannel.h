@@ -25,10 +25,6 @@ class ShutterControllerChannel : public OpenKNX::Channel
         std::string _name = std::string();
         WindowOpenHandler* _currentWindowOpenHandler = nullptr;
         WindowOpenState _windowOpenState = WindowOpenStateClosed;  
-        bool _windowOpenRestoreActive = false;
-        uint8_t _windowOpenRestorePosition = 255;
-        uint8_t _windowOpenRestoreSlat = 255;
-
         ModeManual* _modeManual = nullptr;
         ModeIdle* _modeIdle = nullptr;
         ModeNight* _modeNight = nullptr;
