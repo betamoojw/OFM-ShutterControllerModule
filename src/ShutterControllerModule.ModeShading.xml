@@ -146,10 +146,10 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="37" BitOffset="4" Name="C%C%Shading%Pn%Break" ParameterType="%AID%_PT-ShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
 
 								<!-- Lamellenstellung bei tiefer Sonne (Benutzerdefiniert) -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="38" BitOffset="0" Name="C%C%Shading%Pn%SlatLowSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung (Sonne tief)" SuffixText="%" Value="80" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="38" BitOffset="0" Name="C%C%Shading%Pn%SlatLowSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung bei min. Höhenwinkel" SuffixText="%" Value="80" />
 
 								<!-- Lamellenstellung bei hoher Sonne (Benutzerdefiniert) -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+52%" Offset="39" BitOffset="0" Name="C%C%Shading%Pn%SlatHighSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung (Sonne hoch)" SuffixText="%" Value="50" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+52%" Offset="39" BitOffset="0" Name="C%C%Shading%Pn%SlatHighSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung bei max. Höhenwinkel" SuffixText="%" Value="50" />
 
 								<!-- Next Offset = 40 -->
 								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+53% -->
@@ -262,10 +262,10 @@
 							<!-- Diagnose Objekt für 'Nicht erlaubt' Grund -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+50%_R-%TT%%CC%%PPP+50%01" RefId="%AID%_UP-%TT%%CC%%PPP+50%" />
 
-							<!-- Lamellenstellung (Sonne tief) -->
+							<!-- Lamellenstellung bei min. Höhenwinkel -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01" RefId="%AID%_UP-%TT%%CC%%PPP+51%" />
 
-							<!-- Lamellenstellung (Sonne hoch) -->
+							<!-- Lamellenstellung bei max. Höhenwinkel -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01" RefId="%AID%_UP-%TT%%CC%%PPP+52%" />
 			
 						</ParameterRefs>
@@ -483,10 +483,10 @@
 																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" />
 																		</when>
 																		<when test="2">
-<!-- Lamellenstellung (Sonne tief) -->
+<!-- Lamellenstellung bei min. Höhenwinkel -->
 												<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01" />
 
-												<!-- Lamellenstellung (Sonne hoch) -->
+												<!-- Lamellenstellung bei max. Höhenwinkel -->
 																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01" />
 
 																			<!-- Offset Lamellenposition -->
