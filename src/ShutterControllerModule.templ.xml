@@ -91,7 +91,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
 
 								<!-- Fensterausrichtung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%046" Offset="3" BitOffset="4" Name="C%C%WindowOrientation" ParameterType="%AID%_PT-WindowOrientation" Text="Fenster-/Behangausrichtung" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%046" Offset="3" BitOffset="4" Name="C%C%WindowOrientation" ParameterType="%AID%_PT-WindowOrientation" Text="Fenster-/Behangausrichtung" Value="6" />
 
 								<!-- 1 Bit free -->
 
