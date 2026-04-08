@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="45" increment="38" />
+						<op:param name="%ParamOffset%" value="45" increment="40" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="36" increment="8" />
 						<!-- ModeShading number -->
@@ -630,15 +630,11 @@
 														</when>
 													</choose>
 
-													<!-- Fensterausrichtung (abhängig von Helligkeitseingang und Azimut-Auswertung) -->
+													<!-- Fensterausrichtung (abhängig von Helligkeitseingang) -->
 													<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
 														<when test="1">
-															<choose ParamRefId="%AID%_UP-%TT%%CC%045_R-%TT%%CC%04501">
-																<when test="1">
-																	<ParameterRefRef RefId="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" HelpContext="SHC-Fenster-Behangausrichtung" IndentLevel="1" />
-																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Die Fensterausrichtung wird verwendet, um den passenden Helligkeitssensor für diesen Kanal auszuwählen. Zuordnung: Ost=90°, Südost=135°, Süd=180°, Südwest=225°, West=270°. Bei Zwischenrichtungen (z.B. Südwest) werden benachbarte Sensoren berücksichtigt. 'Dachfläche' bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet; die Beschattung folgt weiterhin Azimut- und Höhenwinkelgrenzen. 'Keine Himmelsrichtung (Azimut-Auswertung aus)' verwendet die eingestellte Aggregation." UIHint="Information" />
-																</when>
-															</choose>
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" HelpContext="SHC-Fenster-Behangausrichtung" IndentLevel="1" />
+															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wählt den passenden Helligkeitssensor anhand des Sonnenstands aus. Zuordnung: Ost=90°, Südost=135°, Süd=180°, Südwest=225°, West=270°. Weitere Details in der Kontexthilfe." UIHint="Information" />
 														</when>
 													</choose>
 

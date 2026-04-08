@@ -5,5 +5,5 @@ Diese Angabe wird verwendet, um den passenden Helligkeitssensor fuer die Beschat
 
 - **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
 - **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
-- **Keine Himmelsrichtung (Azimut-Auswertung aus)**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
+- **Keine Himmelsrichtungsauswertung**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
 
