@@ -124,24 +124,21 @@ void PositionController::setManualSlat(uint8_t manualSlat)
 
 void PositionController::setManualStep(bool step)
 {
+    logInfoP("Set step: %d", (int)step);
+    if (ParamSHC_CManualUpDownType != 0)
+    {
+        KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
+    }
+    if (_shutterSimulation != nullptr)
+        _shutterSimulation->processInputKo(KoSHC_CShutterStopStepOutput);
+    _startWaitForManualPositionFeedback = millis();
+    if (_startWaitForManualPositionFeedback == 0)
+        _startWaitForManualPositionFeedback = 1;
     if (_hasSlat)
     {
-        logInfoP("Set step: %d", (int)step);
-        if (ParamSHC_CManualUpDownType != 0)
-        {
-            KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
-        }
-        if (_shutterSimulation != nullptr)
-            _shutterSimulation->processInputKo(KoSHC_CShutterStopStepOutput);
-        _startWaitForManualPositionFeedback = millis();
-        if (_startWaitForManualPositionFeedback == 0)
-            _startWaitForManualPositionFeedback = 1;
-        if (_hasSlat)
-        {
-            _startWaitForManualSlatPositionFeedback = millis();
-            if (_startWaitForManualSlatPositionFeedback == 0)
-                _startWaitForManualSlatPositionFeedback = 1;
-        }
+        _startWaitForManualSlatPositionFeedback = millis();
+        if (_startWaitForManualSlatPositionFeedback == 0)
+            _startWaitForManualSlatPositionFeedback = 1;
     }
 }
 

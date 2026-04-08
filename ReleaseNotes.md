@@ -5,6 +5,10 @@ v 0.5.0
 - Fix: Azimut-/Helligkeit-UI klarer (Helligkeit Sensor 1..5, "Keine Himmelsrichtung (Azimut-Auswertung aus)")
 - Fix: Schreibfehler und Himmelsrichtungsbezeichnungen korrigiert
 - Doc: Help-Context und Applikationsbeschreibung aktualisiert
+v 0.4.2
+- Fix: Stopp von Rolladen bei manueller Bedienung durch Jalousiensteuerung
+v 0.4.1
+- Feature: Bessere Bennenung der Gruppenobjekte
 v 0.4.0
 - Feature: Invertieren der Fensterkontakt KO
 - Feature: Auswahl verhalten der Fensterkontakte
