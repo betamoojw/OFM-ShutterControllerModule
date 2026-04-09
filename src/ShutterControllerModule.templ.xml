@@ -665,12 +665,12 @@
 																	<when test="1">
 																		<!-- Jalousie -->
 																		<!-- Nach Beschattung Zeit -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" IndentLevel="1" />
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" IndentLevel="1" />
 																	</when>
 																	<when test="2">
 																		<!-- Rollo -->
 																		<!-- Nach Beschattung Zeit -->
-																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" IndentLevel="1" />
+																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" IndentLevel="1" />
 																	</when>
 																</choose>
 															</ParameterBlock>
