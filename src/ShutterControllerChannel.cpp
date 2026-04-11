@@ -714,6 +714,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     bool readinessUser = shadingControlActive() &&
         !_channelLockActive &&
         _currentWindowOpenHandler == nullptr &&
+        _windowOpenState == WindowOpenStateClosed &&
         _currentMode != _modeManual &&
         !shadingModeLockActive;
     if (KoSHC_CShadingReadyUser.valueNoSendCompare(readinessUser, DPT_Switch))
