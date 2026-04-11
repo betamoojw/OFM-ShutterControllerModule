@@ -192,15 +192,14 @@ Es kann hierfür z.B. die OpenKNX-Firmware OAM-InternetServices mit dem OFM-Inte
 DOCCONTENT -->
 
 <!-- DOC -->
-#### Helligkeit
+#### Helligkeitssensoren
 
-Vorgesehen für den Helligkeitswert einer KNX-Wetterstation.
+Legt fest, ob und wie viele Helligkeitssensoren verwendet werden:
 
-<!-- DOC -->
-##### Weitere Helligkeitssensoren
+- **Nein**: Kein Helligkeitssensor aktiv.
+- **1 Sensor** bis **5 Sensoren**: Schaltet die entsprechende Anzahl Kommunikationsobjekte frei.
 
-Legt fest, wie viele zusaetzliche Helligkeitssensoren (2 bis 5) verwendet werden.
-Die Anzahl bestimmt, welche weiteren Kommunikationsobjekte sichtbar und zu verknuepfen sind.
+Bei Auswahl von 1 Sensor oder mehr erscheinen weitere Einstellungen fuer Aggregation, Ausrichtung und Watchdog.
 
 <!-- DOC -->
 ##### Helligkeit Aggregation
@@ -214,21 +213,23 @@ Bestimmt, wie mehrere gueltige Helligkeitssensoren zusammengefasst werden, wenn 
 Die Fenster-/Behangausrichtung im Kanal steuert, wie die Helligkeitssensoren ausgewertet werden:
 
 - **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
-- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
-- **Keine Himmelsrichtungsauswertung**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
+- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Die eingestellte Aggregation wird ignoriert — es gilt immer der Maximalwert. Falls keine Sensoren ohne Azimut-Zuordnung vorhanden sind, greift ein automatischer Fallback: alle Sensoren werden mit Max-Aggregation ausgewertet.
+- **Keine Himmelsrichtungsauswertung**: Azimut-basierte Sensorauswahl ist deaktiviert. Alle gueltigen Sensoren werden mit der eingestellten Aggregation (Mittelwert/Maximum) zusammengefasst.
+
+Hinweis: Obwohl "Dachflaeche" und "Keine Himmelsrichtungsauswertung" beide die Azimut-Auswertung deaktivieren, unterscheiden sie sich in zwei Punkten. "Dachflaeche" bevorzugt gezielt Sensoren ohne Azimut-Zuordnung und erzwingt immer Max-Aggregation. "Keine Himmelsrichtungsauswertung" behandelt alle Sensoren gleichwertig und respektiert die konfigurierte Aggregation.
 
 Beispiele (vereinfachte Sicht):
 
 | Sensor-Setup | Fenster-/Behangausrichtung | Ergebnis fuer Helligkeit |
 | --- | --- | --- |
-| 3x Sensor mit Azimut (O/S/W) | Dachflaeche | Max(alle 3 Sensoren) |
-| 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Dachflaeche | Max(alle Sensoren ohne Azimut) |
+| 3x Sensor mit Azimut (O/S/W) | Dachflaeche | Max(alle 3 Sensoren) — Fallback, da kein unzugeordneter Sensor |
+| 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Dachflaeche | Max(nur der Sensor ohne Azimut) |
 | 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Sued | Azimut-Interpolation nur mit den 4 Azimut-Sensoren |
 | 2x Sensor ohne Azimut | Keine Himmelsrichtungsauswertung | Aggregation ueber alle Sensoren ohne Azimut |
 | 1x Sensor mit Azimut | Keine Himmelsrichtungsauswertung | Aggregation ueber alle gueltigen Sensoren |
 
 <!-- DOC HelpContext="Helligkeit-Sensor-1-5" -->
-##### Helligkeit Sensor 1..5
+##### Ausrichtung Sensor 1..5
 
 Azimut-Zuordnung fuer den jeweiligen Sensor in 5-Grad-Schritten.
 "Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
@@ -796,8 +797,8 @@ Legt die Ausrichtung des Fensters bzw. Behangs fuer diesen Kanal fest.
 Diese Angabe wird verwendet, um den passenden Helligkeitssensor fuer die Beschattungsauswertung auszuwählen.
 
 - **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
-- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Falls keine vorhanden sind, wird der Maximalwert aller Sensoren verwendet.
-- **Keine Himmelsrichtungsauswertung**: Es wird die eingestellte Aggregation (Mittelwert/Maximum) ueber alle gueltigen Sensoren verwendet.
+- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Die eingestellte Aggregation wird ignoriert — es gilt immer der Maximalwert. Falls keine Sensoren ohne Azimut-Zuordnung vorhanden sind, greift ein automatischer Fallback: alle Sensoren werden mit Max-Aggregation ausgewertet.
+- **Keine Himmelsrichtungsauswertung**: Azimut-basierte Sensorauswahl ist deaktiviert. Alle gueltigen Sensoren werden mit der eingestellten Aggregation (Mittelwert/Maximum) zusammengefasst.
 
 <!-- DOC -->
 #### Nur starten wenn aktuelle Position kleiner gleich
