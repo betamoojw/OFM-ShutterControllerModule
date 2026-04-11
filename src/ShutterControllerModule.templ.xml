@@ -630,9 +630,9 @@
 														</when>
 													</choose>
 
-													<!-- Fensterausrichtung (abhängig von Helligkeitseingang) -->
-													<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
-														<when test="1">
+													<!-- Fensterausrichtung (abhängig von Helligkeitssensoren) -->
+													<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
+														<when test=">0">
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" HelpContext="SHC-Fenster-Behangausrichtung" IndentLevel="1" />
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Wählt den passenden Helligkeitssensor anhand des Sonnenstands aus. Zuordnung: Ost=90°, Südost=135°, Süd=180°, Südwest=225°, West=270°. Weitere Details in der Kontexthilfe." UIHint="Information" />
 														</when>
