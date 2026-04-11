@@ -1,3 +1,7 @@
+v 0.6.0
+- Refactor: "Helligkeit" (bool) + "Weitere Helligkeitssensoren" (count) zusammengefasst zu "Helligkeitssensoren" (Enum: Nein/1-5 Sensoren)
+- Rename: "Helligkeit Sensor 1..5" -> "Ausrichtung Sensor 1..5"
+- Breaking: Offset 19 Semantik geaendert (SHC_VerifyVersion 0.5 -> 0.6)
 v 0.5.0
 - Feature: Neues KO "Status Beschattung Bereit" je Kanal
 - Feature: Dachflaeche bevorzugt unzugeordnete Helligkeitssensoren (z.B. Dachsensor)
