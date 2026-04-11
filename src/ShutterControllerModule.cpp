@@ -335,7 +335,7 @@ void ShutterControllerModule::setup()
         (MeasurementWatchdogFallbackBehavior)ParamSHC_TempForecastFallbackMode);
     _callContext.measurementTemperatureForecast = &_measurementTemperatureForecast;
 
-    uint8_t brightnessInputs = ParamSHC_HasBrightnessInput ? (uint8_t)(1 + ParamSHC_BrightnessInputCount) : 0;
+    uint8_t brightnessInputs = (uint8_t)ParamSHC_BrightnessSensorCount;
     if (brightnessInputs > _measurementBrightnessSensors.size())
         brightnessInputs = (uint8_t)_measurementBrightnessSensors.size();
     for (size_t i = 0; i < _measurementBrightnessSensors.size(); i++)

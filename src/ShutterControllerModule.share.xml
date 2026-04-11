@@ -46,13 +46,14 @@
 									<Enumeration Text="Maximum" Value="1" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-BrightnessInputCount" Name="BrightnessInputCount">
+							<ParameterType Id="%AID%_PT-BrightnessSensorCount" Name="BrightnessSensorCount">
 								<TypeRestriction Base="Value" SizeInBit="8">
-									<Enumeration Text="Keine weiteren" Value="0" Id="%ENID%" />
-									<Enumeration Text="1" Value="1" Id="%ENID%" />
-									<Enumeration Text="2" Value="2" Id="%ENID%" />
-									<Enumeration Text="3" Value="3" Id="%ENID%" />
-									<Enumeration Text="4" Value="4" Id="%ENID%" />
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="1 Sensor" Value="1" Id="%ENID%" />
+									<Enumeration Text="2 Sensoren" Value="2" Id="%ENID%" />
+									<Enumeration Text="3 Sensoren" Value="3" Id="%ENID%" />
+									<Enumeration Text="4 Sensoren" Value="4" Id="%ENID%" />
+									<Enumeration Text="5 Sensoren" Value="5" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-BrightnessAzimuth" Name="BrightnessAzimuth">
@@ -484,8 +485,8 @@
 								<!-- Temperatur Prognose Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00002" Offset="1" BitOffset="1" Name="HasTemperaturForecastInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperatur Prognose" Value="0" />
 
-								<!-- Helligkeit Eingang-->
-								<Parameter Id="%AID%_UP-%TT%00003" Offset="1" BitOffset="2" Name="HasBrightnessInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeit" Value="1" />
+								<!-- Helligkeit Eingang (reserviert, nicht mehr in UI) -->
+								<Parameter Id="%AID%_UP-%TT%00003" Offset="1" BitOffset="2" Name="HasBrightnessInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Helligkeit" Value="0" />
 
 								<!-- UVI Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00004" Offset="1" BitOffset="3" Name="HasUVIInput" ParameterType="%AID%_PT-OnOffYesNo" Text="UV-Index" Value="0" />
@@ -561,22 +562,22 @@
 								<!-- Wolken Fallback -->
 								<Parameter Id="%AID%_UP-%TT%00025" Offset="18" BitOffset="0" Name="CloudsFallback" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
 
-								<!-- Zusätzliche Helligkeitssensoren -->
-								<Parameter Id="%AID%_UP-%TT%00026" Offset="19" BitOffset="0" Name="BrightnessInputCount" ParameterType="%AID%_PT-BrightnessInputCount" Text="Weitere Helligkeitssensoren" Value="0" />
+								<!-- Helligkeitssensoren Anzahl -->
+								<Parameter Id="%AID%_UP-%TT%00026" Offset="19" BitOffset="0" Name="BrightnessSensorCount" ParameterType="%AID%_PT-BrightnessSensorCount" Text="Helligkeitssensoren" Value="1" />
 
 								<!-- Helligkeit Aggregation -->
 								<Parameter Id="%AID%_UP-%TT%00027" Offset="20" BitOffset="0" Name="BrightnessAggregation" ParameterType="%AID%_PT-BrightnessAggregation" Text="Helligkeit Aggregation" Value="0" />
 
-								<!-- Helligkeit Sensor 1 -->
-								<Parameter Id="%AID%_UP-%TT%00028" Offset="21" BitOffset="0" Name="BrightnessAzimuth1" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 1" Value="65535" />
-								<!-- Helligkeit Sensor 2 -->
-								<Parameter Id="%AID%_UP-%TT%00029" Offset="23" BitOffset="0" Name="BrightnessAzimuth2" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 2" Value="65535" />
-								<!-- Helligkeit Sensor 3 -->
-								<Parameter Id="%AID%_UP-%TT%00030" Offset="25" BitOffset="0" Name="BrightnessAzimuth3" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 3" Value="65535" />
-								<!-- Helligkeit Sensor 4 -->
-								<Parameter Id="%AID%_UP-%TT%00031" Offset="27" BitOffset="0" Name="BrightnessAzimuth4" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 4" Value="65535" />
-								<!-- Helligkeit Sensor 5 -->
-								<Parameter Id="%AID%_UP-%TT%00032" Offset="29" BitOffset="0" Name="BrightnessAzimuth5" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Helligkeit Sensor 5" Value="65535" />
+								<!-- Ausrichtung Sensor 1 -->
+								<Parameter Id="%AID%_UP-%TT%00028" Offset="21" BitOffset="0" Name="BrightnessAzimuth1" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 1" Value="65535" />
+								<!-- Ausrichtung Sensor 2 -->
+								<Parameter Id="%AID%_UP-%TT%00029" Offset="23" BitOffset="0" Name="BrightnessAzimuth2" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 2" Value="65535" />
+								<!-- Ausrichtung Sensor 3 -->
+								<Parameter Id="%AID%_UP-%TT%00030" Offset="25" BitOffset="0" Name="BrightnessAzimuth3" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 3" Value="65535" />
+								<!-- Ausrichtung Sensor 4 -->
+								<Parameter Id="%AID%_UP-%TT%00031" Offset="27" BitOffset="0" Name="BrightnessAzimuth4" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 4" Value="65535" />
+								<!-- Ausrichtung Sensor 5 -->
+								<Parameter Id="%AID%_UP-%TT%00032" Offset="29" BitOffset="0" Name="BrightnessAzimuth5" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 5" Value="65535" />
 
 							</Union>
 						</Parameters>
@@ -839,11 +840,11 @@
 								</choose>
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
-								<!-- Helligkeit Eingang-->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00003_R-%TT%0000301" HelpContext="%DOC%" IndentLevel="1" />
-								<!-- Helligkeit Eingang-->
-								<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
-									<when test="1">
+								<!-- Helligkeitssensoren -->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00026_R-%TT%0002601" HelpContext="%DOC%" IndentLevel="1" />
+								<!-- Helligkeitssensoren abhängige Einstellungen -->
+								<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
+									<when test=">0">
 										<!-- Verfügbare Kanäle -->
 										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001" >
 											<when test="&gt;0">
@@ -851,45 +852,43 @@
 												<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
 											</when>
 										</choose>
-										<!-- Weitere Helligkeitssensoren -->
-										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00026_R-%TT%0002601" HelpContext="%DOC%"/>
-										<!-- Helligkeit Aggregation -->
-										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00027_R-%TT%0002701" HelpContext="%DOC%"/>
-										<ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Die Aggregation wird verwendet, wenn die Azimut-Auswertung deaktiviert ist (Fenster-/Behangausrichtung 'Keine Himmelsrichtungsauswertung') oder kein gültiger Sonnen-Azimut bzw. keine Sensor-Azimute vorliegen." UIHint="Information" />
-										<!-- Helligkeit Sensor 1 -->
+										<!-- Ausrichtung Sensor 1 -->
 										<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00028_R-%TT%0002801" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
-											<when test=">=1">
+											<when test=">=2">
 												<!-- Helligkeit Eingang 2 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00009_R-%TT%0000901" />
-												<!-- Helligkeit Sensor 2 -->
+												<!-- Ausrichtung Sensor 2 -->
 												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00029_R-%TT%0002901" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
-											<when test=">=2">
+											<when test=">=3">
 												<!-- Helligkeit Eingang 3 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00010_R-%TT%0001001" />
-												<!-- Helligkeit Sensor 3 -->
+												<!-- Ausrichtung Sensor 3 -->
 												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00030_R-%TT%0003001" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
-											<when test=">=3">
+											<when test=">=4">
 												<!-- Helligkeit Eingang 4 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00011_R-%TT%0001101" />
-												<!-- Helligkeit Sensor 4 -->
+												<!-- Ausrichtung Sensor 4 -->
 												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00031_R-%TT%0003101" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
-											<when test=">=4">
+											<when test=">=5">
 												<!-- Helligkeit Eingang 5 -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00012_R-%TT%0001201" />
-												<!-- Azimut Sensor 5 -->
+												<!-- Ausrichtung Sensor 5 -->
 												<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00032_R-%TT%0003201" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 											</when>
 										</choose>
+										<!-- Helligkeit Aggregation -->
+										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00027_R-%TT%0002701" HelpContext="%DOC%"/>
+										<ParameterSeparator Id="%AID%_PS-nnn" Text="Hinweis: Die Aggregation wird verwendet, wenn die Azimut-Auswertung deaktiviert ist (Fenster-/Behangausrichtung 'Keine Himmelsrichtungsauswertung') oder kein gültiger Sonnen-Azimut bzw. keine Sensor-Azimute vorliegen." UIHint="Information" />
 										<!-- Helligkeit Watchdog -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00014_R-%TT%0001401" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00014_R-%TT%0001401">
