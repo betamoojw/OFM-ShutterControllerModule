@@ -1,3 +1,14 @@
+v 0.6.0
+- Refactor: "Helligkeit" (bool) + "Weitere Helligkeitssensoren" (count) zusammengefasst zu "Helligkeitssensoren" (Enum: Nein/1-5 Sensoren)
+- Rename: "Helligkeit Sensor 1..5" -> "Ausrichtung Sensor 1..5"
+- Breaking: Offset 19 Semantik geaendert (SHC_VerifyVersion 0.5 -> 0.6)
+v 0.5.0
+- Feature: Neues KO "Status Beschattung Bereit" je Kanal
+- Feature: Dachflaeche bevorzugt unzugeordnete Helligkeitssensoren (z.B. Dachsensor)
+- Feature: Wiederherstellung der vorherigen Position nach Fenster offen/gekippt
+- Fix: Azimut-/Helligkeit-UI klarer (Helligkeit Sensor 1..5, "Keine Himmelsrichtung (Azimut-Auswertung aus)")
+- Fix: Schreibfehler und Himmelsrichtungsbezeichnungen korrigiert
+- Doc: Help-Context und Applikationsbeschreibung aktualisiert
 v 0.4.2
 - Fix: Stopp von Rolladen bei manueller Bedienung durch Jalousiensteuerung
 v 0.4.1

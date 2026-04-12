@@ -171,9 +171,9 @@ void WindowOpenHandler::start(const CallContext &callContext, const WindowOpenHa
     {
 
         auto positionControl = getParamterOpenPositionControl();
-        // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
-        //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
-        //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
+        // 	<Enumeration Text="No" Value="0" Id="%ENID%" />
+        //  <Enumeration Text="Only move up" Value="1" Id="%ENID%" />
+        //  <Enumeration Text="Always" Value="2" Id="%ENID%" />
         if (positionControl > 0)
         {
             auto position = getParamterOpenPosition();
@@ -185,9 +185,9 @@ void WindowOpenHandler::start(const CallContext &callContext, const WindowOpenHa
     if (positionController.hasSlat())
     {
         auto slatPositionControl = getParamterOpenSlatPositionControl();
-        // 	<Enumeration Text="Nein" Value="0" Id="%ENID%" />
-        //  <Enumeration Text="Nur hochfahren" Value="1" Id="%ENID%" />
-        //  <Enumeration Text="Immer" Value="2" Id="%ENID%" />
+        // 	<Enumeration Text="No" Value="0" Id="%ENID%" />
+        //  <Enumeration Text="Only move up" Value="1" Id="%ENID%" />
+        //  <Enumeration Text="Always" Value="2" Id="%ENID%" />
         if (slatPositionControl > 0)
         {
             auto slatPosition = getParamterOpenSlatPosition();

@@ -2,7 +2,9 @@
 #include "OpenKNX.h"
 #include "ChannelOwnerModule.h"
 #include "CallContext.h"
+#include "BrightnessMeasurement.h"
 #include "MeasurementWatchdog.h"
+#include <array>
 
 class ShutterControllerModule : public ShutterControllerChannelOwnerModule
 {
@@ -20,7 +22,9 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
     CallContext _callContext = CallContext();
     MeasurementWatchdog _measurementTemperature = MeasurementWatchdog();
     MeasurementWatchdog _measurementTemperatureForecast = MeasurementWatchdog();
-    MeasurementWatchdog _measurementBrightness = MeasurementWatchdog();
+    static constexpr uint8_t kBrightnessSensorCount = 5;
+    std::array<MeasurementWatchdog, kBrightnessSensorCount> _measurementBrightnessSensors;
+    BrightnessMeasurement _brightnessMeasurement;
     MeasurementWatchdog _measurementUVIndex = MeasurementWatchdog();
     MeasurementWatchdog _measurementRain = MeasurementWatchdog();
     MeasurementWatchdog _measurementClouds = MeasurementWatchdog();

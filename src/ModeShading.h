@@ -1,6 +1,7 @@
 #pragma once
 #include "ModeBase.h"
 
+class MeasurementSource;
 
 enum ModeShadingNotAllowedReason : uint32_t
 {
@@ -50,7 +51,7 @@ class ModeShading : public ModeBase
     unsigned long _lastHeadingTimeStamp = 0;
     bool _heatingOff = true;
     bool allowedByMeasurmentValues(const CallContext& callContext);
-    bool handleMeasurmentValue(bool& allowed, bool enabled, const MeasurementWatchdog *measurementWatchdog, const CallContext &callContext, bool (*predicate)(const MeasurementWatchdog *, uint8_t _channelIndex, uint8_t _index, bool previousAllowed), ModeShadingNotAllowedReason reasonBit);
+    bool handleMeasurmentValue(bool& allowed, bool enabled, const MeasurementSource *measurementSource, const CallContext &callContext, bool (*predicate)(const MeasurementSource *, uint8_t _channelIndex, uint8_t _index, bool previousAllowed), ModeShadingNotAllowedReason reasonBit);
     void updateDiagnosticKos();
 public:
     ModeShading(uint8_t index);

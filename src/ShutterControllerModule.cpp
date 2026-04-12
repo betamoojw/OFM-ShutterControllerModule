@@ -1,5 +1,6 @@
 #include "ShutterControllerModule.h"
 #include "ShutterControllerChannel.h"
+#include <vector>
 
 
 ShutterControllerModule::ShutterControllerModule()
@@ -57,7 +58,8 @@ void ShutterControllerModule::loop()
 
     _measurementTemperature.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementTemperatureForecast.update(_callContext.currentMillis, _callContext.diagnosticLog);
-    _measurementBrightness.update(_callContext.currentMillis, _callContext.diagnosticLog);
+    for (auto& sensor : _measurementBrightnessSensors)
+        sensor.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementUVIndex.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementRain.update(_callContext.currentMillis, _callContext.diagnosticLog);
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
@@ -95,10 +97,12 @@ void ShutterControllerModule::loop()
         _callContext.azimuth = openknx.sun.azimuth();
         _callContext.elevation = openknx.sun.elevation();
     }
+    _brightnessMeasurement.update(_callContext.currentMillis, _callContext.diagnosticLog, _callContext.azimuth, _callContext.timeAndSunValid);
     _callContext.diagnosticLog = false;
     auto numberOfChannels = getNumberOfChannels();
     for (uint8_t i = 0; i < numberOfChannels; i++)
     {
+        uint8_t _channelIndex = i;
         auto channel = (ShutterControllerChannel *)getChannel(i);
         if (channel != nullptr)
         {
@@ -108,6 +112,7 @@ void ShutterControllerModule::loop()
                 _callContext.localTime.hour == 0)
                 channel->activateShading();
 
+            _brightnessMeasurement.setUseAzimuth(ParamSHC_CBrightnessAzimuthEnabled != 0);
             channel->execute(_callContext);
         }
     }
@@ -119,7 +124,7 @@ void ShutterControllerModule::loop()
     }
     _measurementTemperature.resetChanged();
     _measurementTemperatureForecast.resetChanged();
-    _measurementBrightness.resetChanged();
+    _brightnessMeasurement.resetChanged();
     _measurementUVIndex.resetChanged();
     _measurementRain.resetChanged();
     _measurementClouds.resetChanged();
@@ -165,7 +170,7 @@ bool ShutterControllerModule::processCommand(const std::string cmd, bool diagnos
         {
             if (moduleCommand.length() == 1)
             {
-                _measurementBrightness.logState(true);
+                _brightnessMeasurement.logState(true);
                 return true;
             }
             logInfoP("Set brightness");
@@ -293,7 +298,8 @@ void ShutterControllerModule::processInputKo(GroupObject &ko)
     }
     _measurementTemperature.processIputKo(ko);
     _measurementTemperatureForecast.processIputKo(ko);
-    _measurementBrightness.processIputKo(ko);
+    for (auto& sensor : _measurementBrightnessSensors)
+        sensor.processIputKo(ko);
     _measurementUVIndex.processIputKo(ko);
     _measurementRain.processIputKo(ko);
     _measurementClouds.processIputKo(ko);
@@ -329,14 +335,71 @@ void ShutterControllerModule::setup()
         (MeasurementWatchdogFallbackBehavior)ParamSHC_TempForecastFallbackMode);
     _callContext.measurementTemperatureForecast = &_measurementTemperatureForecast;
 
-    _measurementBrightness.init(
+    uint8_t brightnessInputs = (uint8_t)ParamSHC_BrightnessSensorCount;
+    if (brightnessInputs > _measurementBrightnessSensors.size())
+        brightnessInputs = (uint8_t)_measurementBrightnessSensors.size();
+    for (size_t i = 0; i < _measurementBrightnessSensors.size(); i++)
+    {
+        GroupObject* brightnessKo = nullptr;
+        if (i < brightnessInputs)
+        {
+            switch (i)
+            {
+            case 0:
+                brightnessKo = &KoSHC_BrightnessInput;
+                break;
+            case 1:
+                brightnessKo = &KoSHC_BrightnessInput2;
+                break;
+            case 2:
+                brightnessKo = &KoSHC_BrightnessInput3;
+                break;
+            case 3:
+                brightnessKo = &KoSHC_BrightnessInput4;
+                break;
+            case 4:
+                brightnessKo = &KoSHC_BrightnessInput5;
+                break;
+            default:
+                break;
+            }
+        }
+        _measurementBrightnessSensors[i].init(
+            "Brightness",
+            brightnessKo,
+            ParamSHC_BrightnessWatchdog,
+            KNXValue((float)ParamSHC_BrightnessFallback * 1000.F),
+            DPT_Value_Lux,
+            (MeasurementWatchdogFallbackBehavior)ParamSHC_BrightnessFallbackMode);
+    }
+
+    std::vector<BrightnessSensor> brightnessSensors;
+    brightnessSensors.reserve(_measurementBrightnessSensors.size());
+    const uint16_t noAzimuthValue = 65535;
+    const uint16_t azimuths[] = {
+        ParamSHC_BrightnessAzimuth1,
+        ParamSHC_BrightnessAzimuth2,
+        ParamSHC_BrightnessAzimuth3,
+        ParamSHC_BrightnessAzimuth4,
+        ParamSHC_BrightnessAzimuth5
+    };
+    for (size_t i = 0; i < _measurementBrightnessSensors.size(); i++)
+    {
+        BrightnessSensor sensor;
+        sensor.watchdog = &_measurementBrightnessSensors[i];
+        sensor.azimuth = azimuths[i] == noAzimuthValue ? 0 : azimuths[i];
+        sensor.hasAzimuth = azimuths[i] != noAzimuthValue;
+        sensor.enabled = i < brightnessInputs;
+        brightnessSensors.push_back(sensor);
+    }
+
+    _brightnessMeasurement.init(
         "Brightness",
-        ParamSHC_HasBrightnessInput ? &KoSHC_BrightnessInput : nullptr,
-        ParamSHC_BrightnessWatchdog,
-        KNXValue((float)ParamSHC_BrightnessFallback * 1000.F),
-        DPT_Value_Lux,
-        (MeasurementWatchdogFallbackBehavior)ParamSHC_BrightnessFallbackMode);
-    _callContext.measurementBrightness = &_measurementBrightness;
+        (MeasurementWatchdogFallbackBehavior)ParamSHC_BrightnessFallbackMode,
+        (float)ParamSHC_BrightnessFallback * 1000.F);
+    _brightnessMeasurement.setSensors(brightnessSensors);
+    _brightnessMeasurement.setAggregation((BrightnessAggregation)ParamSHC_BrightnessAggregation);
+    _callContext.measurementBrightness = &_brightnessMeasurement;
 
     _measurementUVIndex.init(
         "UV Index",

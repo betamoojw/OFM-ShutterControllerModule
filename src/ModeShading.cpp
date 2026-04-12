@@ -25,8 +25,6 @@ ModeShading::ModeShading(uint8_t index)
     _name = "Shading";
     _name += std::to_string(index);
     logInfoP("ModeShading %s created", _name.c_str());
-
-  
 }
 
 const char *ModeShading::name() const
@@ -160,7 +158,7 @@ bool ModeShading::allowed(const CallContext &callContext)
     {
         logDebugP("Allowed by sun: %d", (int)allowedSun);
         _lastSunFrameAllowed = allowedSun;
-        _needWaitTime = false; // shading peruiod changed, no wait time needed
+        _needWaitTime = false; // shading period changed, no wait time needed
     }
     bool logWaitTimeResult = false;
     if (_recalcMeasurmentValues || callContext.diagnosticLog)
@@ -172,19 +170,19 @@ bool ModeShading::allowed(const CallContext &callContext)
     bool allowedByHeatingOff = true;
     if (_waitTimeAfterHeatingValueChange != 0)
     {
-        // <Enumeration Text="ausgeschaltete Heizung" Value="1" Id="%ENID%" />
-        // <Enumeration Text="mindestens 1 Stunde ausgeschalten" Value="2" Id="%ENID%" />
-        // <Enumeration Text="mindestens 2 Stunde ausgeschalten" Value="3" Id="%ENID%" />
-        // <Enumeration Text="mindestens 3 Stunde ausgeschalten" Value="4" Id="%ENID%" />
-        // <Enumeration Text="mindestens 4 Stunde ausgeschalten" Value="11" Id="%ENID%" />
-        // <Enumeration Text="mindestens 5 Stunde ausgeschalten" Value="12" Id="%ENID%" />
-        // <Enumeration Text="mindestens 6 Stunde ausgeschalten" Value="5" Id="%ENID%" />
-        // <Enumeration Text="mindestens 7 Stunde ausgeschalten" Value="13" Id="%ENID%" />
-        // <Enumeration Text="mindestens 8 Stunde ausgeschalten" Value="6" Id="%ENID%" />
-        // <Enumeration Text="mindestens 10 Stunde ausgeschalten" Value="7" Id="%ENID%" />
-        // <Enumeration Text="mindestens 12 Stunde ausgeschalten" Value="8" Id="%ENID%" />
-        // <Enumeration Text="mindestens 1 Tag ausgeschalten" Value="9" Id="%ENID%" />
-        // <Enumeration Text="mindestens 2 Tag ausgeschalten" Value="10" Id="%ENID%" />
+        // <Enumeration Text="Heating switched off" Value="1" Id="%ENID%" />
+        // <Enumeration Text="At least 1 hour switched off" Value="2" Id="%ENID%" />
+        // <Enumeration Text="At least 2 hours switched off" Value="3" Id="%ENID%" />
+        // <Enumeration Text="At least 3 hours switched off" Value="4" Id="%ENID%" />
+        // <Enumeration Text="At least 4 hours switched off" Value="11" Id="%ENID%" />
+        // <Enumeration Text="At least 5 hours switched off" Value="12" Id="%ENID%" />
+        // <Enumeration Text="At least 6 hours switched off" Value="5" Id="%ENID%" />
+        // <Enumeration Text="At least 7 hours switched off" Value="13" Id="%ENID%" />
+        // <Enumeration Text="At least 8 hours switched off" Value="6" Id="%ENID%" />
+        // <Enumeration Text="At least 10 hours switched off" Value="7" Id="%ENID%" />
+        // <Enumeration Text="At least 12 hours switched off" Value="8" Id="%ENID%" />
+        // <Enumeration Text="At least 1 day switched off" Value="9" Id="%ENID%" />
+        // <Enumeration Text="At least 2 days switched off" Value="10" Id="%ENID%" />
         unsigned long waitTimeInMillis = 0;
         switch (ParamSHC_CShading1HeatingActive)
         {
@@ -250,21 +248,21 @@ bool ModeShading::allowed(const CallContext &callContext)
             allowedByHeatingOff = false;
         }
     }
-    // Check if allow changed through measurment values and heating off
+    // Check if allowance changed through measurement values and heating off
     bool allowedByMeasurementValuesAndHeatingOffWaitTime = _allowedByMeasurementValues && allowedByHeatingOff;
     if (_allowedByMeasurementValuesAndHeatingOffWaitTime != allowedByMeasurementValuesAndHeatingOffWaitTime)
     {
         _allowedByMeasurementValuesAndHeatingOffWaitTime = allowedByMeasurementValuesAndHeatingOffWaitTime;
 
         if (_active && !allowedByMeasurementValuesAndHeatingOffWaitTime)
-            _needWaitTime = true; // not longer allowed and active, active wait time for deactivation and reactivation
+            _needWaitTime = true; // no longer allowed and active, start wait time for deactivation and reactivation
 
         if (_active)
         {
             if (_needWaitTime && !allowedByMeasurementValuesAndHeatingOffWaitTime)
             {
                 logDebugP("Start stopping wait time");
-                _waitTimeAfterMeasurmentValueChange = callContext.currentMillis; // acivate stop wait time
+                _waitTimeAfterMeasurmentValueChange = callContext.currentMillis; // activate stop wait time
             }
             else
             {
@@ -353,6 +351,11 @@ bool ModeShading::allowed(const CallContext &callContext)
         _lastNotAllowedReason = _notAllowedReason;
         updateDiagnosticKos();
     }
+#ifdef KoSHC_CShading1Ready
+    bool readiness = _notAllowedReason == 0;
+    if (KoSHC_CShading1Ready.valueNoSendCompare(readiness, DPT_Switch))
+        KoSHC_CShading1Ready.objectWritten();
+#endif
     // Return result
     if (!_lastSunFrameAllowed)
         return false;
@@ -402,11 +405,11 @@ bool ModeShading::allowedBySun(const CallContext &callContext)
     {
      
         auto shadingBreak = ParamSHC_CShading1Break;
-        // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
-        // <Enumeration Text="Azimut" Value="1" Id="%ENID%" />
-        // <Enumeration Text="Höhenwinkel" Value="2" Id="%ENID%" />
-        // <Enumeration Text="Azimut UND Höhenwinkel" Value="3" Id="%ENID%" />
-        // <Enumeration Text="Azimut ODER Höhenwinkel" Value="4" Id="%ENID%" />
+        // <Enumeration Text="Disabled" Value="0" Id="%ENID%" />
+        // <Enumeration Text="Azimuth" Value="1" Id="%ENID%" />
+        // <Enumeration Text="Elevation" Value="2" Id="%ENID%" />
+        // <Enumeration Text="Azimuth AND elevation" Value="3" Id="%ENID%" />
+        // <Enumeration Text="Azimuth OR elevation" Value="4" Id="%ENID%" />
         switch (shadingBreak)
         {
         case 1:
@@ -456,35 +459,35 @@ bool ModeShading::allowedBySun(const CallContext &callContext)
     return allowed;
 }
 
-bool ModeShading::handleMeasurmentValue(bool &allowed, bool enabled, const MeasurementWatchdog *measurementWatchdog, const CallContext &callContext, bool (*predicate)(const MeasurementWatchdog *, uint8_t _channelIndex, uint8_t _index, bool previousAllowed), ModeShadingNotAllowedReason reasonBit)
+bool ModeShading::handleMeasurmentValue(bool &allowed, bool enabled, const MeasurementSource *measurementSource, const CallContext &callContext, bool (*predicate)(const MeasurementSource *, uint8_t _channelIndex, uint8_t _index, bool previousAllowed), ModeShadingNotAllowedReason reasonBit)
 {
     if (!enabled)
     {
         _notAllowedReason &= ~reasonBit;
         return true;
     }
-    if (measurementWatchdog->ignoreValue())
+    if (measurementSource->ignoreValue())
     {
         if (callContext.diagnosticLog)
-            logInfoP("%s: value ignore", measurementWatchdog->logPrefix().c_str());
+            logInfoP("%s: value ignore", measurementSource->logPrefix().c_str());
         _notAllowedReason &= ~reasonBit;
         return true;
     }
 
-    if (measurementWatchdog->waitForValue())
+    if (measurementSource->waitForValue())
     {
         if (callContext.diagnosticLog)
-            logInfoP("%s: wait for value", measurementWatchdog->logPrefix().c_str());
+            logInfoP("%s: wait for value", measurementSource->logPrefix().c_str());
         _notAllowedReason |= reasonBit;
         allowed = false;
         return true;
     }
-    bool previousAllowed = !measurementWatchdog->useFallback() && !(_notAllowedReason & reasonBit);
+    bool previousAllowed = !measurementSource->useFallback() && !(_notAllowedReason & reasonBit);
   
-    if (!predicate(measurementWatchdog, _channelIndex, _index, previousAllowed))
+    if (!predicate(measurementSource, _channelIndex, _index, previousAllowed))
     {
         if (callContext.diagnosticLog)
-            logInfoP("%s: value not allowed", measurementWatchdog->logPrefix().c_str());
+            logInfoP("%s: value not allowed", measurementSource->logPrefix().c_str());
         allowed = false;
         _notAllowedReason |= reasonBit;
         return false;
@@ -504,7 +507,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1TempActive,
         callContext.measurementTemperature,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return (float)m->getValue() >= ParamSHC_CShading1TempMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonTemperature);
 
@@ -513,7 +516,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1TempForecastActive,
         callContext.measurementTemperatureForecast,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return (float)m->getValue() >= ParamSHC_CShading1TempForecastMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonTemperatureForecase);
 
@@ -522,7 +525,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1BrightnessActive,
         callContext.measurementBrightness,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return (double)m->getValue() >= max(0., 1000. * ((double) ParamSHC_CShading1BrightnessMin) - (previousAllowed ? ((double) ParamSHC_CShading1BrightnessHyst) * 1000. : 0)); },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonBrightness);
 
@@ -531,7 +534,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1UVIActive,
         callContext.measurementUVIndex,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return (float)m->getValue() >= ParamSHC_CShading1UVIMin; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonUVI);
 
@@ -540,7 +543,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1RainActive,
         callContext.measurementRain,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return !(bool)m->getValue(); },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonRain);
 
@@ -549,7 +552,7 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1Clouds != 101,
         callContext.measurementClouds,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return (uint8_t)m->getValue() <= ParamSHC_CShading1Clouds; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonClouds);
 
@@ -558,22 +561,22 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
         ParamSHC_CShading1RoomTemperaturActive,
         callContext.measurementRoomTemperature,
         callContext,
-        [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+        [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
         { return (float)m->getValue() >= ParamSHC_CRoomTemp; },
         ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonRoomTemperature);
 
-    // <Enumeration Text="Nein" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Heizungsanforderung (EIN/AUS)" Value="2" Id="%ENID%" />
+    // <Enumeration Text="No" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Setpoint %" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Heating request (ON/OFF)" Value="2" Id="%ENID%" />
     bool heatingOff;
     if (ParamSHC_CHeatingInput == 1)
     {
         heatingOff = handleMeasurmentValue(
             allowed,
-            ParamSHC_CShading1HeatingActive != 0, // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+            ParamSHC_CShading1HeatingActive != 0, // <Enumeration Text="Disabled" Value="0" Id="%ENID%" />
             callContext.measurementHeading,
             callContext,
-            [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+            [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
             { return (uint8_t)m->getValue() <= ParamSHC_CShading1MaxHeatingValue; },
             ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeating);
     }
@@ -581,10 +584,10 @@ bool ModeShading::allowedByMeasurmentValues(const CallContext &callContext)
     {
         heatingOff = handleMeasurmentValue(
             allowed,
-            ParamSHC_CShading1HeatingActive != 0, // <Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+            ParamSHC_CShading1HeatingActive != 0, // <Enumeration Text="Disabled" Value="0" Id="%ENID%" />
             callContext.measurementHeading,
             callContext,
-            [](const MeasurementWatchdog *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
+            [](const MeasurementSource *m, uint8_t _channelIndex, uint8_t _index, bool previousAllowed)
             { return !(bool)m->getValue(); },
             ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonHeating);
         if (callContext.measurementHeading->waitForValue())
@@ -625,9 +628,9 @@ void ModeShading::start(const CallContext &callContext, const ModeBase *previous
     KoSHC_CShading1Active.value(true, DPT_Switch);
     positionController.setAutomaticPosition(ParamSHC_CShading1ShadingPosition);
 
-    // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Channel disabled" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Venetian blind" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Roller shutter" Value="2" Id="%ENID%" />
     if (!ParamSHC_CShading1SlatElevationDepending)
         positionController.setAutomaticSlat(ParamSHC_CShading1SlatShadingPosition);
 }
@@ -637,9 +640,9 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
     if (!callContext.modeNewStarted && !callContext.minuteChanged && !callContext.diagnosticLog)
         return;
 
-    // <Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
-    // <Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Rollo" Value="2" Id="%ENID%" />
+    // <Enumeration Text="Channel disabled" Value="0" Id="%ENID%" />
+    // <Enumeration Text="Venetian blind" Value="1" Id="%ENID%" />
+    // <Enumeration Text="Roller shutter" Value="2" Id="%ENID%" />
     if (!positionController.hasSlat())
         return;
 
@@ -664,7 +667,7 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
             if (callContext.diagnosticLog)
                 logInfoP("Slat position %d difference is less then %d", (int)abs((uint8_t)KoSHC_CShutterSlatOutput.value(DPT_Scaling) - slatPosition), (int)ParamSHC_CShading1MinChangeForSlatAdaption);
 
-            return; // Do not change, to less difference
+            return; // Do not change, too little difference
         }
         positionController.setAutomaticSlat(slatPosition);
     }
@@ -701,11 +704,11 @@ void ModeShading::processInputKo(GroupObject &ko, PositionController &positionCo
         KoSHC_CShading1BreakLockActive.value(_breakLockActive, DPT_Switch); 
         return;
     }
-    // global ko
+    // global KO
     switch (ko.asap())
     {
     case SHC_KoCShadingControl:
-        // Manual activativation / deativiation stop wait time
+        // Manual activation / deactivation stops wait time
         _waitTimeAfterMeasurmentValueChange = 0;
         return;
     }

@@ -93,7 +93,7 @@ void PositionController::setManualPosition(uint8_t manualPosition)
     _restorePosition = manualPosition;
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
     if (ParamSHC_CManualUpDownType != 0)
     {
         setAutomaticPosition(manualPosition);
@@ -117,7 +117,7 @@ void PositionController::setManualSlat(uint8_t manualSlat)
     
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
     if (_hasSlat && (ParamSHC_CManualUpDownType != 0))
         setAutomaticSlat(manualSlat);
 }
@@ -167,7 +167,7 @@ void PositionController::setManualUpDown(bool down)
     }
     // <Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
     // <Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
-    // <Enumeration Text="Modul sendet 0/100% zum Aktor " Value="2" Id="%ENID%" />
+    // <Enumeration Text="Modul sendet 0/100% zum Aktor" Value="2" Id="%ENID%" />
     switch (ParamSHC_CManualUpDownType)
     {
     case 1:
@@ -542,7 +542,7 @@ void PositionController::setSlatLowerLimit(uint8_t slatLimit, bool moveToLimit)
     }
     else if (slat() > slatLimit || moveToLimit)
     {
-        if (_blockedSlat != NOTUSED)
+        if (_blockedSlat == NOTUSED)
             _blockedSlat = slat();
         _setSlat = slatLimit;
         logDebugP("Slat limit forces new slat %d, store %d", (int)_setSlat, (int)_blockedSlat);

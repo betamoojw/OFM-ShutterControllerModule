@@ -24,7 +24,19 @@ enum MeasurementWatchdogFallbackBehavior : uint8_t
     RequestValueAndProvideFallbackValue = 3
 };
 
-class MeasurementWatchdog 
+class MeasurementSource
+{
+public:
+    virtual ~MeasurementSource() = default;
+    virtual const std::string& logPrefix() const = 0;
+    virtual KNXValue getValue() const = 0;
+    virtual bool ignoreValue() const = 0;
+    virtual bool useFallback() const = 0;
+    virtual bool waitForValue() const = 0;
+    virtual bool isChanged() const = 0;
+};
+
+class MeasurementWatchdog : public MeasurementSource
 {
 private:
     const static unsigned long _waitForValueTimeout = 10000;
@@ -43,16 +55,16 @@ private:
     static void resetMissingValue();
     static bool missingValue();
     MeasurementWatchdog();
-    const std::string& logPrefix() const;
+    const std::string& logPrefix() const override;
     void init(const char* name, GroupObject* groupObject, uint8_t timeoutParameterValue, const KNXValue& fallbackValue, const Dpt& dpt, MeasurementWatchdogFallbackBehavior fallbackBehaviour);
     void setup();
     void update(unsigned long currentMillis, bool diagnosticLog);
-    KNXValue getValue() const;
-    bool ignoreValue() const;
-    bool useFallback() const;
-    bool waitForValue() const;
+    KNXValue getValue() const override;
+    bool ignoreValue() const override;
+    bool useFallback() const override;
+    bool waitForValue() const override;
     void processIputKo(GroupObject& go);
-    bool isChanged() const;
+    bool isChanged() const override;
     bool resetChanged();
     void logState(bool incudeValue);
 };

@@ -192,9 +192,47 @@ Es kann hierfür z.B. die OpenKNX-Firmware OAM-InternetServices mit dem OFM-Inte
 DOCCONTENT -->
 
 <!-- DOC -->
-#### Helligkeit
+#### Helligkeitssensoren
 
-Vorgesehen für den Helligkeitswert einer KNX-Wetterstation.
+Legt fest, ob und wie viele Helligkeitssensoren verwendet werden:
+
+- **Nein**: Kein Helligkeitssensor aktiv.
+- **1 Sensor** bis **5 Sensoren**: Schaltet die entsprechende Anzahl Kommunikationsobjekte frei.
+
+Bei Auswahl von 1 Sensor oder mehr erscheinen weitere Einstellungen fuer Aggregation, Ausrichtung und Watchdog.
+
+<!-- DOC -->
+##### Helligkeit Aggregation
+
+Bestimmt, wie mehrere gueltige Helligkeitssensoren zusammengefasst werden, wenn keine Azimut-Auswertung verwendet wird.
+"Mittelwert" mittelt alle gueltigen Sensoren, "Maximum" nimmt den hoechsten Wert.
+
+<!-- DOC -->
+##### Fenster-/Behangausrichtung und Azimut-Auswertung
+
+Die Fenster-/Behangausrichtung im Kanal steuert, wie die Helligkeitssensoren ausgewertet werden:
+
+- **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
+- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Die eingestellte Aggregation wird ignoriert — es gilt immer der Maximalwert. Falls keine Sensoren ohne Azimut-Zuordnung vorhanden sind, greift ein automatischer Fallback: alle Sensoren werden mit Max-Aggregation ausgewertet.
+- **Keine Himmelsrichtungsauswertung**: Azimut-basierte Sensorauswahl ist deaktiviert. Alle gueltigen Sensoren werden mit der eingestellten Aggregation (Mittelwert/Maximum) zusammengefasst.
+
+Hinweis: Obwohl "Dachflaeche" und "Keine Himmelsrichtungsauswertung" beide die Azimut-Auswertung deaktivieren, unterscheiden sie sich in zwei Punkten. "Dachflaeche" bevorzugt gezielt Sensoren ohne Azimut-Zuordnung und erzwingt immer Max-Aggregation. "Keine Himmelsrichtungsauswertung" behandelt alle Sensoren gleichwertig und respektiert die konfigurierte Aggregation.
+
+Beispiele (vereinfachte Sicht):
+
+| Sensor-Setup | Fenster-/Behangausrichtung | Ergebnis fuer Helligkeit |
+| --- | --- | --- |
+| 3x Sensor mit Azimut (O/S/W) | Dachflaeche | Max(alle 3 Sensoren) — Fallback, da kein unzugeordneter Sensor |
+| 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Dachflaeche | Max(nur der Sensor ohne Azimut) |
+| 4x Sensor mit Azimut + 1x Sensor ohne Azimut | Sued | Azimut-Interpolation nur mit den 4 Azimut-Sensoren |
+| 2x Sensor ohne Azimut | Keine Himmelsrichtungsauswertung | Aggregation ueber alle Sensoren ohne Azimut |
+| 1x Sensor mit Azimut | Keine Himmelsrichtungsauswertung | Aggregation ueber alle gueltigen Sensoren |
+
+<!-- DOC HelpContext="Helligkeit-Sensor-1-5" -->
+##### Ausrichtung Sensor 1..5
+
+Azimut-Zuordnung fuer den jeweiligen Sensor in 5-Grad-Schritten.
+"Keine Zuordnung" deaktiviert die Azimut-Auswertung fuer diesen Sensor.
 
 <!-- DOC -->
 #### UV-Index
@@ -746,6 +784,23 @@ DOCCONTENT -->
 ### Beschattungssteuerung
 
 <!-- DOC -->
+#### Azimut auswerten
+
+Wenn aktiviert, wird die aktuelle Sonnenrichtung fuer die Helligkeit verwendet.
+Bei deaktivierter Azimut-Auswertung wird der Helligkeitswert aus der Aggregation der Sensoren gebildet.
+Dies entspricht der Fenster-/Behangausrichtung "Keine Himmelsrichtungsauswertung".
+
+<!-- DOC HelpContext="Fenster-Behangausrichtung" -->
+#### Fenster-/Behangausrichtung
+
+Legt die Ausrichtung des Fensters bzw. Behangs fuer diesen Kanal fest.
+Diese Angabe wird verwendet, um den passenden Helligkeitssensor fuer die Beschattungsauswertung auszuwählen.
+
+- **Ost/Suedost/Sued/Suedwest/West**: Azimut-Auswertung ist aktiv. Es werden nur Sensoren mit Azimut-Zuordnung verwendet.
+- **Dachflaeche**: Bevorzugt Sensoren ohne Azimut-Zuordnung (z.B. Dachsensor). Die eingestellte Aggregation wird ignoriert — es gilt immer der Maximalwert. Falls keine Sensoren ohne Azimut-Zuordnung vorhanden sind, greift ein automatischer Fallback: alle Sensoren werden mit Max-Aggregation ausgewertet.
+- **Keine Himmelsrichtungsauswertung**: Azimut-basierte Sensorauswahl ist deaktiviert. Alle gueltigen Sensoren werden mit der eingestellten Aggregation (Mittelwert/Maximum) zusammengefasst.
+
+<!-- DOC -->
 #### Nur starten wenn aktuelle Position kleiner gleich
 
 Die Beschattung startet nur, wenn die aktuelle Position kleine gleich dem eingestellten Wert ist. 
@@ -762,8 +817,10 @@ Position die bei Beschattungsstart angefahren wird.
 #### Lamellenstellenung an Sonnenstand anpassen
 
 Diese Einstellung ist nur für den Gerätetype "Jalousie" vorhanden.
-Ist diese Einstellung auf "Ja" gesetzt, wird in der Konfiguration der Wert für die Jalousienposition vorgegeben.
-Bei einer Einstellung von "Nein" wird die Lamellenstellung dem Höhenwinkel der Sonne angepasst.
+
+- **Nein**: Die Lamellenstellung wird nicht an den Sonnenstand angepasst. Stattdessen wird die unter "Lamellenstellung" konfigurierte feste Position verwendet.
+- **Standard**: Die Lamellenstellung wird anhand des Höhenwinkels der Sonne automatisch berechnet (bewährte Formel).
+- **Benutzerdefiniert**: Die Lamellenstellung wird linear zwischen dem Wert bei tiefem Sonnenstand und dem Wert bei hohem Sonnenstand interpoliert.
 
 <!-- DOC HelpContext="Beschattung Lamellenstellung" -->
 #### Lamellenstellung
@@ -777,9 +834,27 @@ Der Wert gibt die Kippstellung der Lamelle in Prozent an. 50% entsprechen der wa
 #### Mindestaenderung Lamellennachfuehrung
 
 <!-- DOC Skip="2" -->
-Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Ja" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Standard" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
 
 Der Wert gibt an, wie oft die Lamellenstellung während des Sonnenverlaufs angepasst wird.
+
+<!-- DOC -->
+#### Lamellenstellung (Sonne tief)
+
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Benutzerdefiniert" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+
+Lamellenposition in Prozent beim minimalen Höhenwinkel der Sonne. Typischerweise nahezu geschlossen (z.B. 80%), da der flache Sonnenstand mehr Blendschutz erfordert.
+
+<!-- DOC -->
+#### Lamellenstellung (Sonne hoch)
+
+<!-- DOC Skip="2" -->
+Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Benutzerdefiniert" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
+
+Lamellenposition in Prozent beim maximalen Höhenwinkel der Sonne. Typischerweise offener (z.B. 50% = waagrecht), da der steile Sonnenstand weniger Kippwinkel benötigt.
+
+Zwischen diesen beiden Werten wird die Lamellenstellung linear interpoliert.
 
 <!-- DOC -->
 #### Offset Lamellenstellung

@@ -3,8 +3,42 @@
 #include "WindowOpenHandler.h"
 #include "ModeNight.h"
 #include "ModeShading.h"
+#include "BrightnessMeasurement.h"
 #include "ModeIdle.h"
 #include "ShutterSimulation.h"
+
+namespace
+{
+    struct WindowOrientationInfo
+    {
+        const char* name;
+        uint16_t azimuth;
+        bool hasAzimuth;
+    };
+
+    WindowOrientationInfo getWindowOrientationInfo(uint8_t value)
+    {
+        switch (value)
+        {
+        case 0:
+            return {"Ost", 90, true};
+        case 1:
+            return {"Suedost", 135, true};
+        case 2:
+            return {"Sued", 180, true};
+        case 3:
+            return {"Suedwest", 225, true};
+        case 4:
+            return {"West", 270, true};
+        case 5:
+            return {"Dachflaeche", 0, false};
+        case 6:
+            return {"Keine Himmelsrichtungsauswertung", 0, false};
+        default:
+            return {"Unbekannt", 0, false};
+        }
+    }
+}
 
 ShutterControllerChannel::ShutterControllerChannel(uint8_t channelIndex)
     : _modes(), _windowOpenHandlers(), _positionController(channelIndex)
@@ -99,7 +133,7 @@ void ShutterControllerChannel::processInputKo(GroupObject &ko)
     _measurementRoomTemperature.processIputKo(ko);
 
 
-    // channel ko
+    // channel KO
     auto index = SHC_KoCalcIndex(ko.asap());
     switch (index)
     {
@@ -343,6 +377,41 @@ unsigned long ShutterControllerChannel::getManualShadingWaitTimeInMs() const
 
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
+    if (callContext.measurementBrightness != nullptr)
+    {
+        auto brightnessMeasurement = static_cast<BrightnessMeasurement*>(callContext.measurementBrightness);
+        const auto orientationInfo = getWindowOrientationInfo(ParamSHC_CWindowOrientation);
+        const bool useAzimuth = ParamSHC_CBrightnessAzimuthEnabled != 0 && orientationInfo.hasAzimuth;
+        const bool preferUnassigned = ParamSHC_CWindowOrientation == 5;
+        const bool forceAggregateMax = ParamSHC_CWindowOrientation == 5;
+        brightnessMeasurement->setUseAzimuth(useAzimuth);
+        brightnessMeasurement->setAggregateUseMaxOverride(forceAggregateMax);
+        brightnessMeasurement->setAggregatePreferUnassigned(preferUnassigned);
+        if (callContext.diagnosticLog)
+        {
+            if (orientationInfo.hasAzimuth)
+                logInfoP("Brightness CH%u: window orientation=%s (%u)",
+                         (unsigned int)(_channelIndex + 1),
+                         orientationInfo.name,
+                         (unsigned int)orientationInfo.azimuth);
+            else
+                logInfoP("Brightness CH%u: window orientation=%s",
+                         (unsigned int)(_channelIndex + 1),
+                         orientationInfo.name);
+
+            if (useAzimuth)
+                logInfoP("Brightness CH%u: target azimuth(sun)=%.2f (%s)",
+                         (unsigned int)(_channelIndex + 1),
+                         callContext.azimuth,
+                         callContext.timeAndSunValid ? "valid" : "invalid");
+            else
+                logInfoP("Brightness CH%u: target=aggregate (no azimuth)",
+                         (unsigned int)(_channelIndex + 1));
+
+            brightnessMeasurement->logSensorMapping(_channelIndex, useAzimuth);
+        }
+    }
+
     _measurementHeading.update(callContext.currentMillis, callContext.diagnosticLog);
     _measurementRoomTemperature.update(callContext.currentMillis, callContext.diagnosticLog);
 
@@ -367,7 +436,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     }
     callContext.modeCurrentActive = _currentMode;
 
-    // Handle reacticvate of shading after manual usage
+    // Handle reactivation of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
         auto waitTime = callContext.fastSimulationActive ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs();
@@ -527,7 +596,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     }
     callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
 
-    // State machine handling for mode activateion
+    // State machine handling for mode activation
     ModeBase *nextMode = nullptr;
     for (auto mode : _modes)
     {
@@ -551,12 +620,12 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                     if (!shadingControlActive() && mode->isModeShading())
                     {
                         if (callContext.diagnosticLog)
-                            logInfoP("-> but ignored, because global shadow not alloewd");
+                            logInfoP("-> but ignored, because global shading not allowed");
                     }
                     else
                         nextMode = mode;
                     // Do not break because allowed should be called for all modes
-                    // because it is a replacment for the loop function
+                    // because it is a replacement for the loop function
                 }
                 else
                 {
@@ -572,7 +641,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         logIndentDown();
     }
-    if (_currentMode != nextMode)
+    if (_currentMode != nextMode && nextMode != nullptr)
     {
         sceneChanged = true;
         if (nextMode == _modeManual)
@@ -629,6 +698,26 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     }
     _currentMode->control(callContext, _positionController);
     _positionController.control(callContext);
+
+    bool shadingModeLockActive = false;
+    if (ParamSHC_CShadingCount >= 1)
+    {
+        shadingModeLockActive = KoSHC_CShading1LockActive.value(DPT_Switch) ||
+            KoSHC_CShading1BreakLockActive.value(DPT_Switch);
+    }
+    if (ParamSHC_CShadingCount >= 2)
+    {
+        shadingModeLockActive = shadingModeLockActive ||
+            KoSHC_CShading2LockActive.value(DPT_Switch) ||
+            KoSHC_CShading2BreakLockActive.value(DPT_Switch);
+    }
+    bool readinessUser = shadingControlActive() &&
+        !_channelLockActive &&
+        _currentWindowOpenHandler == nullptr &&
+        _currentMode != _modeManual &&
+        !shadingModeLockActive;
+    if (KoSHC_CShadingReadyUser.valueNoSendCompare(readinessUser, DPT_Switch))
+        KoSHC_CShadingReadyUser.objectWritten();
 
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
@@ -695,16 +784,16 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
             switch (_positionController.hasSlat() ? ParamSHC_CAfterShadingJalousie : ParamSHC_CAfterShading)
             {
             case 1:
-                // Position vor Beschattungsstart
+                // Position before shading start
                 _positionController.restoreLastManualPosition();
                 break;
             case 2:
-                // Fährt auf
+                // Move up
                 _positionController.setAutomaticPositionAndStoreForRestore(0); // Handled as manual operation because the value should be stored
                 _positionController.setAutomaticSlatAndStoreForRestore(0);     // Handled as manual operation because the value should be stored
                 break;
             case 3:
-                // Lamelle Waagrecht
+                // Slat horizontal
                 _positionController.storeCurrentPositionForRestore();
                 _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
                 break;
