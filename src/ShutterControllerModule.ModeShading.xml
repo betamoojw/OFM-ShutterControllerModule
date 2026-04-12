@@ -539,11 +539,11 @@
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Helligkeitsgrenzen" UIHint="Headline" />
 
 															<!-- Helligkeit Eingang-->
-															<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
+															<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
 																<when test="0">
-																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Helligkeit zu verwenden, muss 'Helligkeit' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Helligkeit zu verwenden, muss 'Helligkeitssensoren' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />
 																</when>
-																<when test="1">
+																<when test=">0">
 																	<!-- Helligkeit Aktiv -->
 																	<ParameterRefRef IndentLevel="1" HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01" />
 																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01">																		<!-- Nicht deaktiviert -->
