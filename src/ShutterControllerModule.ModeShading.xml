@@ -8,7 +8,7 @@
 					<op:partParams name="ModeShading">
 						<!-- Only developer hints for declaration: -->
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="25" increment="38" />
+								<op:param name="%ParamOffset%" value="25" increment="40" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -33,7 +33,7 @@
 							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%Index%Pn%" Access="None" ParameterType="%AID%_PT-SHIndex" Text="Index" Value="%Pn%" />
 
 
-							<Union SizeInBit="304">
+							<Union SizeInBit="320">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
 			
 								<!-- Temperatur Aktiv -->
@@ -52,8 +52,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+29%" Offset="0" BitOffset="4" Name="C%C%Shading%Pn%RainActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Bei Regen nicht beschatten" Value="1" />
 
 								<!-- Lamellenstellung Höhenwinkelabhängig -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
-
+											<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-SlatTrackingMode" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
 							
 								<!-- 2 Bit free -->
 
@@ -146,8 +145,14 @@
 								<!-- Beschattungsunterbrechung -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="37" BitOffset="4" Name="C%C%Shading%Pn%Break" ParameterType="%AID%_PT-ShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
 
-								<!-- Next Offset = 38 -->
-								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+52% -->
+								<!-- Lamellenstellung bei tiefer Sonne (Benutzerdefiniert) -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="38" BitOffset="0" Name="C%C%Shading%Pn%SlatLowSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung bei min. Höhenwinkel" SuffixText="%" Value="80" />
+
+								<!-- Lamellenstellung bei hoher Sonne (Benutzerdefiniert) -->
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+52%" Offset="39" BitOffset="0" Name="C%C%Shading%Pn%SlatHighSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung bei max. Höhenwinkel" SuffixText="%" Value="50" />
+
+								<!-- Next Offset = 40 -->
+								<!-- Next Id: %AID%_UP-%TT%%CC%%PPP+53% -->
 							</Union>
 
 						</Parameters>
@@ -256,6 +261,12 @@
 
 							<!-- Diagnose Objekt für 'Nicht erlaubt' Grund -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+50%_R-%TT%%CC%%PPP+50%01" RefId="%AID%_UP-%TT%%CC%%PPP+50%" />
+
+							<!-- Lamellenstellung bei min. Höhenwinkel -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01" RefId="%AID%_UP-%TT%%CC%%PPP+51%" />
+
+							<!-- Lamellenstellung bei max. Höhenwinkel -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01" RefId="%AID%_UP-%TT%%CC%%PPP+52%" />
 			
 						</ParameterRefs>
 						<ComObjectTable>
@@ -461,12 +472,22 @@
 																	<ParameterRefRef IndentLevel="1" HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01" />
 																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+34%_R-%TT%%CC%%PPP+34%01">
 																		<when test="0">
-																			<!-- Lamellenposition -->
+																			<!-- Lamellenposition (Nein: feste Position) -->
 																			<ParameterRefRef IndentLevel="1" HelpContext="SHC-Beschattung-Lamellenstellung" RefId="%AID%_UP-%TT%%CC%%PPP+33%_R-%TT%%CC%%PPP+33%01" />
 																		</when>
 																		<when test="1">
 																			<!-- Mindeständerung Lamellennachführung -->
 																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+35%_R-%TT%%CC%%PPP+35%01" />
+
+																			<!-- Offset Lamellenposition -->
+																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" />
+																		</when>
+																		<when test="2">
+<!-- Lamellenstellung bei min. Höhenwinkel -->
+												<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+51%_R-%TT%%CC%%PPP+51%01" />
+
+												<!-- Lamellenstellung bei max. Höhenwinkel -->
+																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+52%_R-%TT%%CC%%PPP+52%01" />
 
 																			<!-- Offset Lamellenposition -->
 																			<ParameterRefRef HelpContext="%DOC%" IndentLevel="2" RefId="%AID%_UP-%TT%%CC%%PPP+36%_R-%TT%%CC%%PPP+36%01" />
@@ -518,11 +539,11 @@
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Helligkeitsgrenzen" UIHint="Headline" />
 
 															<!-- Helligkeit Eingang-->
-															<choose ParamRefId="%AID%_UP-%TT%00003_R-%TT%0000301">
+															<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
 																<when test="0">
-																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Helligkeit zu verwenden, muss 'Helligkeit' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Um die Helligkeit zu verwenden, muss 'Helligkeitssensoren' unter 'Verfügbare Messwert Eingänge' unter 'Allgemein' aktiviert werden" />
 																</when>
-																<when test="1">
+																<when test=">0">
 																	<!-- Helligkeit Aktiv -->
 																	<ParameterRefRef IndentLevel="1" HelpContext="%DOC%" RefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01" />
 																	<choose ParamRefId="%AID%_UP-%TT%%CC%%PPP+24%_R-%TT%%CC%%PPP+24%01">																		<!-- Nicht deaktiviert -->

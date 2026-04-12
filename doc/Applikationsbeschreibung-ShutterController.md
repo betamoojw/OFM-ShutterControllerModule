@@ -839,7 +839,7 @@ Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnensta
 Der Wert gibt an, wie oft die Lamellenstellung während des Sonnenverlaufs angepasst wird.
 
 <!-- DOC -->
-#### Lamellenstellung (Sonne tief)
+#### Lamellenstellung bei min. Höhenwinkel
 
 <!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Benutzerdefiniert" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.
@@ -847,7 +847,7 @@ Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnensta
 Lamellenposition in Prozent beim minimalen Höhenwinkel der Sonne. Typischerweise nahezu geschlossen (z.B. 80%), da der flache Sonnenstand mehr Blendschutz erfordert.
 
 <!-- DOC -->
-#### Lamellenstellung (Sonne hoch)
+#### Lamellenstellung bei max. Höhenwinkel
 
 <!-- DOC Skip="2" -->
 Diese Einstellung ist nur vorhanden, wenn unter "Lamellenstellenung an Sonnenstand anpassen" "Benutzerdefiniert" eingestellt wurde und der Gerätetype "Jalousie" verwendet wird.

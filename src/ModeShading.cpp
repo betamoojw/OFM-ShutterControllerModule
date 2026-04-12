@@ -631,7 +631,7 @@ void ModeShading::start(const CallContext &callContext, const ModeBase *previous
     // <Enumeration Text="Channel disabled" Value="0" Id="%ENID%" />
     // <Enumeration Text="Venetian blind" Value="1" Id="%ENID%" />
     // <Enumeration Text="Roller shutter" Value="2" Id="%ENID%" />
-    if (!ParamSHC_CShading1SlatElevationDepending)
+    if (ParamSHC_CShading1SlatElevationDepending == 0)
         positionController.setAutomaticSlat(ParamSHC_CShading1SlatShadingPosition);
 }
 
@@ -647,8 +647,14 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
         return;
 
     // Jalousie
-    if (ParamSHC_CShading1SlatElevationDepending)
+    switch (ParamSHC_CShading1SlatElevationDepending)
     {
+    case 0:
+        // Nein: fixed slat position set in start(), nothing to do here
+        return;
+    case 1:
+    {
+        // Standard: elevation-based formula
         if (callContext.diagnosticLog)
             logInfoP("ModeShading control 4");
         auto targetSlatPosition = max((-1.131d * callContext.elevation + 101.41d) + (double)ParamSHC_CShading1OffsetSlatPosition, 50.d);
@@ -670,6 +676,30 @@ void ModeShading::control(const CallContext &callContext, PositionController &po
             return; // Do not change, too little difference
         }
         positionController.setAutomaticSlat(slatPosition);
+        break;
+    }
+    case 2:
+    {
+        // Benutzerdefiniert: linear interpolation between posLow (sun low) and posHigh (sun high)
+        if (callContext.diagnosticLog)
+            logInfoP("ModeShading control Benutzerdefiniert");
+        double elevMin = (double)ParamSHC_CShading1ElevationMin;
+        double elevMax = (double)ParamSHC_CShading1ElevationMax;
+        double t = (elevMax > elevMin) ? (callContext.elevation - elevMin) / (elevMax - elevMin) : 0.5;
+        if (t < 0.0) t = 0.0;
+        if (t > 1.0) t = 1.0;
+        double posLow = (double)ParamSHC_CShading1SlatLowSunPosition;
+        double posHigh = (double)ParamSHC_CShading1SlatHighSunPosition;
+        double targetSlatPosition = posLow + (posHigh - posLow) * t
+            + (double)ParamSHC_CShading1OffsetSlatPosition;
+        if (targetSlatPosition < 0.0) targetSlatPosition = 0.0;
+        if (targetSlatPosition > 100.0) targetSlatPosition = 100.0;
+        auto slatPosition = (uint8_t)targetSlatPosition;
+        if (callContext.diagnosticLog)
+            logInfoP("Calculated slat position %d for elevation %lf (t=%.2f, low=%d, high=%d)", (int)slatPosition, callContext.elevation, t, (int)posLow, (int)posHigh);
+        positionController.setAutomaticSlat(slatPosition);
+        break;
+    }
     }
 }
 
