@@ -10,7 +10,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="31" increment="7" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="28" increment="4" />
+						<op:param name="%En%" value="27" increment="4" />
 						<!-- ModeWindowOpen number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Visibilty select -->
@@ -23,7 +23,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="45" increment="40" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="36" increment="8" />
+						<op:param name="%En%" value="35" increment="8" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
@@ -424,18 +424,18 @@
 							<ComObject Id="%AID%_O-%TT%%CC%025" Number="%K26%" ObjectSize="2 Bytes" DatapointType="DPST-9-1" Name="C%C%RoomTemp" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 
 							<!-- Status Beschattung Bereit (nur Nutzer-Einfluss) -->
-							<ComObject Id="%AID%_O-%TT%%CC%027" Number="%K27%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingReadyUser" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+							<!-- <ComObject Id="%AID%_O-%TT%%CC%027" Number="%K27%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingReadyUser" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" /> -->
 
-							<!-- Next Id: %AID%_O-%TT%%CC%028 -->
+							<!-- Next Id: %AID%_O-%TT%%CC%027 -->
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Id starting with 900 -->
-							<!-- KO Number starting with 28 -->
+							<!-- KO Number starting with 27 -->
 							<op:usePart name="ModeWindowOpen" xpath="//ComObjectTable/*" />
 
 							<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 							<!-- Id starting with 100 -->
-							<!-- KO Number starting with 36 -->
+							<!-- KO Number starting with 35 -->
 							<op:usePart name="ModeShading" xpath="//ComObjectTable/*" />
 
 						</ComObjectTable>
@@ -506,7 +506,7 @@
 							<!-- Raumtemperatur Eingang -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="{{0:Jalousie %C%}}: Raumtemperatur" FunctionText="Jalousie %C%: Eingang, °C" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Status Beschattung Bereit (nur Nutzer-Einfluss) -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_O-%TT%%CC%027" Text="{{0:Jalousie %C%}}: Status Beschattung Bereit" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<!-- <ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_O-%TT%%CC%027" Text="{{0:Jalousie %C%}}: Status Beschattung Bereit" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" /> -->
 
 
 
@@ -653,7 +653,7 @@
 																<!-- Beschattung Aktiv -->
 																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801" />
 																<!-- Status Beschattung Bereit -->
-																<ComObjectRefRef RefId="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" />
+																<!-- <ComObjectRefRef RefId="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" /> -->
 
 																<!-- Beschattungsunterbrechnung nach Handbetrieb -->
 																<ParameterRefRef RefId="%AID%_UP-%TT%%CC%016_R-%TT%%CC%01601" HelpContext="%DOC%" IndentLevel="1" />

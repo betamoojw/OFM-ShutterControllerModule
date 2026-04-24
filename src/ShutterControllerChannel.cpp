@@ -711,14 +711,14 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             KoSHC_CShading2LockActive.value(DPT_Switch) ||
             KoSHC_CShading2BreakLockActive.value(DPT_Switch);
     }
-    bool readinessUser = shadingControlActive() &&
-        !_channelLockActive &&
-        _currentWindowOpenHandler == nullptr &&
-        _windowOpenState == WindowOpenStateClosed &&
-        _currentMode != _modeManual &&
-        !shadingModeLockActive;
-    if (KoSHC_CShadingReadyUser.valueNoSendCompare(readinessUser, DPT_Switch))
-        KoSHC_CShadingReadyUser.objectWritten();
+    // bool readinessUser = shadingControlActive() &&
+    //     !_channelLockActive &&
+    //     _currentWindowOpenHandler == nullptr &&
+    //     _windowOpenState == WindowOpenStateClosed &&
+    //     _currentMode != _modeManual &&
+    //     !shadingModeLockActive;
+    // if (KoSHC_CShadingReadyUser.valueNoSendCompare(readinessUser, DPT_Switch))
+    //     KoSHC_CShadingReadyUser.objectWritten();
 
     callContext.modeIdle = nullptr;
     callContext.modeManual = nullptr;
