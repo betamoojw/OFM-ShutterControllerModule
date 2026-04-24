@@ -34,11 +34,11 @@
 
 					<Static>
 						<ParameterTypes>
-							<ParameterType Id="%AID%_PT-NumberOfShading" Name="NumberOfShading">
+							<ParameterType Id="%AID%_PT-SHCNumberOfShading" Name="NumberOfShading">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
 									<!-- ShutterControllerModule.ModeShading.xml will be included here -->
-									<op:usePart name="ModeShading" xpath="//ParameterTypes/ParameterType[@Name='NumberOfShadingEnumValue']/TypeRestriction/*" />
+									<op:usePart name="ModeShading" xpath="//ParameterTypes/ParameterType[@Name='SHCNumberOfShadingEnumValue']/TypeRestriction/*" />
 
 								</TypeRestriction>
 							</ParameterType>
@@ -54,7 +54,7 @@
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
-								<Parameter Id="%AID%_UP-%TT%%CC%001" Offset="0" BitOffset="0" Name="C%C%Type" ParameterType="%AID%_PT-ShutterType" Text="Geräteart" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%001" Offset="0" BitOffset="0" Name="C%C%Type" ParameterType="%AID%_PT-SHCShutterType" Text="Geräteart" Value="0" />
 
 								<!-- Kanal Deaktivieren -->
 								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="C%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
@@ -80,61 +80,61 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%045" Offset="1" BitOffset="7" Name="C%C%BrightnessAzimuthEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Azimut auswerten" Value="1" />
 
 								<!-- Fenster gekippt Wartezeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%043" Offset="2" BitOffset="0" Name="C%C%WindowTiltWaitTime" ParameterType="%AID%_PT-WindowOpenTiltWaitTime" Text="Kontaktänderung auswerten nach" Value="4" />
+								<Parameter Id="%AID%_UP-%TT%%CC%043" Offset="2" BitOffset="0" Name="C%C%WindowTiltWaitTime" ParameterType="%AID%_PT-SHCWindowOpenTiltWaitTime" Text="Kontaktänderung auswerten nach" Value="4" />
 								<!-- ^^^ Need 6 bit ^^^-->
 
 								<!-- Fenster gekippt handling -->
-								<Parameter Id="%AID%_UP-%TT%%CC%044" Offset="2" BitOffset="6" Name="C%C%WindowTiltHandling" ParameterType="%AID%_PT-WindowOpenTiltHandling" Text="Gekippt wenn" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%044" Offset="2" BitOffset="6" Name="C%C%WindowTiltHandling" ParameterType="%AID%_PT-SHCWindowOpenTiltHandling" Text="Gekippt wenn" Value="0" />
 								<!-- ^^^ Need 2 bit ^^^-->
 
 								<!-- Nacht Modus von -->
-								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightStartBehavior" ParameterType="%AID%_PT-NightModeStartBehavior" Text="Auslöser" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%005" Offset="3" BitOffset="0" Name="C%C%NightStartBehavior" ParameterType="%AID%_PT-SHCNightModeStartBehavior" Text="Auslöser" Value="3" />
 
 								<!-- Fensterausrichtung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%046" Offset="3" BitOffset="4" Name="C%C%WindowOrientation" ParameterType="%AID%_PT-WindowOrientation" Text="Fenster-/Behangausrichtung" Value="6" />
+								<Parameter Id="%AID%_UP-%TT%%CC%046" Offset="3" BitOffset="4" Name="C%C%WindowOrientation" ParameterType="%AID%_PT-SHCWindowOrientation" Text="Fenster-/Behangausrichtung" Value="6" />
 
 								<!-- 1 Bit free -->
 
 								<!-- Von Uhrzeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="4" BitOffset="0" Name="C%C%NightFromTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="1320" />
+								<Parameter Id="%AID%_UP-%TT%%CC%006" Offset="4" BitOffset="0" Name="C%C%NightFromTime" ParameterType="%AID%_PT-SHCActivationTime" Text="Uhrzeit" Value="1320" />
 
 								<!-- vor / bei / nach -->
-								<Parameter Id="%AID%_UP-%TT%%CC%007" Offset="6" BitOffset="0" Name="C%C%NightSunSet" ParameterType="%AID%_PT-SunSet" Text="Sonne" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%007" Offset="6" BitOffset="0" Name="C%C%NightSunSet" ParameterType="%AID%_PT-SHCSunSet" Text="Sonne" Value="1" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Höhenwinkel Grad nach Sonnenuntergang -->
-								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="7" BitOffset="0" Name="C%C%NightSunSetElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%008" Offset="7" BitOffset="0" Name="C%C%NightSunSetElevationOffset" ParameterType="%AID%_PT-SHCElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="2" />
 
 								<!-- Nacht Modus bis -->
-								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="C%C%NightEndBehavior" ParameterType="%AID%_PT-NightModeEndBehavior" Text="Auslöser" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%009" Offset="8" BitOffset="0" Name="C%C%NightEndBehavior" ParameterType="%AID%_PT-SHCNightModeEndBehavior" Text="Auslöser" Value="2" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Bis Uhrzeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%010" Offset="9" BitOffset="0" Name="C%C%NightToTime" ParameterType="%AID%_PT-ActivationTime" Text="Uhrzeit" Value="420" />
+								<Parameter Id="%AID%_UP-%TT%%CC%010" Offset="9" BitOffset="0" Name="C%C%NightToTime" ParameterType="%AID%_PT-SHCActivationTime" Text="Uhrzeit" Value="420" />
 
 								<!-- vor / bei / nach -->
-								<Parameter Id="%AID%_UP-%TT%%CC%011" Offset="11" BitOffset="0" Name="C%C%NightSunRise" ParameterType="%AID%_PT-SunRise" Text="Sonne" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%011" Offset="11" BitOffset="0" Name="C%C%NightSunRise" ParameterType="%AID%_PT-SHCSunRise" Text="Sonne" Value="1" />
 
 								<!-- 4 Bit free -->
 
 								<!-- Höhenwinkel Grad nach Sonnenaufgang -->
-								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="12" BitOffset="0" Name="C%C%NightSunRiseElevationOffset" ParameterType="%AID%_PT-ElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%012" Offset="12" BitOffset="0" Name="C%C%NightSunRiseElevationOffset" ParameterType="%AID%_PT-SHCElevationBeforeAfterSunSetRise" Text="Höhenwinkel Offset" SuffixText="°" Value="0" />
 
 								<!-- Heizungs Anforderung-->
-								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="C%C%HeatingInput" ParameterType="%AID%_PT-HeatingInput" Text="Heizung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%013" Offset="13" BitOffset="0" Name="C%C%HeatingInput" ParameterType="%AID%_PT-SHCHeatingInput" Text="Heizung" Value="0" />
 
 								<!-- 6 Bit free -->
 
 								<!-- Handbetrieb Auf/Ab Type-->
-								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="C%C%ManualUpDownType" ParameterType="%AID%_PT-UpDownTypeForManualControl" Text="Handbetriebseinstellung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%015" Offset="14" BitOffset="0" Name="C%C%ManualUpDownType" ParameterType="%AID%_PT-SHCUpDownTypeForManualControl" Text="Handbetriebseinstellung" Value="0" />
 								<!-- Beschattungsunterbrechnung nach Handbetrieb -->
-								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%ManualShadingWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%ManualShadingWaitTime" ParameterType="%AID%_PT-SHCWaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
 								<!-- Nach Beschattung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="2" />
-								<Parameter Id="%AID%_UP-%TT%%CC%039" Offset="16" BitOffset="0" Name="C%C%AfterShadingJalousie" ParameterType="%AID%_PT-AfterShadingJalousie" Text="Nach Beschattung" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-SHCAfterShading" Text="Nach Beschattung" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%039" Offset="16" BitOffset="0" Name="C%C%AfterShadingJalousie" ParameterType="%AID%_PT-SHCAfterShadingJalousie" Text="Nach Beschattung" Value="2" />
 
 
 								<!-- Position bei Nacht Start anfahren -->
@@ -156,17 +156,17 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%024" Offset="20" BitOffset="1" Name="C%C%NightStopSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
 
 								<!-- Anzahl Fenster Offen Mode-->
-								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="C%C%WindowOpenCount" ParameterType="%AID%_PT-WindowOpenModeActive" Text="Fenster offen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%026" Offset="21" BitOffset="0" Name="C%C%WindowOpenCount" ParameterType="%AID%_PT-SHCWindowOpenModeActive" Text="Fenster offen" Value="0" />
 
 								<!-- Anzahl Beschattungs Mode-->
-								<Parameter Id="%AID%_UP-%TT%%CC%034" Offset="21" BitOffset="4" Name="C%C%ShadingCount" ParameterType="%AID%_PT-NumberOfShading" Text="Beschattungsmodus Anzahl" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%034" Offset="21" BitOffset="4" Name="C%C%ShadingCount" ParameterType="%AID%_PT-SHCNumberOfShading" Text="Beschattungsmodus Anzahl" Value="1" />
 
 
 								<!-- Heizung Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%%CC%027" Offset="22" BitOffset="0" Name="C%C%HeatingWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%027" Offset="22" BitOffset="0" Name="C%C%HeatingWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Heizung Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%%CC%028" Offset="23" BitOffset="4" Name="C%C%HeatingWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%028" Offset="23" BitOffset="4" Name="C%C%HeatingWatchdogBehavior" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Heizung Fallback % -->
 								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
@@ -175,30 +175,30 @@
 
 
 								<!-- Raumtemperatur Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%%CC%031" Offset="25" BitOffset="0" Name="C%C%RoomTempWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%031" Offset="25" BitOffset="0" Name="C%C%RoomTempWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Raumtemperatur Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%%CC%032" Offset="26" BitOffset="4" Name="C%C%RoomTempWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%%CC%032" Offset="26" BitOffset="4" Name="C%C%RoomTempWatchdogBehavior" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Raumtemperatur Fallback -->
-								<Parameter Id="%AID%_UP-%TT%%CC%033" Offset="27" BitOffset="0" Name="C%C%RoomTempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
+								<Parameter Id="%AID%_UP-%TT%%CC%033" Offset="27" BitOffset="0" Name="C%C%RoomTempFallback" ParameterType="%AID%_PT-SHCTemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
 
 								<!-- Kurzer Druck "Nach oben" bei geöffneter Jalousie  -->
-								<Parameter Id="%AID%_UP-%TT%%CC%035" Offset="28" BitOffset="0" Name="C%C%ShortKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctionsOpened" Text="Kurzer Druck 'Nach oben'" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%035" Offset="28" BitOffset="0" Name="C%C%ShortKeyPressUpIfOpen" ParameterType="%AID%_PT-SHCKeySpecialFunctionsOpened" Text="Kurzer Druck 'Nach oben'" Value="0" />
 
 								<!-- Langer Druck "Nach oben" bei geöffneter Jalousie  -->
-								<Parameter Id="%AID%_UP-%TT%%CC%036" Offset="28" BitOffset="4" Name="C%C%LongKeyPressUpIfOpen" ParameterType="%AID%_PT-KeySpecialFunctionsOpened" Text="Langer Druck 'Nach oben'" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%036" Offset="28" BitOffset="4" Name="C%C%LongKeyPressUpIfOpen" ParameterType="%AID%_PT-SHCKeySpecialFunctionsOpened" Text="Langer Druck 'Nach oben'" Value="0" />
 
 
 								<!-- Wartezeit nach Handbedienung-->
-								<Parameter Id="%AID%_UP-%TT%%CC%038" Offset="29" BitOffset="0" Name="C%C%ManualWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsage" Text="Sperrzeit für Automatiken nach Handbedienung" Value="5" />
+								<Parameter Id="%AID%_UP-%TT%%CC%038" Offset="29" BitOffset="0" Name="C%C%ManualWaitTime" ParameterType="%AID%_PT-SHCWaitTimeAfterManualUsage" Text="Sperrzeit für Automatiken nach Handbedienung" Value="5" />
 
 								<!-- Kurzer Druck "Nach oben" bei geschlossener Jalousie  -->
-								<Parameter Id="%AID%_UP-%TT%%CC%040" Offset="30" BitOffset="0" Name="C%C%ShortKeyPressUpIfClosed" ParameterType="%AID%_PT-KeySpecialFunctionsClosed" Text="Kurzer Druck 'Nach unten'" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%040" Offset="30" BitOffset="0" Name="C%C%ShortKeyPressUpIfClosed" ParameterType="%AID%_PT-SHCKeySpecialFunctionsClosed" Text="Kurzer Druck 'Nach unten'" Value="0" />
 
 								<!-- Langer Druck "Nach oben" bei geschlossener Jalousie  -->
-								<Parameter Id="%AID%_UP-%TT%%CC%041" Offset="30" BitOffset="4" Name="C%C%LongKeyPressUpIfClosed" ParameterType="%AID%_PT-KeySpecialFunctionsClosed" Text="Langer Druck 'Nach unten'" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%041" Offset="30" BitOffset="4" Name="C%C%LongKeyPressUpIfClosed" ParameterType="%AID%_PT-SHCKeySpecialFunctionsClosed" Text="Langer Druck 'Nach unten'" Value="0" />
 
 
 

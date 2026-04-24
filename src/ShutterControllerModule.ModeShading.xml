@@ -21,7 +21,7 @@
 
 					<Static>
 						<ParameterTypes>
-							<ParameterType Id="%AID%_PT-NumberOfShadingEnumValue" Name="NumberOfShadingEnumValue">
+							<ParameterType Id="%AID%_PT-SHCNumberOfShadingEnumValue" Name="SHCNumberOfShadingEnumValue">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="%Pn%" Value="%Pn%" Id="%ENID%" />
 								</TypeRestriction>
@@ -30,7 +30,7 @@
 						<Parameters>
 
 							<!-- Part Index -->
-							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%Index%Pn%" Access="None" ParameterType="%AID%_PT-SHIndex" Text="Index" Value="%Pn%" />
+							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%Index%Pn%" Access="None" ParameterType="%AID%_PT-SHCSHIndex" Text="Index" Value="%Pn%" />
 
 
 							<Union SizeInBit="320">
@@ -52,44 +52,44 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+29%" Offset="0" BitOffset="4" Name="C%C%Shading%Pn%RainActive" ParameterType="%AID%_PT-OnOffYesNo" Text="Bei Regen nicht beschatten" Value="1" />
 
 								<!-- Lamellenstellung Höhenwinkelabhängig -->
-											<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-SlatTrackingMode" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
+											<Parameter Id="%AID%_UP-%TT%%CC%%PPP+34%" Offset="0" BitOffset="5" Name="C%C%Shading%Pn%SlatElevationDepending" ParameterType="%AID%_PT-SHCSlatTrackingMode" Text="Lamellenstellenung an Sonnenstand anpassen" Value="1" />
 							
 								<!-- 2 Bit free -->
 
 								<!-- Wartezeit Beschattungsstart -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+14%" Offset="1" BitOffset="0" Name="C%C%Shading%Pn%WaitTimeStart" ParameterType="%AID%_PT-WaitTimeShadingControl" Text="Beschattungsstart" SuffixText="Minuten" Value="5" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+14%" Offset="1" BitOffset="0" Name="C%C%Shading%Pn%WaitTimeStart" ParameterType="%AID%_PT-SHCWaitTimeShadingControl" Text="Beschattungsstart" SuffixText="Minuten" Value="5" />
 
 								<!-- Wartezeit Beschattungsende -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+15%" Offset="3" BitOffset="0" Name="C%C%Shading%Pn%WaitTimeEnd" ParameterType="%AID%_PT-WaitTimeShadingControl" Text="Beschattungsende" SuffixText="Minuten" Value="15" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+15%" Offset="3" BitOffset="0" Name="C%C%Shading%Pn%WaitTimeEnd" ParameterType="%AID%_PT-SHCWaitTimeShadingControl" Text="Beschattungsende" SuffixText="Minuten" Value="15" />
 
 								<!-- Minimaler Azimut -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+16%" Offset="5" BitOffset="0" Name="C%C%Shading%Pn%AzimutMin" ParameterType="%AID%_PT-Azimut" Text="von" SuffixText="°" Value="120" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+16%" Offset="5" BitOffset="0" Name="C%C%Shading%Pn%AzimutMin" ParameterType="%AID%_PT-SHCAzimut" Text="von" SuffixText="°" Value="120" />
 								<!-- Maximaler Azimut -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+17%" Offset="7" BitOffset="0" Name="C%C%Shading%Pn%AzimutMax" ParameterType="%AID%_PT-Azimut" Text="bis" SuffixText="°" Value="240" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+17%" Offset="7" BitOffset="0" Name="C%C%Shading%Pn%AzimutMax" ParameterType="%AID%_PT-SHCAzimut" Text="bis" SuffixText="°" Value="240" />
 
 								<!-- Minimaler Elevation -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+18%" Offset="9" BitOffset="0" Name="C%C%Shading%Pn%ElevationMin" ParameterType="%AID%_PT-Elevation" Text="von" SuffixText="°" Value="5" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+18%" Offset="9" BitOffset="0" Name="C%C%Shading%Pn%ElevationMin" ParameterType="%AID%_PT-SHCElevation" Text="von" SuffixText="°" Value="5" />
 								<!-- Maximaler Elevation -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+19%" Offset="10" BitOffset="0" Name="C%C%Shading%Pn%ElevationMax" ParameterType="%AID%_PT-Elevation" Text="bis" SuffixText="°" Value="90" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+19%" Offset="10" BitOffset="0" Name="C%C%Shading%Pn%ElevationMax" ParameterType="%AID%_PT-SHCElevation" Text="bis" SuffixText="°" Value="90" />
 
 								<!-- Minimum Temperatur -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+21%" Offset="11" BitOffset="0" Name="C%C%Shading%Pn%TempMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindesttemperatur" SuffixText="°C" Value="%MinTemp%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+21%" Offset="11" BitOffset="0" Name="C%C%Shading%Pn%TempMin" ParameterType="%AID%_PT-SHCTemperaturLimit" Text="Mindesttemperatur" SuffixText="°C" Value="%MinTemp%" />
 
 								<!-- Minimum Forecast Temperatur -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+23%" Offset="12" BitOffset="0" Name="C%C%Shading%Pn%TempForecastMin" ParameterType="%AID%_PT-TemperaturLimit" Text="Mindestens prognostizierte Tageshöchsttemperatur" SuffixText="°C" Value="18" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+23%" Offset="12" BitOffset="0" Name="C%C%Shading%Pn%TempForecastMin" ParameterType="%AID%_PT-SHCTemperaturLimit" Text="Mindestens prognostizierte Tageshöchsttemperatur" SuffixText="°C" Value="18" />
 
 
 								<!-- Minimale Helligkeit -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+25%" Offset="13" BitOffset="0" Name="C%C%Shading%Pn%BrightnessMin" ParameterType="%AID%_PT-BrightnessLimit" Text="Minimale Helligkeit" SuffixText="x1000 lux" Value="15" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+25%" Offset="13" BitOffset="0" Name="C%C%Shading%Pn%BrightnessMin" ParameterType="%AID%_PT-SHCBrightnessLimit" Text="Minimale Helligkeit" SuffixText="x1000 lux" Value="15" />
 								<!-- Helligkeit Hysterese-->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+26%" Offset="14" BitOffset="0" Name="C%C%Shading%Pn%BrightnessHyst" ParameterType="%AID%_PT-BrightnessHysteresis" Text="Helligkeit Hysterese" SuffixText="x1000 lux" Value="5" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+26%" Offset="14" BitOffset="0" Name="C%C%Shading%Pn%BrightnessHyst" ParameterType="%AID%_PT-SHCBrightnessHysteresis" Text="Helligkeit Hysterese" SuffixText="x1000 lux" Value="5" />
 
 								<!-- Minimale UV-Index -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+28%" Offset="15" BitOffset="0" Name="C%C%Shading%Pn%UVIMin" ParameterType="%AID%_PT-UVIndex" Text="Minimaler UV-Index" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+28%" Offset="15" BitOffset="0" Name="C%C%Shading%Pn%UVIMin" ParameterType="%AID%_PT-SHCUVIndex" Text="Minimaler UV-Index" Value="1" />
 
 
 								<!-- Maximale Wolken -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+30%" Offset="19" BitOffset="0" Name="C%C%Shading%Pn%Clouds" ParameterType="%AID%_PT-MaxCloudLimit" Text="Maximale Bewölkung" Value="101" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+30%" Offset="19" BitOffset="0" Name="C%C%Shading%Pn%Clouds" ParameterType="%AID%_PT-SHCMaxCloudLimit" Text="Maximale Bewölkung" Value="101" />
 
 								<!-- Beschattungsmodus nur starten wenn % Manuell kleiner gleich -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+31%" Offset="20" BitOffset="0" Name="C%C%Shading%Pn%OnlyIfLessThan" ParameterType="%AID%_PT-SHCPercent" Text="Nur starten wenn aktuelle Position kleiner gleich" Value="0" />
@@ -102,21 +102,21 @@
 
 
 								<!-- Mindeständerung Lamellennachführung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+35%" Offset="23" BitOffset="0" Name="C%C%Shading%Pn%MinChangeForSlatAdaption" ParameterType="%AID%_PT-MinChangeForSlatAdaption" Text="Mindeständerung Lamellennachführung" Value="10" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+35%" Offset="23" BitOffset="0" Name="C%C%Shading%Pn%MinChangeForSlatAdaption" ParameterType="%AID%_PT-SHCMinChangeForSlatAdaption" Text="Mindeständerung Lamellennachführung" Value="10" />
 
 								<!-- Offset Lamellenposition -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+36%" Offset="24" BitOffset="0" Name="C%C%Shading%Pn%OffsetSlatPosition" ParameterType="%AID%_PT-OffsetSlatPosition" Text="Offset Lamellenstellung" SuffixText="%" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+36%" Offset="24" BitOffset="0" Name="C%C%Shading%Pn%OffsetSlatPosition" ParameterType="%AID%_PT-SHCOffsetSlatPosition" Text="Offset Lamellenstellung" SuffixText="%" Value="0" />
 
 
 								<!-- Beschattungsunterbrechung Minimaler Azimut -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+39%" Offset="25" BitOffset="0" Name="C%C%Shading%Pn%BreakAzimutMin" ParameterType="%AID%_PT-AzimutBreak" Text="von" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+39%" Offset="25" BitOffset="0" Name="C%C%Shading%Pn%BreakAzimutMin" ParameterType="%AID%_PT-SHCAzimutBreak" Text="von" SuffixText="°" Value="0" />
 								<!-- Beschattungsunterbrechung Maximaler Azimut -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+40%" Offset="27" BitOffset="0" Name="C%C%Shading%Pn%BreakAzimutMax" ParameterType="%AID%_PT-AzimutBreak" Text="bis" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+40%" Offset="27" BitOffset="0" Name="C%C%Shading%Pn%BreakAzimutMax" ParameterType="%AID%_PT-SHCAzimutBreak" Text="bis" SuffixText="°" Value="0" />
 
 								<!-- Beschattungsunterbrechung Minimaler Elevation -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+41%" Offset="29" BitOffset="0" Name="C%C%Shading%Pn%BreakElevationMin" ParameterType="%AID%_PT-Elevation" Text="von" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+41%" Offset="29" BitOffset="0" Name="C%C%Shading%Pn%BreakElevationMin" ParameterType="%AID%_PT-SHCElevation" Text="von" SuffixText="°" Value="0" />
 								<!-- Beschattungsunterbrechung Maximaler Elevation -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+42%" Offset="30" BitOffset="0" Name="C%C%Shading%Pn%BreakElevationMax" ParameterType="%AID%_PT-Elevation" Text="bis" SuffixText="°" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+42%" Offset="30" BitOffset="0" Name="C%C%Shading%Pn%BreakElevationMax" ParameterType="%AID%_PT-SHCElevation" Text="bis" SuffixText="°" Value="0" />
 
 
 								<!-- Raumtemperatur Aktiv -->
@@ -133,17 +133,17 @@
 								<!-- 2 Bits free -->
 
 								<!-- Heizung Stellwert -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+45%" Offset="32" BitOffset="0" Name="C%C%Shading%Pn%MaxHeatingValue" ParameterType="%AID%_PT-MaxHeatingValue" Text="Maximaler Heizungsstellwert" SuffixText="%" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+45%" Offset="32" BitOffset="0" Name="C%C%Shading%Pn%MaxHeatingValue" ParameterType="%AID%_PT-SHCMaxHeatingValue" Text="Maximaler Heizungsstellwert" SuffixText="%" Value="0" />
 
 								<!-- Raumtemperatur Minimum -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+46%" Offset="33" BitOffset="0" Name="C%C%Shading%Pn%RoomTemperaturMinimum" ParameterType="%AID%_PT-RoomTemperaturMinimum" Text="Minimale Raumtemperatur" SuffixText="°C" Value="21" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+46%" Offset="33" BitOffset="0" Name="C%C%Shading%Pn%RoomTemperaturMinimum" ParameterType="%AID%_PT-SHCRoomTemperaturMinimum" Text="Minimale Raumtemperatur" SuffixText="°C" Value="21" />
 								<!-- ^^^ 4 Bytes ^^^ -->
 
 								<!-- Heizung Aktiv -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="37" BitOffset="0" Name="C%C%Shading%Pn%HeatingActive" ParameterType="%AID%_PT-HeatingActive" Text="Heizung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+44%" Offset="37" BitOffset="0" Name="C%C%Shading%Pn%HeatingActive" ParameterType="%AID%_PT-SHCHeatingActive" Text="Heizung" Value="0" />
 
 								<!-- Beschattungsunterbrechung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="37" BitOffset="4" Name="C%C%Shading%Pn%Break" ParameterType="%AID%_PT-ShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+38%" Offset="37" BitOffset="4" Name="C%C%Shading%Pn%Break" ParameterType="%AID%_PT-SHCShadingBreak" Text="Beschattungsunterbrechung" Value="0" />
 
 								<!-- Lamellenstellung bei tiefer Sonne (Benutzerdefiniert) -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="38" BitOffset="0" Name="C%C%Shading%Pn%SlatLowSunPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung bei min. Höhenwinkel" SuffixText="%" Value="80" />

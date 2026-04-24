@@ -26,10 +26,10 @@
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="%ParamOffset%" BitOffset="0" />
 
 								<!-- Position anfahren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+1%" Offset="0" BitOffset="0" Name="C%C%WindowOpenPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+1%" Offset="0" BitOffset="0" Name="C%C%WindowOpenPositionControl%Pn%" ParameterType="%AID%_PT-SHCUsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
 
 								<!-- Lamellenstellung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+2%" Offset="0" BitOffset="4" Name="C%C%WindowOpenSlatPositionControl%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+2%" Offset="0" BitOffset="4" Name="C%C%WindowOpenSlatPositionControl%Pn%" ParameterType="%AID%_PT-SHCUsePositionIfWindowOpen" Text="Lamellen öffnen" Value="2" />
 
 								<!-- Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+3%" Offset="1" BitOffset="0" Name="C%C%WindowOpenPosition%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />
@@ -41,7 +41,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+5%" Offset="3" BitOffset="0" Name="C%C%WindowOpenLockOut%Pn%" ParameterType="%AID%_PT-SHCLockOutPrevention" Text="Aussperrverhinderung" Value="10" />
 
 								<!-- Kontakt invertiert -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+6%" Offset="3" BitOffset="4" Name="C%C%WindowOpenContactInvert%Pn%" ParameterType="%AID%_PT-WindowOpenContact" Text="Objekt Kontakt" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+6%" Offset="3" BitOffset="4" Name="C%C%WindowOpenContactInvert%Pn%" ParameterType="%AID%_PT-SHCWindowOpenContact" Text="Objekt Kontakt" Value="0" />
 
 								<!-- In der Nacht anders -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+7%" Offset="3" BitOffset="5" Name="C%C%WindowOpenNight%Pn%" ParameterType="%AID%_PT-OnOffYesNo" Text="In der Nacht anders" Value="0" />
@@ -49,10 +49,10 @@
 								<!-- 2 bit free -->
 
 								<!-- Position anfahren Nacht -->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="4" BitOffset="0" Name="C%C%WindowOpenPositionControlN%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+51%" Offset="4" BitOffset="0" Name="C%C%WindowOpenPositionControlN%Pn%" ParameterType="%AID%_PT-SHCUsePositionIfWindowOpen" Text="Position anfahren" Value="0" />
 
 								<!-- Lamellenstellung Nacht-->
-								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+52%" Offset="4" BitOffset="4" Name="C%C%WindowOpenSlatPositionControlN%Pn%" ParameterType="%AID%_PT-UsePositionIfWindowOpen" Text="Lamellen öffnen" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+52%" Offset="4" BitOffset="4" Name="C%C%WindowOpenSlatPositionControlN%Pn%" ParameterType="%AID%_PT-SHCUsePositionIfWindowOpen" Text="Lamellen öffnen" Value="2" />
 
 								<!-- Position Nacht -->
 								<Parameter Id="%AID%_UP-%TT%%CC%%PPP+53%" Offset="5" BitOffset="0" Name="C%C%WindowOpenPositionN%Pn%" ParameterType="%AID%_PT-SHCPercent" Text="Position" SuffixText="%" Value="0" />

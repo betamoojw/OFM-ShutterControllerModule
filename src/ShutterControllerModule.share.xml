@@ -12,41 +12,41 @@
 							<ParameterType Id="%AID%_PT-SHCNumChannels" Name="SHCNumChannels">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-SHIndex" Name="SHIndex">
+							<ParameterType Id="%AID%_PT-SHCSHIndex" Name="SHCIndex">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="255" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-ShutterType" Name="ShutterType">
+							<ParameterType Id="%AID%_PT-SHCShutterType" Name="SHCShutterType">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
 									<Enumeration Text="Rollo" Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-Azimut" Name="Azimut">
+							<ParameterType Id="%AID%_PT-SHCAzimut" Name="SHCAzimut">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="20" maxInclusive="340" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-AzimutBreak" Name="AzimutBreak">
+							<ParameterType Id="%AID%_PT-SHCAzimutBreak" Name="SHCAzimutBreak">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="360" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-Elevation" Name="Elevation">
+							<ParameterType Id="%AID%_PT-SHCElevation" Name="SHCElevation">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="90" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-TemperaturLimit" Name="TemperaturLimit">
+							<ParameterType Id="%AID%_PT-SHCTemperaturLimit" Name="SHCTemperaturLimit">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="40" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-BrightnessLimit" Name="BrightnessLimit">
+							<ParameterType Id="%AID%_PT-SHCBrightnessLimit" Name="SHCBrightnessLimit">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="50" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-BrightnessHysteresis" Name="BrightnessHysteresis">
+							<ParameterType Id="%AID%_PT-SHCBrightnessHysteresis" Name="SHCBrightnessHysteresis">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="20" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-BrightnessAggregation" Name="BrightnessAggregation">
+							<ParameterType Id="%AID%_PT-SHCBrightnessAggregation" Name="SHCBrightnessAggregation">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Mittelwert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Maximum" Value="1" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-BrightnessSensorCount" Name="BrightnessSensorCount">
+							<ParameterType Id="%AID%_PT-SHCBrightnessSensorCount" Name="SHCBrightnessSensorCount">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
 									<Enumeration Text="1 Sensor" Value="1" Id="%ENID%" />
@@ -56,7 +56,7 @@
 									<Enumeration Text="5 Sensoren" Value="5" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-BrightnessAzimuth" Name="BrightnessAzimuth">
+							<ParameterType Id="%AID%_PT-SHCBrightnessAzimuth" Name="SHCBrightnessAzimuth">
 								<TypeRestriction Base="Value" SizeInBit="16">
 									<Enumeration Text="Keine Zuordnung" Value="65535" Id="%ENID%" />
 									<Enumeration Text="0° (Nord)" Value="0" Id="%ENID%" />
@@ -133,7 +133,7 @@
 									<Enumeration Text="355°" Value="355" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WindowOrientation" Name="WindowOrientation">
+							<ParameterType Id="%AID%_PT-SHCWindowOrientation" Name="SHCWindowOrientation">
 								<TypeRestriction Base="Value" SizeInBit="3">
 									<Enumeration Text="Ost (90°)" Value="0" Id="%ENID%" />
 									<Enumeration Text="Südost (135°)" Value="1" Id="%ENID%" />
@@ -144,10 +144,10 @@
 									<Enumeration Text="Keine Himmelsrichtungsauswertung" Value="6" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-UVIndex" Name="UVI">
+							<ParameterType Id="%AID%_PT-SHCUVIndex" Name="SHCUVIndex">
 								<TypeFloat Encoding="IEEE-754 Single" minInclusive="0.1" maxInclusive="11" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-MaxCloudLimit" Name="MaxCloudLimit">
+							<ParameterType Id="%AID%_PT-SHCMaxCloudLimit" Name="SHCMaxCloudLimit">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Deaktiviert" Value="101" Id="%ENID%" />
 									<Enumeration Text="20%" Value="20" Id="%ENID%" />
@@ -165,7 +165,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-SunSet" Name="SunSet">
+							<ParameterType Id="%AID%_PT-SHCSunSet" Name="SHCSunSet">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="vor Sonnenuntergang" Value="0" Id="%ENID%" />
 									<Enumeration Text="bei Sonnenuntergang" Value="1" Id="%ENID%" />
@@ -173,7 +173,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-SunRise" Name="SunRise">
+							<ParameterType Id="%AID%_PT-SHCSunRise" Name="SHCSunRise">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="vor Sonnenaufgang" Value="0" Id="%ENID%" />
 									<Enumeration Text="bei Sonnenaufgang" Value="1" Id="%ENID%" />
@@ -181,29 +181,29 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-ActivationTime" Name="ActivationTime">
+							<ParameterType Id="%AID%_PT-SHCActivationTime" Name="SHCActivationTime">
 								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="1440" UIHint="Time_hhmm" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-ElevationBeforeAfterSunSetRise" Name="ElevationBeforeAfterSunSetRise">
+							<ParameterType Id="%AID%_PT-SHCElevationBeforeAfterSunSetRise" Name="SHCElevationBeforeAfterSunSetRise">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="240" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-WaitTimeShadingControl" Name="WaitTimeShadingControl">
+							<ParameterType Id="%AID%_PT-SHCWaitTimeShadingControl" Name="SHCWaitTimeShadingControl">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="720" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-SHCPercent" Name="Percent">
+							<ParameterType Id="%AID%_PT-SHCPercent" Name="SHCPercent">
 								<TypeNumber SizeInBit="7" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-SlatTrackingMode" Name="SlatTrackingMode">
+							<ParameterType Id="%AID%_PT-SHCSlatTrackingMode" Name="SHCSlatTrackingMode">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
 									<Enumeration Text="Standard" Value="1" Id="%ENID%" />
 									<Enumeration Text="Benutzerdefiniert" Value="2" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-OffsetSlatPosition" Name="OffsetSlatPosition">
+							<ParameterType Id="%AID%_PT-SHCOffsetSlatPosition" Name="SHCOffsetSlatPosition">
 								<TypeNumber SizeInBit="8" Type="signedInt" minInclusive="-20" maxInclusive="20" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-MinChangeForSlatAdaption" Name="MinChangeForSlatAdaption">
+							<ParameterType Id="%AID%_PT-SHCMinChangeForSlatAdaption" Name="SHCMinChangeForSlatAdaption">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="5%" Value="5" Id="%ENID%" />
 									<Enumeration Text="10%" Value="10" Id="%ENID%" />
@@ -213,7 +213,7 @@
 									<Enumeration Text="30%" Value="30" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-AfterShadingJalousie" Name="AfterShadingJalousie">
+							<ParameterType Id="%AID%_PT-SHCAfterShadingJalousie" Name="SHCAfterShadingJalousie">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
 									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
@@ -221,7 +221,7 @@
 									<Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-AfterShading" Name="AfterShading">
+							<ParameterType Id="%AID%_PT-SHCAfterShading" Name="SHCAfterShading">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
 									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
@@ -229,7 +229,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-ShadingBreak" Name="ShadingBreak">
+							<ParameterType Id="%AID%_PT-SHCShadingBreak" Name="SHCShadingBreak">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Himmelsrichtung" Value="1" Id="%ENID%" />
@@ -239,7 +239,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-NightModeStartBehavior" Name="NightModeStartBehavior">
+							<ParameterType Id="%AID%_PT-SHCNightModeStartBehavior" Name="SHCNightModeStartBehavior">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Kein automatischer Start" Value="0" Id="%ENID%" />
 									<Enumeration Text="Uhrzeit" Value="1" Id="%ENID%" />
@@ -249,7 +249,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-NightModeEndBehavior" Name="NightModeEndBehavior">
+							<ParameterType Id="%AID%_PT-SHCNightModeEndBehavior" Name="SHCNightModeEndBehavior">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Kein automatisches Ende" Value="0" Id="%ENID%" />
 									<Enumeration Text="Uhrzeit" Value="1" Id="%ENID%" />
@@ -259,7 +259,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-HeatingInput" Name="HeatingInput">
+							<ParameterType Id="%AID%_PT-SHCHeatingInput" Name="SHCHeatingInput">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
 									<Enumeration Text="Stellwert %" Value="1" Id="%ENID%" />
@@ -267,15 +267,15 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-RoomTemperaturMinimum" Name="RoomTemperaturMinimum">
+							<ParameterType Id="%AID%_PT-SHCRoomTemperaturMinimum" Name="SHCRoomTemperaturMinimum">
 								<TypeFloat Encoding="IEEE-754 Single" minInclusive="10" maxInclusive="30" />
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-MaxHeatingValue" Name="MaxHeatingValue">
+							<ParameterType Id="%AID%_PT-SHCMaxHeatingValue" Name="SHCMaxHeatingValue">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="100" />
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-UpDownTypeForManualControl" Name="UpDownTypeForManualControl">
+							<ParameterType Id="%AID%_PT-SHCUpDownTypeForManualControl" Name="SHCUpDownTypeForManualControl">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Text="Manuelle Bedienung über Aktor" Value="0" Id="%ENID%" />
 									<Enumeration Text="Modul sendet Auf/Ab zum Aktor" Value="1" Id="%ENID%" />
@@ -283,7 +283,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-WaitTimeAfterManualUsageForShading" Name="WaitTimeAfterManualUsageForShading">
+							<ParameterType Id="%AID%_PT-SHCWaitTimeAfterManualUsageForShading" Name="SHCWaitTimeAfterManualUsageForShading">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="für diese Periode deaktivieren" Value="0" Id="%ENID%" />
 									<Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
@@ -307,7 +307,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-WaitTimeAfterManualUsage" Name="WaitTimeAfterManualUsage">
+							<ParameterType Id="%AID%_PT-SHCWaitTimeAfterManualUsage" Name="SHCWaitTimeAfterManualUsage">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Keine Wartezeit" Value="0" Id="%ENID%" />
 									<Enumeration Text="1 Minute" Value="1" Id="%ENID%" />
@@ -331,7 +331,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-UsePositionIfWindowOpen" Name="UsePositionIfWindowOpen">
+							<ParameterType Id="%AID%_PT-SHCUsePositionIfWindowOpen" Name="SHCUsePositionIfWindowOpen">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
 									<Enumeration Text="Nur öffnen" Value="1" Id="%ENID%" />
@@ -339,7 +339,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-WindowOpenModeActive" Name="WindowOpenModeActive">
+							<ParameterType Id="%AID%_PT-SHCWindowOpenModeActive" Name="SHCWindowOpenModeActive">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
 									<Enumeration Text="Ein Kontakt" Value="1" Id="%ENID%" />
@@ -347,7 +347,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-WindowOpenTiltHandling" Name="WindowOpenTiltHandling">
+							<ParameterType Id="%AID%_PT-SHCWindowOpenTiltHandling" Name="SHCWindowOpenTiltHandling">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Text="Gekippt Aktiv und Offen Inaktiv" Value="0" Id="%ENID%" />
 									<Enumeration Text="Gekippt Aktiv und Offen Aktiv" Value="1" Id="%ENID%" />
@@ -355,7 +355,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-WindowOpenTiltWaitTime" Name="WindowOpenTiltWaitTime">
+							<ParameterType Id="%AID%_PT-SHCWindowOpenTiltWaitTime" Name="SHCWindowOpenTiltWaitTime">
 								<TypeRestriction Base="Value" SizeInBit="6">
 									<Enumeration Text="100 Millisekunden" Value="1" Id="%ENID%" />
 									<Enumeration Text="200 Millisekunden" Value="2" Id="%ENID%" />
@@ -368,14 +368,14 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-WindowOpenContact" Name="WindowOpenContact">
+							<ParameterType Id="%AID%_PT-SHCWindowOpenContact" Name="SHCWindowOpenContact">
 								<TypeRestriction Base="Value" SizeInBit="1" UIHint="DropDown">
 									<Enumeration Text="Normal (Aktiv = 1)" Value="0" Id="%ENID%" />
 									<Enumeration Text="Invertiert (Aktiv = 0)" Value="1" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-ShadingActivation" Name="ShadingActivation">
+							<ParameterType Id="%AID%_PT-SHCShadingActivation" Name="SHCShadingActivation">
 								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Aus" Value="0" Id="%ENID%" />
 									<Enumeration Text="Ein" Value="1" Id="%ENID%" />
@@ -386,7 +386,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-MeasurementWatchdog" Name="MeasurementWatchdog">
+							<ParameterType Id="%AID%_PT-SHCMeasurementWatchdog" Name="SHCMeasurementWatchdog">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Aus" Value="0" Id="%ENID%" />
 									<Enumeration Text="10 Minuten" Value="1" Id="%ENID%" />
@@ -400,7 +400,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-MeasurementFallback" Name="MeasurementFallback">
+							<ParameterType Id="%AID%_PT-SHCMeasurementFallback" Name="SHCMeasurementFallback">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Wert Ignorieren" Value="0" Id="%ENID%" />
 									<Enumeration Text="Leseanforderung schicken, dann ignorieren" Value="1" Id="%ENID%" />
@@ -409,7 +409,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-HeatingActive" Name="HeatingActive">
+							<ParameterType Id="%AID%_PT-SHCHeatingActive" Name="SHCHeatingActive">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="ausgeschaltete Heizung" Value="1" Id="%ENID%" />
@@ -428,7 +428,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-KeySpecialFunctionsOpened" Name="KeySpecialFunctions">
+							<ParameterType Id="%AID%_PT-SHCKeySpecialFunctionsOpened" Name="SHCKeySpecialFunctionsOpened">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
@@ -438,7 +438,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-KeySpecialFunctionsClosed" Name="KeySpecialFunctions">
+							<ParameterType Id="%AID%_PT-SHCKeySpecialFunctionsClosed" Name="SHCKeySpecialFunctionsClosed">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
 									<Enumeration Text="Beschattungsautomatik EIN/AUS" Value="1" Id="%ENID%" />
@@ -448,7 +448,7 @@
 								</TypeRestriction>
 							</ParameterType>
 
-							<ParameterType Id="%AID%_PT-SHCLockOutPrevention" Name="LockOutPrevention">
+							<ParameterType Id="%AID%_PT-SHCLockOutPrevention" Name="SHCLockOutPrevention">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Deaktiviert" Value="10" Id="%ENID%" />
 									<Enumeration Text="bei 0%" Value="0" Id="%ENID%" />
@@ -463,7 +463,7 @@
 									<Enumeration Text="bei 90%" Value="9" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-SHCNightAction" Name="Action">
+							<ParameterType Id="%AID%_PT-SHCNightAction" Name="SHCNightAction">
 								<TypeRestriction Base="Value" SizeInBit="1">
 									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
 									<Enumeration Text="Position anfahren" Value="1" Id="%ENID%" />
@@ -500,53 +500,53 @@
 								<!-- 2 bits free-->
 
 								<!-- Beschattung täglich aktivieren -->
-								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche Aktivierung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-SHCShadingActivation" Text="Tägliche Aktivierung" Value="3" />
 
 
 								<!-- Temperatur Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00008" Offset="3" BitOffset="0" Name="TempWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00008" Offset="3" BitOffset="0" Name="TempWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Temperatur Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%00009" Offset="3" BitOffset="4" Name="TempFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00009" Offset="3" BitOffset="4" Name="TempFallbackMode" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Temperatur Fallback -->
-								<Parameter Id="%AID%_UP-%TT%00010" Offset="4" BitOffset="0" Name="TempFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
+								<Parameter Id="%AID%_UP-%TT%00010" Offset="4" BitOffset="0" Name="TempFallback" ParameterType="%AID%_PT-SHCTemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
 
 								<!-- Temperatur Prognose Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00011" Offset="5" BitOffset="0" Name="TempForecastWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00011" Offset="5" BitOffset="0" Name="TempForecastWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Temperatur Prognose Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%00012" Offset="5" BitOffset="4" Name="TempForecastFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00012" Offset="5" BitOffset="4" Name="TempForecastFallbackMode" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Temperatur Prognose Fallback -->
-								<Parameter Id="%AID%_UP-%TT%00013" Offset="6" BitOffset="0" Name="TempForecastFallback" ParameterType="%AID%_PT-TemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
+								<Parameter Id="%AID%_UP-%TT%00013" Offset="6" BitOffset="0" Name="TempForecastFallback" ParameterType="%AID%_PT-SHCTemperaturLimit" Text="Wert" Value="30" SuffixText="°C" />
 
 
 								<!-- Helligkeit Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00014" Offset="7" BitOffset="0" Name="BrightnessWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00014" Offset="7" BitOffset="0" Name="BrightnessWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Helligkeit Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%00015" Offset="7" BitOffset="4" Name="BrightnessFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00015" Offset="7" BitOffset="4" Name="BrightnessFallbackMode" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Helligkeit Fallback -->
-								<Parameter Id="%AID%_UP-%TT%00016" Offset="8" BitOffset="0" Name="BrightnessFallback" ParameterType="%AID%_PT-BrightnessLimit" Text="Wert" SuffixText="x1000 lux" Value="30" />
+								<Parameter Id="%AID%_UP-%TT%00016" Offset="8" BitOffset="0" Name="BrightnessFallback" ParameterType="%AID%_PT-SHCBrightnessLimit" Text="Wert" SuffixText="x1000 lux" Value="30" />
 
 
 								<!-- UVI Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00017" Offset="9" BitOffset="0" Name="UVIWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00017" Offset="9" BitOffset="0" Name="UVIWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- UVI Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%00018" Offset="9" BitOffset="4" Name="UVIFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00018" Offset="9" BitOffset="4" Name="UVIFallbackMode" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- UVI Fallback -->
-								<Parameter Id="%AID%_UP-%TT%00019" Offset="10" BitOffset="0" Name="UVIFallback" ParameterType="%AID%_PT-UVIndex" Text="Wert" Value="10" />
+								<Parameter Id="%AID%_UP-%TT%00019" Offset="10" BitOffset="0" Name="UVIFallback" ParameterType="%AID%_PT-SHCUVIndex" Text="Wert" Value="10" />
 
 								<!-- Regen Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00020" Offset="14" BitOffset="0" Name="RainWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00020" Offset="14" BitOffset="0" Name="RainWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Regen Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%00021" Offset="14" BitOffset="4" Name="RainFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00021" Offset="14" BitOffset="4" Name="RainFallbackMode" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Regen Fallback -->
 								<Parameter Id="%AID%_UP-%TT%00022" Offset="15" BitOffset="0" Name="RainFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" />
@@ -554,30 +554,30 @@
 								<!-- 7 bits free-->
 
 								<!-- Wolken Watchdog -->
-								<Parameter Id="%AID%_UP-%TT%00023" Offset="16" BitOffset="0" Name="CloudsWatchdog" ParameterType="%AID%_PT-MeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00023" Offset="16" BitOffset="0" Name="CloudsWatchdog" ParameterType="%AID%_PT-SHCMeasurementWatchdog" Text="Ausfallsüberwachung" Value="3" />
 
 								<!-- Wolken Watchdog Fallback-->
-								<Parameter Id="%AID%_UP-%TT%00024" Offset="17" BitOffset="4" Name="CloudsFallbackMode" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
+								<Parameter Id="%AID%_UP-%TT%00024" Offset="17" BitOffset="4" Name="CloudsFallbackMode" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Wolken Fallback -->
 								<Parameter Id="%AID%_UP-%TT%00025" Offset="18" BitOffset="0" Name="CloudsFallback" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
 
 								<!-- Helligkeitssensoren Anzahl -->
-								<Parameter Id="%AID%_UP-%TT%00026" Offset="19" BitOffset="0" Name="BrightnessSensorCount" ParameterType="%AID%_PT-BrightnessSensorCount" Text="Helligkeitssensoren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%00026" Offset="19" BitOffset="0" Name="BrightnessSensorCount" ParameterType="%AID%_PT-SHCBrightnessSensorCount" Text="Helligkeitssensoren" Value="1" />
 
 								<!-- Helligkeit Aggregation -->
-								<Parameter Id="%AID%_UP-%TT%00027" Offset="20" BitOffset="0" Name="BrightnessAggregation" ParameterType="%AID%_PT-BrightnessAggregation" Text="Helligkeit Aggregation" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%00027" Offset="20" BitOffset="0" Name="BrightnessAggregation" ParameterType="%AID%_PT-SHCBrightnessAggregation" Text="Helligkeit Aggregation" Value="0" />
 
 								<!-- Ausrichtung Sensor 1 -->
-								<Parameter Id="%AID%_UP-%TT%00028" Offset="21" BitOffset="0" Name="BrightnessAzimuth1" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 1" Value="65535" />
+								<Parameter Id="%AID%_UP-%TT%00028" Offset="21" BitOffset="0" Name="BrightnessAzimuth1" ParameterType="%AID%_PT-SHCBrightnessAzimuth" Text="Ausrichtung Sensor 1" Value="65535" />
 								<!-- Ausrichtung Sensor 2 -->
-								<Parameter Id="%AID%_UP-%TT%00029" Offset="23" BitOffset="0" Name="BrightnessAzimuth2" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 2" Value="65535" />
+								<Parameter Id="%AID%_UP-%TT%00029" Offset="23" BitOffset="0" Name="BrightnessAzimuth2" ParameterType="%AID%_PT-SHCBrightnessAzimuth" Text="Ausrichtung Sensor 2" Value="65535" />
 								<!-- Ausrichtung Sensor 3 -->
-								<Parameter Id="%AID%_UP-%TT%00030" Offset="25" BitOffset="0" Name="BrightnessAzimuth3" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 3" Value="65535" />
+								<Parameter Id="%AID%_UP-%TT%00030" Offset="25" BitOffset="0" Name="BrightnessAzimuth3" ParameterType="%AID%_PT-SHCBrightnessAzimuth" Text="Ausrichtung Sensor 3" Value="65535" />
 								<!-- Ausrichtung Sensor 4 -->
-								<Parameter Id="%AID%_UP-%TT%00031" Offset="27" BitOffset="0" Name="BrightnessAzimuth4" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 4" Value="65535" />
+								<Parameter Id="%AID%_UP-%TT%00031" Offset="27" BitOffset="0" Name="BrightnessAzimuth4" ParameterType="%AID%_PT-SHCBrightnessAzimuth" Text="Ausrichtung Sensor 4" Value="65535" />
 								<!-- Ausrichtung Sensor 5 -->
-								<Parameter Id="%AID%_UP-%TT%00032" Offset="29" BitOffset="0" Name="BrightnessAzimuth5" ParameterType="%AID%_PT-BrightnessAzimuth" Text="Ausrichtung Sensor 5" Value="65535" />
+								<Parameter Id="%AID%_UP-%TT%00032" Offset="29" BitOffset="0" Name="BrightnessAzimuth5" ParameterType="%AID%_PT-SHCBrightnessAzimuth" Text="Ausrichtung Sensor 5" Value="65535" />
 
 							</Union>
 						</Parameters>
