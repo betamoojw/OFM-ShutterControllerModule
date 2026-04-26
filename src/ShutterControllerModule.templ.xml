@@ -34,7 +34,7 @@
 
 					<Static>
 						<ParameterTypes>
-							<ParameterType Id="%AID%_PT-SHCNumberOfShading" Name="NumberOfShading">
+							<ParameterType Id="%AID%_PT-SHCNumberOfShading" Name="SHCNumberOfShading">
 								<TypeRestriction Base="Value" SizeInBit="4">
 									<Enumeration Text="Keine" Value="0" Id="%ENID%" />
 									<!-- ShutterControllerModule.ModeShading.xml will be included here -->

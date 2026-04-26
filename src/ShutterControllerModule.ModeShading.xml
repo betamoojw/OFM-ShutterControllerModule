@@ -30,7 +30,7 @@
 						<Parameters>
 
 							<!-- Part Index -->
-							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%Index%Pn%" Access="None" ParameterType="%AID%_PT-SHCSHIndex" Text="Index" Value="%Pn%" />
+							<Parameter Id="%AID%_P-%TT%%CC%%PPP+0%" Name="C%C%Index%Pn%" Access="None" ParameterType="%AID%_PT-SHCIndex" Text="Index" Value="%Pn%" />
 
 
 							<Union SizeInBit="320">

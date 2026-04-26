@@ -12,7 +12,7 @@
 							<ParameterType Id="%AID%_PT-SHCNumChannels" Name="SHCNumChannels">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
 							</ParameterType>
-							<ParameterType Id="%AID%_PT-SHCSHIndex" Name="SHCIndex">
+							<ParameterType Id="%AID%_PT-SHCIndex" Name="SHCIndex">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="255" />
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHCShutterType" Name="SHCShutterType">
