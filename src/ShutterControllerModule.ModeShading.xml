@@ -14,7 +14,7 @@
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="36" increment="8" />
+						<op:param name="%En%" value="34" increment="8" />
 						<!-- Min Temp-->
 						<op:param name="%MinTemp%" value="15" increment="10" />
 					</op:partParams>
