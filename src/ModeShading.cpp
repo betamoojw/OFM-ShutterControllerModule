@@ -351,11 +351,6 @@ bool ModeShading::allowed(const CallContext &callContext)
         _lastNotAllowedReason = _notAllowedReason;
         updateDiagnosticKos();
     }
-#ifdef KoSHC_CShading1Ready
-    bool readiness = _notAllowedReason == 0;
-    if (KoSHC_CShading1Ready.valueNoSendCompare(readiness, DPT_Switch))
-        KoSHC_CShading1Ready.objectWritten();
-#endif
     // Return result
     if (!_lastSunFrameAllowed)
         return false;

@@ -14,7 +14,7 @@
 						<!-- Parameter ID's -->
 						<op:param name="%PPP%" value="100" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="34" increment="8" />
+						<op:param name="%En%" value="34" increment="7" />
 						<!-- Min Temp-->
 						<op:param name="%MinTemp%" value="15" increment="10" />
 					</op:partParams>
@@ -286,9 +286,6 @@
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+5%" Number="%K%En+5%%" ObjectSize="4 Bytes" DatapointType="DPST-27-1" Name="C%C%Shading%Pn%DiagnoseNotAllowedBit" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 							<!-- Modus 1 Diagnose "Nicht erlaubt" Grund -->
 							<ComObject Id="%AID%_O-%TT%%CC%%PPP+6%" Number="%K%En+6%%" ObjectSize="1 Byte" DatapointType="DPST-5-5" Name="C%C%Shading%Pn%DiagnoseNotAllowedReason" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-							<!-- Modus 1 Bereitschaft -->
-							<ComObject Id="%AID%_O-%TT%%CC%%PPP+7%" Number="%K%En+7%%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%Shading%Pn%Ready" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-					
 						</ComObjectTable>
 						<ComObjectRefs>
 

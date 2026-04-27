@@ -23,7 +23,7 @@
 						<!-- Parameter Offset -->
 						<op:param name="%ParamOffset%" value="45" increment="40" />
 						<!-- KO Offset-->
-						<op:param name="%En%" value="35" increment="8" />
+						<op:param name="%En%" value="35" increment="7" />
 						<!-- ModeShading number -->
 						<op:param name="%Pn%" value="1" />
 						<!-- Parameter ID's -->
