@@ -303,9 +303,7 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+5%_R-%TT%%CC%%PPP+5%01" RefId="%AID%_O-%TT%%CC%%PPP+5%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% 'Nicht erlaubt'" FunctionText="Jalousie %C%: Ausgang, Bitcodiert" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Diagnose "Nicht erlaubt" Grund -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+6%_R-%TT%%CC%%PPP+6%01" RefId="%AID%_O-%TT%%CC%%PPP+6%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% 'Nicht erlaubt' Grund" FunctionText="Jalousie %C%: Ausgang, Zahl" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-							<!-- Modus 1 Bereitschaft -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+7%_R-%TT%%CC%%PPP+7%01" RefId="%AID%_O-%TT%%CC%%PPP+7%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% Bereitschaft" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-
+			
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
@@ -333,8 +331,6 @@
 
 															<!-- Modus %Pn%  Aktiv -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+0%_R-%TT%%CC%%PPP+0%01" />
-															<!-- Modus %Pn%  Bereitschaft -->
-															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+7%_R-%TT%%CC%%PPP+7%01" />
 															<!-- Modus %Pn%  Sperre -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" />
 															<!-- Modus %Pn%  Sperre Rückmeldung -->
