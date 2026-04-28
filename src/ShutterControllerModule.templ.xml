@@ -133,7 +133,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%ManualShadingWaitTime" ParameterType="%AID%_PT-SHCWaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
 								<!-- Nach Beschattung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-SHCAfterShading" Text="Nach Beschattung" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-SHCAfterShading" Text="Nach Beschattung" Value="2" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%039" Offset="16" BitOffset="0" Name="C%C%AfterShadingJalousie" ParameterType="%AID%_PT-SHCAfterShadingJalousie" Text="Nach Beschattung" Value="2" op:nowarn="true" />
 
 
@@ -169,9 +169,9 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%028" Offset="23" BitOffset="4" Name="C%C%HeatingWatchdogBehavior" ParameterType="%AID%_PT-SHCMeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Heizung Fallback % -->
-								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" op:nowarn="true" />
 								<!-- Heizung Fallback Ein/Aus -->
-								<Parameter Id="%AID%_UP-%TT%%CC%030" Offset="24" BitOffset="0" Name="C%C%HeadingFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%030" Offset="24" BitOffset="0" Name="C%C%HeadingFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" op:nowarn="true" />
 
 
 								<!-- Raumtemperatur Watchdog -->
