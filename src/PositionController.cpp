@@ -69,6 +69,11 @@ void PositionController::storeCurrentPositionForRestore()
     _restorePosition = position();
 }
 
+void PositionController::storeCurrentSlatPositionForRestore()
+{
+    _restoreSlat = slat();
+}
+
 void PositionController::setRestorePosition(uint8_t restorePosition)
 {
     _restorePosition = restorePosition;

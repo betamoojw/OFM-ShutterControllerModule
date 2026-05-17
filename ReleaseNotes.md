@@ -1,3 +1,5 @@
+v 0.7.0
+- Feature: Benutzerdefinierte Position nach Beschattungsende anfahren
 v 0.6.0
 - Refactor: "Helligkeit" (bool) + "Weitere Helligkeitssensoren" (count) zusammengefasst zu "Helligkeitssensoren" (Enum: Nein/1-5 Sensoren)
 - Rename: "Helligkeit Sensor 1..5" -> "Ausrichtung Sensor 1..5"

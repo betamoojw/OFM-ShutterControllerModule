@@ -219,6 +219,7 @@
 									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
 									<Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
 									<Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+									<Enumeration Text="Benutzerdefinierte Position" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHCAfterShading" Name="SHCAfterShading">
@@ -226,6 +227,7 @@
 									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
 									<Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
 									<Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
+									<Enumeration Text="Benutzerdefinierte Position" Value="4" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 

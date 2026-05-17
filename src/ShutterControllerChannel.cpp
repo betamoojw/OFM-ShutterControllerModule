@@ -782,6 +782,7 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
             // <Enumeration Text="Position vor Beschattungsstart" Value="1" Id="%ENID%" />
             // <Enumeration Text="Fährt Auf" Value="2" Id="%ENID%" />
             // <Enumeration Text="Lamelle Waagrecht" Value="3" Id="%ENID%" />
+            //<Enumeration Text="Benutzerdefinierte Position" Value="4" Id="%ENID%" />
             switch (_positionController.hasSlat() ? ParamSHC_CAfterShadingJalousie : ParamSHC_CAfterShading)
             {
             case 1:
@@ -797,6 +798,20 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
                 // Slat horizontal
                 _positionController.storeCurrentPositionForRestore();
                 _positionController.setAutomaticSlatAndStoreForRestore(50); // Handled as manual operation because the value should be stored
+                break;
+            case 4:
+                // User defined position
+                if (ParamSHC_CShadingEndPositionEnabled)
+                    _positionController.setAutomaticPositionAndStoreForRestore(ParamSHC_CShadingEndPosition); // Handled as manual operation because the value should be stored
+                else
+                    _positionController.storeCurrentPositionForRestore();
+                if (_positionController.hasSlat())
+                {
+                    if (ParamSHC_CShadingEndSlatPositionEnabled)
+                        _positionController.setAutomaticSlatAndStoreForRestore(ParamSHC_CShadingEndSlatPosition);   // Handled as manual operation because the value should be stored
+                    else
+                        _positionController.storeCurrentSlatPositionForRestore();
+                }
                 break;
             }
         }

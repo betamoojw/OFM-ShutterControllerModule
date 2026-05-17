@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeWindowOpen.xml" name="ModeWindowOpen" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="31" increment="7" />
+						<op:param name="%ParamOffset%" value="33" increment="7" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="27" increment="4" />
 						<!-- ModeWindowOpen number -->
@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="45" increment="40" />
+						<op:param name="%ParamOffset%" value="47" increment="40" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="35" increment="7" />
 						<!-- ModeShading number -->
@@ -50,7 +50,7 @@
 							<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
 							<Parameter Id="%AID%_P-%TT%%CC%042" Name="C%C%KoWithoutSpecialFunction" ParameterType="%AID%_PT-OnOffYesNo" Text="Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung" Value="0" />
 
-							<Union SizeInBit="248">
+							<Union SizeInBit="264">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
@@ -201,9 +201,21 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%041" Offset="30" BitOffset="4" Name="C%C%LongKeyPressUpIfClosed" ParameterType="%AID%_PT-SHCKeySpecialFunctionsClosed" Text="Langer Druck 'Nach unten'" Value="0" />
 
 
+								<!-- Shading End Position Enabled -->
+								<Parameter Id="%AID%_UP-%TT%%CC%047" Offset="31" BitOffset="0" Name="C%C%ShadingEndPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
 
-								<!-- Next offset: 31-->
-								<!-- Next Id: %AID%_UP-%TT%%CC%047 -->
+								<!-- Shading End Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%048" Offset="31" BitOffset="1" Name="C%C%ShadingEndPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="0" SuffixText="%" />
+
+								<!-- Shading End Lamellen Enabled -->
+								<Parameter Id="%AID%_UP-%TT%%CC%049" Offset="32" BitOffset="0" Name="C%C%ShadingEndSlatPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellenstellung anfahren" Value="1" />
+
+								<!-- Shading Lamellen Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%050" Offset="32" BitOffset="1" Name="C%C%ShadingEndSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
+	
+
+								<!-- Next offset: 33-->
+								<!-- Next Id: %AID%_UP-%TT%%CC%51 -->
 
 
 							</Union>
@@ -348,6 +360,20 @@
 
 							<!-- Fenster gekippt handling -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" RefId="%AID%_UP-%TT%%CC%044"/>
+
+							
+							<!-- Shading End Position Enabled -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" RefId="%AID%_UP-%TT%%CC%047" />
+
+							<!-- Shading End Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801" RefId="%AID%_UP-%TT%%CC%048" />
+
+							<!-- Shading End Lamellen Enabled -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901" RefId="%AID%_UP-%TT%%CC%049" />
+
+							<!-- Shading Lamellen Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" />
+
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
@@ -666,11 +692,45 @@
 																		<!-- Jalousie -->
 																		<!-- Nach Beschattung Zeit -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" IndentLevel="1" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901">
+																			<when test="4">
+																				<!-- Benutzerdefiniert -->
+																				<!-- Shading End Position Enabled -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" HelpContext="%DOC%" IndentLevel="2" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701">
+																					<when test="1">
+																						<!-- Shading End Position -->
+																						<ParameterRefRef RefId="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801" HelpContext="%DOC%" IndentLevel="3" />
+																					</when>
+																				</choose>
+																				<!-- Shading End Lamellen Enabled -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901" HelpContext="%DOC%" IndentLevel="2" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%049_R-%TT%%CC%04901">
+																					<when test="1">
+																						<!-- Shading End Lamellen -->
+																						<ParameterRefRef RefId="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" HelpContext="%DOC%" IndentLevel="3" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose> 	
 																	</when>
 																	<when test="2">
 																		<!-- Rollo -->
 																		<!-- Nach Beschattung Zeit -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" IndentLevel="1" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801">
+																			<when test="4">
+																				<!-- Benutzerdefiniert -->
+																				<!-- Shading End Position Enabled -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701" HelpContext="%DOC%" IndentLevel="2" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%047_R-%TT%%CC%04701">
+																					<when test="1">
+																						<!-- Shading End Position -->
+																						<ParameterRefRef RefId="%AID%_UP-%TT%%CC%048_R-%TT%%CC%04801" HelpContext="%DOC%" IndentLevel="3" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose> 
 																	</when>
 																</choose>
 															</ParameterBlock>
