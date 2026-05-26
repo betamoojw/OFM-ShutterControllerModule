@@ -15,6 +15,7 @@ class CallContext
         bool modeNewStarted = false;
         bool fastSimulationActive = false;
         bool isWindowOpenActive = false;
+        bool isWindowTiltActive = false;
         bool hasSlat = false;
         bool diagnosticLog = false;
         bool shadingControlActive = false;
