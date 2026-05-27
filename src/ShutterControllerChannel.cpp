@@ -595,6 +595,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             _currentWindowOpenHandler->start(callContext, _currentWindowOpenHandler, _positionController);
     }
     callContext.isWindowOpenActive = _currentWindowOpenHandler != nullptr;
+    callContext.isWindowTiltActive = _currentWindowOpenHandler != nullptr && _currentWindowOpenHandler->isTiltHandler();
 
     // State machine handling for mode activation
     ModeBase *nextMode = nullptr;

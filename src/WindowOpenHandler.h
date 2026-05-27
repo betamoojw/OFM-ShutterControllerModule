@@ -26,6 +26,7 @@ public:
 protected:
     const std::string& logPrefix() const;
 public:
+    bool isTiltHandler() const { return _isTiltHandler; }
     uint8_t getParamterOpenPositionControl();
     uint8_t getParamterOpenSlatPositionControl();
     uint8_t getParamterOpenPosition();
