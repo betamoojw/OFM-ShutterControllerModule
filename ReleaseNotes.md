@@ -1,3 +1,7 @@
+v 0.8.1
+- Fix: Offenes Fenster blockiert Beschattung
+v 0.8.0
+- Fix: Speicherüberlappung in knxprod
 v 0.7.0
 - Feature: Benutzerdefinierte Position nach Beschattungsende anfahren
 v 0.6.0
