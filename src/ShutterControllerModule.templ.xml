@@ -478,9 +478,9 @@
 
 
 							<!-- Jalousie Prozent Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Höhe Absolut" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Höhe Absolut" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Lamellenstellung" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Lamellenstellung" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Beschattung Einschalten -->
