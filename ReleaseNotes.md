@@ -1,3 +1,5 @@
+v 0.9.1
+- Fix: Sperrobjekt für Beschattungsmodus
 v 0.9
 - Fix: Aktorrückmeldungs-KO sollte mit Eingang statt mit Ausgang bezeichnet sein
 v 0.8.1
