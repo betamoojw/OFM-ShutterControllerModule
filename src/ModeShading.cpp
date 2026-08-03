@@ -352,6 +352,8 @@ bool ModeShading::allowed(const CallContext &callContext)
         updateDiagnosticKos();
     }
     // Return result
+    if (_lockActive)
+        return false;
     if (!_lastSunFrameAllowed)
         return false;
     if (startWaitTimeActive)
