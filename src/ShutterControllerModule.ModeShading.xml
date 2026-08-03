@@ -294,7 +294,7 @@
 							<!-- Modus 1 Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+1%_R-%TT%%CC%%PPP+1%01" RefId="%AID%_O-%TT%%CC%%PPP+1%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Sperre Rückmeldung -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" RefId="%AID%_O-%TT%%CC%%PPP+2%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% Sperre Aktiv" FunctionText="Jalousie %C%: Eingang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
+							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+2%_R-%TT%%CC%%PPP+2%01" RefId="%AID%_O-%TT%%CC%%PPP+2%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% Sperre Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"/>
 							<!-- Modus 1 Beschattungsunterbrechung Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%%PPP+3%_R-%TT%%CC%%PPP+3%01" RefId="%AID%_O-%TT%%CC%%PPP+3%" Text="{{0:Jalousie %C%}}: Beschattungsmodus %Pn% Beschattungsunterbrechung Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus 1 Beschattungsunterbrechung Sperre Rückmeldung -->
