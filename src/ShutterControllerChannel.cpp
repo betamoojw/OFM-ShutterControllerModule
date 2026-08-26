@@ -123,7 +123,7 @@ void ShutterControllerChannel::setup()
         mode->setup(_channelIndex);
     }
 #ifdef SIMULATION
-    _positionController.startSimulation(false);
+    _positionController.simulationMode(SimulationMode::RealisticSimulation);
 #endif
 }
 
@@ -200,25 +200,25 @@ bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagno
             switch (std::stoi(cmd.substr(3)))
             {
             case 0:
-                _positionController.stopSimulation();
+                _positionController.simulationMode(SimulationMode::None);
                 break;
             case 1:
-                _positionController.startSimulation(false);
+                _positionController.simulationMode(SimulationMode::RealisticSimulation);
                 break;
             case 2:
-                _positionController.startSimulation(true);
+                _positionController.simulationMode(SimulationMode::FastSimulation);
                 break;
             }
         }
         switch (_positionController.simulationMode())
         {
-        case 0:
+        case SimulationMode::None:
             logInfoP("Simulation not started");
             break;
-        case 1:
+        case SimulationMode::RealisticSimulation:
             logInfoP("Simulation started");
             break;
-        case 2:
+        case SimulationMode::FastSimulation:
             logInfoP("Fast simulation started");
             break;
         }
@@ -417,7 +417,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
 
     callContext.shadingPeriodActive = _shadingPeriodActive;
     callContext.positionController = &_positionController;
-    callContext.fastSimulationActive = _positionController.simulationMode() == 2;
+    callContext.simulationMode = _positionController.simulationMode();
     callContext.hasSlat = _positionController.hasSlat();
     callContext.modeNewStarted = false;
     callContext.modeIdle = _modeIdle;
@@ -439,7 +439,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     // Handle reactivation of shading after manual usage
     if (_waitTimeForReactivateShadingAfterManualStarted != 0)
     {
-        auto waitTime = callContext.fastSimulationActive ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs();
+        auto waitTime = callContext.simulationMode == SimulationMode::FastSimulation ? getManualShadingWaitTimeInMs() / 10 : getManualShadingWaitTimeInMs();
         if (callContext.currentMillis - _waitTimeForReactivateShadingAfterManualStarted > waitTime)
         {
             // reactivate
@@ -516,7 +516,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
                 break;
             }
         }
-        if (callContext.fastSimulationActive)
+        if (callContext.simulationMode == SimulationMode::FastSimulation)
             waitTime /= 10;
         if (callContext.currentMillis - _waitForWindowOpenEvalulation >= waitTime)
         {
@@ -817,4 +817,9 @@ void ShutterControllerChannel::anyShadingModeActive(bool active)
             }
         }
     }
+}
+
+void ShutterControllerChannel::loop()
+{
+    _positionController.loop();
 }

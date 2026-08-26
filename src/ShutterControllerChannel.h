@@ -58,4 +58,5 @@ class ShutterControllerChannel : public OpenKNX::Channel
         bool processCommand(const std::string cmd, bool diagnoseKo, bool& diagnosticLogLoopRequest);
         void execute(CallContext& callContext);
         void activateShading();
+        void loop() override;
 };

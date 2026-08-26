@@ -1,9 +1,10 @@
 #pragma once
 #include "OpenKNX.h"
 #include "CallContext.h"
+#include "ShutterControlBase.h"
 class PositionController;
 
-class ShutterSimulation 
+class ShutterSimulation : public ShutterControlBase
 {
     private:
         PositionController& _positionController;
@@ -15,13 +16,12 @@ class ShutterSimulation
         unsigned long _lastPositionChange = 0;
         unsigned long _lastGroupObjectUpdate = 0;
         std::string _logPrefix;
-        bool _fastSimulation = false;
         void setMoving(bool moving);
     public:
         ShutterSimulation(uint8_t channelIndex, PositionController& positionController);
-        void processInputKo(GroupObject& ko);
-        void update(const CallContext& callContext);
+        void processInputKo(GroupObject& ko) override;
+        void update(const CallContext& callContext) override;
         const std::string& logPrefix();
-        void setFastSimulation(bool fastSimulation);
-        bool getFastSimulation();
+        void loop() override {};
+
 };

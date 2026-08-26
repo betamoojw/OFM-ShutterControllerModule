@@ -1,7 +1,11 @@
 #include "PositionController.h"
 #include "knxprod.h"
 #include "CallContext.h"
+#include "ShutterControlBase.h"
 #include "ShutterSimulation.h"
+#ifdef SHC_SHUTTER_CONTROL_CLASS
+#include "ShutterControlCustom.h"
+#endif
 
 #define MOVING_TIMEOUT 120000               // 2 minutes
 #define MOVING_TIMEOUT_AFTER_FEEDBACK 30000 // 30 seconds
@@ -14,6 +18,10 @@ PositionController::PositionController(uint8_t channelIndex)
     _hasSlat = ParamSHC_CType == 1;
     _logPrefix = openknx.logger.buildPrefix("SC", _channelIndex + 1);
     _logPrefix += "PosCtrl";
+
+#ifdef SHC_SHUTTER_CONTROL_CLASS
+    _shutterControl = new SHC_SHUTTER_CONTROL_CLASS(_channelIndex, *this);
+#endif
 }
 const std::string &PositionController::logPrefix()
 {
@@ -23,6 +31,12 @@ const std::string &PositionController::logPrefix()
 bool PositionController::hasSlat() const
 {
     return _hasSlat;
+}
+
+void PositionController::loop()
+{
+    if (_shutterControl != nullptr)
+        _shutterControl->loop();
 }
 
 void PositionController::setAutomaticPosition(uint8_t automaticPosition)
@@ -134,8 +148,8 @@ void PositionController::setManualStep(bool step)
     {
         KoSHC_CShutterStopStepOutput.value(step, DPT_Step);
     }
-    if (_shutterSimulation != nullptr)
-        _shutterSimulation->processInputKo(KoSHC_CShutterStopStepOutput);
+    if (_shutterControl != nullptr)
+        _shutterControl->processInputKo(KoSHC_CShutterStopStepOutput);
     _startWaitForManualPositionFeedback = millis();
     if (_startWaitForManualPositionFeedback == 0)
         _startWaitForManualPositionFeedback = 1;
@@ -178,8 +192,8 @@ void PositionController::setManualUpDown(bool down)
     case 1:
         logInfoP("Set down: %d", (int)down);
         KoSHC_CShutterUpDownOutput.value(down, DPT_UpDown);
-        if (_shutterSimulation != nullptr)
-            _shutterSimulation->processInputKo(KoSHC_CShutterUpDownOutput);
+        if (_shutterControl != nullptr)
+            _shutterControl->processInputKo(KoSHC_CShutterUpDownOutput);
 
         break;
     case 2:
@@ -198,8 +212,8 @@ void PositionController::restoreLastManualPosition()
 
 bool PositionController::processInputKo(GroupObject &ko)
 {
-    if (_shutterSimulation != nullptr)
-        _shutterSimulation->processInputKo(ko);
+    if (_shutterControl != nullptr)
+        _shutterControl->processInputKo(ko);
     auto koIndex = SHC_KoCalcIndex(ko.asap());
     // Handle blocked input
     switch (koIndex)
@@ -325,7 +339,7 @@ bool PositionController::processInputKo(GroupObject &ko)
 
 void PositionController::setMovingTimeout(unsigned long timeout)
 {
-    if (simulationMode() == 2)
+    if (simulationMode() == SimulationMode::FastSimulation)
         timeout /= 10;
     _waitForMovingTimeout = timeout;
     _waitForMovingFinshed = max(millis(), 1ul);
@@ -337,8 +351,8 @@ void PositionController::control(const CallContext &callContext)
     {
         _lastSetPosition = 0;
     }
-    if (_shutterSimulation != nullptr)
-        _shutterSimulation->update(callContext);
+    if (_shutterControl != nullptr)
+        _shutterControl->update(callContext);
     auto now = callContext.currentMillis;
     if (_waitForMovingFinshed > 0 && now - _waitForMovingFinshed > _waitForMovingTimeout)
     {
@@ -369,16 +383,16 @@ void PositionController::control(const CallContext &callContext)
 
         _lastSetPosition = callContext.currentMillis;
         KoSHC_CShutterPercentOutput.value(_setPosition, DPT_Scaling);
-        if (_shutterSimulation != nullptr)
-            _shutterSimulation->processInputKo(KoSHC_CShutterPercentOutput);
+        if (_shutterControl != nullptr)
+            _shutterControl->processInputKo(KoSHC_CShutterPercentOutput);
         _setPosition = NOTUSED;
     }
     else if (_setSlat != NOTUSED && _lastSetPosition == 0) // Wait for setting slat, if position was set
     {
         logInfoP("Set slat position: %d", (int)_setSlat);
         KoSHC_CShutterSlatOutput.value(_setSlat, DPT_Scaling);
-        if (_shutterSimulation != nullptr)
-            _shutterSimulation->processInputKo(KoSHC_CShutterSlatOutput);
+        if (_shutterControl != nullptr)
+            _shutterControl->processInputKo(KoSHC_CShutterSlatOutput);
         _setSlat = NOTUSED;
     }
     if (callContext.diagnosticLog)
@@ -407,32 +421,37 @@ void PositionController::control(const CallContext &callContext)
     }
 }
 
-bool PositionController::startSimulation(bool fastSimulation)
+void PositionController::simulationMode(SimulationMode simulationMode)
 {
-    if (_shutterSimulation == nullptr)
+    if (_simulationMode != simulationMode)
     {
-        _shutterSimulation = new ShutterSimulation(_channelIndex, *this);
-        _shutterSimulation->setFastSimulation(fastSimulation);
-        return true;
-    }
-    _shutterSimulation->setFastSimulation(fastSimulation);
-    return false;
+        bool simulationActive = _simulationMode != SimulationMode::None;
+        bool newSimulationActive = simulationMode != SimulationMode::None;
+        if (_shutterControl != nullptr && simulationActive != newSimulationActive)
+        {
+            delete _shutterControl;
+            _shutterControl = nullptr;
+        }
+        _simulationMode = simulationMode;
+        logInfoP("Simulation mode: %s", simulationMode == SimulationMode::None ? "None" : simulationMode == SimulationMode::RealisticSimulation ? "Realistic" : "Fast");
+        if (newSimulationActive)
+        {
+#ifdef SHC_SHUTTER_CONTROL_CLASS
+            _shutterControl = new SHC_SHUTTER_CONTROL_CLASS(_channelIndex, *this);
+#endif
+        }
+        else
+        {          
+            if (_shutterControl == nullptr)
+                _shutterControl = new ShutterSimulation(_channelIndex, *this);
+        }
+    }   
 }
 
-bool PositionController::stopSimulation()
-{
-    if (_shutterSimulation != nullptr)
-    {
-        delete _shutterSimulation;
-        _shutterSimulation = nullptr;
-        return true;
-    }
-    return false;
-}
 
-uint8_t PositionController::simulationMode() const
+SimulationMode PositionController::simulationMode() const
 {
-    return _shutterSimulation != nullptr ? (_shutterSimulation->getFastSimulation() ? 2 : 1) : 0;
+    return _simulationMode;
 }
 
 PositionControllerState PositionController::state() const

@@ -94,7 +94,7 @@ bool ModeManual::allowed(const CallContext &callContext)
     if (_waitTimeStart != 0)
     {
         auto timeout = getWaitTimeAfterManualUsage();
-        if (callContext.fastSimulationActive)
+        if (callContext.simulationMode == SimulationMode::FastSimulation)
             timeout /= 10;
         if (callContext.diagnosticLog)
             logInfoP("Wait time %lus acitve. Waiting since: %lus", (unsigned long)timeout / 1000, (unsigned long)((callContext.currentMillis - _waitTimeStart) / 1000));

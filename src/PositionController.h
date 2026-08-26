@@ -1,8 +1,8 @@
 #pragma once
 #include "OpenKNX.h"
+#include "CallContext.h"
 
-class CallContext;
-class ShutterSimulation;
+class ShutterControlBase;
 
 enum class PositionControllerState
 {
@@ -14,7 +14,8 @@ enum class PositionControllerState
 class PositionController
 {
     static const uint8_t NOTUSED;
-    ShutterSimulation* _shutterSimulation = nullptr;
+    ShutterControlBase* _shutterControl = nullptr;
+    SimulationMode _simulationMode = SimulationMode::None;
     PositionControllerState _state = PositionControllerState::Idle;
     uint8_t _restorePosition = 0;
     uint8_t _restoreSlat = 0;
@@ -60,11 +61,11 @@ public:
     void restoreLastManualPosition(); 
     bool processInputKo(GroupObject &ko);
     void control(const CallContext& callContext);
-    bool startSimulation(bool fastSimulation);
-    bool stopSimulation();
-    uint8_t simulationMode() const;
+    void simulationMode(SimulationMode simulationMode);
+    SimulationMode simulationMode() const;
     PositionControllerState state() const;
     uint8_t position() const;
     int8_t targetPosition() const;
     uint8_t slat() const;
+    void loop();
 };

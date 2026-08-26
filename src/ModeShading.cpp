@@ -229,7 +229,7 @@ bool ModeShading::allowed(const CallContext &callContext)
             waitTimeInMillis = 7 * 60 * 60 * 1000;
             break;
         }
-        if (callContext.fastSimulationActive)
+        if (callContext.simulationMode == SimulationMode::FastSimulation)
             waitTimeInMillis /= 10;
 
         if (callContext.currentMillis - _waitTimeAfterHeatingValueChange > waitTimeInMillis)
@@ -280,7 +280,7 @@ bool ModeShading::allowed(const CallContext &callContext)
         {
             // Check end wait time
             auto waitTimeInSeconds = (unsigned long)ParamSHC_CShading1WaitTimeEnd * 60;
-            if (callContext.fastSimulationActive)
+            if (callContext.simulationMode == SimulationMode::FastSimulation)
                 waitTimeInSeconds /= 10;
             if (callContext.currentMillis - _waitTimeAfterMeasurmentValueChange < waitTimeInSeconds * 1000)
             {
@@ -302,7 +302,7 @@ bool ModeShading::allowed(const CallContext &callContext)
         {
             // Check start wait time
             auto waitTimeInSeconds = (unsigned long)ParamSHC_CShading1WaitTimeStart * 60;
-            if (callContext.fastSimulationActive)
+            if (callContext.simulationMode == SimulationMode::FastSimulation)
                 waitTimeInSeconds /= 10;
 
             if (logWaitTimeResult)

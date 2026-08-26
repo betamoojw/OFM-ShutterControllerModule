@@ -9,11 +9,18 @@ class ModeBase;
 class MeasurementSource;
 class PositionController;
 
+enum class SimulationMode
+{
+    None,
+    RealisticSimulation,
+    FastSimulation
+};
+
 class CallContext
 {
     public:
         bool modeNewStarted = false;
-        bool fastSimulationActive = false;
+        SimulationMode simulationMode = SimulationMode::None;
         bool isWindowOpenActive = false;
         bool isWindowTiltActive = false;
         bool hasSlat = false;
