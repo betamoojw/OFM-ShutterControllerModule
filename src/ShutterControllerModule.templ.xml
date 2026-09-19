@@ -1651,16 +1651,16 @@
 								<Row Id="%AID%_PB-nnn_R-16" Name="Row16" Text="16" />
 																</Rows>
 																<Columns>
-								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="8%" Text="freigeben" />
-								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="10%" Text="KNX-Szene" />
-								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="10%" Text="speicherbar" />
-								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="12%" Text="Höhe anfahren" />
-								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="8%" Text="Höhe" />
-								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="12%" Text="Lamelle anfahren" />
-								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="8%" Text="Lamelle" />
-								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="32%" Text="Sperren" />
-								<Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="15%" Text="Verzögerung" />
-								<Column Id="%AID%_PB-nnn_C-10" Name="Col10" Width="25%" Text="Beschreibung" />
+								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="10%" Text="freigeben" />
+								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="14%" Text="KNX-Szene" />
+								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="14%" Text="speicherbar" />
+								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" Text="Höhe anfahren" />
+								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="12%" Text="Höhe" />
+								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="20%" Text="Lamelle anfahren" />
+								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="12%" Text="Lamelle" />
+								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="45%" Text="Sperren" />
+								<Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="20%" Text="Verzögerung" />
+								<Column Id="%AID%_PB-nnn_C-10" Name="Col10" Width="35%" Text="Beschreibung" />
 																</Columns>
 								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" Cell="1,1" HelpContext="SHC-Szenen" />
 								<choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
@@ -2149,14 +2149,14 @@
 								<Row Id="%AID%_PB-nnn_R-16" Name="Row16" Text="16" />
 																</Rows>
 																<Columns>
-								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="8%" Text="freigeben" />
-								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="10%" Text="KNX-Szene" />
-								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="10%" Text="speicherbar" />
-								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="12%" Text="Höhe anfahren" />
-								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="8%" Text="Höhe" />
-								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="32%" Text="Sperren" />
-								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="15%" Text="Verzögerung" />
-								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="25%" Text="Beschreibung" />
+								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="10%" Text="freigeben" />
+								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="14%" Text="KNX-Szene" />
+								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="14%" Text="speicherbar" />
+								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" Text="Höhe anfahren" />
+								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="12%" Text="Höhe" />
+								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="45%" Text="Sperren" />
+								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="20%" Text="Verzögerung" />
+								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="35%" Text="Beschreibung" />
 																</Columns>
 								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" Cell="1,1" HelpContext="SHC-Szenen" />
 								<choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
