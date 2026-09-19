@@ -461,7 +461,7 @@ void ShutterControllerModule::setup()
         KoSHC_ShadingControlDailyActivation.requestObjectRead();
         break;
     }
-    setupChannels(ParamSHC_VisibleChannels);
+    setupChannels(SHC_ChannelCount);
 }
 
 OpenKNX::Channel *ShutterControllerModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)

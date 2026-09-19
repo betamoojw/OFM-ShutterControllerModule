@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
-	<op:config name="%SHC_NumChannelsDefault%" value="0" />
 	<ManufacturerData>
 		<Manufacturer>
 			<ApplicationPrograms>
@@ -10,14 +9,21 @@
 						<ParameterTypes>
 							<!-- Number of channels (module specific) -->
 							<ParameterType Id="%AID%_PT-SHCNumChannels" Name="SHCNumChannels">
-								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="%N%" maxInclusive="%N%" />
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHIndex" Name="SHIndex">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="255" />
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-ShutterType" Name="ShutterType">
 								<TypeRestriction Base="Value" SizeInBit="8">
-									<Enumeration Text="Kanal deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Deaktiviert" Value="0" Id="%ENID%" />
+									<Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
+									<Enumeration Text="Rollo" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<!-- Geraeteart auf dem Kanal-Tab (TypeSelect, ohne "Deaktiviert") -->
+							<ParameterType Id="%AID%_PT-SHCShutterTypeSelect" Name="SHCShutterTypeSelect">
+								<TypeRestriction Base="Value" SizeInBit="8">
 									<Enumeration Text="Jalousie" Value="1" Id="%ENID%" />
 									<Enumeration Text="Rollo" Value="2" Id="%ENID%" />
 								</TypeRestriction>
@@ -527,7 +533,7 @@
 							<Union SizeInBit="248">
 								<Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
 								<!-- Anzahl der Kanäle -->
-								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="%SHC_NumChannelsDefault%" SuffixText=" von %N%" />
+								<Parameter Id="%AID%_UP-%TT%00000" Offset="0" BitOffset="0" Name="VisibleChannels" ParameterType="%AID%_PT-SHCNumChannels" Text="Verfügbare Kanäle" Value="%N%" Access="None" />
 
 								<!-- Temperatur Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00001" Offset="1" BitOffset="0" Name="HasTemperaturInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Temperatur" Value="1" />
@@ -633,7 +639,6 @@
 						</Parameters>
 						<ParameterRefs>
 							<!-- Anzahl der Kanäle -->
-							<ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
 
 							<!-- Temperatur Eingang-->
 							<ParameterRef Id="%AID%_UP-%TT%00001_R-%TT%0000101" RefId="%AID%_UP-%TT%00001" />
@@ -791,19 +796,8 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Version: %ModuleVersion%" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-
-								<!-- Verfügbare Kanäle -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="%DOC%" IndentLevel="1" />
-								<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-									<when test="&gt;0">
-										<!-- Fehlender Messwert -->
-										<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
-									</when>
-								</choose>
-
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Tipp: Benötigen mehrere Kanäle gleiche Konfigurationen, können mit gedrückter STRG Taste die jeweils gleichen Seiten mit der Maus ausgewählt werden." />
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="Die vorgenommen Konfigurationen werden dann auf allen Seiten übernommen." />
+								<!-- Fehlender Messwert -->
+								<ComObjectRefRef RefId="%AID%_O-%TT%00008_R-%TT%0000801" />
 
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Globale Beschattungseinstellung" UIHint="Headline" />
@@ -812,15 +806,10 @@
 								<ParameterRefRef RefId="%AID%_UP-%TT%00007_R-%TT%0000701" HelpContext="%DOC%" IndentLevel="1" />
 								<choose ParamRefId="%AID%_UP-%TT%00007_R-%TT%0000701">
 									<when test="&gt;=2">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-											<when test="&gt;0">
-												<!-- Beschattung täglich aktivieren -->
-												<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
-												<!-- Beschattung täglich aktivieren Status -->
-												<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
-											</when>
-										</choose>
+										<!-- Beschattung täglich aktivieren -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00000_R-%TT%0000001" />
+										<!-- Beschattung täglich aktivieren Status -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
 									</when>
 								</choose>
 
@@ -834,13 +823,8 @@
 								<!-- Temperatur Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00001_R-%TT%0000101">
 									<when test="&gt;0">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-											<when test="&gt;0">
 												<!-- Temperatur Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00002_R-%TT%0000201" />
-											</when>
-										</choose>
 
 										<!-- Temperatur Watchdog -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00008_R-%TT%0000801" HelpContext="%DOC%" />
@@ -865,13 +849,8 @@
 								<!-- Temperatur Prognose Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00002_R-%TT%0000201">
 									<when test="1">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-											<when test="&gt;0">
 												<!-- Temperatur Prognose Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00003_R-%TT%0000301" />
-											</when>
-										</choose>
 										<!-- Temperatur Prognose Watchdog -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00011_R-%TT%0001101" HelpContext="%DOC%" />
 										<choose ParamRefId="%AID%_UP-%TT%00011_R-%TT%0001101">
@@ -895,13 +874,8 @@
 								<!-- Helligkeitssensoren abhängige Einstellungen -->
 								<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
 									<when test=">0">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001" >
-											<when test="&gt;0">
 												<!-- Helligkeit Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00004_R-%TT%0000401" />
-											</when>
-										</choose>
 										<!-- Ausrichtung Sensor 1 -->
 										<ParameterRefRef IndentLevel="3" RefId="%AID%_UP-%TT%00028_R-%TT%0002801" HelpContext="SHC-Helligkeit-Sensor-1-5"/>
 										<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">
@@ -962,13 +936,8 @@
 								<!-- UVI Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00004_R-%TT%0000401">
 									<when test="1">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-											<when test="&gt;0">
 												<!-- UVI Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00005_R-%TT%0000501" />
-											</when>
-										</choose>
 										<!-- UVI Watchdog -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00017_R-%TT%0001701" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00017_R-%TT%0001701">
@@ -992,13 +961,8 @@
 								<!-- Regen Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00005_R-%TT%0000501">
 									<when test="1">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-											<when test="&gt;0">
 												<!-- Regen Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00006_R-%TT%0000601" />
-											</when>
-										</choose>
 										<!-- Regen Watchdog -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00020_R-%TT%0002001" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00020_R-%TT%0002001">
@@ -1022,13 +986,8 @@
 								<!-- Wolken Eingang-->
 								<choose ParamRefId="%AID%_UP-%TT%00006_R-%TT%0000601">
 									<when test="1">
-										<!-- Verfügbare Kanäle -->
-										<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-											<when test="&gt;0">
 												<!-- Wolken Eingang -->
 												<ComObjectRefRef RefId="%AID%_O-%TT%00007_R-%TT%0000701" />
-											</when>
-										</choose>
 										<!-- Wolken Watchdog -->
 										<ParameterRefRef IndentLevel="2" RefId="%AID%_UP-%TT%00023_R-%TT%0002301" HelpContext="%DOC%"/>
 										<choose ParamRefId="%AID%_UP-%TT%00023_R-%TT%0002301">
@@ -1047,23 +1006,23 @@
 								</choose>
 							</ParameterBlock>
 
-							<op:include href="ShutterControllerModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="SHC" IsInner="true" />
-							<!-- Verfügbare Kanäle -->
-							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-								<when test="&gt;0">
-
-									<!-- More Page -->
-									<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-										<when test="&lt;%N%">
-											<ParameterBlock Id="%AID%_PB-nnn" Name="SHCAdditionalChannels" Text="(mehr)" Icon="dots-horizontal">												<!-- HelpContext="Empty" -->
-												<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
-												<ParameterRefRef RefId="%AID%_UP-%TT%00000_R-%TT%0000001" HelpContext="%DOC%" IndentLevel="1" />
-												<!-- HelpContext="BASE-Verfuegbare-Kanaele" IndentLevel="2" /-->
-											</ParameterBlock>
-										</when>
-									</choose>
-								</when>
-							</choose>
+							<ParameterBlock Id="%AID%_PB-nnn" Text="Kanalauswahl" Icon="format-list-bulleted-type" HelpContext="BASE-ChannelSelect">
+								<ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+									<Rows>
+										<Row Id="%AID%_PB-nnn_R-1" />
+									</Rows>
+									<Columns>
+										<Column Id="%AID%_PB-nnn_C-1" Width="20%" />
+										<Column Id="%AID%_PB-nnn_C-2" Width="30%" />
+										<Column Id="%AID%_PB-nnn_C-3" Width="50%" />
+									</Columns>
+									<ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" UIHint="Headline" Text="Kanal" />
+									<ParameterSeparator Id="%AID%_PS-nnn" Cell="1,2" UIHint="Headline" Text="Geräteart" />
+									<ParameterSeparator Id="%AID%_PS-nnn" Cell="1,3" UIHint="Headline" Text="Beschreibung" />
+								</ParameterBlock>
+								<op:include href="ShutterControllerModule.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Settings']/*" type="template" prefix="SHC" IsInner="true" />
+							</ParameterBlock>
+							<op:include href="ShutterControllerModule.templ.xml" xpath="//ApplicationProgram/Dynamic/ChannelIndependentBlock/ParameterBlock[@Name='Channel']/*" type="template" prefix="SHC" IsInner="true" />
 						</Channel>
 					</Dynamic>
 				</ApplicationProgram>

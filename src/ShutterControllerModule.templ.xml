@@ -46,7 +46,7 @@
 						<Parameters>
 
 							<!-- Kanal Name -->
-							<Parameter Id="%AID%_P-%TT%%CC%000" Name="C%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
+							<Parameter Id="%AID%_P-%TT%%CC%000" Name="C%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
 							<!-- Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung -->
 							<Parameter Id="%AID%_P-%TT%%CC%042" Name="C%C%KoWithoutSpecialFunction" ParameterType="%AID%_PT-OnOffYesNo" Text="Zusätzliches Kommunikationsobjekt ohne Sonderfunktion Auswertung" Value="0" />
 <Parameter Id="%AID%_P-%TT%%CC%047" Name="C%C%LockEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Sperren Kanal freigeben" Value="1" />
@@ -62,6 +62,11 @@
 								<Parameter Id="%AID%_P-%TT%%CC%057" Name="C%C%WindowTiltStatusEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Status Fenster gekippt freigeben" Value="1" />
 								<Parameter Id="%AID%_P-%TT%%CC%058" Name="C%C%WindowTiltLockEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Sperren Fenster gekippt freigeben" Value="1" />
 
+								<!-- Geraeteart auf dem Kanal-Tab (TypeSelect, ohne "Deaktiviert") -->
+								<Parameter Id="%AID%_P-%TT%%CC%065" Name="C%C%TypeSelect" ParameterType="%AID%_PT-SHCShutterTypeSelect" Text="Geräteart" Value="1" />
+								<!-- Kanalname fuer Anzeige im Kanalbaum (mit Sperr-Symbol bei Suspendiert) -->
+								<Parameter Id="%AID%_P-%TT%%CC%066" Name="C%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
+
 							<Union SizeInBit="272">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
@@ -69,7 +74,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%001" Offset="0" BitOffset="0" Name="C%C%Type" ParameterType="%AID%_PT-ShutterType" Text="Geräteart" Value="0" />
 
 								<!-- Kanal Deaktivieren -->
-								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="C%C%Deactivated" ParameterType="%AID%_PT-OnOffYesNo" Text="Kanal deaktivieren (zu Testzwecken)" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%002" Offset="1" BitOffset="0" Name="C%C%Deactivated" ParameterType="%AID%_PT-Suspended" Text="Suspendiert" Value="0" />
 								<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
 								<Parameter Id="%AID%_UP-%TT%%CC%003" Offset="1" BitOffset="1" Name="C%C%IgnoreFirstManualCommandIfShadingActiv" ParameterType="%AID%_PT-OnOffYesNo" Text="Erstes manuelles AUF ignorieren, wenn bei Beschattungstart geschlossen" Value="0" />
 
@@ -264,6 +269,10 @@
 							<ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
 							<!-- Kanal Deaktivieren -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
+							<!-- Geraeteart auf dem Kanal-Tab (TypeSelect) -->
+							<ParameterRef Id="%AID%_P-%TT%%CC%065_R-%TT%%CC%06501" RefId="%AID%_P-%TT%%CC%065" />
+							<!-- Kanalname fuer Anzeige im Kanalbaum -->
+							<ParameterRef Id="%AID%_P-%TT%%CC%066_R-%TT%%CC%06601" RefId="%AID%_P-%TT%%CC%066" />
 
 
 							<!-- Ersten Fahrbefehlt ignorieren wenn Beschattung aktiv -->
@@ -406,6 +415,25 @@
 							<op:usePart name="ModeShading" xpath="//ParameterRefs/*" />
 
 						</ParameterRefs>
+						<ParameterCalculations>
+							<ParameterCalculation Id="%AID%_PC-%TT%%CC%001" Language="JavaScript" Name="SyncType%CC%" RLTransformationFunc="BASE_SyncChannelType" LRTransformationFunc="BASE_SyncChannelType">
+								<LParameters>
+									<ParameterRefRef RefId="%AID%_P-%TT%%CC%065_R-%TT%%CC%06501" AliasName="TypeValue" />
+								</LParameters>
+								<RParameters>
+									<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" AliasName="TypeValue" />
+								</RParameters>
+							</ParameterCalculation>
+							<ParameterCalculation Id="%AID%_PC-%TT%%CC%002" Language="JavaScript" Name="MarkInactive%CC%" RLTransformationFunc="BASE_MarkInactiveChannel" RLTransformationParameters="{&quot;InactiveValue&quot;:1}" LRTransformationFunc="BASE_Nop">
+								<LParameters>
+									<ParameterRefRef RefId="%AID%_P-%TT%%CC%066_R-%TT%%CC%06601" AliasName="TextOutput" />
+								</LParameters>
+								<RParameters>
+									<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" AliasName="TextInput" />
+									<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" AliasName="InactiveControl" />
+								</RParameters>
+							</ParameterCalculation>
+						</ParameterCalculations>
 						<ComObjectTable>
 
 							<!-- Jalousie Prozent Ausgang -->
@@ -585,25 +613,37 @@
 					</Static>
 					<Dynamic>
 						<ChannelIndependentBlock>
-							<choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-								<when test="&gt;=%C%">
-									<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="blinds-horizontal" HelpContext="SHC-Kanal" ShowInComObjectTree="true">
+							<ParameterBlock Id="%AID%_PB-nnn" Name="Settings">
+								<ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+									<Rows>
+										<Row Id="%AID%_PB-nnn_R-1" />
+									</Rows>
+									<Columns>
+										<Column Id="%AID%_PB-nnn_C-1" Width="20%" />
+										<Column Id="%AID%_PB-nnn_C-2" Width="30%" />
+										<Column Id="%AID%_PB-nnn_C-3" Width="50%" />
+									</Columns>
+									<ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="Kanal %C%" />
+									<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" Cell="1,2" HelpContext="%DOC%" />
+									<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Cell="1,3" HelpContext="BASE-ChannelName" />
+								</ParameterBlock>
+							</ParameterBlock>
+							<ParameterBlock Id="%AID%_PB-nnn" Name="Channel">
+								<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+									<when test="&gt;0">
+										<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Page" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%066_R-%TT%%CC%06601" Icon="blinds-horizontal" HelpContext="SHC-Kanal" ShowInComObjectTree="true">
 										<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Konfiguration" Inline="true">
 
-											<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanal %C%" UIHint="Headline" />
-											<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+											<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanaldefinition" UIHint="Headline" />
 
-											<!-- Kanal Name -->
-											<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="%DOC%" IndentLevel="1" />
+											<!-- Beschreibung -->
+											<ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="BASE-ChannelName" IndentLevel="1" />
 
-											<!-- Kanal Type -->
-											<ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="%DOC%" IndentLevel="1" />
+											<!-- Geraeteart (Typ wechseln, ohne Deaktivieren) -->
+											<ParameterRefRef RefId="%AID%_P-%TT%%CC%065_R-%TT%%CC%06501" HelpContext="%DOC%" IndentLevel="1" />
 
-								
-											<!-- Kanal Type -->
-											<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-												<when test="&gt;0">
-													<!-- Nicht deaktiviert -->
+											<!-- Suspendiert -->
+											<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="BASE-ChannelSuspended" IndentLevel="1" />
 
 													<ParameterBlock Id="%AID%_PB-nnn" Name="SHC%C%Wrapper" Text="Aktor Verbindungen" Inline="true" ShowInComObjectTree="true">
 														<!-- Jalousie Prozent Ausgang -->
@@ -658,9 +698,6 @@
 													</choose>
 													</ParameterBlock>
 
-
-													<!-- Kanal Deaktivieren -->
-													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" HelpContext="%DOC%" IndentLevel="1" />
 
 													<ParameterSeparator Id="%AID%_PS-nnn" Text="Modus Auswahl" UIHint="Headline" />
 
@@ -863,13 +900,8 @@
 															</ParameterBlock>
 														</when>
 													</choose>
-												</when>
-											</choose>
 										</ParameterBlock>
-										<!-- Gerätetype -->
-										<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
-											<when test="&gt;0">
-												<!-- Gerätetype aktiviert -->
+										<!-- Gerätetype aktiviert -->
 
 												<!-- Handbetrieb -->
 												<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCHandbetrieb" Text="Handbetrieb" Icon="gesture-tap" HelpContext="SHC-Handbetrieb" ShowInComObjectTree="true">
@@ -1174,11 +1206,10 @@
 													<ParameterRefRef RefId="%AID%_P-%TT%%CC%051_R-%TT%%CC%05101" IndentLevel="1" />
 													<ParameterRefRef RefId="%AID%_P-%TT%%CC%052_R-%TT%%CC%05201" IndentLevel="1" />
 												</ParameterBlock>
-											</when>
-										</choose>
 									</ParameterBlock>
 								</when>
-							</choose>
+								</choose>
+							</ParameterBlock>
 						</ChannelIndependentBlock>
 					</Dynamic>
 				</ApplicationProgram>
