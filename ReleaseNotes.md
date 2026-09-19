@@ -1,3 +1,9 @@
+v 0.11.0
+- Feature: Kanalauswahl auf den OpenKNX-Standard umgestellt (eigener Tab „Kanalauswahl“, Kanäle werden dort aktiviert/deaktiviert; „Suspendiert“ ersetzt „Kanal deaktivieren (zu Testzwecken)“ und markiert den Kanal im Baum mit ⛔)
+- Feature: Szenen je Kanal (bis zu 16), mit Höhe/Lamelle, Sperren für Beschattungssteuerung/Nachtmodus/Handbetrieb, Verzögerung und Lernen (DPT 18.001); siehe Kapitel „Szenen“ in der Applikationsbeschreibung
+- Breaking: Parameterblock je Kanal wächst von 184 auf 281 Byte (neue Szenenparameter angehängt, bestehende Parameter bleiben an ihrer Stelle). KO-Block je Kanal wächst von 52 auf 53 (neues KO „Szene“); dadurch verschieben sich die KO-Nummern ab Kanal 2. Gruppenadressen bleiben über die KO-Zuordnung der ETS erhalten.
+- Die Hilfetexte werden jetzt über den VS-Code-Task „OpenKNXproducer Documentation“ erzeugt (ersetzt createDoc.ps1)
+
 v 0.10.0
 - Feature: Benutzerdefinierte Position nach Beschattungsende anfahren (Port aus Upstream)
 - Fix: Sperrobjekt für Beschattungsmodus wurde ignoriert
