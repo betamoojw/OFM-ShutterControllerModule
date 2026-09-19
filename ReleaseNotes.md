@@ -1,3 +1,10 @@
+v 0.10.0
+- Feature: Benutzerdefinierte Position nach Beschattungsende anfahren (Port aus Upstream)
+- Fix: Sperrobjekt für Beschattungsmodus wurde ignoriert
+- Fix: Beschriftung (Eingang/Ausgang) der KOs „Aktorrückmeldung" und „Beschattungsmodus Sperre Aktiv"
+- Fix: Überlappungswarnungen in knxprod unterdrückt
+- Breaking: Parameterblock je Kanal um 2 Byte vergrößert (Fenster offen- und Beschattungsmodus-Blöcke verschoben). Bestehende ETS-Projekte müssen neu parametriert werden.
+
 v 0.6.4
 - Feature: Neue Einstellung „Betriebsart Lamellennachführung" für die Modi 5 und 6 (Geo. Positions- und Lamellennachführung). Vier Optionen: „Direktlicht abschneiden (Cut-Off)" (bisheriges Verhalten: geometrische Cut-Off-Formel), „Blendschutz (Retro-Reflexion)" (Retro-Reflexion: θ = Profilwinkel), „Adaptiv (Daylight)" (θ = min(θ_CutOff, θ_Retro) – maximale Tageslichtnutzung bei gleichzeitigem Blendschutz) und „Über Tabelle" (6 konfigurierbare Stützpunkte Höhenwinkel → Lamellenposition % mit linearer Interpolation, Standardwerte gemäß Warema-Tabelle).
 - Feature: Neuer Parameter „Beschattungsstart" – legt fest, ob die Beschattung sofort (mit Schutzposition) oder erst bei direktem Sonnenlicht (Profilwinkel > 0°) startet.

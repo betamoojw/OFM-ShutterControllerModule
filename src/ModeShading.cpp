@@ -377,6 +377,8 @@ bool ModeShading::allowed(const CallContext &callContext)
         KoSHC_CShading1Ready.objectWritten();
 #endif
     // Return result
+    if (_lockActive)
+        return false;
     if (!_lastSunFrameAllowed)
         return false;
     if (startWaitTimeActive)

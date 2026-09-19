@@ -354,6 +354,19 @@ Diese Einstellung legt fest, was am Ende der Beschattung passieren soll.
 - Lamelle Waagrecht (Einstellung nur bei Geräteart 'Jalousie' vorhanden)  
   Die Jalousie bleibt in der Position der Beschattung, jedoch wird die Lamelle waagrecht (50%) gestellt.
 
+- Benutzerdefinierte Position
+  Fährt die benutzerdefinierten Werte an 
+
+<!-- DOC -->
+#### Position anfahren
+
+Fährt die Position an. 
+
+<!-- DOC -->
+#### Lamellenstellung anfahren
+
+Fährt die Lamellenstellung an. 
+
 <!-- DOC -->
 ### Raumbezogene Messwert Eingänge
 

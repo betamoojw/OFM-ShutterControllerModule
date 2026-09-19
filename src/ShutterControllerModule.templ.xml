@@ -8,7 +8,7 @@
 
 					<op:part href="ShutterControllerModule.ModeWindowOpen.xml" name="ModeWindowOpen" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="32" increment="7" />
+						<op:param name="%ParamOffset%" value="34" increment="7" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="28" increment="4" />
 						<!-- ModeWindowOpen number -->
@@ -21,7 +21,7 @@
 
 					<op:part href="ShutterControllerModule.ModeShading.xml" name="ModeShading" instances="2">
 						<!-- Parameter Offset -->
-						<op:param name="%ParamOffset%" value="46" increment="68" />
+						<op:param name="%ParamOffset%" value="48" increment="68" />
 						<!-- KO Offset-->
 						<op:param name="%En%" value="36" increment="8" />
 						<!-- ModeShading number -->
@@ -62,7 +62,7 @@
 								<Parameter Id="%AID%_P-%TT%%CC%057" Name="C%C%WindowTiltStatusEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Status Fenster gekippt freigeben" Value="1" />
 								<Parameter Id="%AID%_P-%TT%%CC%058" Name="C%C%WindowTiltLockEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Sperren Fenster gekippt freigeben" Value="1" />
 
-							<Union SizeInBit="256">
+							<Union SizeInBit="272">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
 
 								<!-- Kanal Type -->
@@ -145,8 +145,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%016" Offset="15" BitOffset="0" Name="C%C%ManualShadingWaitTime" ParameterType="%AID%_PT-WaitTimeAfterManualUsageForShading" Text="Beschattung nach Handbetrieb unterbrechen" Value="0" />
 
 								<!-- Nach Beschattung -->
-								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="2" />
-								<Parameter Id="%AID%_UP-%TT%%CC%039" Offset="16" BitOffset="0" Name="C%C%AfterShadingJalousie" ParameterType="%AID%_PT-AfterShadingJalousie" Text="Nach Beschattung" Value="2" />
+								<Parameter Id="%AID%_UP-%TT%%CC%018" Offset="16" BitOffset="0" Name="C%C%AfterShading" ParameterType="%AID%_PT-AfterShading" Text="Nach Beschattung" Value="2" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%039" Offset="16" BitOffset="0" Name="C%C%AfterShadingJalousie" ParameterType="%AID%_PT-AfterShadingJalousie" Text="Nach Beschattung" Value="2" op:nowarn="true" />
 
 
 								<!-- Position bei Nacht Start anfahren -->
@@ -181,9 +181,9 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%028" Offset="23" BitOffset="4" Name="C%C%HeatingWatchdogBehavior" ParameterType="%AID%_PT-MeasurementFallback" Text="Verhalten bei Ausfall" Value="3" />
 
 								<!-- Heizung Fallback % -->
-								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%029" Offset="24" BitOffset="0" Name="C%C%HeadingFallbackPercent" ParameterType="%AID%_PT-SHCPercent" Text="Wert" Value="0" SuffixText="%" op:nowarn="true" />
 								<!-- Heizung Fallback Ein/Aus -->
-								<Parameter Id="%AID%_UP-%TT%%CC%030" Offset="24" BitOffset="0" Name="C%C%HeadingFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%030" Offset="24" BitOffset="0" Name="C%C%HeadingFallback" ParameterType="%AID%_PT-OnOffYesNo" Text="Wert" Value="0" op:nowarn="true" />
 
 
 								<!-- Raumtemperatur Watchdog -->
@@ -217,8 +217,20 @@
 <!-- Fassadenneigung/Fensterneigung (für Schattenkantennachführung) -->
 										<Parameter Id="%AID%_UP-%TT%%CC%059" Offset="31" BitOffset="0" Name="C%C%FacadeInclination" ParameterType="%AID%_PT-FacadeInclination" Text="Fassadenneigung/Fensterneigung" SuffixText="°" Value="0" />
 
-										<!-- Next offset: 32-->
-										<!-- Next Id: %AID%_UP-%TT%%CC%060 -->
+								<!-- Shading End Position Enabled -->
+								<Parameter Id="%AID%_UP-%TT%%CC%060" Offset="32" BitOffset="0" Name="C%C%ShadingEndPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Position anfahren" Value="1" />
+
+								<!-- Shading End Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%061" Offset="32" BitOffset="1" Name="C%C%ShadingEndPosition" ParameterType="%AID%_PT-SHCPercent" Text="Position" Value="0" SuffixText="%" />
+
+								<!-- Shading End Lamellen Enabled -->
+								<Parameter Id="%AID%_UP-%TT%%CC%062" Offset="33" BitOffset="0" Name="C%C%ShadingEndSlatPositionEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamellenstellung anfahren" Value="1" />
+
+								<!-- Shading End Lamellen Position -->
+								<Parameter Id="%AID%_UP-%TT%%CC%063" Offset="33" BitOffset="1" Name="C%C%ShadingEndSlatPosition" ParameterType="%AID%_PT-SHCPercent" Text="Lamellenstellung" Value="0" SuffixText="%" />
+
+										<!-- Next offset: 34-->
+										<!-- Next Id: %AID%_UP-%TT%%CC%064 -->
 
 							</Union>
 
@@ -268,6 +280,14 @@
 							<ParameterRef Id="%AID%_UP-%TT%%CC%046_R-%TT%%CC%04601" RefId="%AID%_UP-%TT%%CC%046" />
 							<!-- Fassadenneigung/Fensterneigung -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%059_R-%TT%%CC%05901" RefId="%AID%_UP-%TT%%CC%059" />
+							<!-- Shading End Position Enabled -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001" RefId="%AID%_UP-%TT%%CC%060" />
+							<!-- Shading End Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101" RefId="%AID%_UP-%TT%%CC%061" />
+							<!-- Shading End Lamellen Enabled -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%062_R-%TT%%CC%06201" RefId="%AID%_UP-%TT%%CC%062" />
+							<!-- Shading End Lamellen Position -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%063_R-%TT%%CC%06301" RefId="%AID%_UP-%TT%%CC%063" />
 							<!-- Von Uhrzeit -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%006_R-%TT%%CC%00601" RefId="%AID%_UP-%TT%%CC%006" />
 
@@ -480,9 +500,9 @@
 
 
 							<!-- Jalousie Prozent Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Höhe Absolut" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401" RefId="%AID%_O-%TT%%CC%004" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Höhe Absolut" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Prozent Lamelle Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Lamellenstellung" FunctionText="Jalousie %C%: Ausgang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501" RefId="%AID%_O-%TT%%CC%005" Text="{{0:Jalousie %C%}}: Aktorrückmeldung Lamellenstellung" FunctionText="Jalousie %C%: Eingang, Prozent" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 							<!-- Beschattung Einschalten -->
@@ -726,11 +746,45 @@
 																		<!-- Jalousie -->
 																		<!-- Nach Beschattung Zeit -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901" IndentLevel="1" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%039_R-%TT%%CC%03901">
+																			<when test="4">
+																				<!-- Benutzerdefiniert -->
+																				<!-- Shading End Position Enabled -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001" HelpContext="%DOC%" IndentLevel="2" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001">
+																					<when test="1">
+																						<!-- Shading End Position -->
+																						<ParameterRefRef RefId="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101" HelpContext="%DOC%" IndentLevel="3" />
+																					</when>
+																				</choose>
+																				<!-- Shading End Lamellen Enabled -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%062_R-%TT%%CC%06201" HelpContext="%DOC%" IndentLevel="2" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%062_R-%TT%%CC%06201">
+																					<when test="1">
+																						<!-- Shading End Lamellen Position -->
+																						<ParameterRefRef RefId="%AID%_UP-%TT%%CC%063_R-%TT%%CC%06301" HelpContext="%DOC%" IndentLevel="3" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose>
 																	</when>
 																	<when test="2">
 																		<!-- Rollo -->
 																		<!-- Nach Beschattung Zeit -->
 																		<ParameterRefRef RefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801" IndentLevel="1" />
+																		<choose ParamRefId="%AID%_UP-%TT%%CC%018_R-%TT%%CC%01801">
+																			<when test="4">
+																				<!-- Benutzerdefiniert -->
+																				<!-- Shading End Position Enabled -->
+																				<ParameterRefRef RefId="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001" HelpContext="%DOC%" IndentLevel="2" />
+																				<choose ParamRefId="%AID%_UP-%TT%%CC%060_R-%TT%%CC%06001">
+																					<when test="1">
+																						<!-- Shading End Position -->
+																						<ParameterRefRef RefId="%AID%_UP-%TT%%CC%061_R-%TT%%CC%06101" HelpContext="%DOC%" IndentLevel="3" />
+																					</when>
+																				</choose>
+																			</when>
+																		</choose>
 																	</when>
 																</choose>
 															</ParameterBlock>
