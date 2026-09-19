@@ -10,6 +10,7 @@
 class ModeWindowOpen;
 class ModeShading;
 class ModeNight;
+class ModeScene;
 
 
 class ShutterControllerChannel : public OpenKNX::Channel
@@ -28,6 +29,7 @@ class ShutterControllerChannel : public OpenKNX::Channel
         ModeManual* _modeManual = nullptr;
         ModeIdle* _modeIdle = nullptr;
         ModeNight* _modeNight = nullptr;
+        ModeScene* _modeScene = nullptr;
         ModeBase* _currentMode = nullptr;
         PositionController _positionController;
         bool _anyAutoModeActive = false;
@@ -48,7 +50,9 @@ class ShutterControllerChannel : public OpenKNX::Channel
         ShutterControllerChannel(uint8_t channelIndex);
         bool shadingControlActive() const;
         void activateShadingControl(bool active);
-       
+        void notifySceneRequested();
+        ModeScene* modeScene() const;
+
         const std::string name() override;
         void setup() override;
         bool needCall();  

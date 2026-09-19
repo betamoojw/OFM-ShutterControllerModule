@@ -2,6 +2,7 @@
 #include "ModeManual.h"
 #include "WindowOpenHandler.h"
 #include "ModeNight.h"
+#include "ModeScene.h"
 #include "ModeShading.h"
 #include "BrightnessMeasurement.h"
 #include "ModeIdle.h"
@@ -102,6 +103,12 @@ void ShutterControllerChannel::setup()
         _modes.push_back(_modeNight);
     }
 
+    if (ParamSHC_CScenes)
+    {
+        _modeScene = new ModeScene(*this);
+        _modes.push_back(_modeScene);
+    }
+
     for (uint8_t i = 0; i < ParamSHC_CWindowOpenCount; i++)
     {
         _windowOpenHandlers.push_back(new WindowOpenHandler(_channelIndex, i, ParamSHC_CWindowOpenCount - 1 != i, _modeNight));
@@ -182,6 +189,21 @@ void ShutterControllerChannel::activateShadingControl(bool activate)
     {
         _modeManual->stopWaitTime();
     }
+}
+
+void ShutterControllerChannel::notifySceneRequested()
+{
+    // Let a scene take over immediately, even while manual mode is still
+    // within its wait time after the last manual command.
+    if (_currentMode == _modeManual)
+    {
+        _modeManual->stopWaitTime();
+    }
+}
+
+ModeScene* ShutterControllerChannel::modeScene() const
+{
+    return _modeScene;
 }
 
 bool ShutterControllerChannel::processCommand(const std::string cmd, bool diagnoseKo, bool &diagnosticLogLoopRequest)
