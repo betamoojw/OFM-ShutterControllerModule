@@ -1,4 +1,4 @@
-### Lamellenstellung anfahren
+﻿### Lamellenstellung anfahren
 
 Fährt die Lamellenstellung an. 
 

@@ -1,10 +1,6 @@
 ﻿### Geräteart
 
-Die Art der Beschattungseinrichtung:
-
-- **Kanal deaktiviert**  
-Diese Einstellung soll verwendet werden wenn der Kanal nicht benötigt wird. 
-Achtung, alle Gruppenaddressen Verbindungen des Kanals gehen verloren, die Einstellungen bleiben jedoch Erhalten und können werden bei der Wiederaktivierung verwendet.
+Die Art der Beschattungseinrichtung. Aktiviert wird ein Kanal in der Kanalauswahl; auf dem Kanal-Tab kann die Geräteart nachträglich gewechselt werden, ohne den Kanal dabei zu deaktivieren.
 
 - **Jalousie**  
 Erlaubt eine Positionsvorgabe und Lamellensteuerung.

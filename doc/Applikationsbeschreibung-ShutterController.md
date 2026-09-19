@@ -94,10 +94,11 @@ Insbesondere im Bereich Handbedienung sind wichtige Informationen zur richtigen 
 
 Die Jalousiensteuerung darf aus Sicherheitsgründen nicht bei Beschattungseinrichtungen bei Notausgängen verwendet werden, da eine Automatik im Notfall das Öffnen verhindern könnte.
 
-<!-- DOC -->
-### Verfügbare Kanäle
+### Kanalauswahl
 
-Über diese Auswahl werden die Anzahl der benötigten Steuerkanäle festgelegt.
+Auf dieser eigenen Seite werden alle Kanäle mit Geräteart und Beschreibung in einer Tabelle aufgelistet.
+Ein Kanal wird über die Geräteart (Jalousie/Rollo) aktiviert; "Deaktiviert" schaltet ihn wieder aus.
+Deaktivierte Kanäle werden nicht mehr im Kanalbaum angezeigt.
 
 <!-- DOC -->
 ### Globale Beschattungseinstellung
@@ -265,22 +266,18 @@ DOCCONTENT -->
 ## Kanal 1-n
 
 Auf dieser Seite werden die verschiedenen Betriebsarten der Jalousiensteuerung festgelegt.
+Der Kanal-Tab ist nur sichtbar, wenn der Kanal zuvor in der [Kanalauswahl](#kanalauswahl) aktiviert wurde.
 
-<!-- DOC -->
-#### Bezeichnung
+#### Beschreibung
 
-Die Bezeichnung wird innerhalb der ETS verwenden um den Kanal und die Kanalobjekte zu benennen.
+Die Beschreibung wird innerhalb der ETS verwenden um den Kanal und die Kanalobjekte zu benennen.
 Es wird empfohlen, die Bezeichnung des Raumes oder der Jalousie zu verwenden.
 Z.B. Küche, Wohnzimmer Süden, Wohnzimmer Terassentür, Schlafzimmer...
 
 <!-- DOC -->
 #### Geräteart
 
-Die Art der Beschattungseinrichtung:
-
-- **Kanal deaktiviert**  
-Diese Einstellung soll verwendet werden wenn der Kanal nicht benötigt wird. 
-Achtung, alle Gruppenaddressen Verbindungen des Kanals gehen verloren, die Einstellungen bleiben jedoch Erhalten und können werden bei der Wiederaktivierung verwendet.
+Die Art der Beschattungseinrichtung. Aktiviert wird ein Kanal in der [Kanalauswahl](#kanalauswahl); auf dem Kanal-Tab kann die Geräteart nachträglich gewechselt werden, ohne den Kanal dabei zu deaktivieren.
 
 - **Jalousie**  
 Erlaubt eine Positionsvorgabe und Lamellensteuerung.
@@ -289,11 +286,10 @@ Erlaubt eine Positionsvorgabe und Lamellensteuerung.
 Erlaubt eine Positionsvorgabe.
 Es steht keine Lamellensteuerung zur Verfügung.
 
-<!-- DOC -->
-#### Kanal deaktivieren (zu Testzwecken)
+#### Suspendiert
 
-Mit dieser Einstellung kann ein Kanal deaktiviert werden, ohne das die Konfigurationswerte und Gruppenadressen an den Kommunikationsobjekten verloren gehen.
-Ein deaktivierter Kanal sendet keine Telegramme auf dem KNX-Bus. 
+Mit dieser Einstellung kann ein Kanal vorübergehend deaktiviert werden, ohne das die Konfigurationswerte und Gruppenadressen an den Kommunikationsobjekten verloren gehen.
+Ein suspendierter Kanal sendet keine Telegramme auf dem KNX-Bus und wird im Kanalbaum mit ⛔ gekennzeichnet.
 
 <!-- DOC -->
 ### Modus Auswahl

@@ -10,3 +10,9 @@ Insbesondere im Bereich Handbedienung sind wichtige Informationen zur richtigen 
 
 Die Jalousiensteuerung darf aus Sicherheitsgründen nicht bei Beschattungseinrichtungen bei Notausgängen verwendet werden, da eine Automatik im Notfall das Öffnen verhindern könnte.
 
+### Kanalauswahl
+
+Auf dieser eigenen Seite werden alle Kanäle mit Geräteart und Beschreibung in einer Tabelle aufgelistet.
+Ein Kanal wird über die Geräteart (Jalousie/Rollo) aktiviert; "Deaktiviert" schaltet ihn wieder aus.
+Deaktivierte Kanäle werden nicht mehr im Kanalbaum angezeigt.
+
