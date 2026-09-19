@@ -4,6 +4,45 @@ Die Jalousiensteuerung bietet unterschiedliche Betriebsarten.
 Jede Betriebsart kann durch Ereignisse, Eingangs- oder Messwerte zulässig sein. 
 Sind mehrere Betriebsarten zulässig, entscheidet die Priorität über die Auswahl.
 
+## Inhaltsverzeichnis
+
+- [Betriebsarten](#betriebsarten)
+- [Diagnose](#diagnose)
+- [Wichtige Informationen zur richtigen Konfiguration der Gruppenadressen](#wichtige-informationen-zur-richtigen-konfiguration-der-gruppenadressen)
+- [Allgemein](#allgemein)
+- [Kanalauswahl](#kanalauswahl)
+- [Kanal 1-n](#kanal-1-n)
+- [Handbetrieb](#handbetrieb)
+- [Nachtmodus](#nachtmodus)
+- [Szenen](#szenen)
+- [Beschattungsmodus N](#beschattungsmodus-n)
+- [Fenster Offen/Gekippt](#fenster-offengekippt)
+- [Kommunikationsobjekte](#kommunikationsobjekte)
+
+### ETS Konfiguration
+
+Übersicht der Konfigurationsseiten der ETS-Applikation und Links zur jeweiligen Detailbeschreibung:
+
+* [**Allgemein**](#allgemein)
+  * [Globale Beschattungseinstellung](#globale-beschattungseinstellung) / [Verfügbare Messwerteingänge](#verfügbare-messwerteingänge) / [Messwertüberwachung](#messwertüberwachung) / [Messwerte](#messwerte)
+* [**Kanalauswahl**](#kanalauswahl)
+* [**Kanal 1-n**](#kanal-1-n)
+  * [Modus Auswahl](#modus-auswahl) / [Beschattungseinstellungen](#beschattungseinstellungen) / [Raumbezogene Messwert Eingänge](#raumbezogene-messwert-eingänge)
+  * [**Handbetrieb**](#handbetrieb) (Unterseite)
+    * [Handbetriebseinstellung](#handbetriebseinstellung) / [Sonderfunktionen Tasterbedienung](#sonderfunktionen-tasterbedienung)
+    * [Kurzer Druck 'Nach oben'](#kurzer-druck-nach-oben) / [Langer Druck 'Nach oben'](#langer-druck-nach-oben) / [Kurzer Druck 'Nach unten'](#kurzer-druck-nach-unten) / [Langer Druck 'Nach unten'](#langer-druck-nach-unten)
+  * [**Nachtmodus**](#nachtmodus) (Unterseite)
+    * [Nacht Beginn / Nacht Ende](#nacht-beginn--nacht-ende)
+  * [**Szenen**](#szenen) (Unterseite)
+  * [**Beschattungsmodus N**](#beschattungsmodus-n) (Unterseite, je nach Anzahl der konfigurierten Modi)
+    * [Sonnenposition](#sonnenposition) / [Beschattungsunterbrechung](#beschattungsunterbrechung) / [Beschattungssteuerung](#beschattungssteuerung)
+    * [Temperaturgrenzen](#temperaturgrenzen) / [Wetter](#wetter) / [Wohnraum](#wohnraum) / [Wartezeiten](#wartezeiten)
+    * [Diagnoseobjekte für Beschattungsverhinderungsgrund](#diagnoseobjekte-für-beschattungsverhinderungsgrund) / ['Nicht erlaubt' Bits](#nicht-erlaubt-bits-nur-für-experten) / ['Nicht erlaubt' Grund](#nicht-erlaubt-grund)
+  * [**Fenster Offen/Gekippt**](#fenster-offengekippt) (Unterseite)
+    * [Gekippt wenn](#gekippt-wenn) / [Kontaktänderung auswerten nach](#kontaktänderung-auswerten-nach)
+    * [Objekt 'Fenster gekippt/offen Kontakt'](#objekt-fenster-gekipptoffen-kontakt): [Position Anfahren](#position-anfahren) / [Lamelle öffnen](#lamelle-öffnen)
+* [**Kommunikationsobjekte**](#kommunikationsobjekte)
+
 ## Betriebsarten
 
 Folgende Betriebsarten - gereiht nach der Priorät - stehen zur Verfügung:
@@ -1452,3 +1491,70 @@ Dieser Wert wird verwendet um ein Aussperren auf einer Terrasse durch beginnende
 Werden hier Beispielsweise 20% eingestellt und die Terrassentüre ist vor dem Beginn der automatischen Beschattung geöffnet, wird die Jalousie zu maximal 20% geschlossen um ein Durchgehen noch zu ermöglichen.
 Erst nach dem Schließen der Terrassentüre wird die normale Beschattungsposition angefahren.
 
+
+<!-- DOC -->
+## Kommunikationsobjekte
+
+### Übersicht
+
+Alle Kommunikationsobjekte sind mit dem Präfix "Jalousie %C%: " (Kanal-KOs) bzw. "Jalousiensteuerung: " (globale KOs) beschriftet; dieser Präfix ist in der Tabelle weggelassen.
+
+#### Globale Kommunikationsobjekte
+
+Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-412.
+
+| KO | DPT | Bezeichnung | Erklärung |
+|---:|---|---|---|
+| 0 | 1.001 | Beschattung täglich aktivieren | Eingang, Schalten. Nur bei "Tägliche Aktivierung" = "Über KO" |
+| 1 | 1.011 | Beschattung täglich aktivieren Status | Ausgang. Nur bei "Tägliche Aktivierung" = "Über KO" |
+| 2 | 9.001 | [Temperatur](#verfügbare-messwerteingänge) | Eingang, °C |
+| 3 | 9.001 | Temperaturprognose | Eingang, °C |
+| 4 | 9.004 | Helligkeit | Eingang, Lux |
+| 5 | 9.031 | UV-Index | Eingang, Gleitkomma |
+| 6 | 1.001 | Regen Ja/Nein | Eingang, Schalten |
+| 7 | 5.001 | Bewölkung | Eingang, Prozent |
+| 8 | 1.005 | Fehlender Messwert | Ausgang, Alarm |
+| 9 | 9.004 | Helligkeit 2 | Eingang, Lux |
+| 10 | 9.004 | Helligkeit 3 | Eingang, Lux |
+| 11 | 9.004 | Helligkeit 4 | Eingang, Lux |
+| 12 | 9.004 | Helligkeit 5 | Eingang, Lux |
+
+#### Kommunikationsobjekte pro Kanal
+
+Jeder Kanal belegt einen festen Block von 53 aufeinanderfolgenden KOs (Offset `+0`..`+52`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 53 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-472, das letzte KO von Kanal 32 bei 2115. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt ["Kommunikationsobjekte freigeben"](#kanal-1-n) des jeweiligen Kanals einzeln ein-/ausblenden.
+
+|  KO | DPT | Bezeichnung | Erklärung |
+|----:|---|---|---|
+|  +0 | 5.001 | [Position setzen](#beschattungsmodus-n) | Ausgang, Prozent |
+|  +1 | 5.001 | Lamellenstellung setzen | Ausgang, Prozent (nur Jalousie) |
+|  +2 | 1.008 | Auf/Ab setzen | Ausgang, Auf=0 / Ab=1 |
+|  +3 | 1.007 | Stopp/Schritt setzen | Ausgang |
+|  +4 | 5.001 | Aktorrückmeldung Höhe absolut | Eingang, Prozent |
+|  +5 | 5.001 | Aktorrückmeldung Lamellenstellung | Eingang, Prozent (nur Jalousie) |
+|  +6 | 1.001 | [Beschattung Einschalten](#beschattungssteuerung) | Eingang, Schalten |
+|  +7 | 1.011 | Beschattung Eingeschaltet | Ausgang |
+|  +8 | 1.001 | Beschattung Aktiv | Ausgang |
+|  +9 | 1.001 | Sperre | Eingang, Sperre=1 |
+| +10 | 1.011 | Sperre Aktiv | Ausgang |
+| +11 | 17.001 | Aktiver Modus | Ausgang, Zahl. Siehe [Diagnose](#diagnose) für die Belegung, [Szenen](#szenen) für die Werte 21-36 |
+| +12 | 1.010 | [Handbetrieb Aus-/Einschalten](#handbetrieb) | Eingang, Schalten |
+| +13 | 1.011 | Handbetrieb Aktiv | Ausgang |
+| +14 | 1.001 | Handbetrieb Sperre | Eingang, Sperre=1 |
+| +15 | 1.011 | Handbetrieb Sperre Aktiv | Ausgang |
+| +16 | 1.008 | Handbetrieb Auf/Ab | Eingang, Ab=1 / Auf=0 |
+| +17 | 1.007 | Handbetrieb Stopp/Schritt | Eingang, Erhöhen=1 |
+| +18 | 5.001 | Handbetrieb Position setzen | Eingang, Prozent |
+| +19 | 5.001 | Handbetrieb Lamellenstellung setzen | Eingang, Prozent (nur Jalousie) |
+| +20 | 1.011 | [Nachtmodus Aktiv](#nachtmodus) | Ausgang |
+| +21 | 1.001 | Nachtmodus Aus-/Einschalten | Eingang, Schalten |
+| +22 | 1.001 | Nachtmodus Sperre | Eingang, Sperre=1 |
+| +23 | 1.011 | Nachtmodus Sperre Aktiv | Ausgang |
+| +24 | 5.001 / 1.001 | Heizung Stellwert / Heizung Aktiv | Eingang, Prozent bzw. Eingang, Aktiv=1, je nach "Heizungsanforderung" |
+| +25 | 9.001 | [Raumtemperatur](#raumbezogene-messwert-eingänge) | Eingang, °C |
+| +26 | 1.001 | Handbetrieb Auf/Ab (ohne Sonderfunktion) | Eingang, Ab=1 / Auf=0 |
+| +27 | 1.001 | Status Beschattung Bereit | Ausgang |
+| +28..+31 | – | [Fenster offen](#fenster-offengekippt) (Instanz 1) | Aktiv, Kontakt, Sperre, Sperre Aktiv |
+| +32..+35 | – | Fenster gekippt (Instanz 2) | Aktiv, Kontakt, Sperre, Sperre Aktiv |
+| +36..+43 | – | [Beschattungsmodus 1](#beschattungsmodus-n) | Aktiv, Sperre, Sperre Aktiv, Beschattungsunterbrechung Sperre, Beschattungsunterbrechung Sperre Aktiv, 'Nicht erlaubt' Bits, 'Nicht erlaubt' Grund, Bereitschaft |
+| +44..+51 | – | Beschattungsmodus 2 | wie Beschattungsmodus 1 |
+| +52 | 18.001 | [Szene](#szenen) | Eingang, Szene. Abruf und Lernen |
