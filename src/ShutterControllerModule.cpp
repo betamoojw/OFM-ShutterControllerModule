@@ -1,5 +1,6 @@
 #include "ShutterControllerModule.h"
 #include "ShutterControllerChannel.h"
+#include "ModeScene.h"
 #include <vector>
 
 
@@ -477,6 +478,63 @@ OpenKNX::Channel *ShutterControllerModule::createChannel(uint8_t _channelIndex /
         return nullptr;
     }
     return new ShutterControllerChannel(_channelIndex);
+}
+
+namespace
+{
+    const uint8_t SHC_SceneStoreVersion = 1;
+    const uint8_t SHC_SceneSlotsPerChannel = 16;
+}
+
+uint16_t ShutterControllerModule::flashSize()
+{
+    // Version (1 byte) + learned position per channel per scene slot (3 bytes: valid, height, slat)
+    return 1 + (uint16_t)SHC_ChannelCount * SHC_SceneSlotsPerChannel * 3;
+}
+
+void ShutterControllerModule::writeFlash()
+{
+    openknx.flash.writeByte(SHC_SceneStoreVersion);
+    for (uint8_t ch = 0; ch < SHC_ChannelCount; ch++)
+    {
+        auto channel = (ShutterControllerChannel *)getChannel(ch);
+        auto modeScene = channel != nullptr ? channel->modeScene() : nullptr;
+        for (uint8_t slot = 1; slot <= SHC_SceneSlotsPerChannel; slot++)
+        {
+            bool valid = modeScene != nullptr && modeScene->hasLearnedValue(slot);
+            openknx.flash.writeByte(valid ? 1 : 0);
+            openknx.flash.writeByte(valid ? modeScene->learnedHeight(slot) : 0);
+            openknx.flash.writeByte(valid ? modeScene->learnedSlat(slot) : 0);
+        }
+    }
+}
+
+void ShutterControllerModule::readFlash(const uint8_t *data, const uint16_t size)
+{
+    if (size == 0)
+        return; // first boot, nothing saved yet
+
+    uint8_t version = openknx.flash.readByte();
+    if (version != SHC_SceneStoreVersion)
+        return;
+
+    uint16_t maxSlots = (uint16_t)((size - 1) / 3);
+    for (uint8_t ch = 0; ch < SHC_ChannelCount; ch++)
+    {
+        auto channel = (ShutterControllerChannel *)getChannel(ch);
+        auto modeScene = channel != nullptr ? channel->modeScene() : nullptr;
+        for (uint8_t slot = 1; slot <= SHC_SceneSlotsPerChannel; slot++)
+        {
+            uint16_t index = (uint16_t)ch * SHC_SceneSlotsPerChannel + (slot - 1);
+            if (index >= maxSlots)
+                return;
+            uint8_t valid = openknx.flash.readByte();
+            uint8_t height = openknx.flash.readByte();
+            uint8_t slat = openknx.flash.readByte();
+            if (valid && modeScene != nullptr)
+                modeScene->loadLearnedValue(slot, height, slat);
+        }
+    }
 }
 
 ShutterControllerModule openknxShutterControllerModule;

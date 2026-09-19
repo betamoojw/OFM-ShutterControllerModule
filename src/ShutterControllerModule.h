@@ -39,6 +39,9 @@ class ShutterControllerModule : public ShutterControllerChannelOwnerModule
     bool connected();
     bool processCommand(const std::string cmd, bool diagnoseKo) override;
     void processInputKo(GroupObject &ko) override;
+    uint16_t flashSize() override;
+    void writeFlash() override;
+    void readFlash(const uint8_t *data, const uint16_t size) override;
 };
 
 extern ShutterControllerModule openknxShutterControllerModule;
