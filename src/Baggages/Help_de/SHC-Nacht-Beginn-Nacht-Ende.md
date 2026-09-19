@@ -1,4 +1,4 @@
-﻿### Nacht Begin / Nacht Ende
+﻿### Nacht Beginn / Nacht Ende
 
 Beginn und Ende der Nacht kann durch folgende Ergeignisse gesteuert werden:
 

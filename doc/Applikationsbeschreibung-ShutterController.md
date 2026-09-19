@@ -80,7 +80,7 @@ Bei machen Smart-Home Systemen (Z.B. OpenHAB) muss auf Bus-Wert abgefragt werden
 
 Die richtige Konfiguration ist abhängig von der Betriebart. Bitte daher die Hinweise im Kapitel [Handbetriebseinstellung](#handbetriebseinstellung) beachten.
 
-# Applikationsprogram
+# Applikationsprogramm
 
 <!-- DOC -->
 ## Allgemein
@@ -91,7 +91,7 @@ Die vollständige Anwendungsbeschreibung ist im Web unter https://github.com/Ope
 
 Insbesondere im Bereich Handbedienung sind wichtige Informationen zur richtigen Verbindung der Gruppenadresse im Kapitel "Handbetriebseinstellung" zu finden. 
 
-### WARNUNG und Sicherheitshweis:
+### WARNUNG und Sicherheitshinweis:
 
 Die Jalousiensteuerung darf aus Sicherheitsgründen nicht bei Beschattungseinrichtungen bei Notausgängen verwendet werden, da eine Automatik im Notfall das Öffnen verhindern könnte.
 
@@ -447,7 +447,7 @@ Mit diese Einstellung wird festgelegt, ob eine Handsteuerung bei aktiver Sperre 
 Innerhalb der eingestellten Zeit wird ein Beschattungsstart oder der Nachtmodus verhindert.
 
 <!-- DOC -->
-### Sonderfunktionen Tasterbediendung
+### Sonderfunktionen Tasterbedienung
 
 Die OpenKNX Jalousiensteuerung kann Fahrbefehle die normalerweise keine Auswirkung auf die Jalousie haben für Steuerbefehle benutzen.
 
@@ -587,7 +587,7 @@ Nur verfügbar wenn 2 Fensterkontake konfiguriert wurden.
 Über diese Einstellung wird konfiguriert ob während des aktiven Nachtmodus die Fenster gekippt Stellung verwendet wird.
 
 <!-- DOC -->
-### Nacht Begin / Nacht Ende
+### Nacht Beginn / Nacht Ende
 
 Beginn und Ende der Nacht kann durch folgende Ergeignisse gesteuert werden:
 
@@ -635,8 +635,8 @@ Um nach bzw. vor Sonnenauf bzw. Untergang den Nachtmodus zu aktiveren, wird der 
 #### Aktion
 
 Gibt an, ob bei Begin oder Ende des Nachtmodus die Jalousie automatisch bewegt werden soll. 
-Wird im Anschnitt "Nacht Begin" "Keine" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem eine möglich Beschattung durch den Nachtmodus beginn unterbrochen.
-Wird im Anschnitt "Nacht Ende" "Keine" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem der Beschattungsmodus ermöglicht.
+Wird im Abschnitt "Nacht Beginn" "Keine" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem eine mögliche Beschattung durch den Nachtmodusbeginn unterbrochen.
+Wird im Abschnitt "Nacht Ende" "Keine" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem der Beschattungsmodus ermöglicht.
 
 <!-- DOC -->
 #### Position
@@ -681,7 +681,7 @@ Beim Verlassen des Szenen-Modus wird der Zustand der von der Szene gesetzten Spe
 Solange der Szenen-Modus aktiv ist, meldet das Objekt "Aktiver Modus" den Wert 20 + Szenenplatz (Buswert = Nummer − 1), also 21–36 für die Szenenplätze 1–16.
 
 <!-- DOC HelpContext="Beschattungsmodus" -->
-## Beschattungungsmodus N
+## Beschattungsmodus N
 
 Je nach Konfiguriation stehen verschieden viele Beschattungsmodus zur Verfügung. 
 Die Beschattung wird abhängig von den Einstellungen wie Messwerte und Sonnenstand aktiviert. 
@@ -1273,7 +1273,7 @@ Gibt die Wartezeit für das Beschattungende in Minuten an die nach einer Untersc
 **Hinweis** Die Wartezeit wird nicht angewandt, wenn die Wartezeit durch manuelles deaktiveren der Beschattung über das Kommunikationsobjekt "Beschattung Einschalten" abgeschalten wurde oder der Sonnenstand die Beschattung nicht erlaubt. 
 
 <!-- DOC -->
-### Diagnoseobjekte für Beschaffungshinterungsgrund
+### Diagnoseobjekte für Beschattungsverhinderungsgrund
 
 Aufgrund der vielen Parameter die eine Beschattung zulassen oder sperren kann es schwierig sein den Grund für das nicht aktiv werden der Beschaffung festzustellen. 
 Deshalb kann für Diagnosezwecke oder auch für die Anzeige in einer Visualisierung der Grund für das nicht aktiv werden auf Kommunikationsobjekten ausgegeben werden.
