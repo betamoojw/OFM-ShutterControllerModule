@@ -42,6 +42,60 @@
 
 								</TypeRestriction>
 							</ParameterType>
+							<!-- Szenen: KNX-Szenennummer -->
+							<ParameterType Id="%AID%_PT-SHCSceneNumber" Name="SHCSceneNumber">
+								<TypeNumber SizeInBit="7" Type="unsignedInt" minInclusive="1" maxInclusive="64" />
+							</ParameterType>
+							<!-- Szenen: Verzoegerung bis zur Ausfuehrung -->
+							<ParameterType Id="%AID%_PT-SHCSceneDelay" Name="SHCSceneDelay">
+								<TypeTime SizeInBit="16" Unit="Seconds" minInclusive="0" maxInclusive="43200" UIHint="Time_hhmmss" />
+							</ParameterType>
+							<!-- Szenen: Sperren setzen (Beschattung/Nacht/Hand), volle Auswahl inkl. Hand -->
+							<ParameterType Id="%AID%_PT-SHCSceneLock27" Name="SHCSceneLock27">
+								<TypeRestriction Base="Value" SizeInBit="5">
+									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+									<Enumeration Text="Hand sperren" Value="1" Id="%ENID%" />
+									<Enumeration Text="Hand freigeben" Value="2" Id="%ENID%" />
+									<Enumeration Text="Nacht sperren" Value="3" Id="%ENID%" />
+									<Enumeration Text="Nacht sperren, Hand sperren" Value="4" Id="%ENID%" />
+									<Enumeration Text="Nacht sperren, Hand freigeben" Value="5" Id="%ENID%" />
+									<Enumeration Text="Nacht freigeben" Value="6" Id="%ENID%" />
+									<Enumeration Text="Nacht freigeben, Hand sperren" Value="7" Id="%ENID%" />
+									<Enumeration Text="Nacht freigeben, Hand freigeben" Value="8" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren" Value="9" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Hand sperren" Value="10" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Hand freigeben" Value="11" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht sperren" Value="12" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht sperren, Hand sperren" Value="13" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht sperren, Hand freigeben" Value="14" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht freigeben" Value="15" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht freigeben, Hand sperren" Value="16" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht freigeben, Hand freigeben" Value="17" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben" Value="18" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Hand sperren" Value="19" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Hand freigeben" Value="20" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht sperren" Value="21" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht sperren, Hand sperren" Value="22" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht sperren, Hand freigeben" Value="23" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht freigeben" Value="24" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht freigeben, Hand sperren" Value="25" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht freigeben, Hand freigeben" Value="26" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<!-- Szenen: Sperren setzen (Beschattung/Nacht), ohne Hand -->
+							<ParameterType Id="%AID%_PT-SHCSceneLock9" Name="SHCSceneLock9">
+								<TypeRestriction Base="Value" SizeInBit="5">
+									<Enumeration Text="Keine Änderung" Value="0" Id="%ENID%" />
+									<Enumeration Text="Nacht sperren" Value="3" Id="%ENID%" />
+									<Enumeration Text="Nacht freigeben" Value="6" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren" Value="9" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht sperren" Value="12" Id="%ENID%" />
+									<Enumeration Text="Beschattung sperren, Nacht freigeben" Value="15" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben" Value="18" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht sperren" Value="21" Id="%ENID%" />
+									<Enumeration Text="Beschattung freigeben, Nacht freigeben" Value="24" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
 						</ParameterTypes>
 						<Parameters>
 
@@ -66,6 +120,24 @@
 								<Parameter Id="%AID%_P-%TT%%CC%065" Name="C%C%TypeSelect" ParameterType="%AID%_PT-SHCShutterTypeSelect" Text="Geräteart" Value="1" />
 								<!-- Kanalname fuer Anzeige im Kanalbaum (mit Sperr-Symbol bei Suspendiert) -->
 								<Parameter Id="%AID%_P-%TT%%CC%066" Name="C%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
+
+								<!-- Szenen: Beschreibung je Szene (nur ETS) -->
+								<Parameter Id="%AID%_P-%TT%%CC%067" Name="C%C%Scene1Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%068" Name="C%C%Scene2Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%069" Name="C%C%Scene3Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%070" Name="C%C%Scene4Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%071" Name="C%C%Scene5Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%072" Name="C%C%Scene6Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%073" Name="C%C%Scene7Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%074" Name="C%C%Scene8Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%075" Name="C%C%Scene9Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%076" Name="C%C%Scene10Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%077" Name="C%C%Scene11Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%078" Name="C%C%Scene12Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%079" Name="C%C%Scene13Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%080" Name="C%C%Scene14Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%081" Name="C%C%Scene15Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
+								<Parameter Id="%AID%_P-%TT%%CC%082" Name="C%C%Scene16Text" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
 
 							<Union SizeInBit="272">
 								<Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
@@ -239,6 +311,175 @@
 
 							</Union>
 
+							<Union SizeInBit="776">
+								<Memory CodeSegment="%AID%_RS-04-00000" Offset="184" BitOffset="0" />
+
+								<!-- Szenen freigeben -->
+								<Parameter Id="%AID%_UP-%TT%%CC%064" Offset="0" BitOffset="0" Name="C%C%Scenes" ParameterType="%AID%_PT-OnOffYesNo" Text="Szenen" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%300" Offset="1" BitOffset="0" Name="C%C%Scene1Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%301" Offset="1" BitOffset="1" Name="C%C%Scene1Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%302" Offset="2" BitOffset="0" Name="C%C%Scene1Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%303" Offset="2" BitOffset="1" Name="C%C%Scene1HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%305" Offset="2" BitOffset="2" Name="C%C%Scene1SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%304" Offset="3" BitOffset="0" Name="C%C%Scene1Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%306" Offset="4" BitOffset="0" Name="C%C%Scene1Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%307" Offset="2" BitOffset="3" Name="C%C%Scene1Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%308" Offset="2" BitOffset="3" Name="C%C%Scene1Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%309" Offset="5" BitOffset="0" Name="C%C%Scene1Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%310" Offset="7" BitOffset="0" Name="C%C%Scene2Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%311" Offset="7" BitOffset="1" Name="C%C%Scene2Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%312" Offset="8" BitOffset="0" Name="C%C%Scene2Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%313" Offset="8" BitOffset="1" Name="C%C%Scene2HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%315" Offset="8" BitOffset="2" Name="C%C%Scene2SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%314" Offset="9" BitOffset="0" Name="C%C%Scene2Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%316" Offset="10" BitOffset="0" Name="C%C%Scene2Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%317" Offset="8" BitOffset="3" Name="C%C%Scene2Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%318" Offset="8" BitOffset="3" Name="C%C%Scene2Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%319" Offset="11" BitOffset="0" Name="C%C%Scene2Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%320" Offset="13" BitOffset="0" Name="C%C%Scene3Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%321" Offset="13" BitOffset="1" Name="C%C%Scene3Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%322" Offset="14" BitOffset="0" Name="C%C%Scene3Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%323" Offset="14" BitOffset="1" Name="C%C%Scene3HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%325" Offset="14" BitOffset="2" Name="C%C%Scene3SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%324" Offset="15" BitOffset="0" Name="C%C%Scene3Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%326" Offset="16" BitOffset="0" Name="C%C%Scene3Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%327" Offset="14" BitOffset="3" Name="C%C%Scene3Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%328" Offset="14" BitOffset="3" Name="C%C%Scene3Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%329" Offset="17" BitOffset="0" Name="C%C%Scene3Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%330" Offset="19" BitOffset="0" Name="C%C%Scene4Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%331" Offset="19" BitOffset="1" Name="C%C%Scene4Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%332" Offset="20" BitOffset="0" Name="C%C%Scene4Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%333" Offset="20" BitOffset="1" Name="C%C%Scene4HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%335" Offset="20" BitOffset="2" Name="C%C%Scene4SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%334" Offset="21" BitOffset="0" Name="C%C%Scene4Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%336" Offset="22" BitOffset="0" Name="C%C%Scene4Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%337" Offset="20" BitOffset="3" Name="C%C%Scene4Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%338" Offset="20" BitOffset="3" Name="C%C%Scene4Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%339" Offset="23" BitOffset="0" Name="C%C%Scene4Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%340" Offset="25" BitOffset="0" Name="C%C%Scene5Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%341" Offset="25" BitOffset="1" Name="C%C%Scene5Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%342" Offset="26" BitOffset="0" Name="C%C%Scene5Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%343" Offset="26" BitOffset="1" Name="C%C%Scene5HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%345" Offset="26" BitOffset="2" Name="C%C%Scene5SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%344" Offset="27" BitOffset="0" Name="C%C%Scene5Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%346" Offset="28" BitOffset="0" Name="C%C%Scene5Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%347" Offset="26" BitOffset="3" Name="C%C%Scene5Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%348" Offset="26" BitOffset="3" Name="C%C%Scene5Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%349" Offset="29" BitOffset="0" Name="C%C%Scene5Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%350" Offset="31" BitOffset="0" Name="C%C%Scene6Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%351" Offset="31" BitOffset="1" Name="C%C%Scene6Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%352" Offset="32" BitOffset="0" Name="C%C%Scene6Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%353" Offset="32" BitOffset="1" Name="C%C%Scene6HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%355" Offset="32" BitOffset="2" Name="C%C%Scene6SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%354" Offset="33" BitOffset="0" Name="C%C%Scene6Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%356" Offset="34" BitOffset="0" Name="C%C%Scene6Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%357" Offset="32" BitOffset="3" Name="C%C%Scene6Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%358" Offset="32" BitOffset="3" Name="C%C%Scene6Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%359" Offset="35" BitOffset="0" Name="C%C%Scene6Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%360" Offset="37" BitOffset="0" Name="C%C%Scene7Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%361" Offset="37" BitOffset="1" Name="C%C%Scene7Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%362" Offset="38" BitOffset="0" Name="C%C%Scene7Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%363" Offset="38" BitOffset="1" Name="C%C%Scene7HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%365" Offset="38" BitOffset="2" Name="C%C%Scene7SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%364" Offset="39" BitOffset="0" Name="C%C%Scene7Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%366" Offset="40" BitOffset="0" Name="C%C%Scene7Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%367" Offset="38" BitOffset="3" Name="C%C%Scene7Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%368" Offset="38" BitOffset="3" Name="C%C%Scene7Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%369" Offset="41" BitOffset="0" Name="C%C%Scene7Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%370" Offset="43" BitOffset="0" Name="C%C%Scene8Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%371" Offset="43" BitOffset="1" Name="C%C%Scene8Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%372" Offset="44" BitOffset="0" Name="C%C%Scene8Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%373" Offset="44" BitOffset="1" Name="C%C%Scene8HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%375" Offset="44" BitOffset="2" Name="C%C%Scene8SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%374" Offset="45" BitOffset="0" Name="C%C%Scene8Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%376" Offset="46" BitOffset="0" Name="C%C%Scene8Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%377" Offset="44" BitOffset="3" Name="C%C%Scene8Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%378" Offset="44" BitOffset="3" Name="C%C%Scene8Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%379" Offset="47" BitOffset="0" Name="C%C%Scene8Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%380" Offset="49" BitOffset="0" Name="C%C%Scene9Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%381" Offset="49" BitOffset="1" Name="C%C%Scene9Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%382" Offset="50" BitOffset="0" Name="C%C%Scene9Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%383" Offset="50" BitOffset="1" Name="C%C%Scene9HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%385" Offset="50" BitOffset="2" Name="C%C%Scene9SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%384" Offset="51" BitOffset="0" Name="C%C%Scene9Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%386" Offset="52" BitOffset="0" Name="C%C%Scene9Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%387" Offset="50" BitOffset="3" Name="C%C%Scene9Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%388" Offset="50" BitOffset="3" Name="C%C%Scene9Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%389" Offset="53" BitOffset="0" Name="C%C%Scene9Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%390" Offset="55" BitOffset="0" Name="C%C%Scene10Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%391" Offset="55" BitOffset="1" Name="C%C%Scene10Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%392" Offset="56" BitOffset="0" Name="C%C%Scene10Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%393" Offset="56" BitOffset="1" Name="C%C%Scene10HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%395" Offset="56" BitOffset="2" Name="C%C%Scene10SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%394" Offset="57" BitOffset="0" Name="C%C%Scene10Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%396" Offset="58" BitOffset="0" Name="C%C%Scene10Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%397" Offset="56" BitOffset="3" Name="C%C%Scene10Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%398" Offset="56" BitOffset="3" Name="C%C%Scene10Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%399" Offset="59" BitOffset="0" Name="C%C%Scene10Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%400" Offset="61" BitOffset="0" Name="C%C%Scene11Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%401" Offset="61" BitOffset="1" Name="C%C%Scene11Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%402" Offset="62" BitOffset="0" Name="C%C%Scene11Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%403" Offset="62" BitOffset="1" Name="C%C%Scene11HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%405" Offset="62" BitOffset="2" Name="C%C%Scene11SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%404" Offset="63" BitOffset="0" Name="C%C%Scene11Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%406" Offset="64" BitOffset="0" Name="C%C%Scene11Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%407" Offset="62" BitOffset="3" Name="C%C%Scene11Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%408" Offset="62" BitOffset="3" Name="C%C%Scene11Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%409" Offset="65" BitOffset="0" Name="C%C%Scene11Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%410" Offset="67" BitOffset="0" Name="C%C%Scene12Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%411" Offset="67" BitOffset="1" Name="C%C%Scene12Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%412" Offset="68" BitOffset="0" Name="C%C%Scene12Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%413" Offset="68" BitOffset="1" Name="C%C%Scene12HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%415" Offset="68" BitOffset="2" Name="C%C%Scene12SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%414" Offset="69" BitOffset="0" Name="C%C%Scene12Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%416" Offset="70" BitOffset="0" Name="C%C%Scene12Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%417" Offset="68" BitOffset="3" Name="C%C%Scene12Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%418" Offset="68" BitOffset="3" Name="C%C%Scene12Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%419" Offset="71" BitOffset="0" Name="C%C%Scene12Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%420" Offset="73" BitOffset="0" Name="C%C%Scene13Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%421" Offset="73" BitOffset="1" Name="C%C%Scene13Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%422" Offset="74" BitOffset="0" Name="C%C%Scene13Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%423" Offset="74" BitOffset="1" Name="C%C%Scene13HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%425" Offset="74" BitOffset="2" Name="C%C%Scene13SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%424" Offset="75" BitOffset="0" Name="C%C%Scene13Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%426" Offset="76" BitOffset="0" Name="C%C%Scene13Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%427" Offset="74" BitOffset="3" Name="C%C%Scene13Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%428" Offset="74" BitOffset="3" Name="C%C%Scene13Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%429" Offset="77" BitOffset="0" Name="C%C%Scene13Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%430" Offset="79" BitOffset="0" Name="C%C%Scene14Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%431" Offset="79" BitOffset="1" Name="C%C%Scene14Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%432" Offset="80" BitOffset="0" Name="C%C%Scene14Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%433" Offset="80" BitOffset="1" Name="C%C%Scene14HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%435" Offset="80" BitOffset="2" Name="C%C%Scene14SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%434" Offset="81" BitOffset="0" Name="C%C%Scene14Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%436" Offset="82" BitOffset="0" Name="C%C%Scene14Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%437" Offset="80" BitOffset="3" Name="C%C%Scene14Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%438" Offset="80" BitOffset="3" Name="C%C%Scene14Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%439" Offset="83" BitOffset="0" Name="C%C%Scene14Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%440" Offset="85" BitOffset="0" Name="C%C%Scene15Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%441" Offset="85" BitOffset="1" Name="C%C%Scene15Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%442" Offset="86" BitOffset="0" Name="C%C%Scene15Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%443" Offset="86" BitOffset="1" Name="C%C%Scene15HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%445" Offset="86" BitOffset="2" Name="C%C%Scene15SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%444" Offset="87" BitOffset="0" Name="C%C%Scene15Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%446" Offset="88" BitOffset="0" Name="C%C%Scene15Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%447" Offset="86" BitOffset="3" Name="C%C%Scene15Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%448" Offset="86" BitOffset="3" Name="C%C%Scene15Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%449" Offset="89" BitOffset="0" Name="C%C%Scene15Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%450" Offset="91" BitOffset="0" Name="C%C%Scene16Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%451" Offset="91" BitOffset="1" Name="C%C%Scene16Number" ParameterType="%AID%_PT-SHCSceneNumber" Text="KNX-Szene" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%452" Offset="92" BitOffset="0" Name="C%C%Scene16Storable" ParameterType="%AID%_PT-OnOffYesNo" Text="speicherbar" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%453" Offset="92" BitOffset="1" Name="C%C%Scene16HeightEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Höhe anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%455" Offset="92" BitOffset="2" Name="C%C%Scene16SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
+								<Parameter Id="%AID%_UP-%TT%%CC%454" Offset="93" BitOffset="0" Name="C%C%Scene16Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%456" Offset="94" BitOffset="0" Name="C%C%Scene16Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
+								<Parameter Id="%AID%_UP-%TT%%CC%457" Offset="92" BitOffset="3" Name="C%C%Scene16Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%458" Offset="92" BitOffset="3" Name="C%C%Scene16Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%459" Offset="95" BitOffset="0" Name="C%C%Scene16Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
+
+								<!-- Next offset: 281-->
+							</Union>
+
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<op:usePart name="ModeWindowOpen" xpath="//Parameters/*" />
 
@@ -406,6 +647,185 @@
 							<!-- Fenster gekippt handling -->
 							<ParameterRef Id="%AID%_UP-%TT%%CC%044_R-%TT%%CC%04401" RefId="%AID%_UP-%TT%%CC%044"/>
 
+							<!-- Szenen freigeben -->
+							<ParameterRef Id="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401" RefId="%AID%_UP-%TT%%CC%064" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" RefId="%AID%_UP-%TT%%CC%300" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" RefId="%AID%_UP-%TT%%CC%301" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" RefId="%AID%_UP-%TT%%CC%302" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%303_R-%TT%%CC%30301" RefId="%AID%_UP-%TT%%CC%303" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%305_R-%TT%%CC%30501" RefId="%AID%_UP-%TT%%CC%305" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%304_R-%TT%%CC%30401" RefId="%AID%_UP-%TT%%CC%304" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%306_R-%TT%%CC%30601" RefId="%AID%_UP-%TT%%CC%306" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%307_R-%TT%%CC%30701" RefId="%AID%_UP-%TT%%CC%307" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%308_R-%TT%%CC%30801" RefId="%AID%_UP-%TT%%CC%308" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%309_R-%TT%%CC%30901" RefId="%AID%_UP-%TT%%CC%309" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%067_R-%TT%%CC%06701" RefId="%AID%_P-%TT%%CC%067" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%310_R-%TT%%CC%31001" RefId="%AID%_UP-%TT%%CC%310" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%311_R-%TT%%CC%31101" RefId="%AID%_UP-%TT%%CC%311" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%312_R-%TT%%CC%31201" RefId="%AID%_UP-%TT%%CC%312" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%313_R-%TT%%CC%31301" RefId="%AID%_UP-%TT%%CC%313" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%315_R-%TT%%CC%31501" RefId="%AID%_UP-%TT%%CC%315" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%314_R-%TT%%CC%31401" RefId="%AID%_UP-%TT%%CC%314" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%316_R-%TT%%CC%31601" RefId="%AID%_UP-%TT%%CC%316" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%317_R-%TT%%CC%31701" RefId="%AID%_UP-%TT%%CC%317" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%318_R-%TT%%CC%31801" RefId="%AID%_UP-%TT%%CC%318" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%319_R-%TT%%CC%31901" RefId="%AID%_UP-%TT%%CC%319" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%068_R-%TT%%CC%06801" RefId="%AID%_P-%TT%%CC%068" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%320_R-%TT%%CC%32001" RefId="%AID%_UP-%TT%%CC%320" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%321_R-%TT%%CC%32101" RefId="%AID%_UP-%TT%%CC%321" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%322_R-%TT%%CC%32201" RefId="%AID%_UP-%TT%%CC%322" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%323_R-%TT%%CC%32301" RefId="%AID%_UP-%TT%%CC%323" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%325_R-%TT%%CC%32501" RefId="%AID%_UP-%TT%%CC%325" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%324_R-%TT%%CC%32401" RefId="%AID%_UP-%TT%%CC%324" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%326_R-%TT%%CC%32601" RefId="%AID%_UP-%TT%%CC%326" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%327_R-%TT%%CC%32701" RefId="%AID%_UP-%TT%%CC%327" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%328_R-%TT%%CC%32801" RefId="%AID%_UP-%TT%%CC%328" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%329_R-%TT%%CC%32901" RefId="%AID%_UP-%TT%%CC%329" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%069_R-%TT%%CC%06901" RefId="%AID%_P-%TT%%CC%069" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%330_R-%TT%%CC%33001" RefId="%AID%_UP-%TT%%CC%330" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%331_R-%TT%%CC%33101" RefId="%AID%_UP-%TT%%CC%331" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%332_R-%TT%%CC%33201" RefId="%AID%_UP-%TT%%CC%332" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%333_R-%TT%%CC%33301" RefId="%AID%_UP-%TT%%CC%333" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%335_R-%TT%%CC%33501" RefId="%AID%_UP-%TT%%CC%335" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%334_R-%TT%%CC%33401" RefId="%AID%_UP-%TT%%CC%334" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%336_R-%TT%%CC%33601" RefId="%AID%_UP-%TT%%CC%336" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%337_R-%TT%%CC%33701" RefId="%AID%_UP-%TT%%CC%337" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%338_R-%TT%%CC%33801" RefId="%AID%_UP-%TT%%CC%338" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%339_R-%TT%%CC%33901" RefId="%AID%_UP-%TT%%CC%339" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%070_R-%TT%%CC%07001" RefId="%AID%_P-%TT%%CC%070" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%340_R-%TT%%CC%34001" RefId="%AID%_UP-%TT%%CC%340" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%341_R-%TT%%CC%34101" RefId="%AID%_UP-%TT%%CC%341" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%342_R-%TT%%CC%34201" RefId="%AID%_UP-%TT%%CC%342" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%343_R-%TT%%CC%34301" RefId="%AID%_UP-%TT%%CC%343" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%345_R-%TT%%CC%34501" RefId="%AID%_UP-%TT%%CC%345" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%344_R-%TT%%CC%34401" RefId="%AID%_UP-%TT%%CC%344" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%346_R-%TT%%CC%34601" RefId="%AID%_UP-%TT%%CC%346" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%347_R-%TT%%CC%34701" RefId="%AID%_UP-%TT%%CC%347" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%348_R-%TT%%CC%34801" RefId="%AID%_UP-%TT%%CC%348" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%349_R-%TT%%CC%34901" RefId="%AID%_UP-%TT%%CC%349" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%071_R-%TT%%CC%07101" RefId="%AID%_P-%TT%%CC%071" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%350_R-%TT%%CC%35001" RefId="%AID%_UP-%TT%%CC%350" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%351_R-%TT%%CC%35101" RefId="%AID%_UP-%TT%%CC%351" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%352_R-%TT%%CC%35201" RefId="%AID%_UP-%TT%%CC%352" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%353_R-%TT%%CC%35301" RefId="%AID%_UP-%TT%%CC%353" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%355_R-%TT%%CC%35501" RefId="%AID%_UP-%TT%%CC%355" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%354_R-%TT%%CC%35401" RefId="%AID%_UP-%TT%%CC%354" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%356_R-%TT%%CC%35601" RefId="%AID%_UP-%TT%%CC%356" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%357_R-%TT%%CC%35701" RefId="%AID%_UP-%TT%%CC%357" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%358_R-%TT%%CC%35801" RefId="%AID%_UP-%TT%%CC%358" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%359_R-%TT%%CC%35901" RefId="%AID%_UP-%TT%%CC%359" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%072_R-%TT%%CC%07201" RefId="%AID%_P-%TT%%CC%072" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%360_R-%TT%%CC%36001" RefId="%AID%_UP-%TT%%CC%360" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%361_R-%TT%%CC%36101" RefId="%AID%_UP-%TT%%CC%361" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%362_R-%TT%%CC%36201" RefId="%AID%_UP-%TT%%CC%362" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%363_R-%TT%%CC%36301" RefId="%AID%_UP-%TT%%CC%363" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%365_R-%TT%%CC%36501" RefId="%AID%_UP-%TT%%CC%365" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%364_R-%TT%%CC%36401" RefId="%AID%_UP-%TT%%CC%364" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%366_R-%TT%%CC%36601" RefId="%AID%_UP-%TT%%CC%366" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%367_R-%TT%%CC%36701" RefId="%AID%_UP-%TT%%CC%367" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%368_R-%TT%%CC%36801" RefId="%AID%_UP-%TT%%CC%368" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%369_R-%TT%%CC%36901" RefId="%AID%_UP-%TT%%CC%369" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%073_R-%TT%%CC%07301" RefId="%AID%_P-%TT%%CC%073" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001" RefId="%AID%_UP-%TT%%CC%370" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%371_R-%TT%%CC%37101" RefId="%AID%_UP-%TT%%CC%371" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%372_R-%TT%%CC%37201" RefId="%AID%_UP-%TT%%CC%372" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%373_R-%TT%%CC%37301" RefId="%AID%_UP-%TT%%CC%373" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%375_R-%TT%%CC%37501" RefId="%AID%_UP-%TT%%CC%375" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%374_R-%TT%%CC%37401" RefId="%AID%_UP-%TT%%CC%374" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%376_R-%TT%%CC%37601" RefId="%AID%_UP-%TT%%CC%376" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701" RefId="%AID%_UP-%TT%%CC%377" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%378_R-%TT%%CC%37801" RefId="%AID%_UP-%TT%%CC%378" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901" RefId="%AID%_UP-%TT%%CC%379" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%074_R-%TT%%CC%07401" RefId="%AID%_P-%TT%%CC%074" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38001" RefId="%AID%_UP-%TT%%CC%380" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%381_R-%TT%%CC%38101" RefId="%AID%_UP-%TT%%CC%381" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%382_R-%TT%%CC%38201" RefId="%AID%_UP-%TT%%CC%382" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" RefId="%AID%_UP-%TT%%CC%383" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" RefId="%AID%_UP-%TT%%CC%385" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" RefId="%AID%_UP-%TT%%CC%384" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" RefId="%AID%_UP-%TT%%CC%386" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%387_R-%TT%%CC%38701" RefId="%AID%_UP-%TT%%CC%387" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%388_R-%TT%%CC%38801" RefId="%AID%_UP-%TT%%CC%388" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%389_R-%TT%%CC%38901" RefId="%AID%_UP-%TT%%CC%389" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%075_R-%TT%%CC%07501" RefId="%AID%_P-%TT%%CC%075" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%390_R-%TT%%CC%39001" RefId="%AID%_UP-%TT%%CC%390" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%391_R-%TT%%CC%39101" RefId="%AID%_UP-%TT%%CC%391" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%392_R-%TT%%CC%39201" RefId="%AID%_UP-%TT%%CC%392" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" RefId="%AID%_UP-%TT%%CC%393" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%395_R-%TT%%CC%39501" RefId="%AID%_UP-%TT%%CC%395" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%394_R-%TT%%CC%39401" RefId="%AID%_UP-%TT%%CC%394" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%396_R-%TT%%CC%39601" RefId="%AID%_UP-%TT%%CC%396" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%397_R-%TT%%CC%39701" RefId="%AID%_UP-%TT%%CC%397" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%398_R-%TT%%CC%39801" RefId="%AID%_UP-%TT%%CC%398" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%399_R-%TT%%CC%39901" RefId="%AID%_UP-%TT%%CC%399" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%076_R-%TT%%CC%07601" RefId="%AID%_P-%TT%%CC%076" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%400_R-%TT%%CC%40001" RefId="%AID%_UP-%TT%%CC%400" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%401_R-%TT%%CC%40101" RefId="%AID%_UP-%TT%%CC%401" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%402_R-%TT%%CC%40201" RefId="%AID%_UP-%TT%%CC%402" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%403_R-%TT%%CC%40301" RefId="%AID%_UP-%TT%%CC%403" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%405_R-%TT%%CC%40501" RefId="%AID%_UP-%TT%%CC%405" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%404_R-%TT%%CC%40401" RefId="%AID%_UP-%TT%%CC%404" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%406_R-%TT%%CC%40601" RefId="%AID%_UP-%TT%%CC%406" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%407_R-%TT%%CC%40701" RefId="%AID%_UP-%TT%%CC%407" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%408_R-%TT%%CC%40801" RefId="%AID%_UP-%TT%%CC%408" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%409_R-%TT%%CC%40901" RefId="%AID%_UP-%TT%%CC%409" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%077_R-%TT%%CC%07701" RefId="%AID%_P-%TT%%CC%077" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%410_R-%TT%%CC%41001" RefId="%AID%_UP-%TT%%CC%410" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" RefId="%AID%_UP-%TT%%CC%411" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" RefId="%AID%_UP-%TT%%CC%412" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" RefId="%AID%_UP-%TT%%CC%413" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%415_R-%TT%%CC%41501" RefId="%AID%_UP-%TT%%CC%415" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%414_R-%TT%%CC%41401" RefId="%AID%_UP-%TT%%CC%414" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%416_R-%TT%%CC%41601" RefId="%AID%_UP-%TT%%CC%416" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%417_R-%TT%%CC%41701" RefId="%AID%_UP-%TT%%CC%417" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%418_R-%TT%%CC%41801" RefId="%AID%_UP-%TT%%CC%418" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%419_R-%TT%%CC%41901" RefId="%AID%_UP-%TT%%CC%419" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%078_R-%TT%%CC%07801" RefId="%AID%_P-%TT%%CC%078" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%420_R-%TT%%CC%42001" RefId="%AID%_UP-%TT%%CC%420" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" RefId="%AID%_UP-%TT%%CC%421" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" RefId="%AID%_UP-%TT%%CC%422" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" RefId="%AID%_UP-%TT%%CC%423" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%425_R-%TT%%CC%42501" RefId="%AID%_UP-%TT%%CC%425" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%424_R-%TT%%CC%42401" RefId="%AID%_UP-%TT%%CC%424" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%426_R-%TT%%CC%42601" RefId="%AID%_UP-%TT%%CC%426" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%427_R-%TT%%CC%42701" RefId="%AID%_UP-%TT%%CC%427" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%428_R-%TT%%CC%42801" RefId="%AID%_UP-%TT%%CC%428" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%429_R-%TT%%CC%42901" RefId="%AID%_UP-%TT%%CC%429" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%079_R-%TT%%CC%07901" RefId="%AID%_P-%TT%%CC%079" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%430_R-%TT%%CC%43001" RefId="%AID%_UP-%TT%%CC%430" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" RefId="%AID%_UP-%TT%%CC%431" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" RefId="%AID%_UP-%TT%%CC%432" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" RefId="%AID%_UP-%TT%%CC%433" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501" RefId="%AID%_UP-%TT%%CC%435" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%434_R-%TT%%CC%43401" RefId="%AID%_UP-%TT%%CC%434" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" RefId="%AID%_UP-%TT%%CC%436" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" RefId="%AID%_UP-%TT%%CC%437" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" RefId="%AID%_UP-%TT%%CC%438" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%439_R-%TT%%CC%43901" RefId="%AID%_UP-%TT%%CC%439" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%080_R-%TT%%CC%08001" RefId="%AID%_P-%TT%%CC%080" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" RefId="%AID%_UP-%TT%%CC%440" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" RefId="%AID%_UP-%TT%%CC%441" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" RefId="%AID%_UP-%TT%%CC%442" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" RefId="%AID%_UP-%TT%%CC%443" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%445_R-%TT%%CC%44501" RefId="%AID%_UP-%TT%%CC%445" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%444_R-%TT%%CC%44401" RefId="%AID%_UP-%TT%%CC%444" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" RefId="%AID%_UP-%TT%%CC%446" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" RefId="%AID%_UP-%TT%%CC%447" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%448_R-%TT%%CC%44801" RefId="%AID%_UP-%TT%%CC%448" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%449_R-%TT%%CC%44901" RefId="%AID%_UP-%TT%%CC%449" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%081_R-%TT%%CC%08101" RefId="%AID%_P-%TT%%CC%081" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%450_R-%TT%%CC%45001" RefId="%AID%_UP-%TT%%CC%450" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%451_R-%TT%%CC%45101" RefId="%AID%_UP-%TT%%CC%451" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%452_R-%TT%%CC%45201" RefId="%AID%_UP-%TT%%CC%452" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%453_R-%TT%%CC%45301" RefId="%AID%_UP-%TT%%CC%453" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%455_R-%TT%%CC%45501" RefId="%AID%_UP-%TT%%CC%455" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%454_R-%TT%%CC%45401" RefId="%AID%_UP-%TT%%CC%454" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%456_R-%TT%%CC%45601" RefId="%AID%_UP-%TT%%CC%456" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%457_R-%TT%%CC%45701" RefId="%AID%_UP-%TT%%CC%457" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%458_R-%TT%%CC%45801" RefId="%AID%_UP-%TT%%CC%458" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%459_R-%TT%%CC%45901" RefId="%AID%_UP-%TT%%CC%459" />
+							<ParameterRef Id="%AID%_P-%TT%%CC%082_R-%TT%%CC%08201" RefId="%AID%_P-%TT%%CC%082" />
+
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Parameter Id starting with: 70 -->
 							<op:usePart name="ModeWindowOpen" xpath="//ParameterRefs/*" />
@@ -502,7 +922,10 @@
 							<!-- Status Beschattung Bereit (nur Nutzer-Einfluss) -->
 							<ComObject Id="%AID%_O-%TT%%CC%027" Number="%K27%" ObjectSize="1 Bit" DatapointType="DPST-1-1" Name="C%C%ShadingReadyUser" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
-							<!-- Next Id: %AID%_O-%TT%%CC%028 -->
+							<!-- Szene abrufen/lernen (DPT 18.001) -->
+							<ComObject Id="%AID%_O-%TT%%CC%028" Number="%K52%" ObjectSize="1 Byte" DatapointType="DPST-18-1" Name="C%C%Scene" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
+
+							<!-- Next Id: %AID%_O-%TT%%CC%029 -->
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Id starting with 900 -->
@@ -583,6 +1006,9 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_O-%TT%%CC%025" Text="{{0:Jalousie %C%}}: Raumtemperatur" FunctionText="Jalousie %C%: Eingang, °C" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Status Beschattung Bereit (nur Nutzer-Einfluss) -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%027_R-%TT%%CC%02701" RefId="%AID%_O-%TT%%CC%027" Text="{{0:Jalousie %C%}}: Status Beschattung Bereit" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+
+							<!-- Szene abrufen/lernen -->
+							<ComObjectRef Id="%AID%_O-%TT%%CC%028_R-%TT%%CC%02801" RefId="%AID%_O-%TT%%CC%028" Text="{{0:Jalousie %C%}}: Szene" FunctionText="Jalousie %C%: Eingang, Szene" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 
 
 
@@ -703,6 +1129,9 @@
 
 													<!-- Nacht Modus -->
 													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%004_R-%TT%%CC%00401" HelpContext="%DOC%" IndentLevel="1" />
+
+													<!-- Szenen -->
+													<ParameterRefRef RefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401" HelpContext="%DOC%" IndentLevel="1" />
 
 
 													<!-- Anzahl Fenster Offen Mode-->
@@ -1187,6 +1616,923 @@
 														</ParameterBlock>
 													</when>
 												</choose>
+
+
+
+										<!-- Szenen -->
+										<choose ParamRefId="%AID%_UP-%TT%%CC%064_R-%TT%%CC%06401">
+											<when test="1">
+												<ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%SHCScenes" Text="Szenen" Icon="movie-open-outline" HelpContext="SHC-Szenen" ShowInComObjectTree="true">
+
+													<!-- Szene abrufen/lernen -->
+													<ComObjectRefRef RefId="%AID%_O-%TT%%CC%028_R-%TT%%CC%02801" />
+
+													<ParameterSeparator Id="%AID%_PS-nnn" Text="Szenen" UIHint="Headline" />
+
+													<choose ParamRefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101">
+														<when test="1">
+															<ParameterBlock Id="%AID%_PB-nnn" Name="Table%CC%ScenesJalousie" Text="#" Inline="true" Layout="Table" HelpContext="SHC-Szenen">
+																<Rows>
+								<Row Id="%AID%_PB-nnn_R-1" />
+								<Row Id="%AID%_PB-nnn_R-2" />
+								<Row Id="%AID%_PB-nnn_R-3" />
+								<Row Id="%AID%_PB-nnn_R-4" />
+								<Row Id="%AID%_PB-nnn_R-5" />
+								<Row Id="%AID%_PB-nnn_R-6" />
+								<Row Id="%AID%_PB-nnn_R-7" />
+								<Row Id="%AID%_PB-nnn_R-8" />
+								<Row Id="%AID%_PB-nnn_R-9" />
+								<Row Id="%AID%_PB-nnn_R-10" />
+								<Row Id="%AID%_PB-nnn_R-11" />
+								<Row Id="%AID%_PB-nnn_R-12" />
+								<Row Id="%AID%_PB-nnn_R-13" />
+								<Row Id="%AID%_PB-nnn_R-14" />
+								<Row Id="%AID%_PB-nnn_R-15" />
+								<Row Id="%AID%_PB-nnn_R-16" />
+																</Rows>
+																<Columns>
+								<Column Id="%AID%_PB-nnn_C-1" Width="6%" Text="freigeben" />
+								<Column Id="%AID%_PB-nnn_C-2" Width="8%" Text="KNX-Szene" />
+								<Column Id="%AID%_PB-nnn_C-3" Width="8%" Text="speicherbar" />
+								<Column Id="%AID%_PB-nnn_C-4" Width="9%" Text="Höhe anfahren" />
+								<Column Id="%AID%_PB-nnn_C-5" Width="7%" Text="Höhe" />
+								<Column Id="%AID%_PB-nnn_C-6" Width="9%" Text="Lamelle anfahren" />
+								<Column Id="%AID%_PB-nnn_C-7" Width="7%" Text="Lamelle" />
+								<Column Id="%AID%_PB-nnn_C-8" Width="16%" Text="Sperren" />
+								<Column Id="%AID%_PB-nnn_C-9" Width="11%" Text="Verzögerung" />
+								<Column Id="%AID%_PB-nnn_C-10" Width="19%" Text="Beschreibung" />
+																</Columns>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" Cell="1,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" Cell="1,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" Cell="1,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%303_R-%TT%%CC%30301" Cell="1,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%303_R-%TT%%CC%30301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%304_R-%TT%%CC%30401" Cell="1,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%305_R-%TT%%CC%30501" Cell="1,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%305_R-%TT%%CC%30501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%306_R-%TT%%CC%30601" Cell="1,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%308_R-%TT%%CC%30801" Cell="1,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%307_R-%TT%%CC%30701" Cell="1,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%309_R-%TT%%CC%30901" Cell="1,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%067_R-%TT%%CC%06701" Cell="1,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%310_R-%TT%%CC%31001" Cell="2,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%310_R-%TT%%CC%31001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%311_R-%TT%%CC%31101" Cell="2,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%312_R-%TT%%CC%31201" Cell="2,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%313_R-%TT%%CC%31301" Cell="2,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%313_R-%TT%%CC%31301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%314_R-%TT%%CC%31401" Cell="2,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%315_R-%TT%%CC%31501" Cell="2,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%315_R-%TT%%CC%31501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%316_R-%TT%%CC%31601" Cell="2,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%318_R-%TT%%CC%31801" Cell="2,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%317_R-%TT%%CC%31701" Cell="2,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%319_R-%TT%%CC%31901" Cell="2,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%068_R-%TT%%CC%06801" Cell="2,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%320_R-%TT%%CC%32001" Cell="3,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%320_R-%TT%%CC%32001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%321_R-%TT%%CC%32101" Cell="3,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%322_R-%TT%%CC%32201" Cell="3,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%323_R-%TT%%CC%32301" Cell="3,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%323_R-%TT%%CC%32301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%324_R-%TT%%CC%32401" Cell="3,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%325_R-%TT%%CC%32501" Cell="3,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%325_R-%TT%%CC%32501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%326_R-%TT%%CC%32601" Cell="3,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%328_R-%TT%%CC%32801" Cell="3,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%327_R-%TT%%CC%32701" Cell="3,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%329_R-%TT%%CC%32901" Cell="3,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%069_R-%TT%%CC%06901" Cell="3,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%330_R-%TT%%CC%33001" Cell="4,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%330_R-%TT%%CC%33001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%331_R-%TT%%CC%33101" Cell="4,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%332_R-%TT%%CC%33201" Cell="4,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%333_R-%TT%%CC%33301" Cell="4,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%333_R-%TT%%CC%33301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%334_R-%TT%%CC%33401" Cell="4,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%335_R-%TT%%CC%33501" Cell="4,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%335_R-%TT%%CC%33501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%336_R-%TT%%CC%33601" Cell="4,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%338_R-%TT%%CC%33801" Cell="4,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%337_R-%TT%%CC%33701" Cell="4,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%339_R-%TT%%CC%33901" Cell="4,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%070_R-%TT%%CC%07001" Cell="4,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%340_R-%TT%%CC%34001" Cell="5,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%340_R-%TT%%CC%34001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%341_R-%TT%%CC%34101" Cell="5,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%342_R-%TT%%CC%34201" Cell="5,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%343_R-%TT%%CC%34301" Cell="5,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%343_R-%TT%%CC%34301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%344_R-%TT%%CC%34401" Cell="5,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%345_R-%TT%%CC%34501" Cell="5,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%345_R-%TT%%CC%34501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%346_R-%TT%%CC%34601" Cell="5,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%348_R-%TT%%CC%34801" Cell="5,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%347_R-%TT%%CC%34701" Cell="5,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%349_R-%TT%%CC%34901" Cell="5,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%071_R-%TT%%CC%07101" Cell="5,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%350_R-%TT%%CC%35001" Cell="6,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%350_R-%TT%%CC%35001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%351_R-%TT%%CC%35101" Cell="6,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%352_R-%TT%%CC%35201" Cell="6,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%353_R-%TT%%CC%35301" Cell="6,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%353_R-%TT%%CC%35301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%354_R-%TT%%CC%35401" Cell="6,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%355_R-%TT%%CC%35501" Cell="6,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%355_R-%TT%%CC%35501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%356_R-%TT%%CC%35601" Cell="6,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%358_R-%TT%%CC%35801" Cell="6,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%357_R-%TT%%CC%35701" Cell="6,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%359_R-%TT%%CC%35901" Cell="6,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%072_R-%TT%%CC%07201" Cell="6,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%360_R-%TT%%CC%36001" Cell="7,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%360_R-%TT%%CC%36001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%361_R-%TT%%CC%36101" Cell="7,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%362_R-%TT%%CC%36201" Cell="7,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%363_R-%TT%%CC%36301" Cell="7,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%363_R-%TT%%CC%36301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%364_R-%TT%%CC%36401" Cell="7,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%365_R-%TT%%CC%36501" Cell="7,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%365_R-%TT%%CC%36501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%366_R-%TT%%CC%36601" Cell="7,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%368_R-%TT%%CC%36801" Cell="7,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%367_R-%TT%%CC%36701" Cell="7,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%369_R-%TT%%CC%36901" Cell="7,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%073_R-%TT%%CC%07301" Cell="7,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001" Cell="8,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%371_R-%TT%%CC%37101" Cell="8,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%372_R-%TT%%CC%37201" Cell="8,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%373_R-%TT%%CC%37301" Cell="8,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%373_R-%TT%%CC%37301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%374_R-%TT%%CC%37401" Cell="8,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%375_R-%TT%%CC%37501" Cell="8,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%375_R-%TT%%CC%37501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%376_R-%TT%%CC%37601" Cell="8,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%378_R-%TT%%CC%37801" Cell="8,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701" Cell="8,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901" Cell="8,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%074_R-%TT%%CC%07401" Cell="8,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38001" Cell="9,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%381_R-%TT%%CC%38101" Cell="9,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%382_R-%TT%%CC%38201" Cell="9,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="9,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="9,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501" Cell="9,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%385_R-%TT%%CC%38501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%386_R-%TT%%CC%38601" Cell="9,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%388_R-%TT%%CC%38801" Cell="9,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%387_R-%TT%%CC%38701" Cell="9,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%389_R-%TT%%CC%38901" Cell="9,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%075_R-%TT%%CC%07501" Cell="9,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%390_R-%TT%%CC%39001" Cell="10,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%390_R-%TT%%CC%39001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%391_R-%TT%%CC%39101" Cell="10,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%392_R-%TT%%CC%39201" Cell="10,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" Cell="10,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%394_R-%TT%%CC%39401" Cell="10,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%395_R-%TT%%CC%39501" Cell="10,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%395_R-%TT%%CC%39501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%396_R-%TT%%CC%39601" Cell="10,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%398_R-%TT%%CC%39801" Cell="10,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%397_R-%TT%%CC%39701" Cell="10,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%399_R-%TT%%CC%39901" Cell="10,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%076_R-%TT%%CC%07601" Cell="10,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%400_R-%TT%%CC%40001" Cell="11,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%400_R-%TT%%CC%40001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%401_R-%TT%%CC%40101" Cell="11,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%402_R-%TT%%CC%40201" Cell="11,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%403_R-%TT%%CC%40301" Cell="11,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%403_R-%TT%%CC%40301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%404_R-%TT%%CC%40401" Cell="11,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%405_R-%TT%%CC%40501" Cell="11,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%405_R-%TT%%CC%40501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%406_R-%TT%%CC%40601" Cell="11,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%408_R-%TT%%CC%40801" Cell="11,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%407_R-%TT%%CC%40701" Cell="11,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%409_R-%TT%%CC%40901" Cell="11,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%077_R-%TT%%CC%07701" Cell="11,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%410_R-%TT%%CC%41001" Cell="12,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%410_R-%TT%%CC%41001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" Cell="12,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" Cell="12,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" Cell="12,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%414_R-%TT%%CC%41401" Cell="12,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%415_R-%TT%%CC%41501" Cell="12,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%415_R-%TT%%CC%41501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%416_R-%TT%%CC%41601" Cell="12,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%418_R-%TT%%CC%41801" Cell="12,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%417_R-%TT%%CC%41701" Cell="12,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%419_R-%TT%%CC%41901" Cell="12,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%078_R-%TT%%CC%07801" Cell="12,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%420_R-%TT%%CC%42001" Cell="13,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%420_R-%TT%%CC%42001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" Cell="13,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" Cell="13,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" Cell="13,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%424_R-%TT%%CC%42401" Cell="13,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%425_R-%TT%%CC%42501" Cell="13,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%425_R-%TT%%CC%42501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%426_R-%TT%%CC%42601" Cell="13,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%428_R-%TT%%CC%42801" Cell="13,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%427_R-%TT%%CC%42701" Cell="13,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%429_R-%TT%%CC%42901" Cell="13,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%079_R-%TT%%CC%07901" Cell="13,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%430_R-%TT%%CC%43001" Cell="14,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%430_R-%TT%%CC%43001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" Cell="14,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" Cell="14,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" Cell="14,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%434_R-%TT%%CC%43401" Cell="14,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501" Cell="14,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%435_R-%TT%%CC%43501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%436_R-%TT%%CC%43601" Cell="14,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" Cell="14,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" Cell="14,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%439_R-%TT%%CC%43901" Cell="14,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%080_R-%TT%%CC%08001" Cell="14,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" Cell="15,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" Cell="15,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" Cell="15,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" Cell="15,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%444_R-%TT%%CC%44401" Cell="15,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%445_R-%TT%%CC%44501" Cell="15,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%445_R-%TT%%CC%44501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%446_R-%TT%%CC%44601" Cell="15,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%448_R-%TT%%CC%44801" Cell="15,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" Cell="15,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%449_R-%TT%%CC%44901" Cell="15,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%081_R-%TT%%CC%08101" Cell="15,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%450_R-%TT%%CC%45001" Cell="16,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%450_R-%TT%%CC%45001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%451_R-%TT%%CC%45101" Cell="16,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%452_R-%TT%%CC%45201" Cell="16,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%453_R-%TT%%CC%45301" Cell="16,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%453_R-%TT%%CC%45301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%454_R-%TT%%CC%45401" Cell="16,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%455_R-%TT%%CC%45501" Cell="16,6" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%455_R-%TT%%CC%45501">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%456_R-%TT%%CC%45601" Cell="16,7" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%458_R-%TT%%CC%45801" Cell="16,8" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%457_R-%TT%%CC%45701" Cell="16,8" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%459_R-%TT%%CC%45901" Cell="16,9" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%082_R-%TT%%CC%08201" Cell="16,10" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+															</ParameterBlock>
+														</when>
+														<when test="2">
+															<ParameterBlock Id="%AID%_PB-nnn" Name="Table%CC%ScenesRollo" Text="#" Inline="true" Layout="Table" HelpContext="SHC-Szenen">
+																<Rows>
+								<Row Id="%AID%_PB-nnn_R-1" />
+								<Row Id="%AID%_PB-nnn_R-2" />
+								<Row Id="%AID%_PB-nnn_R-3" />
+								<Row Id="%AID%_PB-nnn_R-4" />
+								<Row Id="%AID%_PB-nnn_R-5" />
+								<Row Id="%AID%_PB-nnn_R-6" />
+								<Row Id="%AID%_PB-nnn_R-7" />
+								<Row Id="%AID%_PB-nnn_R-8" />
+								<Row Id="%AID%_PB-nnn_R-9" />
+								<Row Id="%AID%_PB-nnn_R-10" />
+								<Row Id="%AID%_PB-nnn_R-11" />
+								<Row Id="%AID%_PB-nnn_R-12" />
+								<Row Id="%AID%_PB-nnn_R-13" />
+								<Row Id="%AID%_PB-nnn_R-14" />
+								<Row Id="%AID%_PB-nnn_R-15" />
+								<Row Id="%AID%_PB-nnn_R-16" />
+																</Rows>
+																<Columns>
+								<Column Id="%AID%_PB-nnn_C-1" Width="7%" Text="freigeben" />
+								<Column Id="%AID%_PB-nnn_C-2" Width="9%" Text="KNX-Szene" />
+								<Column Id="%AID%_PB-nnn_C-3" Width="9%" Text="speicherbar" />
+								<Column Id="%AID%_PB-nnn_C-4" Width="10%" Text="Höhe anfahren" />
+								<Column Id="%AID%_PB-nnn_C-5" Width="8%" Text="Höhe" />
+								<Column Id="%AID%_PB-nnn_C-6" Width="18%" Text="Sperren" />
+								<Column Id="%AID%_PB-nnn_C-7" Width="13%" Text="Verzögerung" />
+								<Column Id="%AID%_PB-nnn_C-8" Width="26%" Text="Beschreibung" />
+																</Columns>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" Cell="1,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%301_R-%TT%%CC%30101" Cell="1,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%302_R-%TT%%CC%30201" Cell="1,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%303_R-%TT%%CC%30301" Cell="1,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%303_R-%TT%%CC%30301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%304_R-%TT%%CC%30401" Cell="1,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%308_R-%TT%%CC%30801" Cell="1,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%307_R-%TT%%CC%30701" Cell="1,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%309_R-%TT%%CC%30901" Cell="1,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%067_R-%TT%%CC%06701" Cell="1,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%310_R-%TT%%CC%31001" Cell="2,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%310_R-%TT%%CC%31001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%311_R-%TT%%CC%31101" Cell="2,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%312_R-%TT%%CC%31201" Cell="2,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%313_R-%TT%%CC%31301" Cell="2,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%313_R-%TT%%CC%31301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%314_R-%TT%%CC%31401" Cell="2,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%318_R-%TT%%CC%31801" Cell="2,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%317_R-%TT%%CC%31701" Cell="2,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%319_R-%TT%%CC%31901" Cell="2,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%068_R-%TT%%CC%06801" Cell="2,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%320_R-%TT%%CC%32001" Cell="3,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%320_R-%TT%%CC%32001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%321_R-%TT%%CC%32101" Cell="3,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%322_R-%TT%%CC%32201" Cell="3,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%323_R-%TT%%CC%32301" Cell="3,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%323_R-%TT%%CC%32301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%324_R-%TT%%CC%32401" Cell="3,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%328_R-%TT%%CC%32801" Cell="3,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%327_R-%TT%%CC%32701" Cell="3,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%329_R-%TT%%CC%32901" Cell="3,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%069_R-%TT%%CC%06901" Cell="3,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%330_R-%TT%%CC%33001" Cell="4,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%330_R-%TT%%CC%33001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%331_R-%TT%%CC%33101" Cell="4,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%332_R-%TT%%CC%33201" Cell="4,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%333_R-%TT%%CC%33301" Cell="4,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%333_R-%TT%%CC%33301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%334_R-%TT%%CC%33401" Cell="4,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%338_R-%TT%%CC%33801" Cell="4,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%337_R-%TT%%CC%33701" Cell="4,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%339_R-%TT%%CC%33901" Cell="4,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%070_R-%TT%%CC%07001" Cell="4,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%340_R-%TT%%CC%34001" Cell="5,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%340_R-%TT%%CC%34001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%341_R-%TT%%CC%34101" Cell="5,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%342_R-%TT%%CC%34201" Cell="5,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%343_R-%TT%%CC%34301" Cell="5,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%343_R-%TT%%CC%34301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%344_R-%TT%%CC%34401" Cell="5,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%348_R-%TT%%CC%34801" Cell="5,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%347_R-%TT%%CC%34701" Cell="5,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%349_R-%TT%%CC%34901" Cell="5,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%071_R-%TT%%CC%07101" Cell="5,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%350_R-%TT%%CC%35001" Cell="6,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%350_R-%TT%%CC%35001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%351_R-%TT%%CC%35101" Cell="6,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%352_R-%TT%%CC%35201" Cell="6,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%353_R-%TT%%CC%35301" Cell="6,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%353_R-%TT%%CC%35301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%354_R-%TT%%CC%35401" Cell="6,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%358_R-%TT%%CC%35801" Cell="6,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%357_R-%TT%%CC%35701" Cell="6,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%359_R-%TT%%CC%35901" Cell="6,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%072_R-%TT%%CC%07201" Cell="6,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%360_R-%TT%%CC%36001" Cell="7,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%360_R-%TT%%CC%36001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%361_R-%TT%%CC%36101" Cell="7,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%362_R-%TT%%CC%36201" Cell="7,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%363_R-%TT%%CC%36301" Cell="7,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%363_R-%TT%%CC%36301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%364_R-%TT%%CC%36401" Cell="7,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%368_R-%TT%%CC%36801" Cell="7,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%367_R-%TT%%CC%36701" Cell="7,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%369_R-%TT%%CC%36901" Cell="7,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%073_R-%TT%%CC%07301" Cell="7,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001" Cell="8,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%370_R-%TT%%CC%37001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%371_R-%TT%%CC%37101" Cell="8,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%372_R-%TT%%CC%37201" Cell="8,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%373_R-%TT%%CC%37301" Cell="8,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%373_R-%TT%%CC%37301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%374_R-%TT%%CC%37401" Cell="8,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%378_R-%TT%%CC%37801" Cell="8,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%377_R-%TT%%CC%37701" Cell="8,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%379_R-%TT%%CC%37901" Cell="8,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%074_R-%TT%%CC%07401" Cell="8,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38001" Cell="9,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%380_R-%TT%%CC%38001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%381_R-%TT%%CC%38101" Cell="9,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%382_R-%TT%%CC%38201" Cell="9,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301" Cell="9,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%383_R-%TT%%CC%38301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%384_R-%TT%%CC%38401" Cell="9,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%388_R-%TT%%CC%38801" Cell="9,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%387_R-%TT%%CC%38701" Cell="9,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%389_R-%TT%%CC%38901" Cell="9,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%075_R-%TT%%CC%07501" Cell="9,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%390_R-%TT%%CC%39001" Cell="10,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%390_R-%TT%%CC%39001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%391_R-%TT%%CC%39101" Cell="10,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%392_R-%TT%%CC%39201" Cell="10,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301" Cell="10,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%393_R-%TT%%CC%39301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%394_R-%TT%%CC%39401" Cell="10,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%398_R-%TT%%CC%39801" Cell="10,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%397_R-%TT%%CC%39701" Cell="10,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%399_R-%TT%%CC%39901" Cell="10,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%076_R-%TT%%CC%07601" Cell="10,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%400_R-%TT%%CC%40001" Cell="11,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%400_R-%TT%%CC%40001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%401_R-%TT%%CC%40101" Cell="11,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%402_R-%TT%%CC%40201" Cell="11,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%403_R-%TT%%CC%40301" Cell="11,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%403_R-%TT%%CC%40301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%404_R-%TT%%CC%40401" Cell="11,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%408_R-%TT%%CC%40801" Cell="11,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%407_R-%TT%%CC%40701" Cell="11,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%409_R-%TT%%CC%40901" Cell="11,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%077_R-%TT%%CC%07701" Cell="11,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%410_R-%TT%%CC%41001" Cell="12,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%410_R-%TT%%CC%41001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%411_R-%TT%%CC%41101" Cell="12,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%412_R-%TT%%CC%41201" Cell="12,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301" Cell="12,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%413_R-%TT%%CC%41301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%414_R-%TT%%CC%41401" Cell="12,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%418_R-%TT%%CC%41801" Cell="12,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%417_R-%TT%%CC%41701" Cell="12,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%419_R-%TT%%CC%41901" Cell="12,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%078_R-%TT%%CC%07801" Cell="12,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%420_R-%TT%%CC%42001" Cell="13,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%420_R-%TT%%CC%42001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%421_R-%TT%%CC%42101" Cell="13,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%422_R-%TT%%CC%42201" Cell="13,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301" Cell="13,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%423_R-%TT%%CC%42301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%424_R-%TT%%CC%42401" Cell="13,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%428_R-%TT%%CC%42801" Cell="13,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%427_R-%TT%%CC%42701" Cell="13,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%429_R-%TT%%CC%42901" Cell="13,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%079_R-%TT%%CC%07901" Cell="13,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%430_R-%TT%%CC%43001" Cell="14,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%430_R-%TT%%CC%43001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%431_R-%TT%%CC%43101" Cell="14,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%432_R-%TT%%CC%43201" Cell="14,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301" Cell="14,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%433_R-%TT%%CC%43301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%434_R-%TT%%CC%43401" Cell="14,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%438_R-%TT%%CC%43801" Cell="14,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%437_R-%TT%%CC%43701" Cell="14,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%439_R-%TT%%CC%43901" Cell="14,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%080_R-%TT%%CC%08001" Cell="14,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001" Cell="15,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%440_R-%TT%%CC%44001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%441_R-%TT%%CC%44101" Cell="15,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%442_R-%TT%%CC%44201" Cell="15,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301" Cell="15,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%443_R-%TT%%CC%44301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%444_R-%TT%%CC%44401" Cell="15,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%448_R-%TT%%CC%44801" Cell="15,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%447_R-%TT%%CC%44701" Cell="15,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%449_R-%TT%%CC%44901" Cell="15,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%081_R-%TT%%CC%08101" Cell="15,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%450_R-%TT%%CC%45001" Cell="16,1" HelpContext="SHC-Szenen" />
+								<choose ParamRefId="%AID%_UP-%TT%%CC%450_R-%TT%%CC%45001">
+									<when test="1">
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%451_R-%TT%%CC%45101" Cell="16,2" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%452_R-%TT%%CC%45201" Cell="16,3" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%453_R-%TT%%CC%45301" Cell="16,4" HelpContext="SHC-Szenen" />
+										<choose ParamRefId="%AID%_UP-%TT%%CC%453_R-%TT%%CC%45301">
+											<when test="1">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%454_R-%TT%%CC%45401" Cell="16,5" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<choose ParamRefId="%AID%_UP-%TT%%CC%015_R-%TT%%CC%01501">
+											<when test="0">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%458_R-%TT%%CC%45801" Cell="16,6" HelpContext="SHC-Szenen" />
+											</when>
+											<when test="1 2">
+												<ParameterRefRef RefId="%AID%_UP-%TT%%CC%457_R-%TT%%CC%45701" Cell="16,6" HelpContext="SHC-Szenen" />
+											</when>
+										</choose>
+										<ParameterRefRef RefId="%AID%_UP-%TT%%CC%459_R-%TT%%CC%45901" Cell="16,7" HelpContext="SHC-Szenen" />
+										<ParameterRefRef RefId="%AID%_P-%TT%%CC%082_R-%TT%%CC%08201" Cell="16,8" HelpContext="SHC-Szenen" />
+									</when>
+								</choose>
+															</ParameterBlock>
+														</when>
+													</choose>
+
+												</ParameterBlock>
+											</when>
+										</choose>
 
 												<!-- ShutterControllerModule.ModeShading.xml will be included here -->
 												<op:usePart name="ModeShading" xpath="//Dynamic/ChannelIndependentBlock/ParameterBlock[@Id='ShadingParameters']/*" />
