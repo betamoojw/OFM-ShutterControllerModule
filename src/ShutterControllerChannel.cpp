@@ -445,6 +445,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
     callContext.modeNewStarted = false;
     callContext.modeIdle = _modeIdle;
     callContext.modeManual = _modeManual;
+    callContext.modeScene = _modeScene;
     callContext.measurementHeading = &_measurementHeading;
     callContext.measurementRoomTemperature = &_measurementRoomTemperature;
     callContext.channelLockActive = _channelLockActive;

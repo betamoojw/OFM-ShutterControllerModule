@@ -362,6 +362,11 @@ bool ModeShading::allowed(const CallContext &callContext)
     else
         _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonManualUsage;
 
+    if (callContext.modeScene != nullptr && callContext.modeCurrentActive == callContext.modeScene)
+        _notAllowedReason |= ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSceneActive;
+    else
+        _notAllowedReason &= ~ModeShadingNotAllowedReason::ModeShadingNotAllowedReasonSceneActive;
+
     if (diagnosticLog)
         logInfoP("Not allowed reason: %lu", (unsigned long)_notAllowedReason);
 

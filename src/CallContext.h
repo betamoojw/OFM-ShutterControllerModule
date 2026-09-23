@@ -38,6 +38,7 @@ class CallContext
      
         const ModeIdle* modeIdle = nullptr;
         const ModeManual* modeManual = nullptr;
+        const ModeBase* modeScene = nullptr;
         const ModeBase* modeCurrentActive = nullptr;
         MeasurementSource* measurementTemperature = nullptr;
         MeasurementSource* measurementTemperatureForecast = nullptr;

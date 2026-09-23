@@ -31,6 +31,7 @@ enum ModeShadingNotAllowedReason : uint32_t
     ModeShadingNotAllowedReasonUVI = 4194304,
     ModeShadingNotAllowedReasonProfileAngleSentinel = 8388608,   // Bit 23: Profilwinkel nicht berechenbar
     ModeShadingNotAllowedReasonFlatRoofGuard        = 16777216,  // Bit 24: Flachdach-Schutz aktiv
+    ModeShadingNotAllowedReasonSceneActive          = 33554432,  // Bit 25: Szene haelt die Automatik zurueck
   
 };
 
