@@ -20,6 +20,8 @@ private:
     unsigned long _pendingUntil = 0;
     uint8_t _activeSlot = 0;
     bool _requestStart = false;
+    // Set when the applied scene hands control back to the automatics right away.
+    bool _releaseAfterApply = false;
 
     // Snapshot of the lock states before entering scene mode, and the value
     // a scene last set them to (to detect whether a KO changed them since).
@@ -46,11 +48,12 @@ private:
         uint8_t slat;
         uint8_t lock;
         uint16_t delaySeconds;
+        bool hold;
     };
     SceneRow readSceneRow(uint8_t slot) const;
     uint8_t findSlotForSceneNumber(uint8_t knxSceneNumber) const;
     void applyScene(uint8_t slot, PositionController& positionController);
-    void applyLock(uint8_t lockCode, PositionController& positionController);
+    void applyLock(uint8_t lockCode, bool armRestore);
     void restoreLocks();
 
 protected:
