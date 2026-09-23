@@ -1,3 +1,7 @@
+v 0.11.1
+- Fix: Bei "Automatik sofort frei" wird die Automatik erst freigegeben, wenn die Fahrbefehle der Szene gesendet sind. Zuvor konnte die Automatik die noch ausstehende Lamellenposition einer Jalousie überschreiben, bevor sie gesendet wurde.
+- Fix: Nach einem Szenenabruf bewertet die Beschattung ihre Bedingungen mit der neuen Zielposition neu. Zuvor entschied eine Einschränkung wie "nur wenn Position kleiner als" noch anhand der Position vor dem Szenenabruf.
+
 v 0.11.0
 - Feature: Kanalauswahl auf den OpenKNX-Standard umgestellt (eigener Tab „Kanalauswahl“, Kanäle werden dort aktiviert/deaktiviert; „Suspendiert“ ersetzt „Kanal deaktivieren (zu Testzwecken)“ und markiert den Kanal im Baum mit ⛔)
 - Feature: Szenen je Kanal (bis zu 16), mit Höhe/Lamelle, Sperren für Beschattungssteuerung/Nachtmodus/Handbetrieb, Verzögerung; siehe Kapitel „Szenen“ in der Applikationsbeschreibung
