@@ -201,6 +201,18 @@ void ShutterControllerChannel::notifySceneRequested()
     }
 }
 
+void ShutterControllerChannel::notifySceneApplied()
+{
+    // The scene just changed the target position. The shading modes cache their
+    // measurement evaluation (including the "only if position less than" check),
+    // so it has to be recalculated before they may take over again.
+    for (auto mode : _modes)
+    {
+        if (mode->isModeShading())
+            ((ModeShading *)mode)->requestMeasurementRecalculation();
+    }
+}
+
 ModeScene* ShutterControllerChannel::modeScene() const
 {
     return _modeScene;

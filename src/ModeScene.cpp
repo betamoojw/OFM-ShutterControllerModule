@@ -154,6 +154,7 @@ void ModeScene::applyScene(uint8_t slot, PositionController &positionController)
     _releaseAfterApply = !row.hold;
     logInfoP("Scene %u applied (KNX scene %u), %s", (unsigned int)slot, (unsigned int)row.number,
              row.hold ? "holding the automatics back" : "automatics released again");
+    _channel.notifySceneApplied();
 }
 
 bool ModeScene::allowed(const CallContext &callContext)

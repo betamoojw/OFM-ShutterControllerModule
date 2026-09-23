@@ -51,6 +51,7 @@ class ShutterControllerChannel : public OpenKNX::Channel
         bool shadingControlActive() const;
         void activateShadingControl(bool active);
         void notifySceneRequested();
+        void notifySceneApplied();
         ModeScene* modeScene() const;
 
         const std::string name() override;

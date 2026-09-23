@@ -75,4 +75,7 @@ protected:
     bool isModeShading() const override;
 public:
     bool isPositionAllowed(const CallContext& callContext) const;
+    // Forces the cached measurement evaluation to be recalculated, e.g. after a
+    // scene changed the target position.
+    void requestMeasurementRecalculation();
 };

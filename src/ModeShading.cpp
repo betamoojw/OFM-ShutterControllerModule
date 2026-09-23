@@ -1463,6 +1463,11 @@ void ModeShading::processInputKo(GroupObject &ko, PositionController &positionCo
     _recalcMeasurmentValues = true;
 }
 
+void ModeShading::requestMeasurementRecalculation()
+{
+    _recalcMeasurmentValues = true;
+}
+
 bool ModeShading::isPositionAllowed(const CallContext& callContext) const
 {
     return callContext.positionController->targetPosition() <= ParamSHC_CShading1OnlyIfLessThan;
