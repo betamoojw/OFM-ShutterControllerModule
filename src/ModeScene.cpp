@@ -160,10 +160,15 @@ bool ModeScene::allowed(const CallContext &callContext)
 {
     if (_releaseAfterApply)
     {
-        // The scene has been applied in the previous cycle and does not hold
-        // the automatics back, so release the mode again.
-        _releaseAfterApply = false;
-        _activeSlot = 0;
+        // The scene has been applied and does not hold the automatics back.
+        // Position and slat are sent in separate cycles, so keep the mode until
+        // both commands are out - otherwise the mode taking over would overwrite
+        // the slat position before it was ever sent.
+        if (callContext.positionController == nullptr || !callContext.positionController->hasPendingOutput())
+        {
+            _releaseAfterApply = false;
+            _activeSlot = 0;
+        }
     }
     if (_pendingSlot != 0 && (long)(callContext.currentMillis - _pendingUntil) >= 0)
     {

@@ -64,6 +64,8 @@ public:
     bool stopSimulation();
     uint8_t simulationMode() const;
     PositionControllerState state() const;
+    // True while a position or slat command is set but not sent to the actuator yet.
+    bool hasPendingOutput() const;
     uint8_t position() const;
     int8_t targetPosition() const;
     uint8_t slat() const;

@@ -435,6 +435,11 @@ uint8_t PositionController::simulationMode() const
     return _shutterSimulation != nullptr ? (_shutterSimulation->getFastSimulation() ? 2 : 1) : 0;
 }
 
+bool PositionController::hasPendingOutput() const
+{
+    return _setPosition != NOTUSED || _setSlat != NOTUSED;
+}
+
 PositionControllerState PositionController::state() const
 {
     return _state;
