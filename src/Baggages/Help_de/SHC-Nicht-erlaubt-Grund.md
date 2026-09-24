@@ -29,6 +29,6 @@ Gibt es mehr als einen Grund, wird der erste dieser Liste angezeigt.
 23: UV-Index zu niedrig  
 24: Profilwinkel nicht berechenbar (Sonne trifft Fassade nicht)  
 25: Flachdach-Schutz aktiv (Fassadenneigung zu gering)  
-26: Szene hält die Automatik zurück (Spalte „Nach Abruf“ = „Szene hält“)  
+26: Szene hält die Automatik zurück (Spalte „Nach Abruf“ = „Szenenmodus bleibt aktiv“)  
 
 

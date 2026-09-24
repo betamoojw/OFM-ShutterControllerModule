@@ -1,6 +1,7 @@
 v 0.11.1
-- Fix: Bei "Automatik sofort frei" wird die Automatik erst freigegeben, wenn die Fahrbefehle der Szene gesendet sind. Zuvor konnte die Automatik die noch ausstehende Lamellenposition einer Jalousie überschreiben, bevor sie gesendet wurde.
+- Fix: Bei "Automatikmodus aktiv" wird die Automatik erst freigegeben, wenn die Fahrbefehle der Szene gesendet sind. Zuvor konnte die Automatik die noch ausstehende Lamellenposition einer Jalousie überschreiben, bevor sie gesendet wurde.
 - Fix: Nach einem Szenenabruf bewertet die Beschattung ihre Bedingungen mit der neuen Zielposition neu. Zuvor entschied eine Einschränkung wie "nur wenn Position kleiner als" noch anhand der Position vor dem Szenenabruf.
+- Change: Beschriftungen der Szenentabelle nachgeschärft – die Spalte "Sperren" heißt jetzt "Sperre/Freigabe", die Werte der Spalte "Nach Abruf" heißen "Automatikmodus aktiv" bzw. "Szenenmodus bleibt aktiv", und die Spalte wurde verbreitert. Reine ETS-Texte, bestehende Parametrierungen bleiben erhalten.
 
 v 0.11.0
 - Feature: Kanalauswahl auf den OpenKNX-Standard umgestellt (eigener Tab „Kanalauswahl“, Kanäle werden dort aktiviert/deaktiviert; „Suspendiert“ ersetzt „Kanal deaktivieren (zu Testzwecken)“ und markiert den Kanal im Baum mit ⛔)

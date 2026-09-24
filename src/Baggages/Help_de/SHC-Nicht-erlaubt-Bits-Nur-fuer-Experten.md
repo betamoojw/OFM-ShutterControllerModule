@@ -28,5 +28,5 @@ Bit 21: Bewölkungsgrad zu hoch
 Bit 22: UV-Index zu niedrig  
 Bit 23: Profilwinkel nicht berechenbar (Sonne trifft Fassade nicht)  
 Bit 24: Flachdach-Schutz aktiv (Fassadenneigung zu gering)  
-Bit 25: Szene hält die Automatik zurück (Spalte „Nach Abruf“ = „Szene hält“)  
+Bit 25: Szene hält die Automatik zurück (Spalte „Nach Abruf“ = „Szenenmodus bleibt aktiv“)  
 
