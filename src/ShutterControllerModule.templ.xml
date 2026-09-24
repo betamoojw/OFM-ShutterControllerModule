@@ -50,8 +50,8 @@
 							<!-- Szenen: Verhalten nach dem Abruf -->
 							<ParameterType Id="%AID%_PT-SHCSceneHold" Name="SHCSceneHold">
 								<TypeRestriction Base="Value" SizeInBit="1">
-									<Enumeration Text="Automatik sofort frei" Value="0" Id="%ENID%" />
-									<Enumeration Text="Szene hält" Value="1" Id="%ENID%" />
+									<Enumeration Text="Automatikmodus aktiv" Value="0" Id="%ENID%" />
+									<Enumeration Text="Szenenmodus bleibt aktiv" Value="1" Id="%ENID%" />
 								</TypeRestriction>
 							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHCSceneDelay" Name="SHCSceneDelay">
@@ -330,8 +330,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%305" Offset="2" BitOffset="2" Name="C%C%Scene1SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%304" Offset="3" BitOffset="0" Name="C%C%Scene1Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%306" Offset="4" BitOffset="0" Name="C%C%Scene1Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%307" Offset="2" BitOffset="3" Name="C%C%Scene1Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%308" Offset="2" BitOffset="3" Name="C%C%Scene1Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%307" Offset="2" BitOffset="3" Name="C%C%Scene1Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%308" Offset="2" BitOffset="3" Name="C%C%Scene1Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%309" Offset="5" BitOffset="0" Name="C%C%Scene1Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%460" Offset="3" BitOffset="7" Name="C%C%Scene1Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%310" Offset="7" BitOffset="0" Name="C%C%Scene2Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -341,8 +341,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%315" Offset="8" BitOffset="2" Name="C%C%Scene2SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%314" Offset="9" BitOffset="0" Name="C%C%Scene2Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%316" Offset="10" BitOffset="0" Name="C%C%Scene2Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%317" Offset="8" BitOffset="3" Name="C%C%Scene2Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%318" Offset="8" BitOffset="3" Name="C%C%Scene2Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%317" Offset="8" BitOffset="3" Name="C%C%Scene2Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%318" Offset="8" BitOffset="3" Name="C%C%Scene2Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%319" Offset="11" BitOffset="0" Name="C%C%Scene2Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%461" Offset="9" BitOffset="7" Name="C%C%Scene2Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%320" Offset="13" BitOffset="0" Name="C%C%Scene3Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -352,8 +352,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%325" Offset="14" BitOffset="2" Name="C%C%Scene3SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%324" Offset="15" BitOffset="0" Name="C%C%Scene3Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%326" Offset="16" BitOffset="0" Name="C%C%Scene3Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%327" Offset="14" BitOffset="3" Name="C%C%Scene3Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%328" Offset="14" BitOffset="3" Name="C%C%Scene3Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%327" Offset="14" BitOffset="3" Name="C%C%Scene3Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%328" Offset="14" BitOffset="3" Name="C%C%Scene3Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%329" Offset="17" BitOffset="0" Name="C%C%Scene3Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%462" Offset="15" BitOffset="7" Name="C%C%Scene3Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%330" Offset="19" BitOffset="0" Name="C%C%Scene4Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -363,8 +363,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%335" Offset="20" BitOffset="2" Name="C%C%Scene4SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%334" Offset="21" BitOffset="0" Name="C%C%Scene4Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%336" Offset="22" BitOffset="0" Name="C%C%Scene4Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%337" Offset="20" BitOffset="3" Name="C%C%Scene4Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%338" Offset="20" BitOffset="3" Name="C%C%Scene4Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%337" Offset="20" BitOffset="3" Name="C%C%Scene4Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%338" Offset="20" BitOffset="3" Name="C%C%Scene4Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%339" Offset="23" BitOffset="0" Name="C%C%Scene4Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%463" Offset="21" BitOffset="7" Name="C%C%Scene4Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%340" Offset="25" BitOffset="0" Name="C%C%Scene5Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -374,8 +374,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%345" Offset="26" BitOffset="2" Name="C%C%Scene5SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%344" Offset="27" BitOffset="0" Name="C%C%Scene5Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%346" Offset="28" BitOffset="0" Name="C%C%Scene5Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%347" Offset="26" BitOffset="3" Name="C%C%Scene5Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%348" Offset="26" BitOffset="3" Name="C%C%Scene5Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%347" Offset="26" BitOffset="3" Name="C%C%Scene5Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%348" Offset="26" BitOffset="3" Name="C%C%Scene5Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%349" Offset="29" BitOffset="0" Name="C%C%Scene5Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%464" Offset="27" BitOffset="7" Name="C%C%Scene5Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%350" Offset="31" BitOffset="0" Name="C%C%Scene6Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -385,8 +385,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%355" Offset="32" BitOffset="2" Name="C%C%Scene6SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%354" Offset="33" BitOffset="0" Name="C%C%Scene6Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%356" Offset="34" BitOffset="0" Name="C%C%Scene6Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%357" Offset="32" BitOffset="3" Name="C%C%Scene6Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%358" Offset="32" BitOffset="3" Name="C%C%Scene6Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%357" Offset="32" BitOffset="3" Name="C%C%Scene6Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%358" Offset="32" BitOffset="3" Name="C%C%Scene6Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%359" Offset="35" BitOffset="0" Name="C%C%Scene6Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%465" Offset="33" BitOffset="7" Name="C%C%Scene6Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%360" Offset="37" BitOffset="0" Name="C%C%Scene7Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -396,8 +396,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%365" Offset="38" BitOffset="2" Name="C%C%Scene7SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%364" Offset="39" BitOffset="0" Name="C%C%Scene7Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%366" Offset="40" BitOffset="0" Name="C%C%Scene7Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%367" Offset="38" BitOffset="3" Name="C%C%Scene7Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%368" Offset="38" BitOffset="3" Name="C%C%Scene7Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%367" Offset="38" BitOffset="3" Name="C%C%Scene7Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%368" Offset="38" BitOffset="3" Name="C%C%Scene7Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%369" Offset="41" BitOffset="0" Name="C%C%Scene7Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%466" Offset="39" BitOffset="7" Name="C%C%Scene7Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%370" Offset="43" BitOffset="0" Name="C%C%Scene8Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -407,8 +407,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%375" Offset="44" BitOffset="2" Name="C%C%Scene8SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%374" Offset="45" BitOffset="0" Name="C%C%Scene8Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%376" Offset="46" BitOffset="0" Name="C%C%Scene8Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%377" Offset="44" BitOffset="3" Name="C%C%Scene8Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%378" Offset="44" BitOffset="3" Name="C%C%Scene8Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%377" Offset="44" BitOffset="3" Name="C%C%Scene8Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%378" Offset="44" BitOffset="3" Name="C%C%Scene8Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%379" Offset="47" BitOffset="0" Name="C%C%Scene8Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%467" Offset="45" BitOffset="7" Name="C%C%Scene8Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%380" Offset="49" BitOffset="0" Name="C%C%Scene9Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -418,8 +418,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%385" Offset="50" BitOffset="2" Name="C%C%Scene9SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%384" Offset="51" BitOffset="0" Name="C%C%Scene9Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%386" Offset="52" BitOffset="0" Name="C%C%Scene9Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%387" Offset="50" BitOffset="3" Name="C%C%Scene9Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%388" Offset="50" BitOffset="3" Name="C%C%Scene9Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%387" Offset="50" BitOffset="3" Name="C%C%Scene9Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%388" Offset="50" BitOffset="3" Name="C%C%Scene9Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%389" Offset="53" BitOffset="0" Name="C%C%Scene9Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%468" Offset="51" BitOffset="7" Name="C%C%Scene9Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%390" Offset="55" BitOffset="0" Name="C%C%Scene10Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -429,8 +429,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%395" Offset="56" BitOffset="2" Name="C%C%Scene10SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%394" Offset="57" BitOffset="0" Name="C%C%Scene10Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%396" Offset="58" BitOffset="0" Name="C%C%Scene10Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%397" Offset="56" BitOffset="3" Name="C%C%Scene10Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%398" Offset="56" BitOffset="3" Name="C%C%Scene10Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%397" Offset="56" BitOffset="3" Name="C%C%Scene10Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%398" Offset="56" BitOffset="3" Name="C%C%Scene10Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%399" Offset="59" BitOffset="0" Name="C%C%Scene10Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%469" Offset="57" BitOffset="7" Name="C%C%Scene10Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%400" Offset="61" BitOffset="0" Name="C%C%Scene11Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -440,8 +440,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%405" Offset="62" BitOffset="2" Name="C%C%Scene11SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%404" Offset="63" BitOffset="0" Name="C%C%Scene11Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%406" Offset="64" BitOffset="0" Name="C%C%Scene11Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%407" Offset="62" BitOffset="3" Name="C%C%Scene11Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%408" Offset="62" BitOffset="3" Name="C%C%Scene11Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%407" Offset="62" BitOffset="3" Name="C%C%Scene11Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%408" Offset="62" BitOffset="3" Name="C%C%Scene11Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%409" Offset="65" BitOffset="0" Name="C%C%Scene11Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%470" Offset="63" BitOffset="7" Name="C%C%Scene11Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%410" Offset="67" BitOffset="0" Name="C%C%Scene12Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -451,8 +451,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%415" Offset="68" BitOffset="2" Name="C%C%Scene12SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%414" Offset="69" BitOffset="0" Name="C%C%Scene12Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%416" Offset="70" BitOffset="0" Name="C%C%Scene12Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%417" Offset="68" BitOffset="3" Name="C%C%Scene12Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%418" Offset="68" BitOffset="3" Name="C%C%Scene12Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%417" Offset="68" BitOffset="3" Name="C%C%Scene12Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%418" Offset="68" BitOffset="3" Name="C%C%Scene12Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%419" Offset="71" BitOffset="0" Name="C%C%Scene12Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%471" Offset="69" BitOffset="7" Name="C%C%Scene12Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%420" Offset="73" BitOffset="0" Name="C%C%Scene13Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -462,8 +462,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%425" Offset="74" BitOffset="2" Name="C%C%Scene13SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%424" Offset="75" BitOffset="0" Name="C%C%Scene13Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%426" Offset="76" BitOffset="0" Name="C%C%Scene13Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%427" Offset="74" BitOffset="3" Name="C%C%Scene13Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%428" Offset="74" BitOffset="3" Name="C%C%Scene13Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%427" Offset="74" BitOffset="3" Name="C%C%Scene13Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%428" Offset="74" BitOffset="3" Name="C%C%Scene13Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%429" Offset="77" BitOffset="0" Name="C%C%Scene13Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%472" Offset="75" BitOffset="7" Name="C%C%Scene13Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%430" Offset="79" BitOffset="0" Name="C%C%Scene14Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -473,8 +473,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%435" Offset="80" BitOffset="2" Name="C%C%Scene14SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%434" Offset="81" BitOffset="0" Name="C%C%Scene14Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%436" Offset="82" BitOffset="0" Name="C%C%Scene14Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%437" Offset="80" BitOffset="3" Name="C%C%Scene14Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%438" Offset="80" BitOffset="3" Name="C%C%Scene14Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%437" Offset="80" BitOffset="3" Name="C%C%Scene14Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%438" Offset="80" BitOffset="3" Name="C%C%Scene14Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%439" Offset="83" BitOffset="0" Name="C%C%Scene14Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%473" Offset="81" BitOffset="7" Name="C%C%Scene14Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%440" Offset="85" BitOffset="0" Name="C%C%Scene15Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -484,8 +484,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%445" Offset="86" BitOffset="2" Name="C%C%Scene15SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%444" Offset="87" BitOffset="0" Name="C%C%Scene15Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%446" Offset="88" BitOffset="0" Name="C%C%Scene15Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%447" Offset="86" BitOffset="3" Name="C%C%Scene15Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%448" Offset="86" BitOffset="3" Name="C%C%Scene15Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%447" Offset="86" BitOffset="3" Name="C%C%Scene15Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%448" Offset="86" BitOffset="3" Name="C%C%Scene15Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%449" Offset="89" BitOffset="0" Name="C%C%Scene15Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%474" Offset="87" BitOffset="7" Name="C%C%Scene15Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%450" Offset="91" BitOffset="0" Name="C%C%Scene16Active" ParameterType="%AID%_PT-OnOffYesNo" Text="freigeben" Value="0" />
@@ -495,8 +495,8 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%455" Offset="92" BitOffset="2" Name="C%C%Scene16SlatEnabled" ParameterType="%AID%_PT-OnOffYesNo" Text="Lamelle anfahren" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%454" Offset="93" BitOffset="0" Name="C%C%Scene16Height" ParameterType="%AID%_PT-SHCPercent" Text="Höhe" Value="0" SuffixText="%" />
 								<Parameter Id="%AID%_UP-%TT%%CC%456" Offset="94" BitOffset="0" Name="C%C%Scene16Slat" ParameterType="%AID%_PT-SHCPercent" Text="Lamelle" Value="0" SuffixText="%" />
-								<Parameter Id="%AID%_UP-%TT%%CC%457" Offset="92" BitOffset="3" Name="C%C%Scene16Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperren" Value="0" op:nowarn="true" />
-								<Parameter Id="%AID%_UP-%TT%%CC%458" Offset="92" BitOffset="3" Name="C%C%Scene16Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperren" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%457" Offset="92" BitOffset="3" Name="C%C%Scene16Lock27" ParameterType="%AID%_PT-SHCSceneLock27" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
+								<Parameter Id="%AID%_UP-%TT%%CC%458" Offset="92" BitOffset="3" Name="C%C%Scene16Lock9" ParameterType="%AID%_PT-SHCSceneLock9" Text="Sperre/Freigabe" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%459" Offset="95" BitOffset="0" Name="C%C%Scene16Delay" ParameterType="%AID%_PT-SHCSceneDelay" Text="Verzögerung" Value="0" />
 								<Parameter Id="%AID%_UP-%TT%%CC%475" Offset="93" BitOffset="7" Name="C%C%Scene16Hold" ParameterType="%AID%_PT-SHCSceneHold" Text="Nach Abruf" Value="0" />
 
@@ -1690,17 +1690,17 @@
 								<Row Id="%AID%_PB-nnn_R-16" Name="Row16" Text="16" />
 																</Rows>
 																<Columns>
-								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="16%" Text="freigeben" />
-								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="14%" Text="KNX-Szene" />
-								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="19%" Text="speicherbar" />
-								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" Text="Höhe anfahren" />
-								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="12%" Text="Höhe" />
-								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="20%" Text="Lamelle anfahren" />
-								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="12%" Text="Lamelle" />
-								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="30%" Text="Sperren" />
-								<Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="22%" Text="Nach Abruf" />
-								<Column Id="%AID%_PB-nnn_C-10" Name="Col10" Width="20%" Text="Verzögerung" />
-								<Column Id="%AID%_PB-nnn_C-11" Name="Col11" Width="30%" Text="Beschreibung" />
+								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="18%" Text="freigeben" />
+								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="16%" Text="KNX-Szene" />
+								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="21%" Text="speicherbar" />
+								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="22%" Text="Höhe anfahren" />
+								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="13%" Text="Höhe" />
+								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="22%" Text="Lamelle anfahren" />
+								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="13%" Text="Lamelle" />
+								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="35%" Text="Sperre/Freigabe" />
+								<Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="42%" Text="Nach Abruf" />
+								<Column Id="%AID%_PB-nnn_C-10" Name="Col10" Width="22%" Text="Verzögerung" />
+								<Column Id="%AID%_PB-nnn_C-11" Name="Col11" Width="16%" Text="Beschreibung" />
 																</Columns>
 								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" Cell="1,1" HelpContext="SHC-Szenen" />
 								<choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
@@ -2205,15 +2205,15 @@
 								<Row Id="%AID%_PB-nnn_R-16" Name="Row16" Text="16" />
 																</Rows>
 																<Columns>
-								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="16%" Text="freigeben" />
-								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="14%" Text="KNX-Szene" />
-								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="19%" Text="speicherbar" />
-								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="20%" Text="Höhe anfahren" />
-								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="12%" Text="Höhe" />
-								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="30%" Text="Sperren" />
-								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="22%" Text="Nach Abruf" />
-								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="20%" Text="Verzögerung" />
-								<Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="30%" Text="Beschreibung" />
+								<Column Id="%AID%_PB-nnn_C-1" Name="Col1" Width="18%" Text="freigeben" />
+								<Column Id="%AID%_PB-nnn_C-2" Name="Col2" Width="16%" Text="KNX-Szene" />
+								<Column Id="%AID%_PB-nnn_C-3" Name="Col3" Width="21%" Text="speicherbar" />
+								<Column Id="%AID%_PB-nnn_C-4" Name="Col4" Width="22%" Text="Höhe anfahren" />
+								<Column Id="%AID%_PB-nnn_C-5" Name="Col5" Width="13%" Text="Höhe" />
+								<Column Id="%AID%_PB-nnn_C-6" Name="Col6" Width="35%" Text="Sperre/Freigabe" />
+								<Column Id="%AID%_PB-nnn_C-7" Name="Col7" Width="42%" Text="Nach Abruf" />
+								<Column Id="%AID%_PB-nnn_C-8" Name="Col8" Width="22%" Text="Verzögerung" />
+								<Column Id="%AID%_PB-nnn_C-9" Name="Col9" Width="16%" Text="Beschreibung" />
 																</Columns>
 								<ParameterRefRef RefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001" Cell="1,1" HelpContext="SHC-Szenen" />
 								<choose ParamRefId="%AID%_UP-%TT%%CC%300_R-%TT%%CC%30001">
