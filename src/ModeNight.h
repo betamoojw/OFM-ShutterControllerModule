@@ -40,6 +40,11 @@ private:
     uint8_t _pendingStage = StageNone;
     bool _cycleInitialized = false;
     bool _yieldedToShading = false;
+    // stage or night KO waiting for the channel specific delay
+    uint8_t _delayedStage = StageNone;
+    bool _delayedSilent = false;
+    int8_t _delayedNightKo = -1;
+    unsigned long _delayStart = 0;
     uint8_t _stageStatus = 0xFF;
     uint16_t _lastMinuteOfDay = 0;
 
@@ -53,6 +58,9 @@ private:
     bool readBrightness(const CallContext& callContext, float& lux);
     bool isTimeReached(const CallContext& callContext, int16_t minuteOfDay, bool evening);
     void fireStage(uint8_t stage, bool silent);
+    void scheduleStage(uint8_t stage, bool silent);
+    void applyNightKo(bool night);
+    void handleDelayed();
     void updateStageStatus();
     void applyStage(uint8_t stage, PositionController& positionController);
     uint8_t stageAction(uint8_t stage);

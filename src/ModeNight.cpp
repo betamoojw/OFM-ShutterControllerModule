@@ -351,6 +351,10 @@ void ModeNight::evaluate(const CallContext &callContext, bool reconstruct)
     for (uint8_t stage = StageEvening; stage <= StageDay; stage++)
         reached[stage] = isStageReached(callContext, stage);
 
+    // a stage is still waiting for the channel delay
+    if (_delayedStage != StageNone)
+        return;
+
     // After a restart in the morning half the state is only restored, a shutter opened by hand must not close again
     const bool morningHalf = cyclePosition(callContext.minuteOfDay) >= Noon;
     const bool silent = reconstruct && morningHalf;
@@ -358,16 +362,73 @@ void ModeNight::evaluate(const CallContext &callContext, bool reconstruct)
     if (!_fired[StageMorning] && !_fired[StageDay])
     {
         if (reached[StageNight] && !_fired[StageNight])
-            fireStage(StageNight, silent);
+            scheduleStage(StageNight, silent);
         else if (reached[StageEvening] && !_fired[StageEvening])
-            fireStage(StageEvening, silent);
+            scheduleStage(StageEvening, silent);
     }
     if (morningHalf)
     {
         if (reached[StageDay] && !_fired[StageDay])
-            fireStage(StageDay, silent);
+            scheduleStage(StageDay, silent);
         else if (reached[StageMorning] && !_fired[StageMorning])
-            fireStage(StageMorning, silent);
+            scheduleStage(StageMorning, silent);
+    }
+}
+
+void ModeNight::scheduleStage(uint8_t stage, bool silent)
+{
+    // a restored stage does not move, so it needs no delay
+    if (silent || ParamSHC_CNightDelay == 0)
+    {
+        fireStage(stage, silent);
+        return;
+    }
+    // only one stage can wait, e.g. after a restart evening and morning stage can be reached at once
+    if (_delayedStage != StageNone)
+        fireStage(_delayedStage, _delayedSilent);
+    logInfoP("Stage %s reached, delayed by %ds", stageName(stage), (int)ParamSHC_CNightDelay);
+    _delayedStage = stage;
+    _delayedSilent = silent;
+    _delayStart = max(millis(), 1uL);
+}
+
+void ModeNight::applyNightKo(bool night)
+{
+    if (night)
+    {
+        // same as stage "Nacht": a following "Vorstufe Abend" must not open again
+        _allowed = true;
+        _stage = StageNight;
+        _fired[StageEvening] = true;
+        _fired[StageNight] = true;
+        _pendingStage = StageNight;
+    }
+    else
+    {
+        _allowed = false;
+        _stage = StageNone;
+        _pendingStage = StageNone;
+    }
+    updateStageStatus();
+}
+
+void ModeNight::handleDelayed()
+{
+    if (_delayStart == 0 || millis() - _delayStart < ParamSHC_CNightDelay * 1000UL)
+        return;
+    _delayStart = 0;
+    if (_delayedStage != StageNone)
+    {
+        const uint8_t stage = _delayedStage;
+        _delayedStage = StageNone;
+        fireStage(stage, _delayedSilent);
+    }
+    if (_delayedNightKo >= 0)
+    {
+        logInfoP("Delayed night KO %d", (int)_delayedNightKo);
+        const bool night = _delayedNightKo == 1;
+        _delayedNightKo = -1;
+        applyNightKo(night);
     }
 }
 
@@ -386,6 +447,7 @@ bool ModeNight::allowed(const CallContext &callContext)
         _cycleInitialized = true;
         evaluate(callContext, reconstruct);
     }
+    handleDelayed();
     if (callContext.diagnosticLog)
     {
         logInfoP("Night active: %s, stage: %s, pending: %s", _allowed ? "true" : "false", stageName(_stage), stageName(_pendingStage));
@@ -540,22 +602,14 @@ void ModeNight::processInputKo(GroupObject &ko, PositionController& positionCont
     switch (SHC_KoCalcIndex(ko.asap()))
     {
     case SHC_KoCNight:
-        if (ko.value(DPT_Switch))
+        if (ParamSHC_CNightDelay == 0)
         {
-            // same as stage "Nacht": a following "Vorstufe Abend" must not open again
-            _allowed = true;
-            _stage = StageNight;
-            _fired[StageEvening] = true;
-            _fired[StageNight] = true;
-            _pendingStage = StageNight;
+            applyNightKo(ko.value(DPT_Switch));
+            break;
         }
-        else
-        {
-            _allowed = false;
-            _stage = StageNone;
-            _pendingStage = StageNone;
-        }
-        updateStageStatus();
+        logInfoP("Night KO %d, delayed by %ds", (int)(bool)ko.value(DPT_Switch), (int)ParamSHC_CNightDelay);
+        _delayedNightKo = ko.value(DPT_Switch) ? 1 : 0;
+        _delayStart = max(millis(), 1uL);
         break;
     case SHC_KoCNightLock:
         KoSHC_CNightLockActive.value(ko.value(DPT_Switch), DPT_Switch);

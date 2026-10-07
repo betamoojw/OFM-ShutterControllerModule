@@ -675,6 +675,11 @@ Legt fest, was passiert, wenn das Kommunikationsobjekt "Nachtmodus Sperre" währ
 Bei "Ja" überlässt der Nachtmodus während der Vorstufe Abend und der Vorstufe Morgen einer erlaubten Beschattung den Vorrang, z. B. wenn morgens die Sonne schon auf ein Ostfenster scheint. Endet die Beschattung vor der nächsten Stufe, übernimmt der Nachtmodus wieder, ohne zu fahren. Die Stufen "Nacht" und "Tag" haben immer Vorrang vor der Beschattung.
 
 <!-- DOC -->
+#### Fahrverzögerung
+
+Verzögert jede Stufe dieses Kanals um die angegebene Zeit in Sekunden, unabhängig vom Auslöser, auch beim Kommunikationsobjekt "Nachtmodus Aus-/Einschalten". Damit lassen sich mehrere Rollläden, die zur gleichen Zeit auslösen, um einige Sekunden versetzt fahren, z. B. um Stromspitzen im Jalousieaktor zu vermeiden. 0 = sofort.
+
+<!-- DOC -->
 #### Helligkeit im Nachtmodus
 
 Legt fest, welcher Helligkeitswert für die Schaltpunkte verwendet wird. Angeboten wird nur, was in den allgemeinen Einstellungen freigegeben ist:

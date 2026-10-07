@@ -6,9 +6,10 @@ v 0.12.0
 - Feature: Fahrrichtung je Stufe („Nur schließen“ / „Nur öffnen“ / „Öffnen und Schließen“). Ein von Hand geschlossener Rollladen wird durch den Nachtmodus nicht mehr geöffnet.
 - Feature: „Verhalten bei Sperre“ (Tag-Position anfahren / keine Aktion) und „Beschattung hat in den Vorstufen Vorrang“.
 - Feature: Neues KO „Nachtstufe“ (DPT 5.010) je Kanal.
+- Feature: „Fahrverzögerung“ je Kanal (0–600 s) für alle Nachtstufen und das KO „Nachtmodus Aus-/Einschalten“, um gleichzeitig auslösende Rollläden versetzt zu fahren.
 - Change: Nach einem Neustart wird die aktuelle Nachtstufe wiederhergestellt (zwischen 00:00 und 11:59 ohne Fahrt).
 - Change: Bestehende Einstellungen „Nacht Beginn“/„Nacht Ende“ werden beim Applikationsupdate als Schaltpunkt 1 und 2 übernommen; die Aktion „Position anfahren“ wird zu „Nur schließen“ bzw. „Nur öffnen“.
-- Breaking: Parameterblock je Kanal wächst von 281 auf 400 Byte, KO-Block je Kanal von 53 auf 54 (neues KO „Nachtstufe“); dadurch verschieben sich die KO-Nummern ab Kanal 2. Gruppenadressen bleiben über die KO-Zuordnung der ETS erhalten.
+- Breaking: Parameterblock je Kanal wächst von 281 auf 402 Byte, KO-Block je Kanal von 53 auf 54 (neues KO „Nachtstufe“); dadurch verschieben sich die KO-Nummern ab Kanal 2. Gruppenadressen bleiben über die KO-Zuordnung der ETS erhalten.
 
 v 0.11.1
 - Fix: Bei "Automatikmodus aktiv" wird die Automatik erst freigegeben, wenn die Fahrbefehle der Szene gesendet sind. Zuvor konnte die Automatik die noch ausstehende Lamellenposition einer Jalousie überschreiben, bevor sie gesendet wurde.

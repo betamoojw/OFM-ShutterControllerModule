@@ -445,6 +445,9 @@
 							<ParameterType Id="%AID%_PT-SHCNightLux" Name="SHCNightLux">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="1000" />
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightDelay" Name="SHCNightDelay">
+								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="600" />
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHCNightTimeOffset" Name="SHCNightTimeOffset">
 								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="240" UIHint="Time_hhmm" />
 							</ParameterType>
