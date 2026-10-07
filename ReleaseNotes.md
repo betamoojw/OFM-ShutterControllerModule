@@ -1,3 +1,15 @@
+v 0.12.0
+- Feature: Zweistufiger Nachtmodus mit den Stufen „Vorstufe Abend“, „Nacht“, „Vorstufe Morgen“ und „Tag“, z. B. 30 Minuten vor Sonnenuntergang auf 70 % / Lamelle 50 % und später ganz zu. Ohne Vorstufen arbeitet der Nachtmodus einstufig wie bisher.
+- Feature: Bis zu 8 Schaltpunkte je Kanal mit Wochentagen, Auslöser (Uhrzeit, Sonnenuntergang/-aufgang, ± Zeitversatz, bürgerliche/nautische Dämmerung, Höhenwinkel, Helligkeit), Helligkeit „und“/„oder“ und Bedingung „frühestens um“/„spätestens um“. Ersetzt die bisherigen Einstellungen „Nacht Beginn“/„Nacht Ende“.
+- Feature: Helligkeit im Nachtmodus über einen neuen Geräte-Eingang „Dämmerung“ oder die Helligkeitssensoren der Beschattung (Mittelwert, Maximum, Fensterrichtung), mit Mindestdauer gegen kurze Helligkeitseinbrüche.
+- Feature: Neuer Geräte-Eingang „Heute wie Sonntag“ für Feiertage.
+- Feature: Fahrrichtung je Stufe („Nur schließen“ / „Nur öffnen“ / „Öffnen und Schließen“). Ein von Hand geschlossener Rollladen wird durch den Nachtmodus nicht mehr geöffnet.
+- Feature: „Verhalten bei Sperre“ (Tag-Position anfahren / keine Aktion) und „Beschattung hat in den Vorstufen Vorrang“.
+- Feature: Neues KO „Nachtstufe“ (DPT 5.010) je Kanal.
+- Change: Nach einem Neustart wird die aktuelle Nachtstufe wiederhergestellt (zwischen 00:00 und 11:59 ohne Fahrt).
+- Change: Bestehende Einstellungen „Nacht Beginn“/„Nacht Ende“ werden beim Applikationsupdate als Schaltpunkt 1 und 2 übernommen; die Aktion „Position anfahren“ wird zu „Nur schließen“ bzw. „Nur öffnen“.
+- Breaking: Parameterblock je Kanal wächst von 281 auf 400 Byte, KO-Block je Kanal von 53 auf 54 (neues KO „Nachtstufe“); dadurch verschieben sich die KO-Nummern ab Kanal 2. Gruppenadressen bleiben über die KO-Zuordnung der ETS erhalten.
+
 v 0.11.1
 - Fix: Bei "Automatikmodus aktiv" wird die Automatik erst freigegeben, wenn die Fahrbefehle der Szene gesendet sind. Zuvor konnte die Automatik die noch ausstehende Lamellenposition einer Jalousie überschreiben, bevor sie gesendet wurde.
 - Fix: Nach einem Szenenabruf bewertet die Beschattung ihre Bedingungen mit der neuen Zielposition neu. Zuvor entschied eine Einschränkung wie "nur wenn Position kleiner als" noch anhand der Position vor dem Szenenabruf.
