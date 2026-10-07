@@ -6,7 +6,7 @@ Alle Kommunikationsobjekte sind mit dem Präfix "Jalousie %C%: " (Kanal-KOs) bzw
 
 #### Globale Kommunikationsobjekte
 
-Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-414.
+Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-413.
 
 | KO | DPT | Bezeichnung | Erklärung |
 |---:|---|---|---|
@@ -24,8 +24,6 @@ Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousienst
 | 11 | 9.004 | Helligkeit 4 | Eingang, Lux |
 | 12 | 9.004 | Helligkeit 5 | Eingang, Lux |
 | 13 | 9.004 | Dämmerung | Eingang, Lux |
-| 14 | 1.001 | Heute wie Sonntag | Eingang, 1 = Feiertag |
-
 #### Kommunikationsobjekte pro Kanal
 
 Jeder Kanal belegt einen festen Block von 54 aufeinanderfolgenden KOs (Offset `+0`..`+53`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 54 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-473, das letzte KO von Kanal 32 bei 2147. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt "Kommunikationsobjekte freigeben" des jeweiligen Kanals einzeln ein-/ausblenden.

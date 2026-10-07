@@ -308,12 +308,6 @@ DOCCONTENT -->
 Der Dämmerungswert in Lux, wie ihn viele KNX-Wetterstationen als eigenes Objekt bereitstellen.
 Er kann im Nachtmodus der Kanäle als Helligkeit für die Schaltpunkte verwendet werden.
 
-<!-- DOC -->
-#### Feiertag
-
-Gibt das Kommunikationsobjekt "Heute wie Sonntag" frei. Solange es auf 1 steht, verwenden die Schaltpunkte des Nachtmodus die Einstellungen für Sonntag, z. B. an Feiertagen oder im Urlaub.
-Der Wert kann z. B. von der Feiertagsberechnung des Logikmoduls kommen.
-
 <!-- DOC HelpContext="Kanal" -->
 ## Kanal 1-n
 
@@ -680,6 +674,16 @@ Bei "Ja" überlässt der Nachtmodus während der Vorstufe Abend und der Vorstufe
 Verzögert jede Stufe dieses Kanals um die angegebene Zeit in Sekunden, unabhängig vom Auslöser, auch beim Kommunikationsobjekt "Nachtmodus Aus-/Einschalten". Damit lassen sich mehrere Rollläden, die zur gleichen Zeit auslösen, um einige Sekunden versetzt fahren, z. B. um Stromspitzen im Jalousieaktor zu vermeiden. 0 = sofort.
 
 <!-- DOC -->
+#### Feiertage
+
+Legt fest, wie die Schaltpunkte an Feiertagen ausgewertet werden:
+
+- nicht beachten: Es gelten die Einstellungen des jeweiligen Wochentags.
+- wie Sonntage behandeln: Es gelten die Einstellungen für Sonntag.
+
+Welche Tage Feiertage sind, wird in der Logik unter "Feiertage" festgelegt. Für Abendstufen nach Mitternacht zählt weiterhin der Tag, an dem der Nachtzyklus begonnen hat.
+
+<!-- DOC -->
 #### Helligkeit im Nachtmodus
 
 Legt fest, welcher Helligkeitswert für die Schaltpunkte verwendet wird. Angeboten wird nur, was in den allgemeinen Einstellungen freigegeben ist:
@@ -702,7 +706,7 @@ So lange muss die Helligkeitsschwelle ununterbrochen unter- bzw. überschritten 
 Jeder Kanal hat 8 Schaltpunkte. Ein Schaltpunkt legt fest, an welchen Wochentagen und unter welcher Bedingung eine Stufe auslöst. Mehrere Schaltpunkte derselben Stufe sind ODER-verknüpft: Der erste erfüllte Schaltpunkt löst die Stufe aus.
 
 - **Stufe**: Die Stufe, die der Schaltpunkt auslöst, oder "nicht aktiv".
-- **Mo-So**: Die Wochentage, an denen der Schaltpunkt gilt. Für Abendstufen zählt der Tag, an dem der Nachtzyklus begonnen hat (eine Zeit nach Mitternacht am Freitag gehört noch zum Freitag). Ist das Kommunikationsobjekt ["Heute wie Sonntag"](#feiertag) gesetzt, gelten die Einstellungen für Sonntag.
+- **Mo-So**: Die Wochentage, an denen der Schaltpunkt gilt. Für Abendstufen zählt der Tag, an dem der Nachtzyklus begonnen hat (eine Zeit nach Mitternacht am Freitag gehört noch zum Freitag). An Feiertagen gelten je nach Einstellung ["Feiertage"](#feiertage) die Einstellungen für Sonntag.
 - **Auslöser**:
   - Uhrzeit
   - bei Sonnenuntergang / Sonnenaufgang
@@ -1568,7 +1572,7 @@ Alle Kommunikationsobjekte sind mit dem Präfix "Jalousie %C%: " (Kanal-KOs) bzw
 
 #### Globale Kommunikationsobjekte
 
-Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-414.
+Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-413.
 
 | KO | DPT | Bezeichnung | Erklärung |
 |---:|---|---|---|
@@ -1586,8 +1590,6 @@ Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousienst
 | 11 | 9.004 | Helligkeit 4 | Eingang, Lux |
 | 12 | 9.004 | Helligkeit 5 | Eingang, Lux |
 | 13 | 9.004 | [Dämmerung](#dämmerung) | Eingang, Lux |
-| 14 | 1.001 | [Heute wie Sonntag](#feiertag) | Eingang, 1 = Feiertag |
-
 #### Kommunikationsobjekte pro Kanal
 
 Jeder Kanal belegt einen festen Block von 54 aufeinanderfolgenden KOs (Offset `+0`..`+53`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 54 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-473, das letzte KO von Kanal 32 bei 2147. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt ["Kommunikationsobjekte freigeben"](#kanal-1-n) des jeweiligen Kanals einzeln ein-/ausblenden.

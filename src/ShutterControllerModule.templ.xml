@@ -514,6 +514,7 @@
 								<Parameter Id="%AID%_UP-%TT%%CC%700" Offset="0" BitOffset="2" Name="C%C%NightBrightnessSourceDusk" ParameterType="%AID%_PT-SHCNightBrightnessSourceDusk" Text="Helligkeit im Nachtmodus" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%701" Offset="0" BitOffset="2" Name="C%C%NightBrightnessSourceSensors" ParameterType="%AID%_PT-SHCNightBrightnessSourceSensors" Text="Helligkeit im Nachtmodus" Value="0" op:nowarn="true" />
 								<Parameter Id="%AID%_UP-%TT%%CC%479" Offset="0" BitOffset="5" Name="C%C%NightMigrated" ParameterType="%AID%_PT-OnOffYesNo" Text="Konfiguration migriert" Value="0" />
+								<Parameter Id="%AID%_UP-%TT%%CC%703" Offset="0" BitOffset="6" Name="C%C%NightHoliday" ParameterType="%AID%_PT-SHCNightHoliday" Text="Feiertage" Value="1" />
 								<Parameter Id="%AID%_UP-%TT%%CC%480" Offset="1" BitOffset="0" Name="C%C%NightBrightnessDuration" ParameterType="%AID%_PT-SHCNightBrightnessDuration" Text="Mindestdauer Helligkeit" Value="5" SuffixText="min" />
 								<!-- Stufen: Aktion, Position -->
 								<Parameter Id="%AID%_UP-%TT%%CC%481" Offset="2" BitOffset="0" Name="C%C%NightStage1Action" ParameterType="%AID%_PT-SHCNightActionClose" Text="Aktion" Value="1" />
@@ -1086,6 +1087,7 @@
 							<ParameterRef Id="%AID%_UP-%TT%%CC%700_R-%TT%%CC%70001" RefId="%AID%_UP-%TT%%CC%700" />
 							<ParameterRef Id="%AID%_UP-%TT%%CC%701_R-%TT%%CC%70101" RefId="%AID%_UP-%TT%%CC%701" />
 							<ParameterRef Id="%AID%_UP-%TT%%CC%702_R-%TT%%CC%70201" RefId="%AID%_UP-%TT%%CC%702" />
+							<ParameterRef Id="%AID%_UP-%TT%%CC%703_R-%TT%%CC%70301" RefId="%AID%_UP-%TT%%CC%703" />
 							<ParameterRef Id="%AID%_UP-%TT%%CC%481_R-%TT%%CC%48101" RefId="%AID%_UP-%TT%%CC%481" />
 							<ParameterRef Id="%AID%_UP-%TT%%CC%482_R-%TT%%CC%48201" RefId="%AID%_UP-%TT%%CC%482" />
 							<ParameterRef Id="%AID%_UP-%TT%%CC%483_R-%TT%%CC%48301" RefId="%AID%_UP-%TT%%CC%483" />
@@ -2123,6 +2125,12 @@
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%476_R-%TT%%CC%47601" HelpContext="%DOC%" IndentLevel="1" />
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%477_R-%TT%%CC%47701" HelpContext="%DOC%" IndentLevel="1" />
 															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%702_R-%TT%%CC%70201" HelpContext="%DOC%" IndentLevel="1" />
+															<ParameterRefRef RefId="%AID%_UP-%TT%%CC%703_R-%TT%%CC%70301" HelpContext="%DOC%" IndentLevel="1" />
+															<choose ParamRefId="%AID%_UP-%TT%%CC%703_R-%TT%%CC%70301">
+																<when test="1">
+																	<ParameterSeparator Id="%AID%_PS-nnn" Text="Welche Tage Feiertage sind, wird in der Logik unter „Feiertage“ festgelegt." UIHint="Information" />
+																</when>
+															</choose>
 															<choose ParamRefId="%AID%_UP-%TT%00033_R-%TT%0003301">
 																<when test="1">
 																	<choose ParamRefId="%AID%_UP-%TT%00026_R-%TT%0002601">

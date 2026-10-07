@@ -448,6 +448,12 @@
 							<ParameterType Id="%AID%_PT-SHCNightDelay" Name="SHCNightDelay">
 								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="600" />
 							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightHoliday" Name="SHCNightHoliday">
+								<TypeRestriction Base="Value" SizeInBit="1">
+									<Enumeration Text="nicht beachten" Value="0" Id="%ENID%" />
+									<Enumeration Text="wie Sonntage behandeln" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
 							<ParameterType Id="%AID%_PT-SHCNightTimeOffset" Name="SHCNightTimeOffset">
 								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="240" UIHint="Time_hhmm" />
 							</ParameterType>
@@ -693,8 +699,7 @@
 								<!-- Dämmerung Eingang (Nachtmodus) -->
 								<Parameter Id="%AID%_UP-%TT%00033" Offset="1" BitOffset="6" Name="HasDuskInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Dämmerung" Value="0" />
 
-								<!-- Feiertag Eingang (Nachtmodus: heute wie Sonntag) -->
-								<Parameter Id="%AID%_UP-%TT%00034" Offset="1" BitOffset="7" Name="HasHolidayInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Feiertag" Value="0" />
+								<!-- 1 bit free-->
 
 								<!-- Beschattung täglich aktivieren -->
 								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche Aktivierung" Value="3" />
@@ -799,8 +804,6 @@
 							<!-- Wolken Eingang-->
 							<ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000601" RefId="%AID%_UP-%TT%00006" />
 							<ParameterRef Id="%AID%_UP-%TT%00033_R-%TT%0003301" RefId="%AID%_UP-%TT%00033" />
-							<ParameterRef Id="%AID%_UP-%TT%00034_R-%TT%0003401" RefId="%AID%_UP-%TT%00034" />
-
 							<!-- Beschattung täglich aktivieren -->
 							<ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000701" RefId="%AID%_UP-%TT%00007" />
 
@@ -899,9 +902,7 @@
 							<ComObject Number="11" Id="%AID%_O-%TT%00011" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput4"                      Text="Jalousiensteuerung: Helligkeit 4"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Helligkeit Eingang 5 -->
 							<ComObject Number="12" Id="%AID%_O-%TT%00012" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput5"                      Text="Jalousiensteuerung: Helligkeit 5"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
-							<ComObject Number="13" Id="%AID%_O-%TT%00013" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="DuskInput"                             Text="Jalousiensteuerung: Dämmerung"                             FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
-							<ComObject Number="14" Id="%AID%_O-%TT%00014" ObjectSize="1 Bit"   DatapointType="DPST-1-1" Name="HolidayInput"                          Text="Jalousiensteuerung: Heute wie Sonntag"                     FunctionText="Jalousiensteuerung: Eingang, 1 = Feiertag" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
-						</ComObjectTable>
+							<ComObject Number="13" Id="%AID%_O-%TT%00013" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="DuskInput"                             Text="Jalousiensteuerung: Dämmerung"                             FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->
 							<ComObjectRef Id="%AID%_O-%TT%00000_R-%TT%0000001" RefId="%AID%_O-%TT%00000" />
@@ -930,10 +931,7 @@
 							<!-- Helligkeit Eingang 5 -->
 							<ComObjectRef Id="%AID%_O-%TT%00012_R-%TT%0001201" RefId="%AID%_O-%TT%00012" />
 							<!-- Dämmerung Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%00013_R-%TT%0001301" RefId="%AID%_O-%TT%00013" />
-							<!-- Feiertag Eingang -->
-							<ComObjectRef Id="%AID%_O-%TT%00014_R-%TT%0001401" RefId="%AID%_O-%TT%00014" />
-						</ComObjectRefs>
+							<ComObjectRef Id="%AID%_O-%TT%00013_R-%TT%0001301" RefId="%AID%_O-%TT%00013" />						</ComObjectRefs>
 					</Static>
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Jalousiensteuerung" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="blinds-horizontal">
@@ -1161,16 +1159,6 @@
 									<when test="1">
 										<!-- Dämmerung Eingang -->
 										<ComObjectRefRef RefId="%AID%_O-%TT%00013_R-%TT%0001301" />
-									</when>
-								</choose>
-								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-
-								<!-- Feiertag Eingang (Nachtmodus: heute wie Sonntag) -->
-								<ParameterRefRef RefId="%AID%_UP-%TT%00034_R-%TT%0003401" HelpContext="%DOC%" IndentLevel="1"/>
-								<choose ParamRefId="%AID%_UP-%TT%00034_R-%TT%0003401">
-									<when test="1">
-										<!-- Feiertag Eingang -->
-										<ComObjectRefRef RefId="%AID%_O-%TT%00014_R-%TT%0001401" />
 									</when>
 								</choose>
 							</ParameterBlock>

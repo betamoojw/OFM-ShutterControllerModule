@@ -2,6 +2,9 @@
 #include "ShutterControllerChannel.h"
 #include "ModeScene.h"
 #include <vector>
+#ifdef LOGICMODULE
+#include "Timer.h" // holidays of the logic module
+#endif
 
 
 ShutterControllerModule::ShutterControllerModule()
@@ -66,7 +69,9 @@ void ShutterControllerModule::loop()
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
 
     _callContext.timeAndSunValid = openknx.time.isValid() && openknx.sun.isSunCalculatioValid();
-    _callContext.todayLikeSunday = ParamSHC_HasHolidayInput && KoSHC_HolidayInput.initialized() && KoSHC_HolidayInput.value(DPT_Switch);
+#ifdef LOGICMODULE
+    _callContext.holidayToday = Timer::instance().holidayToday() > 0;
+#endif
     auto utcTime = openknx.time.getUtcTime();
     _callContext.minuteChanged = false;
     if (_callContext.timeAndSunValid &&

@@ -3,7 +3,7 @@
 Jeder Kanal hat 8 Schaltpunkte. Ein Schaltpunkt legt fest, an welchen Wochentagen und unter welcher Bedingung eine Stufe auslöst. Mehrere Schaltpunkte derselben Stufe sind ODER-verknüpft: Der erste erfüllte Schaltpunkt löst die Stufe aus.
 
 - **Stufe**: Die Stufe, die der Schaltpunkt auslöst, oder "nicht aktiv".
-- **Mo-So**: Die Wochentage, an denen der Schaltpunkt gilt. Für Abendstufen zählt der Tag, an dem der Nachtzyklus begonnen hat (eine Zeit nach Mitternacht am Freitag gehört noch zum Freitag). Ist das Kommunikationsobjekt "Heute wie Sonntag" gesetzt, gelten die Einstellungen für Sonntag.
+- **Mo-So**: Die Wochentage, an denen der Schaltpunkt gilt. Für Abendstufen zählt der Tag, an dem der Nachtzyklus begonnen hat (eine Zeit nach Mitternacht am Freitag gehört noch zum Freitag). An Feiertagen gelten je nach Einstellung "Feiertage" die Einstellungen für Sonntag.
 - **Auslöser**:
   - Uhrzeit
   - bei Sonnenuntergang / Sonnenaufgang

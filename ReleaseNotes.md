@@ -2,7 +2,7 @@ v 0.12.0
 - Feature: Zweistufiger Nachtmodus mit den Stufen „Vorstufe Abend“, „Nacht“, „Vorstufe Morgen“ und „Tag“, z. B. 30 Minuten vor Sonnenuntergang auf 70 % / Lamelle 50 % und später ganz zu. Ohne Vorstufen arbeitet der Nachtmodus einstufig wie bisher.
 - Feature: Bis zu 8 Schaltpunkte je Kanal mit Wochentagen, Auslöser (Uhrzeit, Sonnenuntergang/-aufgang, ± Zeitversatz, bürgerliche/nautische Dämmerung, Höhenwinkel, Helligkeit), Helligkeit „und“/„oder“ und Bedingung „frühestens um“/„spätestens um“. Ersetzt die bisherigen Einstellungen „Nacht Beginn“/„Nacht Ende“.
 - Feature: Helligkeit im Nachtmodus über einen neuen Geräte-Eingang „Dämmerung“ oder die Helligkeitssensoren der Beschattung (Mittelwert, Maximum, Fensterrichtung), mit Mindestdauer gegen kurze Helligkeitseinbrüche.
-- Feature: Neuer Geräte-Eingang „Heute wie Sonntag“ für Feiertage.
+- Feature: Feiertage aus dem Logikmodul können im Nachtmodus wie Sonntage behandelt werden (Parameter „Feiertage“ je Kanal).
 - Feature: Fahrrichtung je Stufe („Nur schließen“ / „Nur öffnen“ / „Öffnen und Schließen“). Ein von Hand geschlossener Rollladen wird durch den Nachtmodus nicht mehr geöffnet.
 - Feature: „Verhalten bei Sperre“ (Tag-Position anfahren / keine Aktion) und „Beschattung hat in den Vorstufen Vorrang“.
 - Feature: Neues KO „Nachtstufe“ (DPT 5.010) je Kanal.

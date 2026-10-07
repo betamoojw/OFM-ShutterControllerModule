@@ -34,7 +34,7 @@ class CallContext
         OpenKNX::TimeOnly localTime = {0};
         uint16_t minuteOfDay = 0;
         uint8_t dayOfWeek = 0; // local time, 0 = Sunday ... 6 = Saturday
-        bool todayLikeSunday = false; // holiday input
+        bool holidayToday = false; // holiday calculated by the logic module
 
         // window orientation of the current channel
         uint16_t windowAzimuth = 0;
