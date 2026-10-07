@@ -494,8 +494,16 @@ void ModeNight::control(const CallContext &callContext, PositionController& posi
 void ModeNight::stop(const CallContext &callContext, const ModeBase *next, PositionController& positionController)
 {
     KoSHC_CNightActive.value(false, DPT_Switch);
-    if (next != (const ModeBase *)callContext.modeManual)
-        applyStage(StageDay, positionController);
+    if (next == (const ModeBase *)callContext.modeManual)
+        return;
+    // <Enumeration Text="Tag-Position anfahren" Value="0" Id="%ENID%" />
+    // <Enumeration Text="keine Aktion" Value="1" Id="%ENID%" />
+    if (_allowed && KoSHC_CNightLockActive.value(DPT_Switch) && ParamSHC_CNightLockBehavior == 1)
+    {
+        logInfoP("Locked, no action");
+        return;
+    }
+    applyStage(StageDay, positionController);
 }
 
 void ModeNight::processInputKo(GroupObject &ko, PositionController& positionController)
