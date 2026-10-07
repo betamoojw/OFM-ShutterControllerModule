@@ -315,6 +315,140 @@
 								</TypeRestriction>
 							</ParameterType>
 
+							<!-- Zweistufiger Nachtmodus -->
+							<ParameterType Id="%AID%_PT-SHCNightPointStage" Name="SHCNightPointStage">
+								<TypeRestriction Base="Value" SizeInBit="3">
+									<Enumeration Text="nicht aktiv" Value="0" Id="%ENID%" />
+									<Enumeration Text="Vorstufe Abend" Value="1" Id="%ENID%" />
+									<Enumeration Text="Nacht" Value="2" Id="%ENID%" />
+									<Enumeration Text="Vorstufe Morgen" Value="3" Id="%ENID%" />
+									<Enumeration Text="Tag" Value="4" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightTriggerEvening" Name="SHCNightTriggerEvening">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei Sonnenuntergang" Value="1" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang minus Zeitversatz" Value="2" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang plus Zeitversatz" Value="3" Id="%ENID%" />
+									<Enumeration Text="Ende bürgerliche Dämmerung (6° unter Horizont)" Value="7" Id="%ENID%" />
+									<Enumeration Text="Ende nautische Dämmerung (12° unter Horizont)" Value="8" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang: über Horizont" Value="4" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang: unter Horizont" Value="5" Id="%ENID%" />
+									<Enumeration Text="dunkler als" Value="6" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightTriggerMorning" Name="SHCNightTriggerMorning">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei Sonnenaufgang" Value="1" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang minus Zeitversatz" Value="2" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang plus Zeitversatz" Value="3" Id="%ENID%" />
+									<Enumeration Text="Beginn bürgerliche Dämmerung (6° unter Horizont)" Value="7" Id="%ENID%" />
+									<Enumeration Text="Beginn nautische Dämmerung (12° unter Horizont)" Value="8" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang: über Horizont" Value="4" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang: unter Horizont" Value="5" Id="%ENID%" />
+									<Enumeration Text="heller als" Value="6" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightTriggerEveningNoB" Name="SHCNightTriggerEveningNoB">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei Sonnenuntergang" Value="1" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang minus Zeitversatz" Value="2" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang plus Zeitversatz" Value="3" Id="%ENID%" />
+									<Enumeration Text="Ende bürgerliche Dämmerung (6° unter Horizont)" Value="7" Id="%ENID%" />
+									<Enumeration Text="Ende nautische Dämmerung (12° unter Horizont)" Value="8" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang: über Horizont" Value="4" Id="%ENID%" />
+									<Enumeration Text="Sonnenuntergang: unter Horizont" Value="5" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightTriggerMorningNoB" Name="SHCNightTriggerMorningNoB">
+								<TypeRestriction Base="Value" SizeInBit="4">
+									<Enumeration Text="Uhrzeit" Value="0" Id="%ENID%" />
+									<Enumeration Text="bei Sonnenaufgang" Value="1" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang minus Zeitversatz" Value="2" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang plus Zeitversatz" Value="3" Id="%ENID%" />
+									<Enumeration Text="Beginn bürgerliche Dämmerung (6° unter Horizont)" Value="7" Id="%ENID%" />
+									<Enumeration Text="Beginn nautische Dämmerung (12° unter Horizont)" Value="8" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang: über Horizont" Value="4" Id="%ENID%" />
+									<Enumeration Text="Sonnenaufgang: unter Horizont" Value="5" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightLinkEvening" Name="SHCNightLinkEvening">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="–" Value="0" Id="%ENID%" />
+									<Enumeration Text="und dunkler als" Value="1" Id="%ENID%" />
+									<Enumeration Text="oder dunkler als" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightLinkMorning" Name="SHCNightLinkMorning">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="–" Value="0" Id="%ENID%" />
+									<Enumeration Text="und heller als" Value="1" Id="%ENID%" />
+									<Enumeration Text="oder heller als" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightCondition" Name="SHCNightCondition">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="keine" Value="0" Id="%ENID%" />
+									<Enumeration Text="frühestens um" Value="1" Id="%ENID%" />
+									<Enumeration Text="spätestens um" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightActionClose" Name="SHCNightActionClose">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Nur schließen" Value="1" Id="%ENID%" />
+									<Enumeration Text="Öffnen und Schließen" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightActionOpen" Name="SHCNightActionOpen">
+								<TypeRestriction Base="Value" SizeInBit="2">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Nur öffnen" Value="1" Id="%ENID%" />
+									<Enumeration Text="Öffnen und Schließen" Value="2" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightLockBehavior" Name="SHCNightLockBehavior">
+								<TypeRestriction Base="Value" SizeInBit="1">
+									<Enumeration Text="Tag-Position anfahren" Value="0" Id="%ENID%" />
+									<Enumeration Text="keine Aktion" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightBrightnessSource" Name="SHCNightBrightnessSource">
+								<TypeRestriction Base="Value" SizeInBit="3">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Dämmerungssensor" Value="1" Id="%ENID%" />
+									<Enumeration Text="Helligkeitssensoren: Mittelwert" Value="2" Id="%ENID%" />
+									<Enumeration Text="Helligkeitssensoren: Maximum" Value="3" Id="%ENID%" />
+									<Enumeration Text="Helligkeitssensor in Fensterrichtung" Value="4" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightBrightnessSourceDusk" Name="SHCNightBrightnessSourceDusk">
+								<TypeRestriction Base="Value" SizeInBit="3">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Dämmerungssensor" Value="1" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightBrightnessSourceSensors" Name="SHCNightBrightnessSourceSensors">
+								<TypeRestriction Base="Value" SizeInBit="3">
+									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
+									<Enumeration Text="Helligkeitssensoren: Mittelwert" Value="2" Id="%ENID%" />
+									<Enumeration Text="Helligkeitssensoren: Maximum" Value="3" Id="%ENID%" />
+									<Enumeration Text="Helligkeitssensor in Fensterrichtung" Value="4" Id="%ENID%" />
+								</TypeRestriction>
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightBrightnessDuration" Name="SHCNightBrightnessDuration">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="60" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightLux" Name="SHCNightLux">
+								<TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="0" maxInclusive="1000" />
+							</ParameterType>
+							<ParameterType Id="%AID%_PT-SHCNightTimeOffset" Name="SHCNightTimeOffset">
+								<TypeTime SizeInBit="16" Unit="Minutes" minInclusive="0" maxInclusive="240" UIHint="Time_hhmm" />
+							</ParameterType>
+
 							<ParameterType Id="%AID%_PT-HeatingInput" Name="HeatingInput">
 								<TypeRestriction Base="Value" SizeInBit="2">
 									<Enumeration Text="Nein" Value="0" Id="%ENID%" />
@@ -553,7 +687,10 @@
 								<!-- Wolken Eingang-->
 								<Parameter Id="%AID%_UP-%TT%00006" Offset="1" BitOffset="5" Name="HasCloudsInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Wolkenbedeckung" Value="0" />
 
-								<!-- 2 bits free-->
+								<!-- Dämmerung Eingang (Nachtmodus) -->
+								<Parameter Id="%AID%_UP-%TT%00033" Offset="1" BitOffset="6" Name="HasDuskInput" ParameterType="%AID%_PT-OnOffYesNo" Text="Dämmerung" Value="0" />
+
+								<!-- 1 bit free-->
 
 								<!-- Beschattung täglich aktivieren -->
 								<Parameter Id="%AID%_UP-%TT%00007" Offset="2" BitOffset="0" Name="ShadingActivation" ParameterType="%AID%_PT-ShadingActivation" Text="Tägliche Aktivierung" Value="3" />
@@ -657,6 +794,7 @@
 
 							<!-- Wolken Eingang-->
 							<ParameterRef Id="%AID%_UP-%TT%00006_R-%TT%0000601" RefId="%AID%_UP-%TT%00006" />
+							<ParameterRef Id="%AID%_UP-%TT%00033_R-%TT%0003301" RefId="%AID%_UP-%TT%00033" />
 
 							<!-- Beschattung täglich aktivieren -->
 							<ParameterRef Id="%AID%_UP-%TT%00007_R-%TT%0000701" RefId="%AID%_UP-%TT%00007" />
@@ -756,6 +894,7 @@
 							<ComObject Number="11" Id="%AID%_O-%TT%00011" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput4"                      Text="Jalousiensteuerung: Helligkeit 4"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 							<!-- Helligkeit Eingang 5 -->
 							<ComObject Number="12" Id="%AID%_O-%TT%00012" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="BrightnessInput5"                      Text="Jalousiensteuerung: Helligkeit 5"                          FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
+							<ComObject Number="13" Id="%AID%_O-%TT%00013" ObjectSize="2 Bytes" DatapointType="DPST-9-4" Name="DuskInput"                             Text="Jalousiensteuerung: Dämmerung"                             FunctionText="Jalousiensteuerung: Eingang, Lux" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" Priority="Low" />
 						</ComObjectTable>
 						<ComObjectRefs>
 							<!-- Beschattung täglich aktivieren -->
@@ -784,6 +923,8 @@
 							<ComObjectRef Id="%AID%_O-%TT%00011_R-%TT%0001101" RefId="%AID%_O-%TT%00011" />
 							<!-- Helligkeit Eingang 5 -->
 							<ComObjectRef Id="%AID%_O-%TT%00012_R-%TT%0001201" RefId="%AID%_O-%TT%00012" />
+							<!-- Dämmerung Eingang -->
+							<ComObjectRef Id="%AID%_O-%TT%00013_R-%TT%0001301" RefId="%AID%_O-%TT%00013" />
 						</ComObjectRefs>
 					</Static>
 					<Dynamic>
@@ -1002,6 +1143,16 @@
 												</choose>
 											</when>
 										</choose>
+									</when>
+								</choose>
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+
+								<!-- Dämmerung Eingang (Nachtmodus) -->
+								<ParameterRefRef RefId="%AID%_UP-%TT%00033_R-%TT%0003301" HelpContext="%DOC%" IndentLevel="1"/>
+								<choose ParamRefId="%AID%_UP-%TT%00033_R-%TT%0003301">
+									<when test="1">
+										<!-- Dämmerung Eingang -->
+										<ComObjectRefRef RefId="%AID%_O-%TT%00013_R-%TT%0001301" />
 									</when>
 								</choose>
 							</ParameterBlock>
