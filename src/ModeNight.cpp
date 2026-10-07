@@ -253,10 +253,13 @@ bool ModeNight::isSwitchPointReached(const CallContext &callContext, SwitchPoint
     if (!evening && cyclePosition(callContext.minuteOfDay) < Noon)
         return false;
 
-    // evening stages use the weekday on which the night cycle started (also after midnight)
+    // evening stages use the weekday on which the night cycle started (also after midnight),
+    // the holiday input applies to the current day
     uint8_t dayOfWeek = callContext.dayOfWeek;
     if (evening && callContext.minuteOfDay < Noon)
         dayOfWeek = (dayOfWeek + 6) % 7;
+    else if (callContext.todayLikeSunday)
+        dayOfWeek = 0;
     if (!(switchPoint.days & (1 << dayOfWeek)))
         return false;
 

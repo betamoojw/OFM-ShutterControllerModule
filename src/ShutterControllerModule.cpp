@@ -66,6 +66,7 @@ void ShutterControllerModule::loop()
     _measurementClouds.update(_callContext.currentMillis, _callContext.diagnosticLog);
 
     _callContext.timeAndSunValid = openknx.time.isValid() && openknx.sun.isSunCalculatioValid();
+    _callContext.todayLikeSunday = ParamSHC_HasHolidayInput && KoSHC_HolidayInput.initialized() && KoSHC_HolidayInput.value(DPT_Switch);
     auto utcTime = openknx.time.getUtcTime();
     _callContext.minuteChanged = false;
     if (_callContext.timeAndSunValid &&
