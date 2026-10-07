@@ -204,6 +204,18 @@ void BrightnessMeasurement::update(unsigned long currentMillis, bool diagnosticL
     _azimuthState = azimuthState;
 }
 
+bool BrightnessMeasurement::getNightLux(BrightnessAggregation aggregation, bool useWindowAzimuth, float windowAzimuth, float& lux) const
+{
+    auto aggregateStates = buildAggregateStates(false);
+    ValueState state = aggregation == BrightnessAggregation::Max ? aggregateStates.max : aggregateStates.mean;
+    if (useWindowAzimuth)
+        state = buildAzimuthState(windowAzimuth, true, aggregateStates.mean);
+    if (state.ignoreValue || state.useFallback || state.waitForValue)
+        return false;
+    lux = state.valueLux;
+    return true;
+}
+
 const BrightnessMeasurement::ValueState& BrightnessMeasurement::getAggregateState() const
 {
     const bool useUnassigned = _aggregatePreferUnassigned && _aggregateUnassignedCount > 0;

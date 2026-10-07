@@ -35,6 +35,9 @@ public:
     bool isChanged() const override;
 
     bool resetChanged();
+    // Brightness for the night mode, independent of the shading related settings (azimuth, override).
+    // Returns false if no valid measured value is available (fallback values are not used).
+    bool getNightLux(BrightnessAggregation aggregation, bool useWindowAzimuth, float windowAzimuth, float& lux) const;
     void logState(bool includeValue) const;
     void logSensorMapping(uint8_t channelIndex, bool useAzimuth) const;
 

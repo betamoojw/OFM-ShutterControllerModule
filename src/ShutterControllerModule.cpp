@@ -85,7 +85,8 @@ void ShutterControllerModule::loop()
         _callContext.minuteChanged = true;
         _callContext.localTime = localTime;
         _callContext.minuteOfDay = localTime.minute + 60 * localTime.hour;
-        
+        _callContext.dayOfWeek = localTime.dayOfWeek;
+
         auto localTimeInStandardTime = localTime;
         if (localTime.isDst)
              localTimeInStandardTime.addSeconds(openknx.time.daylightSavingTimeOffset() * -1);

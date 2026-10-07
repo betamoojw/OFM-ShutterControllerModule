@@ -32,6 +32,11 @@ class CallContext
       
         OpenKNX::TimeOnly localTime = {0};
         uint16_t minuteOfDay = 0;
+        uint8_t dayOfWeek = 0; // local time, 0 = Sunday ... 6 = Saturday
+
+        // window orientation of the current channel
+        uint16_t windowAzimuth = 0;
+        bool windowHasAzimuth = false;
        
         OpenKNX::TimeOnly localTimeInStandardTime = {0};
         uint16_t localTimeInStandardTimeDay = 0;

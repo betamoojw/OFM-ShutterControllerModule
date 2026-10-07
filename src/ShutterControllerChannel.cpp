@@ -412,6 +412,10 @@ unsigned long ShutterControllerChannel::getManualShadingWaitTimeInMs() const
 
 void ShutterControllerChannel::execute(CallContext &callContext)
 {
+    const auto windowOrientation = getWindowOrientationInfo(ParamSHC_CWindowOrientation);
+    callContext.windowAzimuth = windowOrientation.azimuth;
+    callContext.windowHasAzimuth = windowOrientation.hasAzimuth;
+
     if (callContext.measurementBrightness != nullptr)
     {
         auto brightnessMeasurement = static_cast<BrightnessMeasurement*>(callContext.measurementBrightness);
