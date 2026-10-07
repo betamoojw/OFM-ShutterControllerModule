@@ -36,7 +36,18 @@ void ModeNight::initGroupObjects()
 {
     KoSHC_CNightActive.value(false, DPT_Switch);
     KoSHC_CNightLockActive.value(false, DPT_Switch);
+    updateStageStatus();
     readSwitchPoints();
+}
+
+void ModeNight::updateStageStatus()
+{
+    // 0 = Tag, 1 = Vorstufe Abend, 2 = Nacht, 3 = Vorstufe Morgen
+    const uint8_t status = _allowed ? _stage : 0;
+    if (status == _stageStatus)
+        return;
+    _stageStatus = status;
+    KoSHC_CNightStage.value(status, DPT_Value_1_Ucount);
 }
 
 bool ModeNight::windowOpenAllowed() const
@@ -331,6 +342,7 @@ void ModeNight::fireStage(uint8_t stage, bool silent)
         _pendingStage = StageNone;
         break;
     }
+    updateStageStatus();
 }
 
 void ModeNight::evaluate(const CallContext &callContext, bool reconstruct)
@@ -543,6 +555,7 @@ void ModeNight::processInputKo(GroupObject &ko, PositionController& positionCont
             _stage = StageNone;
             _pendingStage = StageNone;
         }
+        updateStageStatus();
         break;
     case SHC_KoCNightLock:
         KoSHC_CNightLockActive.value(ko.value(DPT_Switch), DPT_Switch);

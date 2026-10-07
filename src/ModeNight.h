@@ -40,6 +40,7 @@ private:
     uint8_t _pendingStage = StageNone;
     bool _cycleInitialized = false;
     bool _yieldedToShading = false;
+    uint8_t _stageStatus = 0xFF;
     uint16_t _lastMinuteOfDay = 0;
 
     void readSwitchPoints();
@@ -52,6 +53,7 @@ private:
     bool readBrightness(const CallContext& callContext, float& lux);
     bool isTimeReached(const CallContext& callContext, int16_t minuteOfDay, bool evening);
     void fireStage(uint8_t stage, bool silent);
+    void updateStageStatus();
     void applyStage(uint8_t stage, PositionController& positionController);
     uint8_t stageAction(uint8_t stage);
     uint8_t stagePosition(uint8_t stage);

@@ -1350,7 +1350,10 @@
 							<!-- Szene abrufen/lernen (DPT 18.001) -->
 							<ComObject Id="%AID%_O-%TT%%CC%028" Number="%K52%" ObjectSize="1 Byte" DatapointType="DPST-18-1" Name="C%C%Scene" Text="" FunctionText="" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" />
 
-							<!-- Next Id: %AID%_O-%TT%%CC%029 -->
+							<!-- Nachtstufe (0 = Tag, 1 = Vorstufe Abend, 2 = Nacht, 3 = Vorstufe Morgen) -->
+							<ComObject Id="%AID%_O-%TT%%CC%029" Number="%K53%" ObjectSize="1 Byte" DatapointType="DPST-5-10" Name="C%C%NightStage" Text="" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
+							<!-- Next Id: %AID%_O-%TT%%CC%030 -->
 
 							<!-- ShutterControllerModule.ModeWindowOpen.xml will be included here -->
 							<!-- Id starting with 900 -->
@@ -1417,6 +1420,7 @@
 							<ComObjectRef Id="%AID%_O-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_O-%TT%%CC%020" Text="{{0:Jalousie %C%}}: Nachtmodus Aktiv" FunctionText="Jalousie %C%: Ausgang" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Aus-/Einschalten -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_O-%TT%%CC%021" Text="{{0:Jalousie %C%}}: Nachtmodus Aus-/Einschalten" FunctionText="Jalousie %C%: Eingang, Schalten" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
+							<ComObjectRef Id="%AID%_O-%TT%%CC%029_R-%TT%%CC%02901" RefId="%AID%_O-%TT%%CC%029" Text="{{0:Jalousie %C%}}: Nachtstufe" FunctionText="Jalousie %C%: Ausgang, 0 = Tag, 1 = Vorstufe Abend, 2 = Nacht, 3 = Vorstufe Morgen" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre -->
 							<ComObjectRef Id="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_O-%TT%%CC%022" Text="{{0:Jalousie %C%}}: Nachtmodus Sperre" FunctionText="Jalousie %C%: Eingang, Sperre=1" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
 							<!-- Modus Nacht Sperre Rückmeldung -->
@@ -1940,6 +1944,8 @@
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%022_R-%TT%%CC%02201" />
 															<!-- Modus Nacht Sperre Rückmeldung -->
 															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%023_R-%TT%%CC%02301" />
+															<!-- Nachtstufe -->
+															<ComObjectRefRef RefId="%AID%_O-%TT%%CC%029_R-%TT%%CC%02901" />
 
 
 															<ParameterSeparator Id="%AID%_PS-nnn" Text="Nachtmodus" UIHint="Headline" />
