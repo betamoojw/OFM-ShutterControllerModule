@@ -639,6 +639,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
 
     // State machine handling for mode activation
     ModeBase *nextMode = nullptr;
+    callContext.shadingAllowedLastCycle = _shadingAllowedLastCycle;
+    bool shadingAllowed = false;
     for (auto mode : _modes)
     {
         if (callContext.diagnosticLog)
@@ -656,6 +658,8 @@ void ShutterControllerChannel::execute(CallContext &callContext)
             {
                 if (callContext.diagnosticLog)
                     logInfoP("-> allowed");
+                if (mode->isModeShading() && shadingControlActive())
+                    shadingAllowed = true;
                 if (nextMode == nullptr) // check if this is the first allowed mode
                 {
                     if (!shadingControlActive() && mode->isModeShading())
@@ -682,6 +686,7 @@ void ShutterControllerChannel::execute(CallContext &callContext)
         }
         logIndentDown();
     }
+    _shadingAllowedLastCycle = shadingAllowed;
     if (_currentMode != nextMode && nextMode != nullptr)
     {
         sceneChanged = true;

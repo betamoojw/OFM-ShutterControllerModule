@@ -39,6 +39,7 @@ private:
     uint8_t _stage = StageNone;
     uint8_t _pendingStage = StageNone;
     bool _cycleInitialized = false;
+    bool _yieldedToShading = false;
     uint16_t _lastMinuteOfDay = 0;
 
     void readSwitchPoints();

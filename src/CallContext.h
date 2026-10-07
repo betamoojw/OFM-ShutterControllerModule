@@ -27,6 +27,7 @@ class CallContext
         bool reactivateShadingWaitTimeRunning = false;
         bool reactivateShadingAfterPeriod = false;
         bool shadingDailyActivation = false;
+        bool shadingAllowedLastCycle = false; // any shading mode was allowed in the previous mode evaluation
         float azimuth = 0;
         float elevation = 0;
       

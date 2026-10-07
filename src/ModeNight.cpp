@@ -382,6 +382,15 @@ bool ModeNight::allowed(const CallContext &callContext)
             logInfoP("Lock KO active");
         return false;
     }
+    _yieldedToShading = _allowed && ParamSHC_CNightShadingPrecedence &&
+                        (_stage == StageEvening || _stage == StageMorning) &&
+                        callContext.shadingAllowedLastCycle;
+    if (_yieldedToShading)
+    {
+        if (callContext.diagnosticLog)
+            logInfoP("Shading has precedence in stage %s", stageName(_stage));
+        return false;
+    }
     return _allowed;
 }
 
@@ -496,6 +505,11 @@ void ModeNight::stop(const CallContext &callContext, const ModeBase *next, Posit
     KoSHC_CNightActive.value(false, DPT_Switch);
     if (next == (const ModeBase *)callContext.modeManual)
         return;
+    if (_yieldedToShading)
+    {
+        logInfoP("Shading takes over in stage %s", stageName(_stage));
+        return;
+    }
     // <Enumeration Text="Tag-Position anfahren" Value="0" Id="%ENID%" />
     // <Enumeration Text="keine Aktion" Value="1" Id="%ENID%" />
     if (_allowed && KoSHC_CNightLockActive.value(DPT_Switch) && ParamSHC_CNightLockBehavior == 1)

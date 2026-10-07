@@ -37,7 +37,8 @@ class ShutterControllerChannel : public OpenKNX::Channel
         unsigned long _waitForWindowOpenEvalulation = 0;
         bool _waitForShadingPeriodEnd = false;
         bool _shadingPeriodActive = false;
-       
+        bool _shadingAllowedLastCycle = false;
+
 
         bool __shadingControlActive = false;
         void shadingControlActive(bool active);
