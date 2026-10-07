@@ -6,7 +6,7 @@ Alle Kommunikationsobjekte sind mit dem Präfix "Jalousie %C%: " (Kanal-KOs) bzw
 
 #### Globale Kommunikationsobjekte
 
-Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-412.
+Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-414.
 
 | KO | DPT | Bezeichnung | Erklärung |
 |---:|---|---|---|
@@ -23,10 +23,12 @@ Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousienst
 | 10 | 9.004 | Helligkeit 3 | Eingang, Lux |
 | 11 | 9.004 | Helligkeit 4 | Eingang, Lux |
 | 12 | 9.004 | Helligkeit 5 | Eingang, Lux |
+| 13 | 9.004 | Dämmerung | Eingang, Lux |
+| 14 | 1.001 | Heute wie Sonntag | Eingang, 1 = Feiertag |
 
 #### Kommunikationsobjekte pro Kanal
 
-Jeder Kanal belegt einen festen Block von 53 aufeinanderfolgenden KOs (Offset `+0`..`+52`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 53 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-472, das letzte KO von Kanal 32 bei 2115. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt "Kommunikationsobjekte freigeben" des jeweiligen Kanals einzeln ein-/ausblenden.
+Jeder Kanal belegt einen festen Block von 54 aufeinanderfolgenden KOs (Offset `+0`..`+53`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 54 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-473, das letzte KO von Kanal 32 bei 2147. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt "Kommunikationsobjekte freigeben" des jeweiligen Kanals einzeln ein-/ausblenden.
 
 |  KO | DPT | Bezeichnung | Erklärung |
 |----:|---|---|---|
@@ -63,3 +65,4 @@ Jeder Kanal belegt einen festen Block von 53 aufeinanderfolgenden KOs (Offset `+
 | +36..+43 | – | Beschattungsmodus 1 | Aktiv, Sperre, Sperre Aktiv, Beschattungsunterbrechung Sperre, Beschattungsunterbrechung Sperre Aktiv, 'Nicht erlaubt' Bits, 'Nicht erlaubt' Grund, Bereitschaft |
 | +44..+51 | – | Beschattungsmodus 2 | wie Beschattungsmodus 1 |
 | +52 | 18.001 | Szene | Eingang, Szene. Abruf und Lernen |
+| +53 | 5.010 | Nachtstufe | Ausgang, 0 = Tag, 1 = Vorstufe Abend, 2 = Nacht, 3 = Vorstufe Morgen |

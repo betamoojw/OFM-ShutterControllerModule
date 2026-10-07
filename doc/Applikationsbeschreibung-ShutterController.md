@@ -623,7 +623,7 @@ Ist diese Einstellung aktiv, kann bei einer 2 Tastenbedienung auch mit einem lan
 <!-- DOC -->
 ## Nachtmodus
 
-Über diesen Modus kann die Jalousien oder der Rolladen Sonnenstand- und/oder Zeitgesteuert geöffnet und/oder geschlossen werden.
+Über diesen Modus kann die Jalousie oder der Rollladen abends und morgens automatisch geschlossen bzw. geöffnet werden, auf Wunsch in zwei Stufen. Auslöser sind Uhrzeit, Sonnenstand und Helligkeit, getrennt nach Wochentagen.
 
 <!-- DOC -->
 #### Fenster offen Modus erlaubt
@@ -638,68 +638,106 @@ Nur verfügbar wenn 2 Fensterkontake konfiguriert wurden.
 Über diese Einstellung wird konfiguriert ob während des aktiven Nachtmodus die Fenster gekippt Stellung verwendet wird.
 
 <!-- DOC -->
-### Nacht Beginn / Nacht Ende
+### Nachtstufen
 
-Beginn und Ende der Nacht kann durch folgende Ergeignisse gesteuert werden:
+Der Nachtmodus kennt vier Stufen:
 
-- Sonnenstand
-- Uhrzeit
-- Kommunikationsobjekt "Nachtmodus Aus-/Einschalten"
+| Stufe | Bedeutung | Fahrrichtung |
+|---|---|---|
+| Vorstufe Abend | optionale Zwischenstellung am Abend, z. B. 70 % / Lamelle 50 %, damit noch Restlicht hereinkommt | schließen |
+| Nacht | Nachtstellung, z. B. ganz geschlossen | schließen |
+| Vorstufe Morgen | optionale Zwischenstellung am Morgen | öffnen |
+| Tag | Ende der Nacht, z. B. ganz geöffnet | öffnen |
 
-<!-- DOC -->
-#### Auslöser
+Eine Stufe löst aus, sobald einer ihrer [Schaltpunkte](#schaltpunkte) erfüllt ist. Was dabei angefahren wird, legt die Tabelle [Stufen](#stufen) fest. Die Vorstufen sind nur aktiv, wenn ein Schaltpunkt sie verwendet; ohne solche Schaltpunkte arbeitet der Nachtmodus einstufig wie bisher.
 
-Zur Wahl steht:
+Ablauf:
 
-- Kein automatischer Start/ Kein automatisches Ende  
-Der Nachtmodus wird in dieser Einstellung nur durch das Kommunikationsobjekt "Nachtmodus Aus-/Einschalten" gestartet bzw. beendet.
-Achtung: Ist automatisches Ende aktiv, wird eine Beschattung nur aktiv wenn zuvor das Kommunikationsobjekt "Nachtmodus Aus-/Einschalten" ein Telegram AUS empfängt.
-
-- Uhrzeit  
-Bei der eingestelltem Uhrzeit wird der Nachtmodus aktiviert/deaktiviert
-
-- Sonne  
-Bei dem eingestelltem Sonnenstand, wird der Nachtmodus aktiviert/deaktiviert
-
-- Uhrzeit, Sonne (früheres Ereignis)
-Bei der eingestellten Uhrzeit oder Sonnenstand, wird der Nachtmodus aktiviert/deaktiviert
-
-- Uhrzeit, Sonne (späteres Ereignis)
-Bei der eingestellten Uhrzeit und Sonnenstand, wird der Nachtmodus aktiviert/deaktiviert
+- Der Nachtmodus ist von der ersten Abendstufe bis zur Stufe "Tag" aktiv. Das Kommunikationsobjekt "Nachtmodus Aktiv" und die Einstellung ["In der Nacht anders"](#in-der-nacht-anders) der Fensterkontakte gelten daher schon ab der Vorstufe Abend. Die aktuelle Stufe meldet das Kommunikationsobjekt "Nachtstufe".
+- Ein Nachtzyklus läuft von 12:00 bis 11:59 des Folgetags. Jede Stufe löst darin höchstens einmal aus. Abendstufen werten ab 12:00 aus (auch nach Mitternacht), Morgenstufen von 00:00 bis 11:59.
+- Hat die Stufe "Nacht" bereits ausgelöst, entfällt die Vorstufe Abend in diesem Zyklus; ebenso entfällt die Vorstufe Morgen, wenn "Tag" schon ausgelöst hat.
+- Das Kommunikationsobjekt "Nachtmodus Aus-/Einschalten" startet mit 1 die Stufe "Nacht" und beendet mit 0 den Nachtmodus mit der Stufe "Tag".
+- Wird der Nachtmodus durch Handbetrieb oder Sperre unterbrochen, fährt er bei der Rückkehr nicht erneut. Hat in der Zwischenzeit eine neue Stufe ausgelöst, wird diese bei der Rückkehr angefahren.
+- Nach einem Neustart wird die aktuelle Stufe aus den Schaltpunkten wiederhergestellt. Zwischen 12:00 und 23:59 wird sie angefahren, zwischen 00:00 und 11:59 nur übernommen, ohne zu fahren. Ein vorher über das Kommunikationsobjekt "Nachtmodus Aus-/Einschalten" geändertes Verhalten geht dabei verloren.
+- Ist bei einem Fenster "'Fenster offen' Modus erlaubt" aktiv, begrenzt ein geöffnetes Fenster wie bisher die Position. Die Position der Stufe wird gemerkt und nach dem Schließen des Fensters angefahren. Ist die Einstellung deaktiviert, greift im Nachtmodus keine Aussperrverhinderung.
 
 <!-- DOC -->
-#### Uhrzeit
+#### Verhalten bei Sperre
 
-Uhrzeit für den automatischen Beginn oder des automatischen Endes des Nachtmodus
+Legt fest, was passiert, wenn das Kommunikationsobjekt "Nachtmodus Sperre" während der Nacht gesetzt wird:
 
-<!-- DOC -->
-#### Sonne
-
-Direkt bei Sonnenuntergang bzw. -aufgang oder unter Angabe eines zusätzlichen Höhenwinkeloffsets wird der Nachtmodus gestartet bzw. beendet.
+- Tag-Position anfahren: Der Nachtmodus endet und die Position der Stufe "Tag" wird angefahren (bisheriges Verhalten).
+- keine Aktion: Der Behang bleibt stehen. Die Position der Stufe "Tag" wird erst angefahren, wenn die Nacht wirklich endet.
 
 <!-- DOC -->
-#### Höhenwinkel Offset
+#### Beschattung hat in den Vorstufen Vorrang
 
-Um nach bzw. vor Sonnenauf bzw. Untergang den Nachtmodus zu aktiveren, wird der Höhenwinkel der Sonne über oder unter dem Horizont angegeben.
-
-<!-- DOC -->
-#### Aktion
-
-Gibt an, ob bei Begin oder Ende des Nachtmodus die Jalousie automatisch bewegt werden soll. 
-Wird im Abschnitt "Nacht Beginn" "Keine" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem eine mögliche Beschattung durch den Nachtmodusbeginn unterbrochen.
-Wird im Abschnitt "Nacht Ende" "Keine" gewählt, wird die Jalousie nicht automatisch bewegt, jedoch wird trotzdem der Beschattungsmodus ermöglicht.
+Bei "Ja" überlässt der Nachtmodus während der Vorstufe Abend und der Vorstufe Morgen einer erlaubten Beschattung den Vorrang, z. B. wenn morgens die Sonne schon auf ein Ostfenster scheint. Endet die Beschattung vor der nächsten Stufe, übernimmt der Nachtmodus wieder, ohne zu fahren. Die Stufen "Nacht" und "Tag" haben immer Vorrang vor der Beschattung.
 
 <!-- DOC -->
-#### Position
+#### Helligkeit im Nachtmodus
 
-Nur verfügbar wenn "Position anfahren" auf "Ja" gesetzt wurde.
-Gibt die JalousienPosition an, die angefahren werden soll.
+Legt fest, welcher Helligkeitswert für die Schaltpunkte verwendet wird. Angeboten wird nur, was in den allgemeinen Einstellungen freigegeben ist:
+
+- Nein: Die Schaltpunkte werten keine Helligkeit aus.
+- Dämmerungssensor: Wert des Eingangs ["Dämmerung"](#dämmerung).
+- Helligkeitssensoren: Mittelwert / Maximum: Mittelwert bzw. größter Wert aller Helligkeitssensoren der Beschattung.
+- Helligkeitssensor in Fensterrichtung: Der Sensor bzw. die Sensoren, die zur eingestellten Fenster-/Behangausrichtung passen.
+
+Fehlt der Helligkeitswert oder liefert ein Sensor nur einen Ersatzwert, wird die Helligkeit nicht verwendet: Bei "oder" zählt sie nicht, bei "und" blockiert sie den Schaltpunkt nicht.
 
 <!-- DOC -->
-#### Lamellenstellung
+#### Mindestdauer Helligkeit
 
-Nur verfügbar wenn "Position anfahren" auf "Ja" gesetzt wurde und der Gerätetype "Jalousie" gewählt wurde.
-Gibt die Lamellenposition an, die eingenommen werden soll.
+So lange muss die Helligkeitsschwelle ununterbrochen unter- bzw. überschritten sein, bevor sie als erfüllt gilt. Damit lösen kurze Helligkeitseinbrüche, z. B. durch Wolken, keine Stufe aus. 0 = sofort.
+
+<!-- DOC HelpContext="Schaltpunkte" -->
+### Schaltpunkte
+
+Jeder Kanal hat 8 Schaltpunkte. Ein Schaltpunkt legt fest, an welchen Wochentagen und unter welcher Bedingung eine Stufe auslöst. Mehrere Schaltpunkte derselben Stufe sind ODER-verknüpft: Der erste erfüllte Schaltpunkt löst die Stufe aus.
+
+- **Stufe**: Die Stufe, die der Schaltpunkt auslöst, oder "nicht aktiv".
+- **Mo-So**: Die Wochentage, an denen der Schaltpunkt gilt. Für Abendstufen zählt der Tag, an dem der Nachtzyklus begonnen hat (eine Zeit nach Mitternacht am Freitag gehört noch zum Freitag). Ist das Kommunikationsobjekt ["Heute wie Sonntag"](#feiertag) gesetzt, gelten die Einstellungen für Sonntag.
+- **Auslöser**:
+  - Uhrzeit
+  - bei Sonnenuntergang / Sonnenaufgang
+  - Sonnenuntergang / Sonnenaufgang minus bzw. plus Zeitversatz (hh:mm)
+  - Ende bzw. Beginn der bürgerlichen Dämmerung (Sonne 6° unter dem Horizont)
+  - Ende bzw. Beginn der nautischen Dämmerung (Sonne 12° unter dem Horizont)
+  - Sonnenuntergang / Sonnenaufgang über bzw. unter Horizont (Höhenwinkel in Grad)
+  - dunkler als / heller als (Lux), nur wenn "Helligkeit im Nachtmodus" verwendet wird
+- **Wert**: Uhrzeit, Zeitversatz, Höhenwinkel oder Lux, je nach Auslöser.
+- **Helligkeit / Lux**: Verknüpft den Auslöser innerhalb des Schaltpunkts mit der Helligkeit: "und dunkler als" (beides muss erfüllt sein) oder "oder dunkler als" (eines genügt). Morgens entsprechend "heller als".
+- **Bedingung / Zeit**: "frühestens um" verhindert ein Auslösen vor dieser Zeit. "spätestens um" löst zu dieser Zeit auch dann aus, wenn Auslöser und Helligkeit noch nicht erfüllt sind.
+
+Ausgewertet wird in dieser Reihenfolge: (Auslöser und/oder Helligkeit), danach die Bedingung.
+
+Beispiele:
+
+| Stufe | Tage | Auslöser | Helligkeit | Bedingung | Ergebnis |
+|---|---|---|---|---|---|
+| Nacht | Mo-So | bei Sonnenuntergang | oder dunkler als 20 Lux | spätestens um 22:00 | schließt bei Sonnenuntergang oder Dunkelheit, spätestens um 22:00 |
+| Nacht | Mo-So | dunkler als 20 Lux | | frühestens um 17:00 | kein Schließen bei einem Gewitter am Nachmittag |
+| Tag | Mo-Fr | bei Sonnenaufgang | | frühestens um 06:00 | Wochentags nicht vor 06:00 |
+| Tag | Sa, So | Uhrzeit 08:30 | | | am Wochenende um 08:30 |
+| Vorstufe Abend | Mo-So | Sonnenuntergang minus Zeitversatz 00:30 | | | 30 Minuten vor Sonnenuntergang |
+
+Uhrzeiten von Abendstufen vor 12:00 gelten als "nach Mitternacht". Uhrzeiten von Morgenstufen ab 12:00 werden wie 11:59 behandelt.
+
+<!-- DOC HelpContext="Stufen" -->
+### Stufen
+
+Legt je Stufe fest, ob und wohin der Behang fährt.
+
+- **Aktion**:
+  - Nein: Die Stufe fährt nicht.
+  - Nur schließen (Abendstufen) / Nur öffnen (Morgenstufen): Die Stufe fährt nur, wenn der Behang dadurch weiter geschlossen bzw. weiter geöffnet wird. Ein von Hand geschlossener Rollladen wird abends also nicht wieder geöffnet, ein von Hand geöffneter morgens nicht wieder geschlossen.
+  - Öffnen und Schließen: Die Stufe fährt immer ihre Position an, z. B. für eine Lüftungsstellung in der Nacht oder eine Sichtschutzstellung am Tag.
+- **Höhe / Lamelle**: Die Position der Stufe. Die Lamelle ist nur bei Jalousien verfügbar.
+
+"Nur schließen" und "Nur öffnen" benötigen die Aktorrückmeldung der Position. Ohne Rückmeldung fährt die Stufe immer.
+
+Bei der Übernahme einer Konfiguration einer früheren Version wird "Nacht Beginn" zu Schaltpunkt 1 (Stufe "Nacht"), "Nacht Ende" zu Schaltpunkt 2 (Stufe "Tag"), jeweils für Mo-So, und die Aktion "Position anfahren" zu "Nur schließen" bzw. "Nur öffnen".
 
 <!-- DOC HelpContext="Szenen" -->
 ## Szenen
@@ -1525,7 +1563,7 @@ Alle Kommunikationsobjekte sind mit dem Präfix "Jalousie %C%: " (Kanal-KOs) bzw
 
 #### Globale Kommunikationsobjekte
 
-Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-412.
+Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousiensteuerung ist `KoSingleOffset = 400`, die globalen KOs liegen also bei 400-414.
 
 | KO | DPT | Bezeichnung | Erklärung |
 |---:|---|---|---|
@@ -1542,10 +1580,12 @@ Die absolute KO-Nummer ergibt sich aus `KoSingleOffset + KO`. In der Jalousienst
 | 10 | 9.004 | Helligkeit 3 | Eingang, Lux |
 | 11 | 9.004 | Helligkeit 4 | Eingang, Lux |
 | 12 | 9.004 | Helligkeit 5 | Eingang, Lux |
+| 13 | 9.004 | [Dämmerung](#dämmerung) | Eingang, Lux |
+| 14 | 1.001 | [Heute wie Sonntag](#feiertag) | Eingang, 1 = Feiertag |
 
 #### Kommunikationsobjekte pro Kanal
 
-Jeder Kanal belegt einen festen Block von 53 aufeinanderfolgenden KOs (Offset `+0`..`+52`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 53 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-472, das letzte KO von Kanal 32 bei 2115. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt ["Kommunikationsobjekte freigeben"](#kanal-1-n) des jeweiligen Kanals einzeln ein-/ausblenden.
+Jeder Kanal belegt einen festen Block von 54 aufeinanderfolgenden KOs (Offset `+0`..`+53`). Die absolute KO-Nummer ergibt sich aus `KoOffset + (Kanal - 1) * 54 + Offset`; in der Jalousiensteuerung ist `KoOffset = 420`, Kanal 1 liegt also bei 420-473, das letzte KO von Kanal 32 bei 2147. Nicht alle KOs sind immer sichtbar; die meisten lassen sich im Abschnitt ["Kommunikationsobjekte freigeben"](#kanal-1-n) des jeweiligen Kanals einzeln ein-/ausblenden.
 
 |  KO | DPT | Bezeichnung | Erklärung |
 |----:|---|---|---|
@@ -1582,3 +1622,4 @@ Jeder Kanal belegt einen festen Block von 53 aufeinanderfolgenden KOs (Offset `+
 | +36..+43 | – | [Beschattungsmodus 1](#beschattungsmodus-n) | Aktiv, Sperre, Sperre Aktiv, Beschattungsunterbrechung Sperre, Beschattungsunterbrechung Sperre Aktiv, 'Nicht erlaubt' Bits, 'Nicht erlaubt' Grund, Bereitschaft |
 | +44..+51 | – | Beschattungsmodus 2 | wie Beschattungsmodus 1 |
 | +52 | 18.001 | [Szene](#szenen) | Eingang, Szene. Abruf und Lernen |
+| +53 | 5.010 | [Nachtstufe](#nachtstufen) | Ausgang, 0 = Tag, 1 = Vorstufe Abend, 2 = Nacht, 3 = Vorstufe Morgen |
